@@ -7,6 +7,7 @@ function App() {
     <>
       <Flex direction="column" gap="2">
         <Text>Hello from Radix Themes :</Text>
+        <p className="text-red-500">Test tailwind</p>
         <Button>{`Let's go`}</Button>
       </Flex>
     </>

@@ -1,8 +1,4 @@
 {
   "name": "ecoride-backend",
-  "private": true,
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ]
+  "private": true
 }
