@@ -8,6 +8,7 @@ export const Footer = () => {
       <Typography variant="small" weight="bold">
         Copyright © 2025 EcoRide
       </Typography>
+      <Typography variant="small">contact@ecoride.com</Typography>
       <div className="flex gap-2 my-2">
         <Link href={'/mentions-legales'}>
           <Typography variant="small">Mentions légales</Typography>
