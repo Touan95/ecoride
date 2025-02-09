@@ -31,19 +31,15 @@ export type Props = {
 
 export const VARIANT_TO_TAG: Record<VariantType, HTMLTag> = {
   title: 'h1',
-  heroTitle: 'h1',
   h1: 'h1',
   h2: 'h2',
   h3: 'h3',
   h4: 'h4',
   h5: 'h5',
   cardTitle: 'h3',
-  componentTitle: 'h1',
-  componentSmallTitle: 'h1',
+  cardTitleSm: 'h3',
   small: 'p',
   paragraph: 'p',
-  paragraph2: 'p',
-  paragraph3: 'p',
   formTitle: 'p',
   extraSmall: 'p'
 };
@@ -79,20 +75,16 @@ export const Typography = ({
         customClassName,
         [
           variant === 'title' && 'md:text-[58px] md:leading-[58px] font-medium text-[38px] leading-[38px]',
-          variant === 'heroTitle' && 'font-medium text-[34px] leading-[34px] md:text-[58px] md:leading-[58px]',
           variant === 'h1' && 'font-900 text-3xl',
           variant === 'h2' && 'font-900 text-2xl',
           variant === 'h3' && 'font-900 text-xl',
           variant === 'h4' && 'font-900 text-lg',
           variant === 'h5' && 'font-900 text-md',
-          variant === 'componentTitle' && 'md:text-[52px] md:leading-[62px] font-medium text-[28px] leading-[34px]',
-          variant === 'componentSmallTitle' && 'md:text-[22px] md:leading-[29px] font-semibold text-xl',
           variant === 'cardTitle' && 'text-xl font-semibold',
-          variant === 'paragraph' && 'font-500 text-base md:text-base leading-5',
-          variant === 'paragraph2' && 'font-normal text-lg',
-          variant === 'paragraph3' && 'font-normal text-base md:text-lg',
-          variant === 'small' && 'md:text-base text-sm',
-          variant === 'extraSmall' && 'text-[10px] leading-3'
+          variant === 'cardTitleSm' && 'text-md font-semibold',
+          variant === 'paragraph' && 'font-500 text-base',
+          variant === 'small' && 'text-sm',
+          variant === 'extraSmall' && 'text-[10px]'
         ],
         [breakWords === 'all' && 'break-all', breakWords === 'words' && 'break-words', breakWords === 'normal' && 'break-normal'],
         ellipsis && 'truncate',

@@ -1,5 +1,5 @@
 import { Typography } from '@/components/atoms/Typography';
-import { SearchInput } from '@/components/inputs/SearchInput';
+import { SearchBar } from '@/components/inputs/SearchBar';
 
 export const Header = () => {
   return (
@@ -11,7 +11,7 @@ export const Header = () => {
             Optez pour le covoiturage : voyagez ensemble, réduisez votre empreinte et partagez un moment agréable.
           </Typography>
           <div className="px-20">
-            <SearchInput placeholder="Votre destination" />
+            <SearchBar placeholder="Votre destination" />
           </div>
         </div>
       </div>
