@@ -19,9 +19,7 @@ export const SearchBar = ({ placeholder }: SearchInputProps) => {
           console.log('pressed');
         }}
       >
-        <Typography variant="small" color="white">
-          Rechercher
-        </Typography>
+        Rechercher
       </Button>
     </div>
   );

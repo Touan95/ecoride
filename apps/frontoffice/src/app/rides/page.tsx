@@ -5,36 +5,21 @@ import SectionContainer from '@/components/layout/SectionContainer';
 import { RideCard, RideCardProps } from '@/components/molecules/RideCard';
 import { RidesFilters, RidesFiltersType } from '@/components/molecules/RidesFilters';
 import { SearchRides } from '@/components/molecules/SearchRides';
-import { Ride } from '@/interfaces/ride';
+import { Ride, rideMock } from '@/interfaces/ride';
 import { useMemo, useState } from 'react';
-
-const rideDataExemple: Ride = {
-  driver: {
-    image: 'https://cdn.sanity.io/images/87dmpjr7/production/538bf74e8ed2d58ca18713ec29cf52d834230e12-920x1000.png',
-    username: 'John',
-    rate: 4.3
-  },
-  price: 100,
-  isGreen: true,
-  seats: 3,
-  reservedSeats: 2,
-  arrivalDate: new Date('December 17, 2025 04:24:00'),
-  departureDate: new Date('December 17, 2025 02:34:00'),
-  duration: 5400000
-};
 
 const rideApiToRideCard = (apiRide: Ride): RideCardProps => {
   return {
     arrivalDate: apiRide.arrivalDate,
     departureDate: apiRide.departureDate,
-    driverImage: apiRide.driver.image,
+    driverImage: apiRide.driver.avatar,
     driverName: apiRide.driver.username,
     driverRate: apiRide.driver.rate,
     duration: apiRide.duration,
-    isGreen: apiRide.isGreen ?? false,
+    isGreen: apiRide.car.green ?? false,
     onDetailClick: () => console.log('clicked'),
     price: apiRide.price,
-    seatsLeft: apiRide.seats - (apiRide.reservedSeats ?? 0)
+    seatsLeft: apiRide.car.seats - (apiRide.reservedSeats ?? 0)
   };
 };
 
@@ -55,7 +40,7 @@ const filterRides = (rides: Ride[], filters: RidesFiltersType): Ride[] => {
     }
 
     if (filters.isGreen !== undefined) {
-      isValid = isValid && ride.isGreen === filters.isGreen;
+      isValid = isValid && ride.car.green === filters.isGreen;
     }
 
     return isValid;
@@ -66,13 +51,13 @@ export default function Rides() {
   const [appliedFilters, setAppliedFilters] = useState<RidesFiltersType>({});
 
   const apiRides = [
-    rideDataExemple,
-    { ...rideDataExemple, isGreen: false },
-    rideDataExemple,
-    { ...rideDataExemple, isGreen: false },
-    { ...rideDataExemple, isGreen: false },
-    rideDataExemple,
-    rideDataExemple
+    rideMock,
+    { ...rideMock, isGreen: false },
+    rideMock,
+    { ...rideMock, isGreen: false },
+    { ...rideMock, isGreen: false },
+    rideMock,
+    rideMock
   ];
 
   const filteredRides = useMemo(() => {

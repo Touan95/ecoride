@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import clsxm from '@/utils/clsxm';
+import { outfit } from '@/components/atoms/FontInitializer';
 
 const buttonVariants = cva(
-  'cursor-pointer inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
+  'text-white cursor-pointer inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
   {
     variants: {
       variant: {
@@ -28,7 +29,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLDivElement>,
 
 const Button = ({ className, variant = 'primary', size = 'default', children, ...props }: ButtonProps) => {
   return (
-    <div className={clsxm(buttonVariants({ variant, size, className }))} {...props}>
+    <div className={clsxm(buttonVariants({ variant, size, className }), `${outfit.variable} font-outfit`)} {...props}>
       {children}
     </div>
   );

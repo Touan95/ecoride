@@ -45,7 +45,7 @@ export const RideCard = ({
 
   const formattedDuration = dayjs.duration(duration).format('H:mm');
 
-  const seatLeftText = seatsLeft > 1 ? `${seatsLeft} place(s) disponible(s)` : `${seatsLeft} place disponible`;
+  const seatLeftText = seatsLeft > 1 ? `${seatsLeft} places disponibles` : `${seatsLeft} place disponible`;
   const bgColorClassname = isGreen ? 'bg-primary-300' : 'bg-primary-50';
   const greenTooltipText = isGreen
     ? 'Trajet éco-responsable : réalisé en voiture électrique.'
@@ -135,14 +135,6 @@ export const RideCard = ({
           </Typography>
         </div>
       </div>
-
-      {/* <Icon className="text-primary-900 text-7xl" />
-      <Typography align="center" variant="cardTitle" color="primary">
-        {title}
-      </Typography>
-      <Typography align="center" variant="paragraph" color="primary">
-        {description}
-      </Typography> */}
     </div>
   );
 };

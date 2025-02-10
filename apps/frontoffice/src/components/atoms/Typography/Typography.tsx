@@ -77,7 +77,7 @@ export const Typography = ({
         marginClassName,
         customClassName,
         [
-          variant === 'title' && 'md:text-[58px] md:leading-[58px] font-medium text-[38px] leading-[38px]',
+          variant === 'title' && 'font-medium text-[38px]',
           variant === 'h1' && 'font-900 text-3xl',
           variant === 'h2' && 'font-900 text-2xl',
           variant === 'h3' && 'font-900 text-xl',
