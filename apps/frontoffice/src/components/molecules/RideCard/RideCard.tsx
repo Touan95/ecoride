@@ -1,12 +1,14 @@
 import { Typography } from '@/components/atoms/Typography';
 import clsxm from '@/utils/clsxm';
 import Image from 'next/image';
-import { TbCar, TbDots, TbLeaf, TbLeafOff, TbStarFilled } from 'react-icons/tb';
+import { TbCar, TbDots, TbHourglassEmpty, TbLeaf, TbLeafOff, TbStarFilled } from 'react-icons/tb';
 import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
 import 'dayjs/locale/fr';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 dayjs.locale('fr');
+dayjs.extend(duration);
 
 export interface RideCardProps {
   driverImage: string;
@@ -16,6 +18,7 @@ export interface RideCardProps {
   price: number;
   departureDate: Date;
   arrivalDate: Date;
+  duration: number;
   isGreen: boolean;
   onDetailClick: () => void;
 }
@@ -29,16 +32,23 @@ export const RideCard = ({
   departureDate,
   arrivalDate,
   isGreen,
+  duration,
   onDetailClick
 }: RideCardProps) => {
-  const formattedDepartureDate = dayjs(departureDate).format('dddd D MMMM YYYY');
-  const formattedDepartureTime = dayjs(departureDate).format('HH:mm');
-  const formattedArrivalDate = dayjs(arrivalDate).format('dddd D MMMM YYYY');
-  const formattedArrivalTime = dayjs(arrivalDate).format('HH:mm');
+  const departure = dayjs(departureDate);
+  const arrival = dayjs(arrivalDate);
+
+  const formattedDepartureDate = departure.format('dddd D MMMM YYYY');
+  const formattedDepartureTime = departure.format('HH:mm');
+  const formattedArrivalDate = arrival.format('dddd D MMMM YYYY');
+  const formattedArrivalTime = arrival.format('HH:mm');
+
+  const formattedDuration = dayjs.duration(duration).format('H:mm');
+
   const seatLeftText = seatsLeft > 1 ? `${seatsLeft} place(s) disponible(s)` : `${seatsLeft} place disponible`;
   const bgColorClassname = isGreen ? 'bg-primary-300' : 'bg-primary-50';
   const greenTooltipText = isGreen
-    ? 'Trajet éco-responsable : réalisé en voiture électrique. '
+    ? 'Trajet éco-responsable : réalisé en voiture électrique.'
     : "Ce trajet n'est pas réalisé en voiture électrique";
   const GreenIcon = isGreen ? TbLeaf : TbLeafOff;
 
@@ -75,7 +85,7 @@ export const RideCard = ({
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger>
-                  <GreenIcon size={25} />
+                  <GreenIcon />
                 </TooltipTrigger>
                 <TooltipContent className={clsxm(['shadow', bgColorClassname])}>{greenTooltipText}</TooltipContent>
               </Tooltip>
@@ -83,8 +93,14 @@ export const RideCard = ({
           </div>
           <div className="mx-10 flex gap-4 items-center text-primary-900">
             <TbDots size={25} />
-            <TbCar size={40} />
+            <TbCar size={30} />
             <TbDots size={25} />
+          </div>
+          <div className="flex items-center justify-center">
+            <TbHourglassEmpty />
+            <Typography align="center" variant="small" color="primary">
+              {formattedDuration}
+            </Typography>
           </div>
           <Typography align="center" variant="small" color="primary">
             {seatLeftText}

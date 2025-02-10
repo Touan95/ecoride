@@ -27,6 +27,7 @@ export type Props = {
   customClassName?: string;
   marginClassName?: MarginRestrictedClassnames;
   fontFamily?: FontFamily;
+  htmlFor?: string;
 };
 
 export const VARIANT_TO_TAG: Record<VariantType, HTMLTag> = {
@@ -60,15 +61,17 @@ export const Typography = ({
   withCarriageReturn,
   marginClassName,
   customClassName,
-  fontFamily
+  fontFamily,
+  htmlFor
 }: Props) => {
-  const CustomTag = tag ? tag : (variant && VARIANT_TO_TAG[variant]) || 'p';
+  const CustomTag = htmlFor ? 'label' : tag ? tag : (variant && VARIANT_TO_TAG[variant]) || 'p';
   const appliedColor = customColor || undefined;
 
   return (
     <CustomTag
       data-testid="typography"
       style={{ color: appliedColor }}
+      htmlFor={htmlFor}
       className={clsxm(
         'align-left font-normal ',
         marginClassName,

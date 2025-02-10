@@ -7,5 +7,6 @@ export interface Ride {
   price: number;
   departureDate: Date;
   arrivalDate: Date;
+  duration: number;
   isGreen?: boolean;
 }
