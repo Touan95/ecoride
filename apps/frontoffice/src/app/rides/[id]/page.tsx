@@ -2,14 +2,16 @@
 
 import SectionContainer from '@/components/layout/SectionContainer';
 import { Ride, rideMock } from '@/interfaces/ride';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Itinerary, ItineraryProps } from '@/components/molecules/Itinerary';
 import { InfoCard, InfoCardProps } from '@/components/molecules/InfoCard';
 import { Typography } from '@/components/atoms/Typography';
 import { PriceCard } from '@/components/molecules/PriceCard';
-import { Button } from '@/components/ui/button';
 import { DriverCard, DriverCardProps } from '@/components/molecules/DriverCard';
 import { GreenCard } from '@/components/molecules/GreenCard';
+import { Button } from '@/components/molecules/Button';
+import { LoginModal } from '@/components/organisms/LoginModal';
+import { ConfirmBookingModal } from '@/components/organisms/ConfirmBookingModal';
 
 const ride = rideMock;
 
@@ -47,15 +49,56 @@ const rideApiToDriverCard = (apiRide: Ride): DriverCardProps => {
 };
 
 export default function Rides() {
+  const isConnected = false;
+  const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
+  const [confirmBookingModalOpen, setConfirmBookingModalOpen] = useState<boolean>(false);
+
   const itineraryData = useMemo(() => {
     return rideApiToItinerary(ride);
   }, [ride]);
+
   const infoData = useMemo(() => {
     return rideApiToInfoCard(ride);
   }, [ride]);
+
   const driverData = useMemo(() => {
     return rideApiToDriverCard(ride);
   }, [ride]);
+
+  const isAvailable = ride.car.seats - (ride.reservedSeats ?? 0) > 0;
+
+  const openLoginModal = () => {
+    setLoginModalOpen(true);
+  };
+
+  const closeLoginModal = () => {
+    setLoginModalOpen(false);
+  };
+
+  const openConfirmBookingModal = () => {
+    setConfirmBookingModalOpen(true);
+  };
+
+  const closeConfirmBookingModal = () => {
+    setConfirmBookingModalOpen(false);
+  };
+
+  const onBookClick = () => {
+    if (isConnected) {
+      openConfirmBookingModal();
+    } else {
+      openLoginModal();
+    }
+  };
+
+  const onConfirmBooking = () => {
+    console.log('Booking confirmed');
+  };
+
+  const onLogin = ({ email, password }: { email: string; password: string }) => {
+    console.log('Logged in with email : ', email);
+    console.log('Logged in with password : ', password);
+  };
 
   return (
     <>
@@ -70,10 +113,19 @@ export default function Rides() {
           <div className="flex flex-col gap-4">
             <InfoCard {...infoData} />
             <PriceCard price={ride.price} />
-            <Button>Réserver</Button>
+            <Button disabled={!isAvailable} onClick={onBookClick}>
+              Réserver
+            </Button>
           </div>
         </div>
       </SectionContainer>
+      <LoginModal isOpen={loginModalOpen} onClose={closeLoginModal} onLogin={onLogin} />
+      <ConfirmBookingModal
+        isOpen={confirmBookingModalOpen}
+        onClose={closeConfirmBookingModal}
+        price={ride.price}
+        onValidate={onConfirmBooking}
+      />
     </>
   );
 }

@@ -6,6 +6,7 @@ import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import 'dayjs/locale/fr';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Button } from '@/components/molecules/Button';
 
 dayjs.locale('fr');
 dayjs.extend(duration);
@@ -126,14 +127,9 @@ export const RideCard = ({
         <Typography align="center" variant="cardTitle" color="primary">
           {price}
         </Typography>
-        <div
-          className="cursor-pointer text-primary-900 flex items-center border h-fit rounded-full shadow px-3 py-1 self-center mt-3 hover:bg-secondary-300"
-          onClick={onDetailClick}
-        >
-          <Typography align="center" variant="cardTitleSm" color="primary">
-            Détails
-          </Typography>
-        </div>
+        <Button className="mt-3" onClick={onDetailClick} variant="outlined">
+          Détails
+        </Button>
       </div>
     </div>
   );

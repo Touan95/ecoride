@@ -1,8 +1,8 @@
 'use client';
 
 import { Typography } from '@/components/atoms/Typography';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Button } from '@/components/molecules/Button';
 
 export const SearchRides = () => {
   return (
@@ -19,7 +19,6 @@ export const SearchRides = () => {
             <Input placeholder="Date de trajet" />
             <Button
               className="w-full h-full"
-              variant="primary"
               onClick={() => {
                 console.log('pressed');
               }}

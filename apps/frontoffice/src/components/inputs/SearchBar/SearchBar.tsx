@@ -1,7 +1,7 @@
 'use client';
 
 import { Typography } from '@/components/atoms/Typography';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/molecules/Button';
 import { Input } from '@/components/ui/input';
 
 interface SearchInputProps {
@@ -14,7 +14,6 @@ export const SearchBar = ({ placeholder }: SearchInputProps) => {
       <Input type="text" placeholder={placeholder} />
       <Button
         className="w-fit px-20 py-7"
-        variant="primary"
         onClick={() => {
           console.log('pressed');
         }}

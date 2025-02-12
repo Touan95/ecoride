@@ -5,6 +5,7 @@ import { Controller, ControllerProps, FieldPath, FieldValues, FormProvider, useF
 
 import { Label } from '@/components/ui/label';
 import clsxm from '@/utils/clsxm';
+import { Typography } from '../atoms/Typography';
 
 const Form = FormProvider;
 
@@ -106,14 +107,12 @@ const FormMessage = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<
     const { error, formMessageId } = useFormField();
     const body = error ? String(error?.message) : children;
 
-    if (!body) {
-      return null;
-    }
-
     return (
-      <p ref={ref} id={formMessageId} className={clsxm('text-[0.8rem] font-medium text-destructive', className)} {...props}>
-        {body}
-      </p>
+      <div ref={ref} id={formMessageId} className={clsxm('h-6', className)} {...props}>
+        <Typography color="red" variant="small">
+          {body}
+        </Typography>
+      </div>
     );
   }
 );
