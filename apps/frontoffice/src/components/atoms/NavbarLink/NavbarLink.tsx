@@ -14,11 +14,14 @@ export const NavbarLink = ({ href, label }: NavbarLinkProps) => {
 
   const isCurrentPathname = pathname === href;
 
-  const textColorClassname = isCurrentPathname ? 'text-secondary-500' : 'text-white hover:text-secondary-500';
-
   return (
     <Link href={href} className={isCurrentPathname ? 'cursor-default' : 'cursor-pointer'}>
-      <Typography variant="h3" weight={isCurrentPathname ? 'bold' : undefined} customClassName={textColorClassname}>
+      <Typography
+        color={isCurrentPathname ? 'secondary' : 'white'}
+        variant="h3"
+        weight={isCurrentPathname ? 'bold' : undefined}
+        customClassName="hover:text-secondary-500"
+      >
         {label}
       </Typography>
     </Link>

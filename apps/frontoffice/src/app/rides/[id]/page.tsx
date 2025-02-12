@@ -9,6 +9,7 @@ import { Typography } from '@/components/atoms/Typography';
 import { PriceCard } from '@/components/molecules/PriceCard';
 import { Button } from '@/components/ui/button';
 import { DriverCard, DriverCardProps } from '@/components/molecules/DriverCard';
+import { GreenCard } from '@/components/molecules/GreenCard';
 
 const ride = rideMock;
 
@@ -62,6 +63,7 @@ export default function Rides() {
         <Typography variant="title">Votre itinéraire</Typography>
         <div className="grid gap-4 grid-cols-[3fr_1fr]">
           <div className="flex flex-col gap-4">
+            {ride.car.green && <GreenCard />}
             <Itinerary {...itineraryData} />
             <DriverCard {...driverData} />
           </div>

@@ -65,7 +65,7 @@ export const RideCard = ({
           <Typography align="center" variant="small" color="primary">
             {driverRate}
           </Typography>
-          <TbStarFilled size={14} />
+          <TbStarFilled size={14} className="text-primary-900" />
         </div>
       </div>
       <div className="flex flex-1 justify-center items-center">
@@ -91,13 +91,13 @@ export const RideCard = ({
               </Tooltip>
             </TooltipProvider>
           </div>
-          <div className="mx-10 flex gap-4 items-center text-primary-900">
-            <TbDots size={25} />
-            <TbCar size={30} />
-            <TbDots size={25} />
+          <div className="mx-10 flex gap-4 items-center">
+            <TbDots size={25} className="text-primary-900" />
+            <TbCar size={30} className="text-primary-900" />
+            <TbDots size={25} className="text-primary-900" />
           </div>
           <div className="flex items-center justify-center">
-            <TbHourglassEmpty />
+            <TbHourglassEmpty className="text-primary-900" />
             <Typography align="center" variant="small" color="primary">
               {formattedDuration}
             </Typography>

@@ -54,7 +54,7 @@ export const Typography = ({
   ellipsis = false,
   weight,
   transform,
-  color,
+  color = 'primary',
   gradiant,
   customColor,
   customColorClass,
@@ -108,7 +108,7 @@ export const Typography = ({
         ],
         [
           color === 'primary' && 'text-primary-900',
-          color === 'secondary' && 'text-secondary-900',
+          color === 'secondary' && 'text-secondary-500',
           color === 'tertiary' && 'text-tertiary-900',
           color === 'gray' && 'text-gray-700',
           color === 'darkGray' && 'text-[#6D6D88]',

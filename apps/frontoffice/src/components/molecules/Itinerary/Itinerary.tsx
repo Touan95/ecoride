@@ -38,10 +38,10 @@ export const Itinerary = ({ departureDate, arrivalDate, departureLocation, arriv
         </Typography>
       </div>
       <div>
-        <div className="mx-10 flex gap-4 items-center text-primary-900">
-          <TbDots size={50} />
-          <TbCar size={60} />
-          <TbDots size={50} />
+        <div className="mx-10 flex gap-4 items-center">
+          <TbDots size={50} className="text-primary-900" />
+          <TbCar size={60} className="text-primary-900" />
+          <TbDots size={50} className="text-primary-900" />
         </div>
       </div>
       <div>

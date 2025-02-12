@@ -35,7 +35,7 @@ const DriverReview = ({ reviewer, rating, comment, date }: DriverReviewProps) =>
           <Typography align="center" variant="small" color="primary">
             {`${rating}/5`}
           </Typography>
-          <TbStarFilled size={14} />
+          <TbStarFilled size={14} className="text-primary-900" />
         </div>
       </div>
       <Typography variant="small" color="primary">
@@ -66,17 +66,17 @@ export const DriverCard = ({ username, avatar, rating, allowPets, allowSmokers, 
           <Typography align="center" variant="small" color="primary">
             {rating}
           </Typography>
-          <TbStarFilled size={14} />
+          <TbStarFilled size={14} className="text-primary-900" />
         </div>
       </div>
       <div className="flex flex-col w-full">
         <div className="flex flex-col justify-evenly h-25 gap-4 w-full">
           <div className="flex gap-2 items-center">
-            <PetsIcon size={30} />
+            <PetsIcon size={30} className="text-primary-900" />
             <Typography variant="cardTitleSm">{petsText}</Typography>
           </div>
           <div className="flex gap-2 items-center">
-            <SmokersIcon size={30} />
+            <SmokersIcon size={30} className="text-primary-900" />
             <Typography variant="cardTitleSm">{smokersText}</Typography>
           </div>
         </div>
@@ -89,7 +89,7 @@ export const DriverCard = ({ username, avatar, rating, allowPets, allowSmokers, 
                 {customPreferences?.map((pref, index) => {
                   return (
                     <li key={index} className="flex gap-2 items-center">
-                      <TbCircleDotFilled size={10} className="mx-2" />
+                      <TbCircleDotFilled size={10} className="mx-2 text-primary-900" />
                       <Typography variant="cardTitleSm">{pref}</Typography>
                     </li>
                   );
