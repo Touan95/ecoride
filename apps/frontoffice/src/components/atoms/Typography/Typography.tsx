@@ -16,7 +16,6 @@ export type Props = {
   align?: TextAlign;
   breakWords?: BreakWords;
   ellipsis?: boolean;
-  onClick?: () => void;
   transform?: TextTransform;
   weight?: FontWeight;
   color?: TextColor;

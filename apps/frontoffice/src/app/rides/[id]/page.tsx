@@ -100,6 +100,12 @@ export default function Rides() {
     console.log('Logged in with password : ', password);
   };
 
+  const onRegister = ({ username, email, password }: { username: string; email: string; password: string }) => {
+    console.log('Registered in with username : ', username);
+    console.log('Registered in with email : ', email);
+    console.log('Registered in with password : ', password);
+  };
+
   return (
     <>
       <SectionContainer className="flex flex-col gap-5 my-10">
@@ -119,7 +125,7 @@ export default function Rides() {
           </div>
         </div>
       </SectionContainer>
-      <LoginModal isOpen={loginModalOpen} onClose={closeLoginModal} onLogin={onLogin} />
+      <LoginModal isOpen={loginModalOpen} onClose={closeLoginModal} onLogin={onLogin} onRegister={onRegister} />
       <ConfirmBookingModal
         isOpen={confirmBookingModalOpen}
         onClose={closeConfirmBookingModal}
