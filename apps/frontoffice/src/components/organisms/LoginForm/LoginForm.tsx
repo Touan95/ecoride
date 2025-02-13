@@ -70,10 +70,12 @@ export const LoginForm = ({ onLogin, onCreateAccountClick }: LoginFormProps) => 
         <Button type="submit">Submit</Button>
       </form>
       {onCreateAccountClick && (
-        <div>
+        <div className="mt-6">
           <Typography variant="cardTitleSm">Pas encore inscrit ?</Typography>
-          <div onClick={onCreateAccountClick} className="cursor-pointer w-fit hover:text-secondary-500">
-            <Typography variant="paragraph">Créer un compte</Typography>
+          <div onClick={onCreateAccountClick} className="cursor-pointer w-fit">
+            <Typography variant="paragraph" customClassName="hover:text-secondary-500">
+              Créez un compte
+            </Typography>
           </div>
         </div>
       )}
