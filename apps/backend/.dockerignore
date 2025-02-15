@@ -1,7 +1,0 @@
-.github
-.vscode
-.idea
-.git
-node_modules
-pg_data
-tools

@@ -1,0 +1,23 @@
+
+# Dependency directories
+node_modules/
+
+# build
+dist/
+build/
+
+# History management
+.history/
+
+# Optional npm cache directory
+.npm
+
+# Optional vscode info
+.vscode/*
+!.vscode/settings.json
+
+.pnpm-store
+
+.env
+
+.DS_Store

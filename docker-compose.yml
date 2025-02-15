@@ -1,0 +1,63 @@
+version: "3.8"
+
+services:
+  database: &database_default
+    image: postgis/postgis:14-master
+    restart: unless-stopped
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    env_file:
+      - .env.local
+    environment:
+      POSTGRES_USER: ${DB_USERNAME:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-pass}
+      POSTGRES_DB: ${DB_DATABASE:-postgres}
+      PGDATA: /var/lib/postgresql/data/db-files/
+
+  database-ecoride:
+    <<: *database_default
+    container_name: database-ecoride
+    ports:
+      - 5432:5432
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  adminer:
+    image: michalhosna/adminer
+    restart: unless-stopped
+    ports:
+      - 8089:8080
+    environment:
+      ADMINER_DRIVER: pgsql
+      ADMINER_SERVER: database-ecoride
+      ADMINER_DB: postgres
+      ADMINER_USERNAME: postgres
+      ADMINER_PASSWORD: pass
+      ADMINER_AUTOLOGIN: 1
+      ADMINER_NAME: Ecoride - local
+
+  mailhog:
+    container_name: mailhog-ecoride
+    image: mailhog/mailhog:v1.0.1
+    restart: unless-stopped
+    logging:
+      driver: none # disable saving logs
+    ports:
+      - 1025:1025
+      - 8025:8025
+
+  pgadmin-ecoride:
+    container_name: pgadmin-ecoride
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "pgadmin4@pgadmin.org"
+      PGADMIN_DEFAULT_PASSWORD: "admin"
+    volumes:
+      - pgadmin:/root/.pgadmin
+    ports:
+      - 5050:80
+    restart: unless-stopped
+
+volumes:
+  db-data:
+  pgadmin:
