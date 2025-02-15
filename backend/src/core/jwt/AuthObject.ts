@@ -1,28 +1,15 @@
 import { Request } from 'express';
+import { UserType } from '../../entities/user.entity';
 export interface AuthObject {
   userId: string;
-  isAdmin: boolean;
   email: string;
-  firstName: string;
-  lastName: string;
-  currentOrganizationId: string | null;
-  currentOrganizationName: string | null;
-  referentNodeIds: string[];
+  username: string;
+  type: UserType;
 }
 
 export interface RequestWithJwt extends Request {
   jwt: AuthObject;
 }
 
-export type ResetPasswordTokenAuthObjectType = Pick<AuthObject, 'userId' | 'email'>;
 export type RefreshTokenAuthObjectType = Pick<AuthObject, 'userId'>;
 
-export interface JoinOrganizationObject {
-  email: string;
-  organizationId: string;
-}
-
-export interface ApproveRoutingIssueObject {
-  organizationId: string;
-  requestIssueId: string;
-}

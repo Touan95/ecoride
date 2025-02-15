@@ -3,9 +3,7 @@ import invalidTokenError from '../../api/common/errors/invalidToken.error';
 import config from '../../loader/config';
 import { invalidJwtTokenFormatError } from '../../api/common/errors/invalidJwtTokenFormatError';
 import {
-  ApproveRoutingIssueObject,
   AuthObject,
-  JoinOrganizationObject,
   RefreshTokenAuthObjectType,
 } from './AuthObject';
 
@@ -74,14 +72,3 @@ export const buildAccessTokenObject = (
 
 export const buildRefreshTokenObject = (token: string): Promise<RefreshTokenAuthObjectType> =>
   buildTokenObject<RefreshTokenAuthObjectType>(token, config.REFRESH_TOKEN_SECRET);
-
-export const buildResetPasswordTokenObject = (token: string): Promise<AuthObject> =>
-  buildTokenObject<AuthObject>(token, config.RESET_PASSWORD_TOKEN_SECRET);
-
-export const buildJoinOrganizationTokenObject = (token: string): Promise<JoinOrganizationObject> =>
-  buildTokenObject<JoinOrganizationObject>(token, config.JOIN_ORGANIZATION_TOKEN_SECRET);
-
-export const buildApproveRoutingIssueTokenObject = (
-  token: string,
-): Promise<ApproveRoutingIssueObject> =>
-  buildTokenObject<ApproveRoutingIssueObject>(token, config.APPROVE_ROUTING_ISSUE_TOKEN_SECRET);

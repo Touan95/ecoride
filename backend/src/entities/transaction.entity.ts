@@ -1,5 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
-import { UserEntity, UserEntityInterface } from './user.entity';
+import { User, UserEntity } from './user.entity';
 
 export enum TransactionType {
 	EARNED = 'earned',
@@ -15,8 +15,8 @@ export interface Transaction {
 }
 
 export interface TransactionEntityInterface extends Transaction {
-	payer: UserEntityInterface;
-	receiver: UserEntityInterface;
+	payer: User;
+	receiver: User;
 }
 
 @Entity('transaction')

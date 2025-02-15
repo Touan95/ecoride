@@ -20,4 +20,6 @@ export enum ResponseCodes {
   REQUEST_ISSUE_SUCCESS = 'request-issue-success',
   REQUEST_ISSUE_APPROVED_SUCCESSFULLY = 'request-issue-approved-successfully',
   REQUEST_ISSUE_DISAPPROVED_SUCCESSFULLY = 'request-issue-disapproved-successfully',
+  //
+  CREATE_TRANSACTION_SUCCESS = 'create-transaction-success',
 }

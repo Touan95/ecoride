@@ -7,8 +7,8 @@ export interface AppConfig {
   ALLOWED_ORIGINS: string[];
   ACCESS_TOKEN_SECRET: string;
   REFRESH_TOKEN_SECRET: string;
-  ACCESS_TOKEN_LIFE: string;
-  REFRESH_TOKEN_LIFE: string;
+  ACCESS_TOKEN_LIFE: number;
+  REFRESH_TOKEN_LIFE: number;
   RESET_PASSWORD_TOKEN_SECRET: string;
   RESET_PASSWORD_TOKEN_LIFE: string;
   WEBAPP_BASE_URL: string;
