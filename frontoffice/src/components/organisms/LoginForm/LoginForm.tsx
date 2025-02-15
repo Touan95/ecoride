@@ -9,13 +9,7 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from '@/component
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/molecules/Button';
 import { Typography } from '@/components/atoms/Typography';
-
-const formSchema = z.object({
-  email: z.string().min(1, { message: 'This field has to be filled.' }).email('This is not a valid email.'),
-  password: z.string().min(1, { message: 'Must have at least 1 character' }).regex(passwordRegex, {
-    message: 'Your password is not valid'
-  })
-});
+import { loginFormSchema, LoginSchemaType } from '@/schemas/auth';
 
 interface LoginFormProps {
   onLogin: ({ email, password }: { email: string; password: string }) => void;
@@ -23,15 +17,15 @@ interface LoginFormProps {
 }
 
 export const LoginForm = ({ onLogin, onCreateAccountClick }: LoginFormProps) => {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<LoginSchemaType>({
+    resolver: zodResolver(loginFormSchema),
     defaultValues: {
       email: '',
       password: ''
     }
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
+  const onSubmit = (values: LoginSchemaType) => {
     onLogin({ ...values });
   };
 
