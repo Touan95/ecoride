@@ -6,6 +6,7 @@ import './globals.css';
 import MainLayout from '@/components/layout/MainLayout';
 import { FontInitializer } from '@/components/atoms/FontInitializer';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { AuthProvider } from '@/contexts/auth';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -37,7 +38,9 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <FontInitializer />
         <QueryClientProvider client={queryClient}>
-          <MainLayout>{children}</MainLayout>
+          <AuthProvider>
+            <MainLayout>{children}</MainLayout>
+          </AuthProvider>
         </QueryClientProvider>
       </body>
     </html>

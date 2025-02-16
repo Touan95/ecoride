@@ -70,7 +70,6 @@ export default function Rides() {
 
   const onFiltersChange = (filters: RidesFiltersType) => {
     setAppliedFilters(filters);
-    console.log('🚀 ~ filters:', filters);
   };
 
   return (

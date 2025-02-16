@@ -16,9 +16,6 @@ export default async (
 ): Promise<Response | void> => {
   try {
     const { email, password, username } = req.body;
-    console.log("🚀 ~ email:", email)
-    console.log("🚀 ~ username:", username)
-    console.log("🚀 ~ password:", password)
 
     const response = await service({
       email,

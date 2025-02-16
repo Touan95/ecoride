@@ -17,3 +17,5 @@ export interface User {
 	customRules: string[];
 	credits: number;
 }
+
+export type LoggedUser = Pick<User, 'id' | 'type' | 'username' | 'email'>

@@ -15,7 +15,7 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use((config) => {
-  const token = getCookie('token');
+  const token = getCookie('accessToken');
   config.baseURL = apiUrl;
 
   config.headers = config.headers || {};
@@ -31,6 +31,7 @@ axiosInstance.interceptors.request.use((config) => {
 
   return config;
 });
+
 
 axiosInstance.interceptors.response.use(
   (response) => response,

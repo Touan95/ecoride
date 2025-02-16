@@ -5,8 +5,8 @@ import { AppDataSource } from '../loader/database';
 
 export type UserRepositoryInterface = Repository<UserEntity> & {
   getOneByEmail(email: string, withPassword?: boolean): Promise<UserEntityInterface | null>;
-  getOneByUsername(username: string, withPassword: boolean): Promise<UserEntityInterface | null>;
-  getOneById(id: string, withPassword: boolean): Promise<UserEntityInterface | null>;
+  getOneByUsername(username: string, withPassword?: boolean): Promise<UserEntityInterface | null>;
+  getOneById(id: string, withPassword?: boolean): Promise<UserEntityInterface | null>;
   updateUser(userId: string, user: Partial<User>): Promise<void>;
   createOne(user: User): Promise<User>;
 };

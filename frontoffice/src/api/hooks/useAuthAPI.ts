@@ -1,7 +1,7 @@
-import { useMutation, UseMutationOptions, useQueryClient } from 'react-query';
+import { useMutation, UseMutationOptions, useQuery, useQueryClient } from 'react-query';
 
 import { ErrorResponse } from '../lib/types';
-import { LoginParams, loginRequest, RegisterParams, registerRequest, TokenResponse } from '../lib/auth';
+import { getMe, LoginParams, loginRequest, RegisterParams, registerRequest, TokenResponse } from '../lib/auth';
 import { User } from '@/interfaces/user';
 
 export const useLoginMutation = ({ onSuccess, onError }: UseMutationOptions<TokenResponse, ErrorResponse, LoginParams>) => {
@@ -28,4 +28,8 @@ export const useRegisterMutation = ({ onSuccess, onError }: UseMutationOptions<U
     },
     onError
   });
+};
+
+export const useGetMe = ({ disabled, refetchInterval }: { disabled?: boolean; refetchInterval?: number }) => {
+  return useQuery('me', getMe, { enabled: !disabled, refetchInterval });
 };

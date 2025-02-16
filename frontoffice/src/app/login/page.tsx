@@ -3,26 +3,31 @@
 import { useLoginMutation, useRegisterMutation } from '@/api/hooks/useAuthAPI';
 import { LogOrRegister } from '@/components/organisms/LogOrRegister';
 import { apiUrl } from '@/configs/config';
+import { useAuthContext } from '@/contexts/auth';
 import { LoginSchemaType, RegisterSchemaType } from '@/schemas/auth';
+import { useRouter } from 'next/navigation';
 import { useQueryClient } from 'react-query';
 
 export default function Login() {
-  // const onLogin = ({ email, password }: { email: string; password: string }) => {
-  //   console.log('Logged in with email : ', email);
-  //   console.log('Logged in with password : ', password);
-  // };
+  const router = useRouter()
+  const {saveToken} = useAuthContext()
 
-  // const onRegister = ({ username, email, password }: { username: string; email: string; password: string }) => {
-  //   console.log('Registered in with username : ', username);
-  //   console.log('Registered in with email : ', email);
-  //   console.log('Registered in with password : ', password);
-  // };
-
-  const test = apiUrl
-  console.log("🚀 ~ test:", test)
-
-  const loginMutation = useLoginMutation({});
-  const registerMutation = useRegisterMutation({});
+  const loginMutation = useLoginMutation({
+    onSuccess:(data) => {
+      saveToken(data.accessToken, data.refreshToken);
+      router.replace('/')
+    }
+  });
+  const registerMutation = useRegisterMutation({
+    onSuccess:(_data, variables) => {
+      const loginData = {
+        email:variables.email,
+        password: variables.password       
+      }
+      loginMutation.mutate(loginData);
+    }
+  });
+  
 
   const onLogin = (data: LoginSchemaType) => {
     loginMutation.mutate(data);

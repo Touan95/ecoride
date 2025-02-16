@@ -12,6 +12,9 @@ import { GreenCard } from '@/components/molecules/GreenCard';
 import { Button } from '@/components/molecules/Button';
 import { LoginModal } from '@/components/organisms/LoginModal';
 import { ConfirmBookingModal } from '@/components/organisms/ConfirmBookingModal';
+import { useLoginMutation, useRegisterMutation } from '@/api/hooks/useAuthAPI';
+import { LoginSchemaType, RegisterSchemaType } from '@/schemas/auth';
+import { useAuthContext } from '@/contexts/auth';
 
 const ride = rideMock;
 
@@ -49,6 +52,7 @@ const rideApiToDriverCard = (apiRide: Ride): DriverCardProps => {
 };
 
 export default function Rides() {
+  const { saveToken } = useAuthContext()
   const isConnected = false;
   const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
   const [confirmBookingModalOpen, setConfirmBookingModalOpen] = useState<boolean>(false);
@@ -95,15 +99,30 @@ export default function Rides() {
     console.log('Booking confirmed');
   };
 
-  const onLogin = ({ email, password }: { email: string; password: string }) => {
-    console.log('Logged in with email : ', email);
-    console.log('Logged in with password : ', password);
+  const loginMutation = useLoginMutation({
+      onSuccess:(data) => {
+        saveToken(data.accessToken, data.refreshToken);
+        closeLoginModal()
+      }
+    });
+
+  const registerMutation = useRegisterMutation({
+    onSuccess:(_data, variables) => {
+      const loginData = {
+        email:variables.email,
+        password: variables.password       
+      }
+      loginMutation.mutate(loginData);
+    }
+  });
+  
+
+  const onLogin = (data: LoginSchemaType) => {
+    loginMutation.mutate(data);
   };
 
-  const onRegister = ({ username, email, password }: { username: string; email: string; password: string }) => {
-    console.log('Registered in with username : ', username);
-    console.log('Registered in with email : ', email);
-    console.log('Registered in with password : ', password);
+  const onRegister = (data: RegisterSchemaType) => {
+    registerMutation.mutate(data);
   };
 
   return (

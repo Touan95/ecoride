@@ -21,12 +21,9 @@ export default async ({
   userRepository,
 }: LoginServiceOptions): Promise<LoginServiceResponse> => {
   const user = await userRepository.getOneByEmail(email, true);
-  console.log("🚀 ~ user:", user)
   if (!user) {
     throw badCredentialsError();
   }
-  console.log("🚀 ~ password:", password)
-  console.log("🚀 ~ user.password:", user.password)
 
   const isGoodPassword = await argon2.verify(user.password, password);
   if (!isGoodPassword) {

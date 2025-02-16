@@ -1,5 +1,5 @@
 import axiosInstance from '@/configs/axios';
-import { User } from '@/interfaces/user';
+import { LoggedUser, User, UserType } from '@/interfaces/user';
 import { setCookie } from '@/utils/cookie';
 
 export type TokenResponse = {
@@ -17,6 +17,8 @@ export type RegisterParams = {
   email: string;
   password: string;
 };
+
+
 
 export const loginRequest = async ({ email, password }: LoginParams): Promise<TokenResponse> => {
   const { data } = await axiosInstance.post('/login', {
@@ -37,5 +39,10 @@ export const registerRequest = async ({ email, password, username }: RegisterPar
     username
   });
 
+  return data;
+};
+
+export const getMe = async (): Promise<LoggedUser> => {
+  const { data } = await axiosInstance.get('/user/me/');
   return data;
 };

@@ -45,7 +45,7 @@ export const jwtMiddleware =
 
       if (authObject) {
         req.jwt = authObject;
-        checkAdminRequirement(options, authObject);
+        // checkAdminRequirement(options, authObject);
       }
 
       return next();
