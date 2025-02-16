@@ -16,9 +16,9 @@ import { UserType } from "@/interfaces/user"
 import { userTypeFormSchema, UserTypeFormSchemaType } from "@/schemas/user"
 import { Button } from "@/components/molecules/Button"
 import { Typography } from "@/components/atoms/Typography"
-import { getUserTypeLabel } from "@/utils/userType"
 import { useChangeUserTypeMutation } from "@/api/hooks/useUserAPI"
 import { useGetMe } from "@/api/hooks/useAuthAPI"
+import { getUserTypeLabel } from "@/utils/values"
 
 interface UserTypeFormProps {
   initialValue: UserType
@@ -96,7 +96,7 @@ export const UserTypeForm = ({ initialValue, userId, onValidate } : UserTypeForm
             </FormItem>
           )}
         />
-        <Button type="submit">Confirmer</Button>
+        <Button type="submit" className="w-full">Confirmer</Button>
       </form>
     </Form>
   )

@@ -20,9 +20,9 @@ export interface DriverCardProps {
   username: string;
   avatar: string;
   rating: number;
-  allowPets?: boolean;
-  allowSmokers?: boolean;
-  customPreferences?: string[];
+  acceptsPets?: boolean;
+  acceptsSmoking?: boolean;
+  customRules?: string[];
   reviews?: DriverReviewProps[];
 }
 
@@ -45,13 +45,13 @@ const DriverReview = ({ reviewer, rating, comment, date }: DriverReviewProps) =>
   );
 };
 
-export const DriverCard = ({ username, avatar, rating, allowPets, allowSmokers, customPreferences, reviews }: DriverCardProps) => {
-  const PetsIcon = allowPets ? TbPaw : TbPawOff;
-  const SmokersIcon = allowSmokers ? TbSmoking : TbSmokingNo;
-  const petsText = allowPets
+export const DriverCard = ({ username, avatar, rating, acceptsPets, acceptsSmoking, customRules, reviews }: DriverCardProps) => {
+  const PetsIcon = acceptsPets ? TbPaw : TbPawOff;
+  const SmokersIcon = acceptsSmoking ? TbSmoking : TbSmokingNo;
+  const petsText = acceptsPets
     ? 'Ce conducteur accepte les animaux dans son véhicule'
     : "Ce conducteur n'accepte pas les animaux dans son véhicule";
-  const smokersText = allowSmokers ? 'Ce conducteur accepte les fumeurs' : "Ce conducteur n'accepte pas les fumeurs";
+  const smokersText = acceptsSmoking ? 'Ce conducteur accepte les fumeurs' : "Ce conducteur n'accepte pas les fumeurs";
 
   return (
     <div className={clsxm(['w-full rounded-xl flex p-5 shadow gap-5 bg-primary-50'])}>
@@ -80,13 +80,13 @@ export const DriverCard = ({ username, avatar, rating, allowPets, allowSmokers, 
             <Typography variant="cardTitleSm">{smokersText}</Typography>
           </div>
         </div>
-        {customPreferences && customPreferences.length > 0 && (
+        {customRules && customRules.length > 0 && (
           <>
             <div className="border-t border-dashed border-primary-900 w-full my-4" />
             <div className="flex flex-col gap-4 w-full">
               <ul>
                 <Typography variant="cardTitleSm">Les demandes du chauffeur</Typography>
-                {customPreferences?.map((pref, index) => {
+                {customRules?.map((pref, index) => {
                   return (
                     <li key={index} className="flex gap-2 items-center">
                       <TbCircleDotFilled size={10} className="mx-2 text-primary-900" />

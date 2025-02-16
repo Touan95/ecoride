@@ -44,9 +44,9 @@ const rideApiToDriverCard = (apiRide: Ride): DriverCardProps => {
     avatar: apiRide.driver.avatar,
     rating: apiRide.driver.rate,
     username: apiRide.driver.username,
-    allowPets: apiRide.driver.allowPets,
-    allowSmokers: apiRide.driver.allowSmokers,
-    customPreferences: apiRide.driver.customPreferences,
+    acceptsPets: apiRide.driver.acceptsPets,
+    acceptsSmoking: apiRide.driver.acceptsSmoking,
+    customRules: apiRide.driver.customRules,
     reviews: apiRide.driver.reviews
   };
 };

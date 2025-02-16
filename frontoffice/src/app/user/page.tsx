@@ -15,11 +15,14 @@ import { ConfirmBookingModal } from '@/components/organisms/ConfirmBookingModal'
 import { useLoginMutation, useRegisterMutation } from '@/api/hooks/useAuthAPI';
 import { LoginSchemaType, RegisterSchemaType } from '@/schemas/auth';
 import { useAuthContext } from '@/contexts/auth';
-import { AccountCard } from '@/components/molecules/AccountCard';
-import { userMock } from '@/interfaces/user';
+import { AccountDetailsCard } from '@/components/molecules/AccountDetailsCard';
+import { userMock, UserType } from '@/interfaces/user';
 import { CreditAmountCard } from '@/components/molecules/CreditAmountCard';
 import { UserTypeModal } from '@/components/organisms/UserTypeModal';
-import { useChangeUserTypeMutation } from '@/api/hooks/useUserAPI';
+import { useChangeUserTypeMutation, useGetOneUser } from '@/api/hooks/useUserAPI';
+import { AccountDriverCard } from '@/components/molecules/AccountDriverCard';
+import { DriverPreferencesModal } from '@/components/organisms/DriverPreferencesModal';
+import { DriverPreferencesFormSchemaType } from '@/schemas/user';
 
 const ride = rideMock;
 
@@ -49,17 +52,27 @@ const rideApiToDriverCard = (apiRide: Ride): DriverCardProps => {
     avatar: apiRide.driver.avatar,
     rating: apiRide.driver.rate,
     username: apiRide.driver.username,
-    allowPets: apiRide.driver.allowPets,
-    allowSmokers: apiRide.driver.allowSmokers,
-    customPreferences: apiRide.driver.customPreferences,
+    acceptsPets: apiRide.driver.acceptsPets,
+    acceptsSmoking: apiRide.driver.acceptsSmoking,
+    customRules: apiRide.driver.customRules,
     reviews: apiRide.driver.reviews
   };
 };
 
 export default function Rides() {
   const { user } = useAuthContext()
+  const { data: apiUser } = useGetOneUser(user?.id)
+  
   const [userTypeModalOpen, setUserTypeModalOpen] = useState<boolean>(false);
+  const [driverPreferencesModalOpen, setDriverPreferencesModalOpen] = useState<boolean>(false);
 
+  const driverPreferencesVisible = apiUser?.type === UserType.DRIVER || apiUser?.type === UserType.BOTH
+
+  const driverPreferences = {
+    acceptsPets: apiUser?.acceptsPets ?? false,
+    acceptsSmoking: apiUser?.acceptsSmoking ?? false,
+    customRules: apiUser?.customRules ?? [],
+  }
 
   const openUserTypeModal = () => {
     setUserTypeModalOpen(true);
@@ -69,7 +82,15 @@ export default function Rides() {
     setUserTypeModalOpen(false);
   };
 
-  if(!user){
+  const openDriverPreferencesModal = () => {
+    setDriverPreferencesModalOpen(true);
+  };
+
+  const closeDriverPreferencesModal = () => {
+    setDriverPreferencesModalOpen(false);
+  };
+
+  if(!apiUser){
     return null
   }
 
@@ -78,22 +99,33 @@ export default function Rides() {
       <SectionContainer className="flex flex-col gap-5 my-10">
         <Typography variant="title">Votre compte</Typography>
         <div className='grid grid-cols-[1fr_150px] gap-4'>
-          <AccountCard 
-            username={user.username} 
-            email={user.email} 
+          <AccountDetailsCard 
+            username={apiUser.username} 
+            email={apiUser.email} 
             avatarUrl={userMock.avatarUrl} 
-            type={user.type} 
+            type={apiUser.type} 
             onUserTypeEdit={openUserTypeModal}
           />
           <CreditAmountCard credits={200}/>
+          {driverPreferencesVisible && 
+            <AccountDriverCard onEditClick={openDriverPreferencesModal} values={driverPreferences}/>
+          }
         </div>
       </SectionContainer>
       <UserTypeModal
         isOpen={userTypeModalOpen}
         onClose={closeUserTypeModal}
-        userType={user.type}
+        userType={apiUser.type}
         onValidate={closeUserTypeModal}
-        userId={user.id}
+        userId={apiUser.id}
+      />
+      <DriverPreferencesModal
+        isOpen={driverPreferencesModalOpen}
+        onClose={closeDriverPreferencesModal}
+        userType={apiUser.type}
+        onValidate={closeDriverPreferencesModal}
+        userId={apiUser.id}
+        values={driverPreferences}
       />
     </>
   );

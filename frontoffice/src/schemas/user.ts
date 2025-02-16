@@ -3,10 +3,17 @@ import { passwordRegex } from "@/utils/password";
 import { z } from "zod";
 
 export const userTypeFormSchema = z.object({
-  type: z.enum([UserType.PASSENGER, UserType.DRIVER, UserType.BOTH], {
-    required_error: "Vous devez choisir un type de profil",
-  }),
+  type: z.enum([UserType.PASSENGER, UserType.DRIVER, UserType.BOTH])
 })
 
 export type UserTypeFormSchemaType = z.infer<typeof userTypeFormSchema>
+
+
+export const driverPreferencesFormSchema = z.object({
+  acceptsPets: z.boolean(),
+  acceptsSmoking: z.boolean(),
+  customRules: z.array(z.string()),
+})
+
+export type DriverPreferencesFormSchemaType = z.infer<typeof driverPreferencesFormSchema>
 

@@ -10,3 +10,10 @@ export const getUserTypeLabel = (userType : UserType) => {
             return 'Passager - Conducteur'
     }
 }
+
+export const booleanToYesNo = (bool?: boolean) => {
+    if (bool){
+        return 'Oui'
+    }
+    return 'Non'
+}

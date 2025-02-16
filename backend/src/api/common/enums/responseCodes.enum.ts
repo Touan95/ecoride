@@ -23,4 +23,5 @@ export enum ResponseCodes {
   //
   CREATE_TRANSACTION_SUCCESS = 'create-transaction-success',
   USER_TYPE_CHANGE_SUCCESS = 'user-type-change-success',
+  DRIVER_PREFERENCES_CHANGE_SUCCESS = 'driver-preferences-change-success',
 }
