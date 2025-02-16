@@ -5,7 +5,6 @@ import * as React from "react"
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { NavbarLink } from "@/components/atoms/NavbarLink"
@@ -16,6 +15,20 @@ import { useAuthContext } from "@/contexts/auth"
 interface ConnectedMenuProps {
   username: string
 }
+
+const AccountButton = () => {
+  return (
+    <div className={clsxm('flex w-fit')}>
+      <Typography
+        color='white'
+        variant="h3"
+        customClassName="hover:text-secondary-500 cursor-pointer"
+      >
+        Mon compte
+      </Typography>
+    </div>
+  )
+}  
 
 const LogoutButton = () => {
   const {clearUser} = useAuthContext()
@@ -38,7 +51,7 @@ export const ConnectedMenu = ({username}:ConnectedMenuProps) => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <div>
-          <NavbarLink href='/account' label="Mon compte"/>
+          <AccountButton/>
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="px-5 py-2 w-48 bg-primary-300 border-primary-800">
@@ -52,7 +65,7 @@ export const ConnectedMenu = ({username}:ConnectedMenuProps) => {
               {username}
             </Typography>
           </div>
-          <NavbarLink href='/user/settings' label={"Préférences"} variant="dropdown"/>
+          <NavbarLink href='/user' label={"Préférences"} variant="dropdown"/>
           <NavbarLink href='/user/rides' label={"Mes trajets"} variant="dropdown"/>
           <LogoutButton/>
          

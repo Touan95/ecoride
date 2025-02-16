@@ -14,3 +14,4 @@ export interface ErrorResponse extends BaseAPIResponse {
     validationErrors?: ValidationError[];
   };
 }
+

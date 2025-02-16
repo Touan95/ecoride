@@ -22,4 +22,5 @@ export enum ResponseCodes {
   REQUEST_ISSUE_DISAPPROVED_SUCCESSFULLY = 'request-issue-disapproved-successfully',
   //
   CREATE_TRANSACTION_SUCCESS = 'create-transaction-success',
+  USER_TYPE_CHANGE_SUCCESS = 'user-type-change-success',
 }

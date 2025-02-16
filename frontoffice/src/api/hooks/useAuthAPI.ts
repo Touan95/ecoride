@@ -19,7 +19,6 @@ export const useLoginMutation = ({ onSuccess, onError }: UseMutationOptions<Toke
 };
 
 export const useRegisterMutation = ({ onSuccess, onError }: UseMutationOptions<User, ErrorResponse, RegisterParams>) => {
-  const queryClient = useQueryClient();
   return useMutation((params) => registerRequest(params), {
     onSuccess: (data, params, context) => {
       if (onSuccess) {
