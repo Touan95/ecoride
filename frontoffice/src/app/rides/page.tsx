@@ -5,7 +5,6 @@ import SectionContainer from '@/components/layout/SectionContainer';
 import { RideCard, RideCardProps } from '@/components/molecules/RideCard';
 import { RidesFilters, RidesFiltersType } from '@/components/molecules/RidesFilters';
 import { SearchRides } from '@/components/molecules/SearchRides';
-import { Energy } from '@/interfaces/car';
 import { Ride, rideMock } from '@/interfaces/ride';
 import { isCarGreen } from '@/utils/car';
 import { useMemo, useState } from 'react';

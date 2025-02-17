@@ -106,7 +106,7 @@ export const CarDetailsForm = ({ onLogin, onCreateAccountClick, initialValues, e
           name="energy"
           render={({ field }) => (
             <FormItem>
-              <Typography variant="cardTitleSm">Veuillez choisir l'énergie de votre véhicule'</Typography>
+              <Typography variant="cardTitleSm">{"Veuillez choisir l'énergie de votre véhicule"}</Typography>
               <FormControl>
                 <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex flex-col space-y-1 text-primary-900">
                   <FormItem className="flex items-center space-x-3 space-y-0">

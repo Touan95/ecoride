@@ -1,5 +1,5 @@
 import axiosInstance from '@/configs/axios';
-import { LoggedUser, User, UserType } from '@/interfaces/user';
+import { LoggedUser, User } from '@/interfaces/user';
 import { setCookie } from '@/utils/cookie';
 
 export type TokenResponse = {

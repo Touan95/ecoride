@@ -2,11 +2,9 @@
 
 import { useLoginMutation, useRegisterMutation } from '@/api/hooks/useAuthAPI';
 import { LogOrRegister } from '@/components/organisms/LogOrRegister';
-import { apiUrl } from '@/configs/config';
 import { useAuthContext } from '@/contexts/auth';
 import { LoginSchemaType, RegisterSchemaType } from '@/schemas/auth';
 import { useRouter } from 'next/navigation';
-import { useQueryClient } from 'react-query';
 
 export default function Login() {
   const router = useRouter();

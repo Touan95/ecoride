@@ -1,8 +1,6 @@
 import { Typography } from '@/components/atoms/Typography';
 import clsxm from '@/utils/clsxm';
 import 'dayjs/locale/fr';
-import { UserType } from '@/interfaces/user';
-import Image from 'next/image';
 import { AccountCardField } from '../AccountCardField';
 import { TbCircleDotFilled, TbSteeringWheel } from 'react-icons/tb';
 import { booleanToYesNo } from '@/utils/values';

@@ -3,7 +3,6 @@ import clsxm from '@/utils/clsxm';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import 'dayjs/locale/fr';
-import { Button } from '@/components/molecules/Button';
 import { Energy } from '@/interfaces/car';
 import { AccountCardField } from '../AccountCardField';
 import { getEnergyLabel } from '@/utils/values';

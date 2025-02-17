@@ -1,5 +1,4 @@
 import React from 'react';
-import { FaTimes } from 'react-icons/fa';
 
 import clsxm from '@/utils/clsxm';
 import { TbX } from 'react-icons/tb';

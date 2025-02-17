@@ -3,7 +3,7 @@ import clsxm from '@/utils/clsxm';
 import 'dayjs/locale/fr';
 import { TbCar } from 'react-icons/tb';
 import { CarCard } from '../CarCard';
-import { Car, carMock } from '@/interfaces/car';
+import { Car } from '@/interfaces/car';
 import { Button } from '../Button';
 
 export interface AccountCarsCardProps {
@@ -23,7 +23,7 @@ export const AccountCarsCard = ({ cars, onAddCar, onEditCar, onRemoveCar }: Acco
     return (
       <div className="py-20">
         <Typography align="center" variant="cardTitle">
-          Vous n'avez pas encore de véhicules
+          {"Vous n'avez pas encore de véhicules"}
         </Typography>
       </div>
     );
