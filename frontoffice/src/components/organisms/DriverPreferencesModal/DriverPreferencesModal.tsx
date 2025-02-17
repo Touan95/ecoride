@@ -12,10 +12,9 @@ export interface DriverPreferencesModalProps {
   onClose: () => void;
   userType: UserType;
   onValidate: () => void;
-  userId: string
-  values: DriverPreferencesFormSchemaType
+  userId: string;
+  values: DriverPreferencesFormSchemaType;
 }
-
 
 export const DriverPreferencesModal = ({ isOpen, onClose, userType, onValidate, userId, values }: DriverPreferencesModalProps) => {
   const onValidateClick = () => {
@@ -29,7 +28,7 @@ export const DriverPreferencesModal = ({ isOpen, onClose, userType, onValidate, 
           <Typography variant="cardTitle" customClassName="mb-5">
             Vos préférences conducteur
           </Typography>
-          <DriverPreferencesForm initialValues={values} userId={userId} onValidate={onValidateClick}/>
+          <DriverPreferencesForm initialValues={values} userId={userId} onValidate={onValidateClick} />
         </div>
       </ContentContainer>
     </BaseModal>

@@ -3,7 +3,6 @@ import axios from 'axios';
 import { getCookie } from '@/utils/cookie';
 import { apiUrl } from './config';
 
-
 const axiosInstance = axios.create({
   baseURL: apiUrl,
   headers: {
@@ -31,7 +30,6 @@ axiosInstance.interceptors.request.use((config) => {
 
   return config;
 });
-
 
 axiosInstance.interceptors.response.use(
   (response) => response,

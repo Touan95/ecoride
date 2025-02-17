@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { format } from "date-fns"
+import { format } from 'date-fns';
 
 import { Form, FormControl, FormDescription, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
@@ -21,8 +21,8 @@ import clsxm from '@/utils/clsxm';
 interface CarDetailsFormProps {
   onLogin?: ({ email, password }: { email: string; password: string }) => void;
   onCreateAccountClick?: () => void;
-  initialValues?: CarDetailsFormSchemaType
-  editMode?: boolean
+  initialValues?: CarDetailsFormSchemaType;
+  editMode?: boolean;
 }
 
 export const CarDetailsForm = ({ onLogin, onCreateAccountClick, initialValues, editMode = false }: CarDetailsFormProps) => {
@@ -31,10 +31,10 @@ export const CarDetailsForm = ({ onLogin, onCreateAccountClick, initialValues, e
     defaultValues: {
       brand: initialValues?.brand ?? '',
       color: initialValues?.color ?? '',
-      energy: initialValues?.energy ??  Energy.UNKNOWN,
+      energy: initialValues?.energy ?? Energy.UNKNOWN,
       model: initialValues?.model ?? '',
       plateNumber: initialValues?.plateNumber ?? '',
-      registrationDate: initialValues?.registrationDate ??  new Date(),
+      registrationDate: initialValues?.registrationDate ?? new Date(),
       seats: initialValues?.seats ?? 0
     }
   });
@@ -101,18 +101,14 @@ export const CarDetailsForm = ({ onLogin, onCreateAccountClick, initialValues, e
             </FormItem>
           )}
         />
-       <FormField
+        <FormField
           control={form.control}
           name="energy"
           render={({ field }) => (
             <FormItem>
               <Typography variant="cardTitleSm">Veuillez choisir l'énergie de votre véhicule'</Typography>
               <FormControl>
-                <RadioGroup
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                  className="flex flex-col space-y-1 text-primary-900"
-                >
+                <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex flex-col space-y-1 text-primary-900">
                   <FormItem className="flex items-center space-x-3 space-y-0">
                     <FormControl>
                       <RadioGroupItem value={Energy.DIESEL} />
@@ -182,17 +178,10 @@ export const CarDetailsForm = ({ onLogin, onCreateAccountClick, initialValues, e
                 <PopoverTrigger asChild>
                   <FormControl>
                     <ShadButton
-                      variant={"outline"}
-                      className={clsxm(
-                        "w-[240px] pl-3 text-left font-normal",
-                        !field.value && "text-muted-foreground"
-                      )}
+                      variant={'outline'}
+                      className={clsxm('w-[240px] pl-3 text-left font-normal', !field.value && 'text-muted-foreground')}
                     >
-                      {field.value ? (
-                        format(field.value, "PPP")
-                      ) : (
-                        <span>Pick a date</span>
-                      )}
+                      {field.value ? format(field.value, 'PPP') : <span>Pick a date</span>}
                       <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                     </ShadButton>
                   </FormControl>
@@ -202,16 +191,12 @@ export const CarDetailsForm = ({ onLogin, onCreateAccountClick, initialValues, e
                     mode="single"
                     selected={field.value}
                     onSelect={field.onChange}
-                    disabled={(date) =>
-                      date > new Date() || date < new Date("1900-01-01")
-                    }
+                    disabled={(date) => date > new Date() || date < new Date('1900-01-01')}
                     initialFocus
                   />
                 </PopoverContent>
               </Popover>
-              <FormDescription>
-                Your date of birth is used to calculate your age.
-              </FormDescription>
+              <FormDescription>Your date of birth is used to calculate your age.</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -231,5 +216,3 @@ export const CarDetailsForm = ({ onLogin, onCreateAccountClick, initialValues, e
     </Form>
   );
 };
-
-

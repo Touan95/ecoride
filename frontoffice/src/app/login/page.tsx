@@ -9,25 +9,24 @@ import { useRouter } from 'next/navigation';
 import { useQueryClient } from 'react-query';
 
 export default function Login() {
-  const router = useRouter()
-  const {saveToken} = useAuthContext()
+  const router = useRouter();
+  const { saveToken } = useAuthContext();
 
   const loginMutation = useLoginMutation({
-    onSuccess:(data) => {
+    onSuccess: (data) => {
       saveToken(data.accessToken, data.refreshToken);
-      router.replace('/')
+      router.replace('/');
     }
   });
   const registerMutation = useRegisterMutation({
-    onSuccess:(_data, variables) => {
+    onSuccess: (_data, variables) => {
       const loginData = {
-        email:variables.email,
-        password: variables.password       
-      }
+        email: variables.email,
+        password: variables.password
+      };
       loginMutation.mutate(loginData);
     }
   });
-  
 
   const onLogin = (data: LoginSchemaType) => {
     loginMutation.mutate(data);
@@ -36,7 +35,6 @@ export default function Login() {
   const onRegister = (data: RegisterSchemaType) => {
     registerMutation.mutate(data);
   };
-
 
   return (
     <div>

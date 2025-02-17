@@ -20,7 +20,7 @@ const geistMono = Geist_Mono({
 
 const queryClient = new QueryClient({
   defaultOptions: {
-    queries:{
+    queries: {
       staleTime: 10 * 60 * 1000,
       refetchOnWindowFocus: false,
       retry: 0

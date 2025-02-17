@@ -11,7 +11,7 @@ import { isCarGreen } from '@/utils/car';
 import { useMemo, useState } from 'react';
 
 const rideApiToRideCard = (apiRide: Ride): RideCardProps => {
-  const isGreen = isCarGreen(apiRide.car)
+  const isGreen = isCarGreen(apiRide.car);
   return {
     arrivalDate: apiRide.arrivalDate,
     departureDate: apiRide.departureDate,
@@ -42,7 +42,7 @@ const filterRides = (rides: Ride[], filters: RidesFiltersType): Ride[] => {
       isValid = isValid && ride.driver.rate >= filters.driverRating;
     }
 
-    const isGreen = isCarGreen(ride.car)
+    const isGreen = isCarGreen(ride.car);
     if (filters.isGreen !== undefined) {
       isValid = isValid && isGreen === filters.isGreen;
     }

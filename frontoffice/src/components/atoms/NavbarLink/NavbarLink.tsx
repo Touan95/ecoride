@@ -8,7 +8,7 @@ import clsxm from '@/utils/clsxm';
 interface NavbarLinkProps {
   href: string;
   label: string;
-  variant?: 'default' | 'dropdown'
+  variant?: 'default' | 'dropdown';
 }
 
 export const NavbarLink = ({ href, label, variant = 'default' }: NavbarLinkProps) => {
@@ -16,7 +16,7 @@ export const NavbarLink = ({ href, label, variant = 'default' }: NavbarLinkProps
 
   const isCurrentPathname = pathname === href;
 
-  const textColor = variant === 'default' ? 'white' : 'black'
+  const textColor = variant === 'default' ? 'white' : 'black';
 
   return (
     <Link href={href} className={clsxm([isCurrentPathname ? 'cursor-default' : 'cursor-pointer', 'flex w-fit'])}>

@@ -29,7 +29,7 @@ const rideApiToItinerary = (apiRide: Ride): ItineraryProps => {
 };
 
 const rideApiToInfoCard = (apiRide: Ride): InfoCardProps => {
-  const isRideCarGreen = isCarGreen(apiRide.car)
+  const isRideCarGreen = isCarGreen(apiRide.car);
   return {
     carBrand: apiRide.car.brand,
     carEnergy: apiRide.car.energy,
@@ -54,12 +54,12 @@ const rideApiToDriverCard = (apiRide: Ride): DriverCardProps => {
 };
 
 export default function Rides() {
-  const { saveToken } = useAuthContext()
+  const { saveToken } = useAuthContext();
   const isConnected = false;
   const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
   const [confirmBookingModalOpen, setConfirmBookingModalOpen] = useState<boolean>(false);
 
-  const isGreen = isCarGreen(ride.car)
+  const isGreen = isCarGreen(ride.car);
 
   const itineraryData = useMemo(() => {
     return rideApiToItinerary(ride);
@@ -104,22 +104,21 @@ export default function Rides() {
   };
 
   const loginMutation = useLoginMutation({
-      onSuccess:(data) => {
-        saveToken(data.accessToken, data.refreshToken);
-        closeLoginModal()
-      }
-    });
+    onSuccess: (data) => {
+      saveToken(data.accessToken, data.refreshToken);
+      closeLoginModal();
+    }
+  });
 
   const registerMutation = useRegisterMutation({
-    onSuccess:(_data, variables) => {
+    onSuccess: (_data, variables) => {
       const loginData = {
-        email:variables.email,
-        password: variables.password       
-      }
+        email: variables.email,
+        password: variables.password
+      };
       loginMutation.mutate(loginData);
     }
   });
-  
 
   const onLogin = (data: LoginSchemaType) => {
     loginMutation.mutate(data);

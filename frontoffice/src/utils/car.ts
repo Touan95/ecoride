@@ -1,5 +1,5 @@
-import { Car, Energy } from "@/interfaces/car";
+import { Car, Energy } from '@/interfaces/car';
 
 export const isCarGreen = (car: Car) => {
-    return car.energy === Energy.ELECTRIC
-}
+  return car.energy === Energy.ELECTRIC;
+};

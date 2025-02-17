@@ -18,8 +18,6 @@ export type RegisterParams = {
   password: string;
 };
 
-
-
 export const loginRequest = async ({ email, password }: LoginParams): Promise<TokenResponse> => {
   const { data } = await axiosInstance.post('/login', {
     email,

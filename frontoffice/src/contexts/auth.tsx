@@ -4,7 +4,7 @@ import React, { createContext, PropsWithChildren, useContext, useEffect, useRef 
 import { useQueryClient } from 'react-query';
 
 import { getCookie, removeCookie, setCookie } from '@/utils/cookie';
-import { LoggedUser, UserType } from '@/interfaces/user';
+import { LoggedUser } from '@/interfaces/user';
 import { useGetMe } from '@/api/hooks/useAuthAPI';
 import { useRouter } from 'next/navigation';
 
@@ -32,17 +32,16 @@ export const initialContext: AuthContextType = {
   isLogged: false,
   isReady: false,
   saveToken: () => {},
-  clearUser: () => {},
+  clearUser: () => {}
 };
 
 export const AuthContext = createContext<AuthContextType>(initialContext);
-
 
 export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [expirationDate, setExpirationDate] = React.useState<Date | null>(null);
   const [isLogged, setIsLogged] = React.useState(false);
   const isReady = useRef(false);
-  const { replace } = useRouter()
+  const { replace } = useRouter();
 
   const queryClient = useQueryClient();
 
@@ -63,7 +62,7 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
     removeCookie('accessToken');
     removeCookie('refreshToken');
     queryClient.removeQueries();
-    replace('/')
+    replace('/');
   };
 
   useEffect(() => {
@@ -74,7 +73,6 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
       saveToken(accessToken, refreshToken);
     }
   }, []);
-
 
   const contextValue: AuthContextType = {
     user: user ?? null,

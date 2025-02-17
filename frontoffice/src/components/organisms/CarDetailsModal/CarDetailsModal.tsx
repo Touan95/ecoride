@@ -11,10 +11,9 @@ export interface CarDetailsModalProps {
   isOpen: boolean;
   onClose: () => void;
   onValidate: () => void;
-  userId?: string
-  car?: Car
+  userId?: string;
+  car?: Car;
 }
-
 
 export const CarDetailsModal = ({ isOpen, onClose, car, onValidate, userId }: CarDetailsModalProps) => {
   const onValidateClick = () => {

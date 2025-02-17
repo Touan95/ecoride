@@ -5,8 +5,8 @@ import Link from 'next/link';
 import { ConnectedMenu } from '../ConnectedMenu';
 
 export const Navbar = () => {
-  const {isLogged, clearUser, user} = useAuthContext()
-  const connectedNavbar = isLogged && user
+  const { isLogged, clearUser, user } = useAuthContext();
+  const connectedNavbar = isLogged && user;
 
   return (
     <SectionContainer fluid className="bg-primary-700 sticky top-0 z-1">
@@ -19,7 +19,7 @@ export const Navbar = () => {
           <NavbarLink href="/rides" label="Les trajets" />
           <NavbarLink href="/contact" label="Nous contacter" />
           <div className="flex-1" />
-          { connectedNavbar ?  <ConnectedMenu username={user.username}/> : <NavbarLink href="/login" label="Se connecter" />}
+          {connectedNavbar ? <ConnectedMenu username={user.username} /> : <NavbarLink href="/login" label="Se connecter" />}
         </div>
       </div>
     </SectionContainer>

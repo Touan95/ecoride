@@ -40,7 +40,7 @@ const rideApiToItinerary = (apiRide: Ride): ItineraryProps => {
 };
 
 const rideApiToInfoCard = (apiRide: Ride): InfoCardProps => {
-  const isGreen = isCarGreen(apiRide.car)
+  const isGreen = isCarGreen(apiRide.car);
   return {
     carBrand: apiRide.car.brand,
     carEnergy: apiRide.car.energy,
@@ -65,22 +65,22 @@ const rideApiToDriverCard = (apiRide: Ride): DriverCardProps => {
 };
 
 export default function Rides() {
-  const { user } = useAuthContext()
-  const { data: apiUser } = useGetOneUser(user?.id)
-  const cars = apiUser?.cars ?? []
-  
+  const { user } = useAuthContext();
+  const { data: apiUser } = useGetOneUser(user?.id);
+  const cars = apiUser?.cars ?? [];
+
   const [userTypeModalOpen, setUserTypeModalOpen] = useState<boolean>(false);
   const [driverPreferencesModalOpen, setDriverPreferencesModalOpen] = useState<boolean>(false);
-  const [carDetailsModalProp, setCarDetailsModalProp] = useState< Car | 'new' | undefined >(undefined);
+  const [carDetailsModalProp, setCarDetailsModalProp] = useState<Car | 'new' | undefined>(undefined);
   const [carToRemoveID, setCarToRemoveID] = useState<string | undefined>(undefined);
 
-  const driverCardsVisible = apiUser?.type === UserType.DRIVER || apiUser?.type === UserType.BOTH
+  const driverCardsVisible = apiUser?.type === UserType.DRIVER || apiUser?.type === UserType.BOTH;
 
   const driverPreferences = {
     acceptsPets: apiUser?.acceptsPets ?? false,
     acceptsSmoking: apiUser?.acceptsSmoking ?? false,
-    customRules: apiUser?.customRules ?? [],
-  }
+    customRules: apiUser?.customRules ?? []
+  };
 
   const openUserTypeModal = () => {
     setUserTypeModalOpen(true);
@@ -118,30 +118,35 @@ export default function Rides() {
     setCarToRemoveID(undefined);
   };
 
-  if(!apiUser){
-    return null
+  if (!apiUser) {
+    return null;
   }
 
   return (
     <>
       <SectionContainer className="flex flex-col gap-5 my-10">
         <Typography variant="title">Votre compte</Typography>
-        <div className='grid grid-cols-[1fr_150px] gap-4'>
-          <AccountDetailsCard 
-            username={apiUser.username} 
-            email={apiUser.email} 
-            avatarUrl={userMock.avatarUrl} 
-            type={apiUser.type} 
+        <div className="grid grid-cols-[1fr_150px] gap-4">
+          <AccountDetailsCard
+            username={apiUser.username}
+            email={apiUser.email}
+            avatarUrl={userMock.avatarUrl}
+            type={apiUser.type}
             onUserTypeEdit={openUserTypeModal}
           />
-          <CreditAmountCard credits={200}/>
+          <CreditAmountCard credits={200} />
         </div>
-          {driverCardsVisible && 
-            <>
-              <AccountDriverCard onEditClick={openDriverPreferencesModal} values={driverPreferences}/>
-              <AccountCarsCard cars={cars} onAddCar={openNewCarDetailsModal} onEditCar={openEditCarDetailsModal} onRemoveCar={openRemoveCarModal}/>
-            </>
-          }
+        {driverCardsVisible && (
+          <>
+            <AccountDriverCard onEditClick={openDriverPreferencesModal} values={driverPreferences} />
+            <AccountCarsCard
+              cars={cars}
+              onAddCar={openNewCarDetailsModal}
+              onEditCar={openEditCarDetailsModal}
+              onRemoveCar={openRemoveCarModal}
+            />
+          </>
+        )}
       </SectionContainer>
       <UserTypeModal
         isOpen={userTypeModalOpen}
