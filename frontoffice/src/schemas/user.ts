@@ -1,3 +1,4 @@
+import { Energy } from "@/interfaces/car";
 import { UserType } from "@/interfaces/user";
 import { passwordRegex } from "@/utils/password";
 import { z } from "zod";
@@ -8,7 +9,6 @@ export const userTypeFormSchema = z.object({
 
 export type UserTypeFormSchemaType = z.infer<typeof userTypeFormSchema>
 
-
 export const driverPreferencesFormSchema = z.object({
   acceptsPets: z.boolean(),
   acceptsSmoking: z.boolean(),
@@ -17,3 +17,14 @@ export const driverPreferencesFormSchema = z.object({
 
 export type DriverPreferencesFormSchemaType = z.infer<typeof driverPreferencesFormSchema>
 
+export const carDetailsFormSchema = z.object({
+  plateNumber: z.string(),
+  registrationDate: z.date(),
+  color: z.string(),
+  brand: z.string(),
+  model: z.string(),
+  seats: z.number().min(0),
+  energy: z.nativeEnum(Energy),
+})
+
+export type CarDetailsFormSchemaType = z.infer<typeof carDetailsFormSchema>

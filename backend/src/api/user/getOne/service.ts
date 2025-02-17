@@ -11,7 +11,7 @@ export const service = async ({
   userId,
   userRepository
 }: GetOneUserServiceOptions): Promise<UserEntityInterface> => {
-  const user = await userRepository.getOneById(userId);
+  const user = await userRepository.getOneForAccount(userId);
   if (!user) {
     throw userNotFoundError();
   }

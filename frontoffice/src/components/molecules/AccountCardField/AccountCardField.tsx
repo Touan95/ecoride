@@ -6,24 +6,24 @@ export interface AccountCardFieldProps {
   label: string,
   children: string | React.ReactNode,
   onEdit?: () => void
-  labelWidthClasname?: `w-${number}`
+  labelClassname?: string
+  smallValue?: boolean
 }
 
-export const AccountCardField = ({label, children, onEdit, labelWidthClasname= 'w-30'} : AccountCardFieldProps) => {
+export const AccountCardField = ({label, children, onEdit, labelClassname, smallValue = false} : AccountCardFieldProps) => {
   const childrenComponent = ():React.ReactNode => {
     if (typeof children === 'string') {
       return (
-        <Typography variant="cardTitleSm" color="primary">
+        <Typography variant={"cardTitleSm"} weight={smallValue ? 'light' : undefined} color="primary">
           {children}
         </Typography>
       )
     }
     return children
   } 
-
   return (
-    <div className='flex h-7 gap-5 items-center content-center'>
-      <Typography variant="cardTitleSm" color="primary" customClassName={labelWidthClasname}>
+    <div className='flex h-7 gap-5 items-center content-center justify-between'>
+      <Typography variant="cardTitleSm" color="primary" customClassName={labelClassname} ellipsis>
           {label}
       </Typography>
       <div className='flex gap-1.5 items-center'>

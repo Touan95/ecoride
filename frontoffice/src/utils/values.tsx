@@ -1,3 +1,4 @@
+import { Energy } from "@/interfaces/car";
 import { UserType } from "@/interfaces/user";
 
 export const getUserTypeLabel = (userType : UserType) => {
@@ -8,6 +9,19 @@ export const getUserTypeLabel = (userType : UserType) => {
             return 'Conducteur'
         case UserType.BOTH:
             return 'Passager - Conducteur'
+    }
+}
+
+export const getEnergyLabel = (energy : Energy) => {
+    switch (energy) {
+        case Energy.DIESEL:
+            return 'Diesel'
+        case Energy.GASOLINE:
+            return 'Essence'
+        case Energy.HYBRID:
+            return 'Hybride'
+        case Energy.ELECTRIC:
+            return 'Électrique'
     }
 }
 

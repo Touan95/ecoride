@@ -1,15 +1,30 @@
+
+export enum Energy {
+  GASOLINE = 'gasoline',
+  DIESEL = 'diesel',
+  HYBRID = 'hybrid',
+  ELECTRIC = 'electric',
+  UNKNOWN = 'unknown',
+}
+
 export interface Car {
-  brand: string;
-  model: string;
-  energy: string;
-  seats: number;
-  green?: boolean;
+	id: string;
+	plateNumber: string;
+	registrationDate: Date;
+	color: string;
+	brand: string;
+	model: string;
+	seats: number;
+	energy: Energy;
 }
 
 export const carMock: Car = {
+  id:'fdsfsqdgfqsdfgsdf',
   seats: 3,
   brand: 'Volkswagen',
   model: 'Jetta',
-  energy: 'Diesel',
-  green: true
+  energy: Energy.DIESEL,
+  color:' Vert',
+  plateNumber:'DC-ERE-ZZ',
+  registrationDate: new Date()
 };

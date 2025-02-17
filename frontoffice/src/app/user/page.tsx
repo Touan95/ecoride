@@ -23,6 +23,9 @@ import { useChangeUserTypeMutation, useGetOneUser } from '@/api/hooks/useUserAPI
 import { AccountDriverCard } from '@/components/molecules/AccountDriverCard';
 import { DriverPreferencesModal } from '@/components/organisms/DriverPreferencesModal';
 import { DriverPreferencesFormSchemaType } from '@/schemas/user';
+import { AccountCarsCard } from '@/components/molecules/AccountCarsCard';
+import { CarDetailsModal } from '@/components/organisms/CarDetailsModal';
+import { Car } from '@/interfaces/car';
 
 const ride = rideMock;
 
@@ -62,11 +65,14 @@ const rideApiToDriverCard = (apiRide: Ride): DriverCardProps => {
 export default function Rides() {
   const { user } = useAuthContext()
   const { data: apiUser } = useGetOneUser(user?.id)
+  const cars = apiUser?.cars ?? []
   
   const [userTypeModalOpen, setUserTypeModalOpen] = useState<boolean>(false);
   const [driverPreferencesModalOpen, setDriverPreferencesModalOpen] = useState<boolean>(false);
+  const [carDetailsModalProp, setCarDetailsModalProp] = useState< Car | 'new' | undefined >(undefined);
+  const [carToRemoveID, setCarToRemoveID] = useState<string | undefined>(undefined);
 
-  const driverPreferencesVisible = apiUser?.type === UserType.DRIVER || apiUser?.type === UserType.BOTH
+  const driverCardsVisible = apiUser?.type === UserType.DRIVER || apiUser?.type === UserType.BOTH
 
   const driverPreferences = {
     acceptsPets: apiUser?.acceptsPets ?? false,
@@ -90,6 +96,26 @@ export default function Rides() {
     setDriverPreferencesModalOpen(false);
   };
 
+  const openEditCarDetailsModal = (carId: string) => {
+    setCarDetailsModalProp('new');
+  };
+
+  const openNewCarDetailsModal = () => {
+    setCarDetailsModalProp('new');
+  };
+
+  const closeCarDetailsModal = () => {
+    setCarDetailsModalProp(undefined);
+  };
+
+  const openRemoveCarModal = (carId: string) => {
+    setCarToRemoveID(carId);
+  };
+
+  const closeRemoveCarModal = () => {
+    setCarToRemoveID(undefined);
+  };
+
   if(!apiUser){
     return null
   }
@@ -107,10 +133,13 @@ export default function Rides() {
             onUserTypeEdit={openUserTypeModal}
           />
           <CreditAmountCard credits={200}/>
-          {driverPreferencesVisible && 
-            <AccountDriverCard onEditClick={openDriverPreferencesModal} values={driverPreferences}/>
-          }
         </div>
+          {driverCardsVisible && 
+            <>
+              <AccountDriverCard onEditClick={openDriverPreferencesModal} values={driverPreferences}/>
+              <AccountCarsCard cars={cars} onAddCar={openNewCarDetailsModal} onEditCar={openEditCarDetailsModal} onRemoveCar={openRemoveCarModal}/>
+            </>
+          }
       </SectionContainer>
       <UserTypeModal
         isOpen={userTypeModalOpen}
@@ -126,6 +155,12 @@ export default function Rides() {
         onValidate={closeDriverPreferencesModal}
         userId={apiUser.id}
         values={driverPreferences}
+      />
+      <CarDetailsModal
+        isOpen={!!carDetailsModalProp}
+        onClose={closeCarDetailsModal}
+        onValidate={closeCarDetailsModal}
+        userId={apiUser.id}
       />
     </>
   );

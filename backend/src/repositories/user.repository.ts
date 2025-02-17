@@ -6,8 +6,8 @@ export type UpdateUser = Partial<Omit<UserEntity, 'id'>>;
 
 export type UserRepositoryInterface = Repository<UserEntity> & {
   getOneByEmail(email: string, withPassword?: boolean): Promise<UserEntityInterface | null>;
-  getOneByUsername(username: string, withPassword?: boolean): Promise<UserEntityInterface | null>;
   getOneById(id: string, withPassword?: boolean): Promise<UserEntityInterface | null>;
+  getOneForAccount(id: string, withPassword?: boolean): Promise<UserEntityInterface | null>;
   updateUser(userId: string, user: UpdateUser): Promise<void>;
   createOne(user: User): Promise<User>;
 };
@@ -15,8 +15,9 @@ export type UserRepositoryInterface = Repository<UserEntity> & {
 export const UserRepository: UserRepositoryInterface = AppDataSource.getRepository(
   UserEntity,
 ).extend({
-  getOneByEmail(email: string, withPassword: boolean): Promise<UserEntityInterface | null> {
-    const query = this.createQueryBuilder('user').where('user.email = :email', { email })
+  getOneByEmail(email: string, withPassword?: boolean): Promise<UserEntityInterface | null> {
+    const query = this.createQueryBuilder('user')
+      .where('user.email = :email', { email })
 
     if(withPassword){
       query.addSelect('user.password')
@@ -26,8 +27,9 @@ export const UserRepository: UserRepositoryInterface = AppDataSource.getReposito
 
     return user;
   },
-  getOneByUsername(username: string, withPassword: boolean): Promise<UserEntityInterface | null> {
-    const query = this.createQueryBuilder('user').where('user.username = :username', { username })
+  getOneById(id: string, withPassword?: boolean): Promise<UserEntityInterface | null> {
+    const query = this.createQueryBuilder('user')
+      .where('user.id = :id', { id })
 
     if(withPassword){
       query.addSelect('user.password')
@@ -37,8 +39,10 @@ export const UserRepository: UserRepositoryInterface = AppDataSource.getReposito
 
     return user;
   },
-  getOneById(id: string, withPassword: boolean): Promise<UserEntityInterface | null> {
-    const query = this.createQueryBuilder('user').where('user.id = :id', { id })
+  getOneForAccount(id: string, withPassword?: boolean): Promise<UserEntityInterface | null> {
+    const query = this.createQueryBuilder('user')
+      .leftJoinAndSelect('user.cars', 'cars')
+      .where('user.id = :id', { id })
 
     if(withPassword){
       query.addSelect('user.password')

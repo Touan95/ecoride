@@ -35,9 +35,9 @@ export const AccountCard = ({
       <div className='flex gap-5 items-center'>
         {avatarUrl && <Image src={avatarUrl} height={80} width={80} className="rounded-full w-20" alt={`${username}-avatar-image`} />}
         <div className='flex flex-col'>
-          <AccountCardField onEdit={onUsernameEdit} label='Pseudonyme'>{username}</AccountCardField>
-          <AccountCardField onEdit={onEmailEdit} label='Adresse email'>{email}</AccountCardField>
-          <AccountCardField onEdit={onUserTypeEdit} label='Profil'>{getUserTypeLabel(type)}</AccountCardField>
+          <AccountCardField labelClassname='w-30' onEdit={onUsernameEdit} label='Pseudonyme'>{username}</AccountCardField>
+          <AccountCardField labelClassname='w-30' onEdit={onEmailEdit} label='Adresse email'>{email}</AccountCardField>
+          <AccountCardField labelClassname='w-30' onEdit={onUserTypeEdit} label='Profil'>{getUserTypeLabel(type)}</AccountCardField>
         </div>
       </div>
     </div>

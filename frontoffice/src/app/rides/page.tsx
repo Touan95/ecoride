@@ -5,10 +5,13 @@ import SectionContainer from '@/components/layout/SectionContainer';
 import { RideCard, RideCardProps } from '@/components/molecules/RideCard';
 import { RidesFilters, RidesFiltersType } from '@/components/molecules/RidesFilters';
 import { SearchRides } from '@/components/molecules/SearchRides';
+import { Energy } from '@/interfaces/car';
 import { Ride, rideMock } from '@/interfaces/ride';
+import { isCarGreen } from '@/utils/car';
 import { useMemo, useState } from 'react';
 
 const rideApiToRideCard = (apiRide: Ride): RideCardProps => {
+  const isGreen = isCarGreen(apiRide.car)
   return {
     arrivalDate: apiRide.arrivalDate,
     departureDate: apiRide.departureDate,
@@ -16,7 +19,7 @@ const rideApiToRideCard = (apiRide: Ride): RideCardProps => {
     driverName: apiRide.driver.username,
     driverRate: apiRide.driver.rate,
     duration: apiRide.duration,
-    isGreen: apiRide.car.green ?? false,
+    isGreen,
     onDetailClick: () => console.log('clicked'),
     price: apiRide.price,
     seatsLeft: apiRide.car.seats - (apiRide.reservedSeats ?? 0)
@@ -39,8 +42,9 @@ const filterRides = (rides: Ride[], filters: RidesFiltersType): Ride[] => {
       isValid = isValid && ride.driver.rate >= filters.driverRating;
     }
 
+    const isGreen = isCarGreen(ride.car)
     if (filters.isGreen !== undefined) {
-      isValid = isValid && ride.car.green === filters.isGreen;
+      isValid = isValid && isGreen === filters.isGreen;
     }
 
     return isValid;

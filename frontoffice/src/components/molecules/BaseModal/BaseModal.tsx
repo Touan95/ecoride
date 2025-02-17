@@ -39,7 +39,7 @@ export const BaseModal = ({
   return (
     <div className="fixed inset-0 bg-gray-400/80 backdrop-blur-[1px] flex justify-center items-center z-[99990]" onClick={handleCloseClick}>
       <div
-        className={clsxm('block bg-primary-100 h-fit rounded-xl backdrop-blur-md', {
+        className={clsxm('block bg-primary-100 h-fit rounded-xl backdrop-blur-md relative max-h-screen overflow-y-auto scroll-hidden', {
           'overflow-y-auto': isOpen,
           'w-fit': maxWidth === 'fit',
           'w-[550px]': maxWidth === 'lg',

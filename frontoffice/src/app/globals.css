@@ -6,6 +6,16 @@ input[type="number"]::-webkit-inner-spin-button,
     margin: 0;
   }
 
+/* Hide scrollbar for Chrome, Safari and Edge */
+.scroll-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for Firefox */
+.scroll-hidden {
+  scrollbar-width: none;
+}
+
 @theme {  
     --color-primary-50: #f5faf3;
     --color-primary-100: #e7f4e4;

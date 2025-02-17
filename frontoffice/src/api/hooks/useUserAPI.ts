@@ -1,5 +1,5 @@
 import { useMutation, UseMutationOptions, useQuery, useQueryClient } from "react-query";
-import { ChangeDriverPreferencesParams, changeDriverPreferencesRequest, ChangeUserTypeParams, changeUserTypeRequest, getOneUserRequest } from "../lib/user";
+import { AddCarParams, addCarRequest, ChangeDriverPreferencesParams, changeDriverPreferencesRequest, ChangeUserTypeParams, changeUserTypeRequest, getOneUserRequest } from "../lib/user";
 import { BaseAPIResponse, ErrorResponse } from "../lib/types";
 
 export const useChangeUserTypeMutation = ({ onSuccess }: UseMutationOptions<BaseAPIResponse, ErrorResponse, ChangeUserTypeParams>) => {
@@ -26,7 +26,17 @@ export const useChangeDriverPreferencesMutation = ({ onSuccess }: UseMutationOpt
   });
 };
 
-
 export const useGetOneUser = (userId?: string) => {
   return useQuery(['user', userId], () => getOneUserRequest(userId ?? ''), {enabled: !!userId});
+};
+
+export const useAddCar = ({ onSuccess, onError }: UseMutationOptions<BaseAPIResponse, ErrorResponse, AddCarParams>) => {
+  return useMutation((params) => addCarRequest(params), {
+    onSuccess: (data, params, context) => {
+      if (onSuccess) {
+        onSuccess(data, params, context);
+      }
+    },
+    onError
+  });
 };

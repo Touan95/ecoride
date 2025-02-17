@@ -5,6 +5,7 @@ import { jwtMiddleware } from '../../core/middlewares/jwt.middleware';
 import { changeType } from './changeType';
 import { getOneUser } from './getOne';
 import { changeDriverPreferences } from './changeDriverPreferences';
+import { addCar } from './addCar';
 
 export const userRouter = Router()
   .use(jwtMiddleware({}))
@@ -13,4 +14,5 @@ export const userRouter = Router()
   .use(changeType)
   .use(changeDriverPreferences)
   .use(getOneUser)
+  .use(addCar)
   

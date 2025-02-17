@@ -15,6 +15,7 @@ import { ConfirmBookingModal } from '@/components/organisms/ConfirmBookingModal'
 import { useLoginMutation, useRegisterMutation } from '@/api/hooks/useAuthAPI';
 import { LoginSchemaType, RegisterSchemaType } from '@/schemas/auth';
 import { useAuthContext } from '@/contexts/auth';
+import { isCarGreen } from '@/utils/car';
 
 const ride = rideMock;
 
@@ -28,6 +29,7 @@ const rideApiToItinerary = (apiRide: Ride): ItineraryProps => {
 };
 
 const rideApiToInfoCard = (apiRide: Ride): InfoCardProps => {
+  const isRideCarGreen = isCarGreen(apiRide.car)
   return {
     carBrand: apiRide.car.brand,
     carEnergy: apiRide.car.energy,
@@ -35,7 +37,7 @@ const rideApiToInfoCard = (apiRide: Ride): InfoCardProps => {
     seats: apiRide.car.seats,
     reservedSeats: apiRide.reservedSeats,
     duration: apiRide.duration,
-    isGreen: apiRide.car.green
+    isGreen: isRideCarGreen
   };
 };
 
@@ -56,6 +58,8 @@ export default function Rides() {
   const isConnected = false;
   const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
   const [confirmBookingModalOpen, setConfirmBookingModalOpen] = useState<boolean>(false);
+
+  const isGreen = isCarGreen(ride.car)
 
   const itineraryData = useMemo(() => {
     return rideApiToItinerary(ride);
@@ -131,7 +135,7 @@ export default function Rides() {
         <Typography variant="title">Votre itinéraire</Typography>
         <div className="grid gap-4 grid-cols-[3fr_1fr]">
           <div className="flex flex-col gap-4">
-            {ride.car.green && <GreenCard />}
+            {isGreen && <GreenCard />}
             <Itinerary {...itineraryData} />
             <DriverCard {...driverData} />
           </div>

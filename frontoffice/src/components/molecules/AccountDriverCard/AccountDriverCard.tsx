@@ -22,7 +22,7 @@ export const AccountDriverCard = ({
 
   const Preferences = () => {
     if (values.customRules.length === 0){
-      return <AccountCardField labelWidthClasname='w-54' label='Vous avez des préférences ?'>Non</AccountCardField>
+      return <AccountCardField labelClassname='w-54' label='Vous avez des préférences ?'>Non</AccountCardField>
     }
 
     return (
@@ -52,8 +52,8 @@ export const AccountDriverCard = ({
       <TbSteeringWheel size={50} className='text-primary-900'/>
       <div className='flex items-center'>
         <div className='flex flex-col gap-3'>
-          <AccountCardField labelWidthClasname='w-54' label='Vous acceptez les fumeurs ?'>{booleanToYesNo(values.acceptsSmoking)}</AccountCardField>
-          <AccountCardField labelWidthClasname='w-54' label='Vous acceptez les animaux ?'>{booleanToYesNo(values.acceptsPets)}</AccountCardField>
+          <AccountCardField labelClassname='w-54' label='Vous acceptez les fumeurs ?'>{booleanToYesNo(values.acceptsSmoking)}</AccountCardField>
+          <AccountCardField labelClassname='w-54' label='Vous acceptez les animaux ?'>{booleanToYesNo(values.acceptsPets)}</AccountCardField>
           {Preferences()}
         </div>
       </div>
@@ -61,22 +61,3 @@ export const AccountDriverCard = ({
     </div>
   );
 };
-
-
-// Si il est "chauffeur" (ou les deux), un formulaire apparait (tous les champs sont obligatoires) :
-
-// Plaque d’immatriculation
-
-// Date de première immatriculation
-
-// Modèle, couleur et marque des véhicules (plusieurs possible)
-
-// Nombre de place disponible (par véhicule ?)
-
-// Préférences obligatoires :
-
-// Fumeur / non-fumeur
-
-// Animal / pas d’animal
-
-// Le conducteur peut également rajouter des préférences personnalisées. 
