@@ -51,7 +51,7 @@ export const DriverPreferencesForm = ({ initialValues, userId, onValidate }: Dri
                 <Checkbox checked={field.value} onCheckedChange={field.onChange} />
               </FormControl>
               <Typography variant="cardTitleSm" weight="light">
-                J'accepte les fumeurs
+                {"J'accepte les fumeurs"}
               </Typography>
               <FormMessage />
             </FormItem>
@@ -66,7 +66,7 @@ export const DriverPreferencesForm = ({ initialValues, userId, onValidate }: Dri
                 <Checkbox checked={field.value} onCheckedChange={field.onChange} />
               </FormControl>
               <Typography variant="cardTitleSm" weight="light">
-                J'accepte les animaux
+                {"J'accepte les animaux"}
               </Typography>
               <FormMessage />
             </FormItem>

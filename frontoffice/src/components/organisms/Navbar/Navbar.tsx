@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { ConnectedMenu } from '../ConnectedMenu';
 
 export const Navbar = () => {
-  const { isLogged, clearUser, user } = useAuthContext();
+  const { isLogged, user } = useAuthContext();
   const connectedNavbar = isLogged && user;
 
   return (
