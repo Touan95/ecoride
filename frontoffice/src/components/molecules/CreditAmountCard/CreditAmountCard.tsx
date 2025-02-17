@@ -1,10 +1,6 @@
 import { Typography } from '@/components/atoms/Typography';
 import clsxm from '@/utils/clsxm';
 import 'dayjs/locale/fr';
-import {  UserType } from '@/interfaces/user';
-import { getUserTypeLabel } from '@/utils/userType';
-import Image from 'next/image';
-import { TbEdit } from 'react-icons/tb';
 import { Button } from '../Button';
 
 

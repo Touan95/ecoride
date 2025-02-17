@@ -55,8 +55,8 @@ export const CarCard = ({
           <AccountCardField labelClassname='w-50' smallValue label='Place(s) passager'>{seats.toString()}</AccountCardField>
         </div>
         <div className='flex flex-col gap-5 justify-center'>
-          <Button onClick={onEditClick}>Modifier</Button>
-          <Button color='secondary' onClick={onRemoveClick}>Supprimer</Button>
+          {/* <Button onClick={onEditClick}>Modifier</Button>
+          <Button color='secondary' onClick={onRemoveClick}>Supprimer</Button> */}
         </div>
       </div>
       {isGreen && 

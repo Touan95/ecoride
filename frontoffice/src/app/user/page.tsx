@@ -26,6 +26,7 @@ import { DriverPreferencesFormSchemaType } from '@/schemas/user';
 import { AccountCarsCard } from '@/components/molecules/AccountCarsCard';
 import { CarDetailsModal } from '@/components/organisms/CarDetailsModal';
 import { Car } from '@/interfaces/car';
+import { isCarGreen } from '@/utils/car';
 
 const ride = rideMock;
 
@@ -39,6 +40,7 @@ const rideApiToItinerary = (apiRide: Ride): ItineraryProps => {
 };
 
 const rideApiToInfoCard = (apiRide: Ride): InfoCardProps => {
+  const isGreen = isCarGreen(apiRide.car)
   return {
     carBrand: apiRide.car.brand,
     carEnergy: apiRide.car.energy,
@@ -46,7 +48,7 @@ const rideApiToInfoCard = (apiRide: Ride): InfoCardProps => {
     seats: apiRide.car.seats,
     reservedSeats: apiRide.reservedSeats,
     duration: apiRide.duration,
-    isGreen: apiRide.car.green
+    isGreen
   };
 };
 
