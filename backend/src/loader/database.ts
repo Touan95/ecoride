@@ -9,17 +9,6 @@ const buildPath = (ext: string): string => path.resolve(__dirname, '..', 'migrat
 
 export const entitiesPath = path.join(__dirname, '..', 'entities');
 
-let prodEnv: Partial<PostgresConnectionOptions> | undefined = undefined;
-if (config.INSTANCE_CONNECTION_NAME) {
-  prodEnv = {
-    extra: {
-      socketPath: `/cloudsql/${config.INSTANCE_CONNECTION_NAME}`,
-    },
-    host: `/cloudsql/${config.INSTANCE_CONNECTION_NAME}`,
-    port: undefined,
-  };
-}
-
 const dbEnvConfig: PostgresConnectionOptions = {
   type: 'postgres',
   host: config.DB_HOST,
@@ -33,7 +22,6 @@ const dbEnvConfig: PostgresConnectionOptions = {
   synchronize: false,
   migrations: [buildPath('ts'), buildPath('js')],
   namingStrategy: new SnakeCaseNamingStrategy(),
-  ...prodEnv,
 };
 
 export const AppDataSource = new DataSource(dbEnvConfig);
