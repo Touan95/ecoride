@@ -12,7 +12,7 @@ export default async (): Promise<void> => {
       router: apiRouter,
     });
 
-    app.listen(config.PORT, () => console.log(`App is running on ${config.PORT} port`));
+    app.listen(config.PORT, () => console.log(`App is running on ${config.PORT} port. Allowed origin is ${config.ALLOWED_ORIGINS}`));
   } catch (error) {
     console.log(error);
     process.exit(1);
