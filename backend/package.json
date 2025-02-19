@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "nodemon",
     "start": "node dist/index.js",
-    "build": "tsc -p ./tsconfig.build.json  && pnpm mjml2html && pnpm copy-templates",
+    "build": "tsc -p ./tsconfig.build.json",
     "gcp-build": "tsc -p ./tsconfig.build.json  && pnpm mjml2html && pnpm copy-templates",
     "lint": "eslint --ext .ts src/ tests/",
     "lint:fix": "pnpm lint --fix",
@@ -28,6 +28,7 @@
     "body-parser": "1.20.2",
     "cors": "2.8.5",
     "dayjs": "1.11.10",
+    "eslint-plugin-unused-imports": "^4.1.4",
     "express": "4.18.2",
     "express-pino-logger": "7.0.0",
     "express-rate-limit": "^6.7.1",

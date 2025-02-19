@@ -1,12 +1,12 @@
 import { NextFunction, Response } from 'express';
 import { service } from './service';
 import { AddCarRequest } from './validator';
-import { serializer } from './serializer';
 import { ValidatedRequest } from '../../../core/utils/validatedExpressRequest';
 import { AppDataSource } from '../../../loader/database';
 import { UserRepository } from '../../../repositories/user.repository';
 import { HttpStatuses } from '../../../core/httpStatuses';
 import { CarRepository } from '../../../repositories/car.repository';
+import serializer from './serializer';
 
 type GetUserRequestType = ValidatedRequest<AddCarRequest>;
 

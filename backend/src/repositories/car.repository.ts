@@ -1,6 +1,6 @@
 import { Repository } from 'typeorm';
 import { AppDataSource } from '../loader/database';
-import { Car, CarEntity, CarEntityInterface } from '../entities/car.entity';
+import { CarEntity, CarEntityInterface } from '../entities/car.entity';
 
 export type UpdateCar = Partial<Omit<CarEntity, 'id'>>;
 

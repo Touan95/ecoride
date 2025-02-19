@@ -1,7 +1,6 @@
 import { UserType } from '../../../entities/user.entity';
 import { UpdateUser, UserRepositoryInterface } from '../../../repositories/user.repository';
 import userNotFoundError from '../../common/errors/userNotFound.error';
-import { checkChangeStatus } from './services/canChangeStatus.service';
 
 interface ChangeTypeOptions {
   userId: string;

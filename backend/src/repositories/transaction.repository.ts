@@ -1,5 +1,5 @@
 import { Repository } from 'typeorm';
-import { Transaction, TransactionEntity, TransactionEntityInterface } from '../entities/transaction.entity';
+import { TransactionEntity, TransactionEntityInterface } from '../entities/transaction.entity';
 import { AppDataSource } from '../loader/database';
 
 
