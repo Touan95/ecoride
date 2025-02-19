@@ -1,6 +1,6 @@
-import { UserEntityInterface } from "../../../entities/user.entity";
-import { UserRepositoryInterface } from "../../../repositories/user.repository";
-import userNotFoundError from "../../common/errors/userNotFound.error";
+import { UserEntityInterface } from '../../../entities/user.entity';
+import { UserRepositoryInterface } from '../../../repositories/user.repository';
+import userNotFoundError from '../../common/errors/userNotFound.error';
 
 export interface GetOneUserServiceOptions {
   userId: string;
@@ -9,7 +9,7 @@ export interface GetOneUserServiceOptions {
 
 export const service = async ({
   userId,
-  userRepository
+  userRepository,
 }: GetOneUserServiceOptions): Promise<UserEntityInterface> => {
   const user = await userRepository.getOneForAccount(userId);
   if (!user) {

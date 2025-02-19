@@ -16,39 +16,37 @@ export const UserRepository: UserRepositoryInterface = AppDataSource.getReposito
   UserEntity,
 ).extend({
   getOneByEmail(email: string, withPassword?: boolean): Promise<UserEntityInterface | null> {
-    const query = this.createQueryBuilder('user')
-      .where('user.email = :email', { email })
+    const query = this.createQueryBuilder('user').where('user.email = :email', { email });
 
-    if(withPassword){
-      query.addSelect('user.password')
+    if (withPassword) {
+      query.addSelect('user.password');
     }
 
-    const user = query.getOne()
+    const user = query.getOne();
 
     return user;
   },
   getOneById(id: string, withPassword?: boolean): Promise<UserEntityInterface | null> {
-    const query = this.createQueryBuilder('user')
-      .where('user.id = :id', { id })
+    const query = this.createQueryBuilder('user').where('user.id = :id', { id });
 
-    if(withPassword){
-      query.addSelect('user.password')
+    if (withPassword) {
+      query.addSelect('user.password');
     }
 
-    const user = query.getOne()
+    const user = query.getOne();
 
     return user;
   },
   getOneForAccount(id: string, withPassword?: boolean): Promise<UserEntityInterface | null> {
     const query = this.createQueryBuilder('user')
       .leftJoinAndSelect('user.cars', 'cars')
-      .where('user.id = :id', { id })
+      .where('user.id = :id', { id });
 
-    if(withPassword){
-      query.addSelect('user.password')
+    if (withPassword) {
+      query.addSelect('user.password');
     }
 
-    const user = query.getOne()
+    const user = query.getOne();
 
     return user;
   },

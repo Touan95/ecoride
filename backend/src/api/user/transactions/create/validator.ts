@@ -6,12 +6,11 @@ export interface CreateTransactionRequest {
   body: {
     description: string;
     amount: number;
-    transactionType: TransactionType
-    payerId: string
-    receiverId: string
+    transactionType: TransactionType;
+    payerId: string;
+    receiverId: string;
   };
 }
-
 
 export const CreateTransactionValidator = {
   body: validator.object({

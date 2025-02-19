@@ -15,11 +15,10 @@ export default async ({
   userId,
   userRepository,
 }: GetMeServiceOptions): Promise<GetMeServiceResponse> => {
-
   const user = await userRepository.getOneById(userId);
   if (!user) {
     throw userNotFoundError();
   }
 
-  return {user};
+  return { user };
 };

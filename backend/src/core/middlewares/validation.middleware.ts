@@ -41,7 +41,6 @@ interface ErrorResponse {
 }
 
 function buildValidator(schema: RequestValidatorSchema): ObjectSchema<RequestValidatorSchema> {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return Joi.object({
     headers: Joi.any(),
     params: Joi.any(),
@@ -86,7 +85,6 @@ function validate(
     throw result.error;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return result.value;
 }
 

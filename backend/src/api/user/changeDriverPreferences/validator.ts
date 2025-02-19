@@ -6,9 +6,9 @@ export interface ChangeDriverPreferencesRequest {
     userId: string;
   };
   body: {
-    acceptsPets: boolean
-    acceptsSmoking:boolean
-    customRules: string[]
+    acceptsPets: boolean;
+    acceptsSmoking: boolean;
+    customRules: string[];
   };
 }
 
@@ -18,7 +18,7 @@ export const changeDriverPreferencesValidator = {
   }),
   body: validator.object({
     acceptsPets: validator.boolean().required(),
-    acceptsSmoking:validator.boolean().required(),
+    acceptsSmoking: validator.boolean().required(),
     customRules: validator.array().items(validator.string().min(0)),
   }),
 };

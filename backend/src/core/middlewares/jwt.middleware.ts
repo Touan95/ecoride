@@ -13,7 +13,6 @@ export interface JwtMiddlewareOptions {
   requiresAdmin?: boolean;
 }
 
-
 export const jwtMiddleware =
   (options?: JwtMiddlewareOptions): RequestHandler =>
   async (req: RequestWithJwt, res: Response, next: NextFunction): Promise<void | Response> => {

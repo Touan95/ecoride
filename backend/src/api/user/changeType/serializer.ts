@@ -1,4 +1,4 @@
-import { ResponseCodes } from "../../common/enums/responseCodes.enum";
+import { ResponseCodes } from '../../common/enums/responseCodes.enum';
 
 export interface UserTypeChangedResponse {
   message: string;

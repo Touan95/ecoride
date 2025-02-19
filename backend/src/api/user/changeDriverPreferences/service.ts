@@ -6,7 +6,7 @@ interface ChangeDriverPreferencesOptions {
   acceptsPets: boolean;
   acceptsSmoking: boolean;
   customRules: string[];
-  userRepository: UserRepositoryInterface
+  userRepository: UserRepositoryInterface;
 }
 
 export const service = async ({
@@ -14,7 +14,7 @@ export const service = async ({
   acceptsPets,
   acceptsSmoking,
   customRules,
-  userRepository
+  userRepository,
 }: ChangeDriverPreferencesOptions): Promise<void> => {
   const user = await userRepository.getOneById(userId);
   if (!user) {

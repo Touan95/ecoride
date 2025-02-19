@@ -3,45 +3,45 @@ import { UserEntity, UserEntityInterface } from './user.entity';
 import { RideEntity, RideEntityInterface } from './ride.entity';
 
 export enum RideRole {
-	DRIVER = 'driver',
-	PASSENGER = 'passenger',
+  DRIVER = 'driver',
+  PASSENGER = 'passenger',
 }
 
 export interface RideHistory {
-	id: string;
-	role: RideRole;
-	date: Date;
-	comment: string | null;
-	rating: number | null;
+  id: string;
+  role: RideRole;
+  date: Date;
+  comment: string | null;
+  rating: number | null;
 }
 
 export interface RideHistoryEntityInterface extends RideHistory {
-	user: UserEntityInterface;
-	ride: RideEntityInterface;
+  user: UserEntityInterface;
+  ride: RideEntityInterface;
 }
 
 @Entity('ride_history')
 export class RideHistoryEntity implements RideHistoryEntityInterface {
-	@PrimaryGeneratedColumn('uuid')
-	id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-	@Column({ type: 'enum', enum: RideRole })
-	role: RideRole;
+  @Column({ type: 'enum', enum: RideRole })
+  role: RideRole;
 
-	@Index()
-	@Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-	date: Date;
+  @Index()
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  date: Date;
 
-	@Column({ type: 'text', nullable: true })
-	comment: string | null;
+  @Column({ type: 'text', nullable: true })
+  comment: string | null;
 
-	@Column({ type: 'decimal', precision: 5, scale: 2, nullable: true, default: null })
-	rating: number | null;
+  @Column({ type: 'decimal', precision: 5, scale: 2, nullable: true, default: null })
+  rating: number | null;
 
-	@ManyToOne(() => UserEntity, (user) => user.rideHistory, { onDelete: 'CASCADE' })
-	@Index('ride_history_user_index', ['user'])
-	user: UserEntity;
+  @ManyToOne(() => UserEntity, (user) => user.rideHistory, { onDelete: 'CASCADE' })
+  @Index('ride_history_user_index', ['user'])
+  user: UserEntity;
 
-	@ManyToOne(() => RideEntity, { onDelete: 'CASCADE' })
-	ride: RideEntity;
+  @ManyToOne(() => RideEntity, { onDelete: 'CASCADE' })
+  ride: RideEntity;
 }

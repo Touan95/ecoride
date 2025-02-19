@@ -14,6 +14,5 @@ export const validatedExpressRequest: ValidatedExpressRequest = (
   route: RequestHandlerWithCustomRequestType,
 ): RequestHandlerWithCustomRequestType =>
   function requestHandler(req, res, next): void {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return route(req, res, next);
   };

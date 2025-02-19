@@ -7,7 +7,7 @@
     "start": "node dist/index.js",
     "build": "tsc -p ./tsconfig.build.json",
     "gcp-build": "tsc -p ./tsconfig.build.json  && pnpm mjml2html && pnpm copy-templates",
-    "lint": "eslint --ext .ts src/ tests/",
+    "lint": "eslint src/ --fix",
     "lint:fix": "pnpm lint --fix",
     "copy-templates": "pnpm copyfiles -u 1 './src/**/*.hbs' ./dist",
     "mjml2html:public": "./node_modules/.bin/mjml -r ./mjml/templates/public.template.mjml -o ./src/static/templates/public.template.hbs",
@@ -67,10 +67,10 @@
     "@types/sharp": "^0.32.0",
     "@types/supertest": "^2.0.12",
     "@types/uuid": "^9.0.2",
-    "@typescript-eslint/eslint-plugin": "^6.10.0",
-    "@typescript-eslint/parser": "6.10.0",
+    "@typescript-eslint/eslint-plugin": "^8.24.1",
+    "@typescript-eslint/parser": "8.24.1",
     "copyfiles": "^2.4.1",
-    "eslint": "^8.28.0",
+    "eslint": "^9.20.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "2.26.0",
     "eslint-plugin-prettier": "^5.0.1",
@@ -81,7 +81,7 @@
     "supertest": "^6.3.3",
     "ts-node": "^10.9.1",
     "typeorm-fixtures-cli": "^4.0.0",
-    "typescript": "^5.2.2"
+    "typescript": "^5.7.3"
   },
   "resolutions": {
     "@typescript-eslint/eslint-plugin": "^6.10.0",

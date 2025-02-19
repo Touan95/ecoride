@@ -1,9 +1,6 @@
 import { sign, SignOptions } from 'jsonwebtoken';
 import config from '../../loader/config';
-import {
-  AuthObject,
-  RefreshTokenAuthObjectType,
-} from './AuthObject';
+import { AuthObject, RefreshTokenAuthObjectType } from './AuthObject';
 
 interface GenerateTokenOptions<T extends object> {
   generateJwtOptions: T;

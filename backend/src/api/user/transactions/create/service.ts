@@ -1,6 +1,9 @@
 import { v4 as uuid } from 'uuid';
 import { transactionRepositoryInterface } from '../../../../repositories/transaction.repository';
-import { TransactionEntityInterface, TransactionType } from '../../../../entities/transaction.entity';
+import {
+  TransactionEntityInterface,
+  TransactionType,
+} from '../../../../entities/transaction.entity';
 import { UserRepositoryInterface } from '../../../../repositories/user.repository';
 import payerNotFoundError from '../../../common/errors/payerNotFound.error';
 import receiverNotFoundError from '../../../common/errors/receiverNotFound.error';
@@ -11,8 +14,8 @@ export interface CreateOneTransactionServiceOptions {
   description: string;
   payerId: string;
   receiverId: string;
-  userRepository: UserRepositoryInterface
-  transactionRepository: transactionRepositoryInterface
+  userRepository: UserRepositoryInterface;
+  transactionRepository: transactionRepositoryInterface;
 }
 
 export default async ({
@@ -22,15 +25,15 @@ export default async ({
   payerId,
   receiverId,
   userRepository,
-  transactionRepository
+  transactionRepository,
 }: CreateOneTransactionServiceOptions): Promise<TransactionEntityInterface> => {
-  const payer = await userRepository.getOneById(payerId)
-  if (!payer){
+  const payer = await userRepository.getOneById(payerId);
+  if (!payer) {
     throw payerNotFoundError();
   }
 
-  const receiver = await userRepository.getOneById(receiverId)
-  if (!receiver){
+  const receiver = await userRepository.getOneById(receiverId);
+  if (!receiver) {
     throw receiverNotFoundError();
   }
 
@@ -40,9 +43,9 @@ export default async ({
     description,
     id: uuid(),
     transactionType,
-    payer, 
-    receiver
-  })
+    payer,
+    receiver,
+  });
 
   return transaction;
 };

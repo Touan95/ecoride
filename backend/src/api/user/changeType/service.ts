@@ -4,14 +4,14 @@ import userNotFoundError from '../../common/errors/userNotFound.error';
 
 interface ChangeTypeOptions {
   userId: string;
-  userType:UserType
-  userRepository: UserRepositoryInterface
+  userType: UserType;
+  userRepository: UserRepositoryInterface;
 }
 
 export const service = async ({
   userId,
   userType,
-  userRepository
+  userRepository,
 }: ChangeTypeOptions): Promise<void> => {
   const user = await userRepository.getOneById(userId);
   if (!user) {

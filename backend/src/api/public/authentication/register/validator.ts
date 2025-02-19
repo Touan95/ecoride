@@ -5,7 +5,7 @@ export interface RegisterRequest {
   body: {
     email: string;
     password: string;
-    username: string
+    username: string;
   };
 }
 

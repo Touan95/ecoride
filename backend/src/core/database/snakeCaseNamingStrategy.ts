@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NamingStrategyInterface, DefaultNamingStrategy } from 'typeorm';
 import { snakeCase } from 'typeorm/util/StringUtils';
 
@@ -30,7 +29,7 @@ export class SnakeCaseNamingStrategy
     firstTableName: string,
     secondTableName: string,
     firstPropertyName: string,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
     secondPropertyName: string,
   ): string {
     return snakeCase(

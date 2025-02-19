@@ -2,10 +2,7 @@ import { verify } from 'jsonwebtoken';
 import invalidTokenError from '../../api/common/errors/invalidToken.error';
 import config from '../../loader/config';
 import { invalidJwtTokenFormatError } from '../../api/common/errors/invalidJwtTokenFormatError';
-import {
-  AuthObject,
-  RefreshTokenAuthObjectType,
-} from './AuthObject';
+import { AuthObject, RefreshTokenAuthObjectType } from './AuthObject';
 
 interface VerifyTokenOptions {
   token: string;

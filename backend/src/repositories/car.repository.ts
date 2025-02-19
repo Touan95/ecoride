@@ -9,9 +9,7 @@ export type CarRepositoryInterface = Repository<CarEntity> & {
   createOne(car: CarEntityInterface): Promise<CarEntityInterface>;
 };
 
-export const CarRepository: CarRepositoryInterface = AppDataSource.getRepository(
-  CarEntity,
-).extend({
+export const CarRepository: CarRepositoryInterface = AppDataSource.getRepository(CarEntity).extend({
   async updateCar(carId: string, car: UpdateCar): Promise<void> {
     await this.createQueryBuilder('car').update().set(car).where({ id: carId }).execute();
   },

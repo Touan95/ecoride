@@ -17,17 +17,9 @@ export default async (
 ): Promise<Response | void> => {
   try {
     const { userId } = req.params;
-    const {
-      brand,
-      color,
-      energy,
-      model,
-      plateNumber,
-      registrationDate,
-      seats
-    } = req.body
+    const { brand, color, energy, model, plateNumber, registrationDate, seats } = req.body;
 
-  await service({
+    await service({
       userId,
       brand,
       color,

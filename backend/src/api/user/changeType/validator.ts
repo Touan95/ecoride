@@ -7,7 +7,7 @@ export interface ChangeTypeRequest {
     userId: string;
   };
   body: {
-    userType: UserType
+    userType: UserType;
   };
 }
 

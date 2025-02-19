@@ -14,5 +14,4 @@ export const userRouter = Router()
   .use(changeType)
   .use(changeDriverPreferences)
   .use(getOneUser)
-  .use(addCar)
-  
+  .use(addCar);

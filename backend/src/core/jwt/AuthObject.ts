@@ -12,4 +12,3 @@ export interface RequestWithJwt extends Request {
 }
 
 export type RefreshTokenAuthObjectType = Pick<AuthObject, 'userId'>;
-

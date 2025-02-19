@@ -2,13 +2,12 @@ import { Repository } from 'typeorm';
 import { TransactionEntity, TransactionEntityInterface } from '../entities/transaction.entity';
 import { AppDataSource } from '../loader/database';
 
-
 export type transactionRepositoryInterface = Repository<TransactionEntity> & {
   createOne(transaction: TransactionEntityInterface): Promise<TransactionEntityInterface>;
 };
 
 export const TransactionRepository: transactionRepositoryInterface = AppDataSource.getRepository(
- TransactionEntity,
+  TransactionEntity,
 ).extend({
   async createOne(transaction: TransactionEntityInterface): Promise<TransactionEntityInterface> {
     const newTransaction = this.create(transaction);

@@ -8,7 +8,7 @@ import { UserEntityInterface, UserType } from '../../../../entities/user.entity'
 export interface RegisterServiceOptions {
   email: string;
   password: string;
-  username: string
+  username: string;
   userRepository: UserRepositoryInterface;
 }
 
@@ -22,17 +22,16 @@ export default async ({
   password,
   username,
   userRepository,
-}: RegisterServiceOptions): Promise<UserEntityInterface|undefined> => {
+}: RegisterServiceOptions): Promise<UserEntityInterface | undefined> => {
   const user = await userRepository.getOneByEmail(email);
   if (user) {
     throw userEmailAlreadyExistsError();
   }
 
-  let newUser
+  let newUser;
 
   await processTransaction(async (transactionalEntityManager) => {
     const hashedPassword = await hashPassword(password);
-
 
     newUser = await userRepository.createOne({
       id: uuid(),
@@ -42,8 +41,8 @@ export default async ({
       acceptsPets: true,
       acceptsSmoking: true,
       avatarUrl: null,
-      credits:200,
-      customRules:[],
+      credits: 200,
+      customRules: [],
       type: UserType.PASSENGER,
     });
   });

@@ -22,7 +22,7 @@ export default async (
     await service({
       ...transactionData,
       userRepository: AppDataSource.manager.withRepository(UserRepository),
-      transactionRepository: AppDataSource.manager.withRepository(TransactionRepository)
+      transactionRepository: AppDataSource.manager.withRepository(TransactionRepository),
     });
 
     const response = serializer();
