@@ -7,6 +7,7 @@ import { RidesFilters, RidesFiltersType } from '@/components/molecules/RidesFilt
 import { SearchRides } from '@/components/molecules/SearchRides';
 import { Ride, rideMock } from '@/interfaces/ride';
 import { isCarGreen } from '@/utils/car';
+import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
 
 const rideApiToRideCard = (apiRide: Ride): RideCardProps => {
@@ -52,6 +53,7 @@ const filterRides = (rides: Ride[], filters: RidesFiltersType): Ride[] => {
 
 export default function Rides() {
   const [appliedFilters, setAppliedFilters] = useState<RidesFiltersType>({});
+  const router = useRouter();
 
   const apiRides = [
     rideMock,
@@ -75,6 +77,10 @@ export default function Rides() {
     setAppliedFilters(filters);
   };
 
+  const onDetailClick = (id: string) => () => {
+    router.push(`/rides/${id}`);
+  };
+
   return (
     <>
       <SearchRides />
@@ -83,7 +89,7 @@ export default function Rides() {
         <div className="flex flex-col gap-5">
           <Typography variant="h3">Résultat(s) de la recherche</Typography>
           {rideCardData.map((ride, index) => {
-            return <RideCard key={index} {...ride} />;
+            return <RideCard key={index} {...ride} onDetailClick={onDetailClick(index.toString())} />;
           })}
         </div>
       </SectionContainer>
