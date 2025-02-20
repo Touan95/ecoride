@@ -41,7 +41,7 @@ export default async ({
       acceptsPets: true,
       acceptsSmoking: true,
       avatarUrl: null,
-      credits: 200,
+      credits: 20,
       customRules: [],
       type: UserType.PASSENGER,
     });

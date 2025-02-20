@@ -59,7 +59,7 @@ export const LoginForm = ({ onLogin, onCreateAccountClick }: LoginFormProps) => 
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit">Se connecter</Button>
       </form>
       {onCreateAccountClick && (
         <div className="mt-6">

@@ -201,7 +201,7 @@ export const CarDetailsForm = ({ onLogin, onCreateAccountClick, initialValues, e
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit">{editMode ? 'Modifier' : 'Ajouter'}</Button>
       </form>
       {onCreateAccountClick && (
         <div className="mt-6">
