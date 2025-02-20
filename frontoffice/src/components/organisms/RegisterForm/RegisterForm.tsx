@@ -73,7 +73,7 @@ export const RegisterForm = ({ onRegister, onLoginClick }: RegisterFormProps) =>
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit">{"S'inscrire"}</Button>
       </form>
       {onLoginClick && (
         <div className="mt-6">
