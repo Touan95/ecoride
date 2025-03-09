@@ -228,7 +228,7 @@ export const CarDetailsForm = ({ onSubmit, initialValues, editMode = false }: Ca
             />
           </div>
         </div>
-        <Button type="submit" className="w-40">
+        <Button type="submit" className="w-40" disabled={!form.formState.isDirty}>
           {editMode ? 'Modifier' : 'Ajouter'}
         </Button>
       </form>
