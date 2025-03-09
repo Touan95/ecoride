@@ -41,7 +41,7 @@ export const RegisterForm = ({ onRegister, onLoginClick }: RegisterFormProps) =>
             <FormItem>
               <Typography variant="cardTitleSm">Pseudonyme</Typography>
               <FormControl>
-                <Input placeholder="Pseudonyme"  {...field} />
+                <Input placeholder="Pseudonyme" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -54,7 +54,7 @@ export const RegisterForm = ({ onRegister, onLoginClick }: RegisterFormProps) =>
             <FormItem>
               <Typography variant="cardTitleSm">Email</Typography>
               <FormControl>
-                <Input placeholder="Email"  {...field} />
+                <Input placeholder="Email" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -67,7 +67,7 @@ export const RegisterForm = ({ onRegister, onLoginClick }: RegisterFormProps) =>
             <FormItem>
               <Typography variant="cardTitleSm">Mot de passe</Typography>
               <FormControl>
-                <Input type="password" placeholder="Mot de passe"  {...field} />
+                <Input type="password" placeholder="Mot de passe" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

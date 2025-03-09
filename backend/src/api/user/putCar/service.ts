@@ -50,7 +50,7 @@ export const service = async ({
     model,
     seats,
     energy,
-  }
+  };
 
   await carRepository.updateCar(carId, updatedCar);
 };

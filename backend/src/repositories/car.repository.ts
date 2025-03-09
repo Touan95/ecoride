@@ -20,10 +20,10 @@ export const CarRepository: CarRepositoryInterface = AppDataSource.getRepository
     return newCar;
   },
   getOneById(id: string): Promise<Car | null> {
-      const query = this.createQueryBuilder('car').where('car.id = :id', { id });
-  
-      const car = query.getOne();
-  
-      return car;
-    },
+    const query = this.createQueryBuilder('car').where('car.id = :id', { id });
+
+    const car = query.getOne();
+
+    return car;
+  },
 });
