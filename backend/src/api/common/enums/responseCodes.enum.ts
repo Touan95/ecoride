@@ -26,4 +26,5 @@ export enum ResponseCodes {
   DRIVER_PREFERENCES_CHANGE_SUCCESS = 'driver-preferences-change-success',
   CREATE_CAR_SUCCESS = 'create-car-success',
   UPDATE_CAR_SUCCESS = 'update-car-success',
+  DELETE_CAR_SUCCESS = 'delete-car-success',
 }

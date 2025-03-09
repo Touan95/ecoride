@@ -1,6 +1,6 @@
-import { buildValidationMiddleware } from '../../../core/middlewares';
-import validator from '../../../core/validator';
-import { Energy } from '../../../entities/car.entity';
+import { buildValidationMiddleware } from '../../../../core/middlewares';
+import validator from '../../../../core/validator';
+import { Energy } from '../../../../entities/car.entity';
 
 export interface PutCarRequest {
   params: {

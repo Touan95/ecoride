@@ -30,6 +30,11 @@ export interface PutCarParams extends AddCarParams {
   carId: string;
 }
 
+export interface DeleteCarParams {
+  userId: string;
+  carId: string;
+}
+
 interface GetOneUserResponse extends User {
   cars: Car[];
 }
@@ -60,5 +65,11 @@ export const addCarRequest = async (params: AddCarParams): Promise<BaseAPIRespon
 export const putCarRequest = async (params: PutCarParams): Promise<BaseAPIResponse> => {
   const { userId, carId, ...bodyParams } = params;
   const { data } = await axiosInstance.put(`/user/${userId}/car/${carId}`, bodyParams);
+  return data;
+};
+
+export const deleteCarRequest = async (params: DeleteCarParams): Promise<BaseAPIResponse> => {
+  const { userId, carId } = params;
+  const { data } = await axiosInstance.delete(`/user/${userId}/car/${carId}`);
   return data;
 };
