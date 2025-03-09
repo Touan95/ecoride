@@ -14,9 +14,9 @@ export const SearchRides = () => {
             Trouvez le covoiturage idéal et voyagez malin en partageant votre trajet !
           </Typography>
           <div className="grid grid-cols-[2fr_2fr_1fr_0.5fr] gap-4">
-            <Input placeholder="Lieu de départ" />
-            <Input placeholder="Lieu de destination" />
-            <Input placeholder="Date de trajet" />
+            <Input placeholder="Lieu de départ" className="p-8" />
+            <Input placeholder="Lieu de destination" className="p-8" />
+            <Input placeholder="Date de trajet" className="p-8" />
             <Button
               className="w-full h-full"
               onClick={() => {

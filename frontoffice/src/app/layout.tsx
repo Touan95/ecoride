@@ -6,6 +6,7 @@ import MainLayout from '@/components/layout/MainLayout';
 import { FontInitializer } from '@/components/atoms/FontInitializer';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { AuthProvider } from '@/contexts/auth';
+import 'react-day-picker/dist/style.css';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',

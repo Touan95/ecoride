@@ -14,10 +14,16 @@ export interface AccountCarsCardProps {
 }
 
 export const AccountCarsCard = ({ cars, onAddCar, onEditCar, onRemoveCar }: AccountCarsCardProps) => {
+  const handleEditCar = (carId: string) => () => {
+    onEditCar(carId);
+  };
+  const handleRemoveCar = (carId: string) => () => {
+    onRemoveCar(carId);
+  };
   const List = () => {
     if (cars.length > 0) {
       return cars.map((car) => {
-        return <CarCard key={car.id} {...car} onEditClick={onEditCar} onRemoveClick={onRemoveCar} />;
+        return <CarCard key={car.id} {...car} onEditClick={handleEditCar(car.id)} onRemoveClick={handleRemoveCar(car.id)} />;
       });
     }
     return (

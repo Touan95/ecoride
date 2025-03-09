@@ -26,6 +26,10 @@ export interface AddCarParams {
   energy: Energy;
 }
 
+export interface PutCarParams extends AddCarParams {
+  carId: string;
+}
+
 interface GetOneUserResponse extends User {
   cars: Car[];
 }
@@ -50,5 +54,11 @@ export const getOneUserRequest = async (userId: string): Promise<GetOneUserRespo
 export const addCarRequest = async (params: AddCarParams): Promise<BaseAPIResponse> => {
   const { userId, ...bodyParams } = params;
   const { data } = await axiosInstance.post(`/user/${userId}/car`, bodyParams);
+  return data;
+};
+
+export const putCarRequest = async (params: PutCarParams): Promise<BaseAPIResponse> => {
+  const { userId, carId, ...bodyParams } = params;
+  const { data } = await axiosInstance.put(`/user/${userId}/car/${carId}`, bodyParams);
   return data;
 };

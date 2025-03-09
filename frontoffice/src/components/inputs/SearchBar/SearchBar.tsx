@@ -10,7 +10,7 @@ interface SearchInputProps {
 export const SearchBar = ({ placeholder }: SearchInputProps) => {
   return (
     <div className="flex flex-col gap-5 items-center">
-      <Input type="text" placeholder={placeholder} />
+      <Input type="text" className="p-8" placeholder={placeholder} />
       <Button
         className="w-fit px-20 py-7"
         onClick={() => {
