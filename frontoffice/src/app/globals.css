@@ -16,6 +16,12 @@ input[type="number"]::-webkit-inner-spin-button,
   scrollbar-width: none;
 }
 
+.rdp-caption_dropdowns {
+  gap: 20px;
+  text-transform: uppercase;
+
+}
+
 @theme {  
     --color-primary-50: #f5faf3;
     --color-primary-100: #e7f4e4;

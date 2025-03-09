@@ -8,6 +8,7 @@ export type UserRepositoryInterface = Repository<UserEntity> & {
   getOneByEmail(email: string, withPassword?: boolean): Promise<UserEntityInterface | null>;
   getOneById(id: string, withPassword?: boolean): Promise<UserEntityInterface | null>;
   getOneForAccount(id: string, withPassword?: boolean): Promise<UserEntityInterface | null>;
+  getCompleteOneById(id: string): Promise<UserEntityInterface | null>;
   updateUser(userId: string, user: UpdateUser): Promise<void>;
   createOne(user: User): Promise<User>;
 };
@@ -49,6 +50,18 @@ export const UserRepository: UserRepositoryInterface = AppDataSource.getReposito
     const user = query.getOne();
 
     return user;
+  },
+  getCompleteOneById(id: string): Promise<UserEntityInterface | null> {
+    return this.createQueryBuilder('user')
+      .where('user.id = :id', { id })
+      .leftJoinAndSelect('user.', '')
+      .leftJoinAndSelect('user.ridesAsDriver', 'ridesAsDriver')
+      .leftJoinAndSelect('user.ridesAsPassenger', 'ridesAsPassenger')
+      .leftJoinAndSelect('user.cars', 'cars')
+      .leftJoinAndSelect('user.rideHistory', 'rideHistory')
+      .leftJoinAndSelect('user.transactionAsPayer', 'transactionAsPayer')
+      .leftJoinAndSelect('user.transactionAsReceiver', 'transactionAsReceiver')
+      .getOne();
   },
   async updateUser(userId: string, user: UpdateUser): Promise<void> {
     await this.createQueryBuilder('user').update().set(user).where({ id: userId }).execute();

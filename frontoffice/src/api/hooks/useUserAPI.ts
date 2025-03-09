@@ -6,7 +6,11 @@ import {
   changeDriverPreferencesRequest,
   ChangeUserTypeParams,
   changeUserTypeRequest,
-  getOneUserRequest
+  DeleteCarParams,
+  deleteCarRequest,
+  getOneUserRequest,
+  PutCarParams,
+  putCarRequest
 } from '../lib/user';
 import { BaseAPIResponse, ErrorResponse } from '../lib/types';
 
@@ -43,6 +47,31 @@ export const useGetOneUser = (userId?: string) => {
 export const useAddCar = ({ onSuccess, onError }: UseMutationOptions<BaseAPIResponse, ErrorResponse, AddCarParams>) => {
   return useMutation((params) => addCarRequest(params), {
     onSuccess: (data, params, context) => {
+      if (onSuccess) {
+        onSuccess(data, params, context);
+      }
+    },
+    onError
+  });
+};
+
+export const usePutCar = ({ onSuccess, onError }: UseMutationOptions<BaseAPIResponse, ErrorResponse, PutCarParams>) => {
+  return useMutation((params) => putCarRequest(params), {
+    onSuccess: (data, params, context) => {
+      if (onSuccess) {
+        onSuccess(data, params, context);
+      }
+    },
+    onError
+  });
+};
+
+export const useDeleteCarMutation = ({ onSuccess, onError }: UseMutationOptions<BaseAPIResponse, ErrorResponse, DeleteCarParams>) => {
+  const queryClient = useQueryClient();
+  return useMutation<BaseAPIResponse, ErrorResponse, DeleteCarParams>(deleteCarRequest, {
+    onSuccess: (data, params, context) => {
+      queryClient.invalidateQueries('cars');
+      queryClient.invalidateQueries({ queryKey: ['car', params.carId] });
       if (onSuccess) {
         onSuccess(data, params, context);
       }

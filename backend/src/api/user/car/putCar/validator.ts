@@ -1,10 +1,11 @@
-import { buildValidationMiddleware } from '../../../core/middlewares';
-import validator from '../../../core/validator';
-import { Energy } from '../../../entities/car.entity';
+import { buildValidationMiddleware } from '../../../../core/middlewares';
+import validator from '../../../../core/validator';
+import { Energy } from '../../../../entities/car.entity';
 
-export interface AddCarRequest {
+export interface PutCarRequest {
   params: {
     userId: string;
+    carId: string;
   };
   body: {
     plateNumber: string;
@@ -17,9 +18,10 @@ export interface AddCarRequest {
   };
 }
 
-export const addCarValidator = {
+export const putCarValidator = {
   params: validator.object({
     userId: validator.string().uuid().required(),
+    carId: validator.string().uuid().required(),
   }),
   body: validator.object({
     plateNumber: validator.string().required(),
@@ -35,4 +37,4 @@ export const addCarValidator = {
   }),
 };
 
-export default buildValidationMiddleware(addCarValidator);
+export default buildValidationMiddleware(putCarValidator);

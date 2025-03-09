@@ -47,4 +47,6 @@ export enum ErrorCodes {
   INVITE_DOES_NOT_EXIST = 'invite-does-not-exists',
   INTERNAL_SERVER_ERROR = 'internal-server-error',
   FORBIDDEN_ADMIN_ACCESS = 'forbidden-admin-access',
+  //
+  CAR_NOT_FOUND = 'car-not-found',
 }

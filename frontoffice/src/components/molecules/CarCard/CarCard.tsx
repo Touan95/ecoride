@@ -7,6 +7,7 @@ import { Energy } from '@/interfaces/car';
 import { AccountCardField } from '../AccountCardField';
 import { getEnergyLabel } from '@/utils/values';
 import { TbLeaf } from 'react-icons/tb';
+import { Button } from '../Button';
 
 dayjs.locale('fr');
 dayjs.extend(duration);
@@ -19,8 +20,8 @@ export interface CarCardProps {
   model: string;
   seats: number;
   energy: Energy;
-  onEditClick: (carId: string) => void;
-  onRemoveClick: (carId: string) => void;
+  onEditClick: () => void;
+  onRemoveClick: () => void;
 }
 
 export const CarCard = ({
@@ -67,8 +68,10 @@ export const CarCard = ({
           </AccountCardField>
         </div>
         <div className="flex flex-col gap-5 justify-center">
-          {/* <Button onClick={onEditClick}>Modifier</Button>
-          <Button color='secondary' onClick={onRemoveClick}>Supprimer</Button> */}
+          <Button onClick={onEditClick}>Modifier</Button>
+          <Button color="secondary" onClick={onRemoveClick}>
+            Supprimer
+          </Button>
         </div>
       </div>
       {isGreen && (

@@ -5,5 +5,5 @@ type Props = {
 };
 
 export const ContentContainer = ({ children }: Props) => {
-  return <div className="md:max-w-[450px] flex flex-col gap-4 m-auto px-4 mb-10">{children}</div>;
+  return <div className="flex flex-col gap-4 px-4 mb-10 self-center">{children}</div>;
 };

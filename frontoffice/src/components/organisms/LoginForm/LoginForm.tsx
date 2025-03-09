@@ -40,7 +40,7 @@ export const LoginForm = ({ onLogin, onCreateAccountClick }: LoginFormProps) => 
             <FormItem>
               <Typography variant="cardTitleSm">Email</Typography>
               <FormControl>
-                <Input placeholder="Email" className="py-2 px-4" {...field} />
+                <Input placeholder="Email" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -53,7 +53,7 @@ export const LoginForm = ({ onLogin, onCreateAccountClick }: LoginFormProps) => 
             <FormItem>
               <Typography variant="cardTitleSm">Mot de passe</Typography>
               <FormControl>
-                <Input type="password" placeholder="Mot de passe" className="py-2 px-4" {...field} />
+                <Input type="password" placeholder="Mot de passe" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

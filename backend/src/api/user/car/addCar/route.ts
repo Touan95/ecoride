@@ -1,17 +1,17 @@
 import { NextFunction, Response } from 'express';
 import { service } from './service';
 import { AddCarRequest } from './validator';
-import { ValidatedRequest } from '../../../core/utils/validatedExpressRequest';
-import { AppDataSource } from '../../../loader/database';
-import { UserRepository } from '../../../repositories/user.repository';
-import { HttpStatuses } from '../../../core/httpStatuses';
-import { CarRepository } from '../../../repositories/car.repository';
+import { ValidatedRequest } from '../../../../core/utils/validatedExpressRequest';
+import { AppDataSource } from '../../../../loader/database';
+import { UserRepository } from '../../../../repositories/user.repository';
+import { HttpStatuses } from '../../../../core/httpStatuses';
+import { CarRepository } from '../../../../repositories/car.repository';
 import serializer from './serializer';
 
-type GetUserRequestType = ValidatedRequest<AddCarRequest>;
+type AddCarRequestType = ValidatedRequest<AddCarRequest>;
 
 export default async (
-  req: GetUserRequestType,
+  req: AddCarRequestType,
   res: Response,
   next: NextFunction,
 ): Promise<Response | void> => {

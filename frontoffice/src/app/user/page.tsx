@@ -12,13 +12,15 @@ import { AccountDetailsCard } from '@/components/molecules/AccountDetailsCard';
 import { userMock, UserType } from '@/interfaces/user';
 import { CreditAmountCard } from '@/components/molecules/CreditAmountCard';
 import { UserTypeModal } from '@/components/organisms/UserTypeModal';
-import { useGetOneUser } from '@/api/hooks/useUserAPI';
+import { useAddCar, useDeleteCarMutation, useGetOneUser, usePutCar } from '@/api/hooks/useUserAPI';
 import { AccountDriverCard } from '@/components/molecules/AccountDriverCard';
 import { DriverPreferencesModal } from '@/components/organisms/DriverPreferencesModal';
 import { AccountCarsCard } from '@/components/molecules/AccountCarsCard';
 import { CarDetailsModal } from '@/components/organisms/CarDetailsModal';
 import { Car } from '@/interfaces/car';
 import { isCarGreen } from '@/utils/car';
+import { AddCarParams } from '@/api/lib/user';
+import { ConfirmCarDeletionModal } from '@/components/organisms/ConfirmCarDeletionModal';
 
 const ride = rideMock;
 
@@ -58,7 +60,25 @@ const rideApiToDriverCard = (apiRide: Ride): DriverCardProps => {
 
 export default function Rides() {
   const { user } = useAuthContext();
-  const { data: apiUser } = useGetOneUser(user?.id);
+  const { data: apiUser, refetch: refetchUser } = useGetOneUser(user?.id);
+  const addCar = useAddCar({
+    onSuccess: () => {
+      refetchUser();
+      closeCarDetailsModal();
+    }
+  });
+  const updateCar = usePutCar({
+    onSuccess: () => {
+      refetchUser();
+      closeCarDetailsModal();
+    }
+  });
+  const deleteCar = useDeleteCarMutation({
+    onSuccess: () => {
+      refetchUser();
+      closeRemoveCarModal();
+    }
+  });
   const cars = apiUser?.cars ?? [];
 
   const [userTypeModalOpen, setUserTypeModalOpen] = useState<boolean>(false);
@@ -91,7 +111,8 @@ export default function Rides() {
   };
 
   const openEditCarDetailsModal = (carId: string) => {
-    setCarDetailsModalProp('new');
+    const carToEdit = cars.find((car) => car.id === carId);
+    setCarDetailsModalProp(carToEdit);
   };
 
   const openNewCarDetailsModal = () => {
@@ -102,12 +123,30 @@ export default function Rides() {
     setCarDetailsModalProp(undefined);
   };
 
+  const onCarDetailsSubmit = (params: Omit<AddCarParams, 'userId'>) => {
+    if (!carDetailsModalProp || !user) {
+      return;
+    }
+
+    if (carDetailsModalProp === 'new') {
+      addCar.mutate({ ...params, userId: user.id });
+    } else {
+      updateCar.mutate({ ...params, userId: user.id, carId: carDetailsModalProp.id });
+    }
+  };
+
   const openRemoveCarModal = (carId: string) => {
     setCarToRemoveID(carId);
   };
 
   const closeRemoveCarModal = () => {
     setCarToRemoveID(undefined);
+  };
+
+  const onCarDeletion = () => {
+    if (carToRemoveID && user) {
+      deleteCar.mutate({ carId: carToRemoveID, userId: user.id });
+    }
   };
 
   if (!apiUser) {
@@ -158,9 +197,10 @@ export default function Rides() {
       <CarDetailsModal
         isOpen={!!carDetailsModalProp}
         onClose={closeCarDetailsModal}
-        onValidate={closeCarDetailsModal}
-        userId={apiUser.id}
+        onSubmit={onCarDetailsSubmit}
+        car={carDetailsModalProp !== 'new' ? carDetailsModalProp : undefined}
       />
+      <ConfirmCarDeletionModal isOpen={!!carToRemoveID} onClose={closeRemoveCarModal} onValidate={onCarDeletion} />
     </>
   );
 }

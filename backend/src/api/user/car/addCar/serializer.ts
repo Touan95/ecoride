@@ -1,4 +1,4 @@
-import { ResponseCodes } from '../../common/enums/responseCodes.enum';
+import { ResponseCodes } from '../../../common/enums/responseCodes.enum';
 
 export interface AddCarResponse {
   message: string;
@@ -6,6 +6,6 @@ export interface AddCarResponse {
 }
 
 export default (): AddCarResponse => ({
-  message: 'The request issue has been created',
+  message: 'The car has been created',
   code: ResponseCodes.CREATE_CAR_SUCCESS,
 });
