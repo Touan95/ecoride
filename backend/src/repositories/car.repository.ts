@@ -27,12 +27,8 @@ export const CarRepository: CarRepositoryInterface = AppDataSource.getRepository
 
     return car;
   },
-  
-async deleteOne(id: string): Promise<void> {
-    await this.createQueryBuilder()
-      .delete()
-      .from(CarEntity)
-      .where('id = :id', { id })
-      .execute();
+
+  async deleteOne(id: string): Promise<void> {
+    await this.createQueryBuilder().delete().from(CarEntity).where('id = :id', { id }).execute();
   },
 });

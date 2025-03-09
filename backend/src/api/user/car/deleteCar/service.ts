@@ -13,12 +13,12 @@ export const service = async ({
   carId,
   carRepository,
   userId,
-  userRepository
+  userRepository,
 }: DeleteCarServiceOptions): Promise<void> => {
   const user = await userRepository.getOneById(userId);
-    if (!user) {
-      throw userNotFoundError();
-    }
+  if (!user) {
+    throw userNotFoundError();
+  }
 
   await carRepository.deleteOne(carId);
 };
