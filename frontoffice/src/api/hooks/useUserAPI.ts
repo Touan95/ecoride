@@ -6,6 +6,8 @@ import {
   changeDriverPreferencesRequest,
   ChangeUserTypeParams,
   changeUserTypeRequest,
+  DeleteCarParams,
+  deleteCarRequest,
   getOneUserRequest,
   PutCarParams,
   putCarRequest
@@ -56,6 +58,20 @@ export const useAddCar = ({ onSuccess, onError }: UseMutationOptions<BaseAPIResp
 export const usePutCar = ({ onSuccess, onError }: UseMutationOptions<BaseAPIResponse, ErrorResponse, PutCarParams>) => {
   return useMutation((params) => putCarRequest(params), {
     onSuccess: (data, params, context) => {
+      if (onSuccess) {
+        onSuccess(data, params, context);
+      }
+    },
+    onError
+  });
+};
+
+export const useDeleteCarMutation = ({ onSuccess, onError }: UseMutationOptions<BaseAPIResponse, ErrorResponse, DeleteCarParams>) => {
+  const queryClient = useQueryClient();
+  return useMutation<BaseAPIResponse, ErrorResponse, DeleteCarParams>(deleteCarRequest, {
+    onSuccess: (data, params, context) => {
+      queryClient.invalidateQueries('cars');
+      queryClient.invalidateQueries({ queryKey: ['car', params.carId] });
       if (onSuccess) {
         onSuccess(data, params, context);
       }

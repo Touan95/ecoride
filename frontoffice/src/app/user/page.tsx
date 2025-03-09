@@ -12,7 +12,7 @@ import { AccountDetailsCard } from '@/components/molecules/AccountDetailsCard';
 import { userMock, UserType } from '@/interfaces/user';
 import { CreditAmountCard } from '@/components/molecules/CreditAmountCard';
 import { UserTypeModal } from '@/components/organisms/UserTypeModal';
-import { useAddCar, useGetOneUser, usePutCar } from '@/api/hooks/useUserAPI';
+import { useAddCar, useDeleteCarMutation, useGetOneUser, usePutCar } from '@/api/hooks/useUserAPI';
 import { AccountDriverCard } from '@/components/molecules/AccountDriverCard';
 import { DriverPreferencesModal } from '@/components/organisms/DriverPreferencesModal';
 import { AccountCarsCard } from '@/components/molecules/AccountCarsCard';
@@ -20,6 +20,7 @@ import { CarDetailsModal } from '@/components/organisms/CarDetailsModal';
 import { Car } from '@/interfaces/car';
 import { isCarGreen } from '@/utils/car';
 import { AddCarParams } from '@/api/lib/user';
+import { ConfirmCarDeletionModal } from '@/components/organisms/ConfirmCarDeletionModal';
 
 const ride = rideMock;
 
@@ -70,6 +71,12 @@ export default function Rides() {
     onSuccess: () => {
       refetchUser();
       closeCarDetailsModal();
+    }
+  });
+  const deleteCar = useDeleteCarMutation({
+    onSuccess: () => {
+      refetchUser();
+      closeRemoveCarModal();
     }
   });
   const cars = apiUser?.cars ?? [];
@@ -136,6 +143,12 @@ export default function Rides() {
     setCarToRemoveID(undefined);
   };
 
+  const onCarDeletion = () => {
+    if (carToRemoveID && user) {
+      deleteCar.mutate({ carId: carToRemoveID, userId: user.id });
+    }
+  };
+
   if (!apiUser) {
     return null;
   }
@@ -187,6 +200,7 @@ export default function Rides() {
         onSubmit={onCarDetailsSubmit}
         car={carDetailsModalProp !== 'new' ? carDetailsModalProp : undefined}
       />
+      <ConfirmCarDeletionModal isOpen={!!carToRemoveID} onClose={closeRemoveCarModal} onValidate={onCarDeletion} />
     </>
   );
 }

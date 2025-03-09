@@ -1,11 +1,10 @@
-import { Energy } from '../../../entities/car.entity';
-import { CarRepositoryInterface } from '../../../repositories/car.repository';
-import { UserRepositoryInterface } from '../../../repositories/user.repository';
-import userNotFoundError from '../../common/errors/userNotFound.error';
-import carNotFoundError from '../../common/errors/carNotFound.error';
+import { v4 as uuid } from 'uuid';
+import { CarRepositoryInterface } from '../../../../repositories/car.repository';
+import { UserRepositoryInterface } from '../../../../repositories/user.repository';
+import userNotFoundError from '../../../common/errors/userNotFound.error';
+import { CarEntityInterface, Energy } from '../../../../entities/car.entity';
 
 export interface AddCarServiceOptions {
-  carId: string;
   userId: string;
   plateNumber: string;
   registrationDate: Date;
@@ -19,7 +18,6 @@ export interface AddCarServiceOptions {
 }
 
 export const service = async ({
-  carId,
   userId,
   plateNumber,
   registrationDate,
@@ -30,19 +28,14 @@ export const service = async ({
   energy,
   userRepository,
   carRepository,
-}: AddCarServiceOptions): Promise<void> => {
+}: AddCarServiceOptions): Promise<CarEntityInterface | undefined> => {
   const user = await userRepository.getOneById(userId);
   if (!user) {
     throw userNotFoundError();
   }
 
-  const car = await carRepository.getOneById(carId);
-  if (!car) {
-    throw carNotFoundError();
-  }
-
-  const updatedCar = {
-    ...car,
+  const newCar = await carRepository.createOne({
+    id: uuid(),
     plateNumber,
     registrationDate,
     color,
@@ -50,7 +43,8 @@ export const service = async ({
     model,
     seats,
     energy,
-  };
+    owner: user,
+  });
 
-  await carRepository.updateCar(carId, updatedCar);
+  return newCar;
 };

@@ -1,25 +1,26 @@
 import { NextFunction, Response } from 'express';
 import { service } from './service';
-import { AddCarRequest } from './validator';
-import { ValidatedRequest } from '../../../core/utils/validatedExpressRequest';
-import { AppDataSource } from '../../../loader/database';
-import { UserRepository } from '../../../repositories/user.repository';
-import { HttpStatuses } from '../../../core/httpStatuses';
-import { CarRepository } from '../../../repositories/car.repository';
+import { PutCarRequest } from './validator';
+import { ValidatedRequest } from '../../../../core/utils/validatedExpressRequest';
+import { AppDataSource } from '../../../../loader/database';
+import { UserRepository } from '../../../../repositories/user.repository';
+import { HttpStatuses } from '../../../../core/httpStatuses';
+import { CarRepository } from '../../../../repositories/car.repository';
 import serializer from './serializer';
 
-type GetUserRequestType = ValidatedRequest<AddCarRequest>;
+type PutCarRequestType = ValidatedRequest<PutCarRequest>;
 
 export default async (
-  req: GetUserRequestType,
+  req: PutCarRequestType,
   res: Response,
   next: NextFunction,
 ): Promise<Response | void> => {
   try {
-    const { userId } = req.params;
+    const { userId, carId } = req.params;
     const { brand, color, energy, model, plateNumber, registrationDate, seats } = req.body;
 
     await service({
+      carId,
       userId,
       brand,
       color,
