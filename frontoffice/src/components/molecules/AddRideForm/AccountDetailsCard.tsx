@@ -3,7 +3,7 @@ import clsxm from '@/utils/clsxm';
 import 'dayjs/locale/fr';
 import { UserType } from '@/interfaces/user';
 import Image from 'next/image';
-import { AccountCardField } from '../AccountCardField';
+import { AccountCardField } from '../../molecules/AccountCardField';
 import { getUserTypeLabel } from '@/utils/values';
 
 export interface AccountCardProps {
@@ -16,7 +16,7 @@ export interface AccountCardProps {
   onUserTypeEdit?: () => void;
 }
 
-export const AccountCard = ({ username, email, avatarUrl, type, onUsernameEdit, onEmailEdit, onUserTypeEdit }: AccountCardProps) => {
+export const AccountDetailsCard = ({ username, email, avatarUrl, type, onUsernameEdit, onEmailEdit, onUserTypeEdit }: AccountCardProps) => {
   return (
     <div className={clsxm(['w-full rounded-xl flex flex-col p-5 shadow bg-primary-50 gap-3 items-center'])}>
       <Typography align="center" variant="cardTitle" color="primary">

@@ -1,6 +1,6 @@
 import { Typography } from '@/components/atoms/Typography';
 import clsxm from '@/utils/clsxm';
-import { TbCircleDotFilled, TbPaw, TbPawOff, TbSmoking, TbSmokingNo, TbStarFilled } from 'react-icons/tb';
+import { TbCircleDotFilled, TbExclamationCircle, TbPaw, TbPawOff, TbSmoking, TbSmokingNo, TbStarFilled } from 'react-icons/tb';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import 'dayjs/locale/fr';
@@ -85,7 +85,10 @@ export const DriverCard = ({ username, avatar, rating, acceptsPets, acceptsSmoki
             <div className="border-t border-dashed border-primary-900 w-full my-4" />
             <div className="flex flex-col gap-4 w-full">
               <ul>
-                <Typography variant="cardTitleSm">Les demandes du chauffeur</Typography>
+                <div className="flex gap-2 items-center">
+                  <TbExclamationCircle size={30} className="text-primary-900" />
+                  <Typography variant="cardTitleSm">Les demandes du chauffeur</Typography>
+                </div>
                 {customRules?.map((pref, index) => {
                   return (
                     <li key={index} className="flex gap-2 items-center">

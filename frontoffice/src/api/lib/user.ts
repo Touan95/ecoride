@@ -39,6 +39,18 @@ interface GetOneUserResponse extends User {
   cars: Car[];
 }
 
+interface Coordinate {
+  latitude: number;
+  longitude: number;
+}
+
+export interface RideLocation {
+  address: string | null;
+  postalCode: string | null;
+  city: string | null;
+  coordinate: Coordinate;
+}
+
 export const changeUserTypeRequest = async (params: ChangeUserTypeParams): Promise<BaseAPIResponse> => {
   const { userId, ...bodyParams } = params;
   const { data } = await axiosInstance.patch(`/user/${userId}/type`, bodyParams);

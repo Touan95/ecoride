@@ -3,6 +3,7 @@ import SectionContainer from '@/components/layout/SectionContainer';
 import { useAuthContext } from '@/contexts/auth';
 import Link from 'next/link';
 import { ConnectedMenu } from '../ConnectedMenu';
+import { UserType } from '@/interfaces/user';
 
 export const Navbar = () => {
   const { isLogged, user } = useAuthContext();
@@ -19,7 +20,11 @@ export const Navbar = () => {
           <NavbarLink href="/rides" label="Les trajets" />
           <NavbarLink href="/contact" label="Nous contacter" />
           <div className="flex-1" />
-          {connectedNavbar ? <ConnectedMenu username={user.username} /> : <NavbarLink href="/login" label="Se connecter" />}
+          {connectedNavbar ? (
+            <ConnectedMenu username={user.username} isDriver={user.type !== UserType.PASSENGER} />
+          ) : (
+            <NavbarLink href="/login" label="Se connecter" />
+          )}
         </div>
       </div>
     </SectionContainer>

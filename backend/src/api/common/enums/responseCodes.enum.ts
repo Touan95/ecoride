@@ -27,4 +27,5 @@ export enum ResponseCodes {
   CREATE_CAR_SUCCESS = 'create-car-success',
   UPDATE_CAR_SUCCESS = 'update-car-success',
   DELETE_CAR_SUCCESS = 'delete-car-success',
+  CREATE_RIDE_SUCCESS = 'create-ride-success',
 }

@@ -9,21 +9,41 @@ import { Button } from '../Button';
 export interface AccountCarsCardProps {
   cars: Car[];
   onAddCar: () => void;
-  onEditCar: (carId: string) => void;
-  onRemoveCar: (carId: string) => void;
+  onEditCar?: (carId: string) => void;
+  onRemoveCar?: (carId: string) => void;
+  onSelectCar?: (carId: string) => void;
+  selectedCarIds?: string[];
 }
 
-export const AccountCarsCard = ({ cars, onAddCar, onEditCar, onRemoveCar }: AccountCarsCardProps) => {
+export const AccountCarsCard = ({ cars, onAddCar, onEditCar, onRemoveCar, onSelectCar, selectedCarIds }: AccountCarsCardProps) => {
   const handleEditCar = (carId: string) => () => {
-    onEditCar(carId);
+    if (onEditCar) {
+      onEditCar(carId);
+    }
   };
   const handleRemoveCar = (carId: string) => () => {
-    onRemoveCar(carId);
+    if (onRemoveCar) {
+      onRemoveCar(carId);
+    }
+  };
+  const handleSelectCar = (carId: string) => () => {
+    if (onSelectCar) {
+      onSelectCar(carId);
+    }
   };
   const List = () => {
     if (cars.length > 0) {
       return cars.map((car) => {
-        return <CarCard key={car.id} {...car} onEditClick={handleEditCar(car.id)} onRemoveClick={handleRemoveCar(car.id)} />;
+        return (
+          <CarCard
+            key={car.id}
+            {...car}
+            onEditClick={onEditCar ? handleEditCar(car.id) : undefined}
+            onRemoveClick={onRemoveCar ? handleRemoveCar(car.id) : undefined}
+            onSelectClick={onSelectCar ? handleSelectCar(car.id) : undefined}
+            isSelected={selectedCarIds?.includes(car.id)}
+          />
+        );
       });
     }
     return (

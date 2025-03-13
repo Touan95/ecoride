@@ -23,7 +23,7 @@ export interface Coordinate {
   longitude: number;
 }
 
-export interface Location {
+export interface RideLocation {
   address: string | null;
   postalCode: string | null;
   city: string | null;
@@ -31,13 +31,13 @@ export interface Location {
 }
 
 export interface Ride {
+  id: string;
   reservedSeats: number | null;
   price: number;
   departureDate: Date;
   arrivalDate: Date;
-  duration: number;
-  arrivalLocation: Location;
-  departureLocation: Location;
+  arrivalLocation: RideLocation;
+  departureLocation: RideLocation;
   status: RideStatus;
 }
 
@@ -65,16 +65,13 @@ export class RideEntity implements RideEntityInterface {
   @Column()
   arrivalDate: Date;
 
-  @Column()
-  duration: number;
-
   @Column('jsonb')
   @Index('ride_arrival_location_index', ['arrivalLocation'])
-  arrivalLocation: Location;
+  arrivalLocation: RideLocation;
 
   @Column('jsonb')
   @Index('ride_departure_location_index', ['departureLocation'])
-  departureLocation: Location;
+  departureLocation: RideLocation;
 
   @Column({ type: 'enum', enum: RideStatus, default: RideStatus.UPCOMING })
   @Index('ride_status_index', ['status'])

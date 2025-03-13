@@ -165,7 +165,7 @@ export default function Rides() {
             type={apiUser.type}
             onUserTypeEdit={openUserTypeModal}
           />
-          <CreditAmountCard credits={200} />
+          <CreditAmountCard credits={apiUser.credits} />
         </div>
         {driverCardsVisible && (
           <>

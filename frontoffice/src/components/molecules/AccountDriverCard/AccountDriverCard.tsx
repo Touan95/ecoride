@@ -2,7 +2,7 @@ import { Typography } from '@/components/atoms/Typography';
 import clsxm from '@/utils/clsxm';
 import 'dayjs/locale/fr';
 import { AccountCardField } from '../AccountCardField';
-import { TbCircleDotFilled, TbSteeringWheel } from 'react-icons/tb';
+import { TbCircleDotFilled, TbExclamationCircle, TbPaw, TbSmoking, TbSteeringWheel } from 'react-icons/tb';
 import { booleanToYesNo } from '@/utils/values';
 import { Button } from '../Button';
 import { DriverPreferencesFormSchemaType } from '@/schemas/user';
@@ -16,7 +16,7 @@ export const AccountDriverCard = ({ values, onEditClick }: AccountDriverCardProp
   const Preferences = () => {
     if (values.customRules.length === 0) {
       return (
-        <AccountCardField labelClassname="w-54" label="Vous avez des préférences ?">
+        <AccountCardField labelClassname="w-54" label="Vous avez des préférences ?" icon={TbExclamationCircle}>
           Non
         </AccountCardField>
       );
@@ -24,9 +24,12 @@ export const AccountDriverCard = ({ values, onEditClick }: AccountDriverCardProp
 
     return (
       <div>
-        <Typography variant="cardTitleSm" color="primary">
-          Vos préférences personnalisées
-        </Typography>
+        <div className="flex gap-2 relative">
+          <TbExclamationCircle size={30} className="text-primary-900 absolute -left-10" />
+          <Typography variant="cardTitleSm" color="primary">
+            Vos préférences personnalisées
+          </Typography>
+        </div>
         <ul>
           {values.customRules.map((value, index) => {
             return (
@@ -49,10 +52,10 @@ export const AccountDriverCard = ({ values, onEditClick }: AccountDriverCardProp
       <TbSteeringWheel size={50} className="text-primary-900" />
       <div className="flex items-center">
         <div className="flex flex-col gap-3">
-          <AccountCardField labelClassname="w-54" label="Vous acceptez les fumeurs ?">
+          <AccountCardField labelClassname="w-54" label="Vous acceptez les fumeurs ?" icon={TbSmoking}>
             {booleanToYesNo(values.acceptsSmoking)}
           </AccountCardField>
-          <AccountCardField labelClassname="w-54" label="Vous acceptez les animaux ?">
+          <AccountCardField labelClassname="w-54" label="Vous acceptez les animaux ?" icon={TbPaw}>
             {booleanToYesNo(values.acceptsPets)}
           </AccountCardField>
           {Preferences()}

@@ -19,7 +19,11 @@ input[type="number"]::-webkit-inner-spin-button,
 .rdp-caption_dropdowns {
   gap: 20px;
   text-transform: uppercase;
+}
 
+::placeholder {
+  color: #a0aec0; /* Tailwind's gray-400 */
+  opacity: 1; /* Ensures the color is fully visible */
 }
 
 @theme {  
@@ -56,6 +60,7 @@ input[type="number"]::-webkit-inner-spin-button,
     --color-tertiary-800: #603d33;
     --color-tertiary-900: #54352f;
     --color-tertiary-950: #2f1b19;
+    --color-placeholder: #a0aec0;
     --backgroundImage: {
         'images': "url('.assets/images.png')"        
       }
