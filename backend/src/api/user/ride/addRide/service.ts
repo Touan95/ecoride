@@ -32,12 +32,12 @@ export const service = async ({
   rideRepository,
   carRepository
 }: AddRideServiceOptions): Promise<RideEntityInterface | undefined> => {
-  const user = await userRepository.getOneById(userId);
+  const user = await userRepository.getOneForAccount(userId);
   if (!user) {
     throw userNotFoundError();
   }
   
-  const userCarIds = user.cars.map((car)=> car.id)
+  const userCarIds = user.cars?.map((car)=> car.id) ?? []
   
   if(!userCarIds.includes(carId)){
     throw userCarNotFoundError();

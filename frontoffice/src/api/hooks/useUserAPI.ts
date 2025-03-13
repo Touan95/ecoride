@@ -2,6 +2,8 @@ import { useMutation, UseMutationOptions, useQuery, useQueryClient } from 'react
 import {
   AddCarParams,
   addCarRequest,
+  AddRideParams,
+  addRideRequest,
   ChangeDriverPreferencesParams,
   changeDriverPreferencesRequest,
   ChangeUserTypeParams,
@@ -72,6 +74,17 @@ export const useDeleteCarMutation = ({ onSuccess, onError }: UseMutationOptions<
     onSuccess: (data, params, context) => {
       queryClient.invalidateQueries('cars');
       queryClient.invalidateQueries({ queryKey: ['car', params.carId] });
+      if (onSuccess) {
+        onSuccess(data, params, context);
+      }
+    },
+    onError
+  });
+};
+
+export const useRideCar = ({ onSuccess, onError }: UseMutationOptions<BaseAPIResponse, ErrorResponse, AddRideParams>) => {
+  return useMutation((params) => addRideRequest(params), {
+    onSuccess: (data, params, context) => {
       if (onSuccess) {
         onSuccess(data, params, context);
       }

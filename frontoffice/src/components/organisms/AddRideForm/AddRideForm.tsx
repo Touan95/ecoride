@@ -13,30 +13,37 @@ import { Car } from '@/interfaces/car';
 import { useState } from 'react';
 import { PriceField } from './AddRideFields/PriceField';
 import { Button } from '@/components/molecules/Button';
+import { AddRideParams } from '@/api/lib/user';
 
 dayjs.locale('fr');
 
 interface AddRideFormProps {
-  // onSubmit: (params: Omit<AddCarParams, 'userId'>) => void;
+  onSubmit: (params: Omit<AddRideParams, 'userId'>) => void;
   initialValues?: AddRideFormSchemaType;
   cars: Car[];
   onAddCar: () => void;
 }
 
-export const AddRideForm = ({ initialValues, cars, onAddCar }: AddRideFormProps) => {
+export const AddRideForm = ({ onSubmit, initialValues, cars, onAddCar }: AddRideFormProps) => {
   const [selectedCarId, setSelectedCarId] = useState<string | undefined>(undefined);
+
   const form = useForm<AddRideFormSchemaType>({
     resolver: zodResolver(addRideFormSchema),
     defaultValues: { ...initialValues }
   });
-  console.log('🚀 ~ form:', form.getValues());
 
-  const handleSubmit = (values: AddRideFormSchemaType) => {
-    // onSubmit({ ...values });
+  const handleSubmit = () => {
+    const formValues = form.getValues();
+    onSubmit(formValues);
   };
 
   const onSelectCar = (carId: string) => {
     setSelectedCarId(carId);
+    form.setValue('carId', carId);
+  };
+
+  const onPriceChange = (price?: number) => {
+    form.setValue('price', price ?? 0);
   };
 
   return (
@@ -52,8 +59,8 @@ export const AddRideForm = ({ initialValues, cars, onAddCar }: AddRideFormProps)
               selectedCarIds={selectedCarId ? [selectedCarId] : undefined}
             />
             <div className="flex flex-col gap-4">
-              <PriceField />
-              <Button className="h-16" color="secondary" type="submit">
+              <PriceField onValueChange={onPriceChange} />
+              <Button className="h-16" color="secondary" onClick={handleSubmit}>
                 {"C'est parti !"}
               </Button>
             </div>

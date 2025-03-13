@@ -61,7 +61,7 @@ export const ItineraryFields = ({ form }: ItineraryFieldsProps) => {
                     variant={'outline'}
                     className={clsxm(inputClassname, 'border-0 w-full pl-3 text-left font-normal', !field.value && 'text-muted-foreground')}
                   >
-                    {field.value ? format(field.value, 'MM/dd/yyyy HH:mm') : <Typography color="placeholder">MM/DD/YYYY HH:mm</Typography>}
+                    {field.value ? format(field.value, 'dd/MM/yyyy HH:mm') : <Typography color="placeholder">jj/mm/aaaa hh:mm</Typography>}
                     <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                   </ShadButton>
                 </FormControl>

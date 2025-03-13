@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import axios from 'axios';
 import { useQuery } from 'react-query';
 import { RideLocation } from '@/api/lib/user';
@@ -52,6 +52,8 @@ interface AddressAutocompleteInputProps {
 const AddressAutocompleteInput = ({ onSelect }: AddressAutocompleteInputProps) => {
   const [query, setQuery] = useState('');
   const [isFocused, setIsFocused] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+
   const {
     data: suggestions,
     isLoading,
@@ -77,6 +79,7 @@ const AddressAutocompleteInput = ({ onSelect }: AddressAutocompleteInputProps) =
 
     setQuery(item.display_name);
     onSelect(rideLocation);
+    inputRef.current?.blur();
   };
 
   const onFocus = () => {
@@ -89,9 +92,16 @@ const AddressAutocompleteInput = ({ onSelect }: AddressAutocompleteInputProps) =
 
   return (
     <div className="relative">
-      <Input placeholder="Entrez une adresse" value={query} onChange={(e) => setQuery(e.target.value)} onFocus={onFocus} onBlur={onBlur} />
+      <Input
+        ref={inputRef}
+        placeholder="Entrez une adresse"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        onFocus={onFocus}
+        onBlur={onBlur}
+      />
       {dropdownVisible && isFocused && (
-        <div className={clsxm(inputClassname, 'h-fit rounded-3xl absolute z-[9999] mt-2 p-0')}>
+        <div className={clsxm(inputClassname, 'h-fit rounded-3xl absolute z-[9999] mt-2 p-0')} onMouseDown={(e) => e.preventDefault()}>
           <ul className="flex flex-col py-6 w-full">
             {isLoading && <p className="p-2">Chargement...</p>}
             {isError && <p className="p-2">Erreur de chargement des suggestions</p>}

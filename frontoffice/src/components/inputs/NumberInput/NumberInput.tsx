@@ -3,6 +3,7 @@ import { forwardRef, useCallback, useEffect, useState } from 'react';
 import { NumericFormat, NumericFormatProps } from 'react-number-format';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import clsxm from '@/utils/clsxm';
 
 export interface NumberInputProps extends Omit<NumericFormatProps, 'value' | 'onValueChange'> {
   stepper?: number;
@@ -18,6 +19,7 @@ export interface NumberInputProps extends Omit<NumericFormatProps, 'value' | 'on
   fixedDecimalScale?: boolean;
   withButtons?: boolean;
   decimalScale?: number;
+  align?: 'left' | 'center' | 'right';
 }
 
 export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
@@ -95,7 +97,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     };
 
     return (
-      <div className="flex items-center">
+      <div className="flex items-center [text-align-last:center]">
         <NumericFormat
           value={value}
           onValueChange={handleChange}
@@ -111,7 +113,9 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
           prefix={prefix}
           customInput={Input}
           placeholder={placeholder}
-          className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none rounded-r-none relative"
+          className={clsxm(
+            '[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none rounded-r-none relative text-l'
+          )}
           getInputRef={ref}
           {...props}
         />
