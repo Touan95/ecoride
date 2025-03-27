@@ -1,14 +1,18 @@
 'use client';
 
+import { useGetSearchedRides } from '@/api/hooks/useUserAPI';
+import { GetSearchedRidesParams } from '@/api/lib/user';
 import { Typography } from '@/components/atoms/Typography';
 import SectionContainer from '@/components/layout/SectionContainer';
+import { AddressItemLight } from '@/components/molecules/AddressAutocompleteInput/AddressAutocompleteInput';
 import { RideCard, RideCardProps } from '@/components/molecules/RideCard';
 import { RidesFilters, RidesFiltersType } from '@/components/molecules/RidesFilters';
 import { SearchRides } from '@/components/molecules/SearchRides';
 import { Ride, rideMock } from '@/interfaces/ride';
+import { SearchRidesFormSchemaType } from '@/schemas/user';
 import { isCarGreen } from '@/utils/car';
-import { useRouter } from 'next/navigation';
-import { useMemo, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useMemo, useState } from 'react';
 
 const rideApiToRideCard = (apiRide: Ride): RideCardProps => {
   const isGreen = isCarGreen(apiRide.car);
@@ -53,7 +57,13 @@ const filterRides = (rides: Ride[], filters: RidesFiltersType): Ride[] => {
 
 export default function Rides() {
   const [appliedFilters, setAppliedFilters] = useState<RidesFiltersType>({});
+  const [initialDeparture, setInitialDeparture] = useState<AddressItemLight | undefined>(undefined);
+  const [searchRidesParams, setSearchRidesParams] = useState<GetSearchedRidesParams | undefined>(undefined);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const departureParams = searchParams.get('departure');
+  const { data, refetch } = useGetSearchedRides({ ...searchRidesParams });
+  console.log('🚀 ~ data:', data);
 
   const apiRides = [
     rideMock,
@@ -73,6 +83,17 @@ export default function Rides() {
     return filteredRides.map((ride) => rideApiToRideCard(ride));
   }, [filteredRides]);
 
+  useEffect(() => {
+    if (departureParams) {
+      try {
+        const parsedData = JSON.parse(decodeURIComponent(departureParams as string));
+        setInitialDeparture(parsedData);
+      } catch (error) {
+        console.error('Invalid data format', error);
+      }
+    }
+  }, [departureParams]);
+
   const onFiltersChange = (filters: RidesFiltersType) => {
     setAppliedFilters(filters);
   };
@@ -81,9 +102,23 @@ export default function Rides() {
     router.push(`/rides/${id}`);
   };
 
+  const onSearch = (params: SearchRidesFormSchemaType) => {
+    setSearchRidesParams({
+      departureLatitude: params.departureLocation?.coordinate.latitude,
+      departureLongitude: params.departureLocation?.coordinate.longitude,
+      arrivalLatitude: params.arrivalLocation?.coordinate.latitude,
+      arrivalLongitude: params.arrivalLocation?.coordinate.longitude,
+      departureDate: params.departureDate
+    });
+  };
+
+  useEffect(() => {
+    refetch();
+  }, [searchRidesParams]);
+
   return (
     <>
-      <SearchRides />
+      <SearchRides initialDeparture={initialDeparture} onSearch={onSearch} />
       <SectionContainer className="flex flex-col gap-5 my-10">
         <RidesFilters onFiltersChange={onFiltersChange} />
         <div className="flex flex-col gap-5">

@@ -64,6 +64,14 @@ export const service = async ({
     status: RideStatus.UPCOMING,
     driver: user,
     car: carWithOwner,
+    departurePoint: {
+      type: 'Point',
+      coordinates: [departureLocation.coordinate.longitude, departureLocation.coordinate.latitude],
+    },
+    arrivalPoint: {
+      type: 'Point',
+      coordinates: [arrivalLocation.coordinate.longitude, arrivalLocation.coordinate.latitude],
+    },
     passengers:[]
   });
 

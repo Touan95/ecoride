@@ -1,10 +1,26 @@
 import { Repository } from 'typeorm';
 import { AppDataSource } from '../loader/database';
-import { Ride, RideEntity, RideEntityInterface } from '../entities/ride.entity';
+import { RideEntity, RideEntityInterface } from '../entities/ride.entity';
 
+interface DistanceProps { 
+  latitude: number; 
+  longitude: number; 
+  radiusKm: number 
+}
+
+export interface PointDistanceFilter {
+  departure?: DistanceProps
+  arrival?: DistanceProps
+}
+
+interface GetAllRidesOptions {
+  distanceFilter?: PointDistanceFilter
+  departureDate?: Date
+}
 
 export type RideRepositoryInterface = Repository<RideEntity> & {
   createOne(ride: RideEntityInterface): Promise<RideEntityInterface>;
+  getAllForSearch({distanceFilter, departureDate}:GetAllRidesOptions): Promise<RideEntity[]>;
 };
 
 export const RideRepository: RideRepositoryInterface = AppDataSource.getRepository(
@@ -15,4 +31,45 @@ export const RideRepository: RideRepositoryInterface = AppDataSource.getReposito
     await this.save(newRide);
     return newRide;
   },
+  async getAllForSearch({ distanceFilter, departureDate }: GetAllRidesOptions = {}): Promise<RideEntity[]> {
+    const query = this.createQueryBuilder('ride')
+
+    if (distanceFilter?.departure && distanceFilter?.arrival) {
+      query.andWhere(`
+          ST_DWithin(ride.departure_point::geography, ST_SetSRID(ST_MakePoint(:lngD, :latD), 4326)::geography, :distanceD)
+          AND ST_DWithin(ride.arrival_point::geography, ST_SetSRID(ST_MakePoint(:lngA, :latA), 4326)::geography, :distanceA)
+      `, {
+          latD: distanceFilter.departure.latitude,
+          lngD: distanceFilter.departure.longitude,
+          distanceD: distanceFilter.departure.radiusKm,
+          latA: distanceFilter.arrival.latitude,
+          lngA: distanceFilter.arrival.longitude,
+          distanceA: distanceFilter.arrival.radiusKm
+      });
+  } else if (distanceFilter?.departure) {
+      query.andWhere(`
+          ST_DWithin(ride.departure_point::geography, ST_SetSRID(ST_MakePoint(:lngD, :latD), 4326)::geography, :distanceD)
+      `, {
+          latD: distanceFilter.departure.latitude,
+          lngD: distanceFilter.departure.longitude,
+          distanceD: distanceFilter.departure.radiusKm
+      });
+  } else if (distanceFilter?.arrival) {
+      query.andWhere(`
+          ST_DWithin(ride.arrival_point::geography, ST_SetSRID(ST_MakePoint(:lngA, :latA), 4326)::geography, :distanceA)
+      `, {
+          latA: distanceFilter.arrival.latitude,
+          lngA: distanceFilter.arrival.longitude,
+          distanceA: distanceFilter.arrival.radiusKm
+      });
+  }
+    
+    if (departureDate) {
+      query.andWhere('DATE(ride.departure_date) = :departureDate', {
+        departureDate: departureDate.toISOString().split('T')[0] 
+      });
+    }
+
+    return query.getMany();
+  }
 });

@@ -2,6 +2,7 @@ import axiosInstance from '@/configs/axios';
 import { BaseAPIResponse } from './types';
 import { User, UserType } from '@/interfaces/user';
 import { Car, Energy } from '@/interfaces/car';
+import { Ride } from '@/interfaces/ride';
 
 export interface ChangeUserTypeParams {
   userId: string;
@@ -49,7 +50,7 @@ interface GetOneUserResponse extends User {
   cars: Car[];
 }
 
-interface Coordinate {
+export interface Coordinate {
   latitude: number;
   longitude: number;
 }
@@ -59,6 +60,18 @@ export interface RideLocation {
   postalCode: string | null;
   city: string | null;
   coordinate: Coordinate;
+}
+
+export interface GetSearchedRidesParams {
+  departureLatitude?: number;
+  departureLongitude?: number;
+  arrivalLatitude?: number;
+  arrivalLongitude?: number;
+  departureDate?: Date;
+}
+
+interface GetSearchedRidesResponse {
+  rides: Ride[];
 }
 
 export const changeUserTypeRequest = async (params: ChangeUserTypeParams): Promise<BaseAPIResponse> => {
@@ -99,5 +112,10 @@ export const deleteCarRequest = async (params: DeleteCarParams): Promise<BaseAPI
 export const addRideRequest = async (params: AddRideParams): Promise<BaseAPIResponse> => {
   const { userId, ...bodyParams } = params;
   const { data } = await axiosInstance.post(`/user/${userId}/ride/add`, bodyParams);
+  return data;
+};
+
+export const getSearchedRidesRequest = async (params: GetSearchedRidesParams): Promise<GetSearchedRidesResponse> => {
+  const { data } = await axiosInstance.get(`/rides`, { params });
   return data;
 };

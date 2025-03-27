@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 import { UserEntity, UserEntityInterface } from './user.entity';
 import { CarEntity, CarEntityInterface } from './car.entity';
+import { Point } from 'geojson';
 
 export enum RideStatus {
   UPCOMING = 'upcoming',
@@ -38,6 +39,8 @@ export interface Ride {
   arrivalDate: Date;
   arrivalLocation: RideLocation;
   departureLocation: RideLocation;
+  arrivalPoint: Point;
+  departurePoint: Point;
   status: RideStatus;
 }
 
@@ -64,6 +67,22 @@ export class RideEntity implements RideEntityInterface {
 
   @Column()
   arrivalDate: Date;
+
+  @Column('geometry', {
+    spatialFeatureType: 'Point',
+    srid: 4326,
+    select: false,
+  })
+  @Index({ spatial: true })
+  arrivalPoint: Point;
+
+  @Column('geometry', {
+    spatialFeatureType: 'Point',
+    srid: 4326,
+    select: false,
+  })
+  @Index({ spatial: true })
+  departurePoint: Point;
 
   @Column('jsonb')
   @Index('ride_arrival_location_index', ['arrivalLocation'])

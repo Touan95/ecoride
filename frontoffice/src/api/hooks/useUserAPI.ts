@@ -11,6 +11,8 @@ import {
   DeleteCarParams,
   deleteCarRequest,
   getOneUserRequest,
+  GetSearchedRidesParams,
+  getSearchedRidesRequest,
   PutCarParams,
   putCarRequest
 } from '../lib/user';
@@ -91,4 +93,8 @@ export const useRideCar = ({ onSuccess, onError }: UseMutationOptions<BaseAPIRes
     },
     onError
   });
+};
+
+export const useGetSearchedRides = ({ ...params }: GetSearchedRidesParams) => {
+  return useQuery(['referent_issues', params], () => getSearchedRidesRequest(params));
 };
