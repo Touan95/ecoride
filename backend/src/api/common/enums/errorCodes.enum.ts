@@ -49,4 +49,5 @@ export enum ErrorCodes {
   FORBIDDEN_ADMIN_ACCESS = 'forbidden-admin-access',
   //
   CAR_NOT_FOUND = 'car-not-found',
+  RIDE_NOT_FOUND = 'ride-not-found',
 }

@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import 'dayjs/locale/fr';
 import Image from 'next/image';
+import { useMemo } from 'react';
 
 dayjs.locale('fr');
 dayjs.extend(duration);
@@ -19,7 +20,7 @@ export interface DriverReviewProps {
 export interface DriverCardProps {
   username: string;
   avatar: string;
-  rating: number;
+  rating?: number;
   acceptsPets?: boolean;
   acceptsSmoking?: boolean;
   customRules?: string[];
@@ -53,6 +54,19 @@ export const DriverCard = ({ username, avatar, rating, acceptsPets, acceptsSmoki
     : "Ce conducteur n'accepte pas les animaux dans son véhicule";
   const smokersText = acceptsSmoking ? 'Ce conducteur accepte les fumeurs' : "Ce conducteur n'accepte pas les fumeurs";
 
+  const reviewsContent = useMemo(() => {
+    if (reviews && reviews.length > 0) {
+      return reviews.map((review, index) => (
+        <DriverReview key={index} reviewer={review.reviewer} rating={review.rating} comment={review.comment} date={review.date} />
+      ));
+    }
+    return (
+      <Typography variant="cardTitleSm" align="center" customClassName="mb-16">
+        {"Ce conducteur ne possède pas encore d'avis."}
+      </Typography>
+    );
+  }, [reviews]);
+
   return (
     <div className={clsxm(['w-full rounded-xl flex p-5 shadow gap-5 bg-primary-50'])}>
       <div className="flex flex-col items-center w-20 h-25">
@@ -66,7 +80,7 @@ export const DriverCard = ({ username, avatar, rating, acceptsPets, acceptsSmoki
           <Typography align="center" variant="small" color="primary">
             {rating}
           </Typography>
-          <TbStarFilled size={14} className="text-primary-900" />
+          <TbStarFilled size={14} className={clsxm('text-primary-900', !rating && 'opacity-50')} />
         </div>
       </div>
       <div className="flex flex-col w-full">
@@ -101,19 +115,11 @@ export const DriverCard = ({ username, avatar, rating, acceptsPets, acceptsSmoki
             </div>
           </>
         )}
-        {reviews && reviews.length > 0 && (
-          <>
-            <div className="border-t border-dashed border-primary-900 w-full my-4" />
-            <div className="flex flex-col gap-8 w-full pr-10">
-              <Typography variant="cardTitleSm">Les avis</Typography>
-              {reviews.map((review, index) => {
-                return (
-                  <DriverReview key={index} reviewer={review.reviewer} rating={review.rating} comment={review.comment} date={review.date} />
-                );
-              })}
-            </div>
-          </>
-        )}
+        <div className="border-t border-dashed border-primary-900 w-full my-4" />
+        <div className="flex flex-col gap-8 w-full pr-10">
+          <Typography variant="cardTitleSm">Les avis</Typography>
+          {reviewsContent}
+        </div>
       </div>
     </div>
   );

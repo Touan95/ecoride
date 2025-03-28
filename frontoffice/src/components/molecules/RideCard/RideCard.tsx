@@ -13,6 +13,7 @@ dayjs.locale('fr');
 dayjs.extend(duration);
 
 export interface RideCardProps {
+  id: string;
   driverImage: string;
   driverName: string;
   driverRate?: number;

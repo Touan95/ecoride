@@ -42,7 +42,7 @@ export const ItineraryFields = ({ form }: ItineraryFieldsProps) => {
     form.setValue(dateType, newDate);
   };
 
-  const handleSelectLocation = (locationType: 'departureLocation' | 'arrivalLocation') => (location: RideLocation) => {
+  const handleSelectLocation = (locationType: 'departureLocation' | 'arrivalLocation') => (location?: RideLocation) => {
     form.setValue(locationType, location);
   };
 

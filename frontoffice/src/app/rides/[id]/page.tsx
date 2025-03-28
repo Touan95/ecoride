@@ -1,7 +1,7 @@
 'use client';
 
 import SectionContainer from '@/components/layout/SectionContainer';
-import { Ride, rideMock } from '@/interfaces/ride';
+import { PublicRideDetails } from '@/interfaces/ride';
 import { useMemo, useState } from 'react';
 import { Itinerary, ItineraryProps } from '@/components/molecules/Itinerary';
 import { InfoCard, InfoCardProps } from '@/components/molecules/InfoCard';
@@ -16,40 +16,42 @@ import { useLoginMutation, useRegisterMutation } from '@/api/hooks/useAuthAPI';
 import { LoginSchemaType, RegisterSchemaType } from '@/schemas/auth';
 import { useAuthContext } from '@/contexts/auth';
 import { isCarGreen } from '@/utils/car';
+import { useParams } from 'next/navigation';
+import { useGetRideDetails } from '@/api/hooks/useUserAPI';
+import { DEFAULT_AVATAR_URL } from '@/interfaces/user';
 
-const ride = rideMock;
-
-const rideApiToItinerary = (apiRide: Ride): ItineraryProps => {
+const rideApiToItinerary = (apiRide: PublicRideDetails): ItineraryProps => {
   return {
     arrivalDate: apiRide.arrivalDate,
     departureDate: apiRide.departureDate,
-    arrivalLocation: apiRide.arrivalLocation,
-    departureLocation: apiRide.departureLocation
+    arrivalLocation: apiRide.arrivalLocation.city ?? '',
+    departureLocation: apiRide.departureLocation.city ?? ''
   };
 };
 
-const rideApiToInfoCard = (apiRide: Ride): InfoCardProps => {
+const rideApiToInfoCard = (apiRide: PublicRideDetails): InfoCardProps => {
   const isRideCarGreen = isCarGreen(apiRide.car);
+  const duration = new Date(apiRide.arrivalDate).getTime() - new Date(apiRide.departureDate).getTime();
   return {
     carBrand: apiRide.car.brand,
     carEnergy: apiRide.car.energy,
     carModel: apiRide.car.model,
     seats: apiRide.car.seats,
-    reservedSeats: apiRide.reservedSeats,
-    duration: apiRide.duration,
+    reservedSeats: apiRide.reservedSeats ?? 0,
+    duration,
     isGreen: isRideCarGreen
   };
 };
 
-const rideApiToDriverCard = (apiRide: Ride): DriverCardProps => {
+const rideApiToDriverCard = (apiRide: PublicRideDetails): DriverCardProps => {
   return {
-    avatar: apiRide.driver.avatar,
-    rating: apiRide.driver.rate,
+    avatar: apiRide.driver.avatarUrl ?? DEFAULT_AVATAR_URL,
+    rating: apiRide.driver.rate ?? undefined,
     username: apiRide.driver.username,
     acceptsPets: apiRide.driver.acceptsPets,
     acceptsSmoking: apiRide.driver.acceptsSmoking,
     customRules: apiRide.driver.customRules,
-    reviews: apiRide.driver.reviews
+    reviews: [] //apiRide.driver.reviews
   };
 };
 
@@ -58,22 +60,37 @@ export default function Rides() {
   const isConnected = false;
   const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
   const [confirmBookingModalOpen, setConfirmBookingModalOpen] = useState<boolean>(false);
+  const { id: rideId } = useParams<{ id: string }>();
 
-  const isGreen = isCarGreen(ride.car);
+  const { data: ride } = useGetRideDetails(rideId);
+
+  const isGreen = ride ? isCarGreen(ride.car) : false;
 
   const itineraryData = useMemo(() => {
-    return rideApiToItinerary(ride);
+    if (ride) {
+      return rideApiToItinerary(ride);
+    } else {
+      return undefined;
+    }
   }, [ride]);
 
   const infoData = useMemo(() => {
-    return rideApiToInfoCard(ride);
+    if (ride) {
+      return rideApiToInfoCard(ride);
+    } else {
+      return undefined;
+    }
   }, [ride]);
 
   const driverData = useMemo(() => {
-    return rideApiToDriverCard(ride);
+    if (ride) {
+      return rideApiToDriverCard(ride);
+    } else {
+      return undefined;
+    }
   }, [ride]);
 
-  const isAvailable = ride.car.seats - (ride.reservedSeats ?? 0) > 0;
+  const isAvailable = ride ? ride.car.seats - (ride.reservedSeats ?? 0) > 0 : false;
 
   const openLoginModal = () => {
     setLoginModalOpen(true);
@@ -128,6 +145,10 @@ export default function Rides() {
     registerMutation.mutate(data);
   };
 
+  if (!ride) {
+    return null;
+  }
+
   return (
     <>
       <SectionContainer className="flex flex-col gap-5 my-10">
@@ -135,11 +156,11 @@ export default function Rides() {
         <div className="grid gap-4 grid-cols-[3fr_1fr]">
           <div className="flex flex-col gap-4">
             {isGreen && <GreenCard />}
-            <Itinerary {...itineraryData} />
-            <DriverCard {...driverData} />
+            {itineraryData && <Itinerary {...itineraryData} />}
+            {driverData && <DriverCard {...driverData} />}
           </div>
           <div className="flex flex-col gap-4">
-            <InfoCard {...infoData} />
+            {infoData && <InfoCard {...infoData} />}
             <PriceCard price={ride.price} />
             <Button disabled={!isAvailable} onClick={onBookClick}>
               Réserver

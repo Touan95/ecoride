@@ -44,6 +44,8 @@ export interface AddressItem {
   icon: string;
   address: {
     city?: string;
+    town?: string;
+    village?: string;
     state_district?: string;
     state?: string;
     ISO3166_2_lvl4?: string;
@@ -144,10 +146,11 @@ const AddressAutocompleteInput = ({
       return;
     }
 
+    console.log('🚀 ~ location:', location.address?.town);
     const rideLocation: RideLocation = {
       address: location.display_name,
-      postalCode: location.address?.postcode || null,
-      city: location.address?.city || null,
+      postalCode: location.address?.postcode ?? null,
+      city: location.address?.city ?? location.address?.town ?? location.address?.village ?? null,
       coordinate: {
         latitude: parseFloat(location.lat),
         longitude: parseFloat(location.lon)

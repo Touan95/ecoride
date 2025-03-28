@@ -20,6 +20,7 @@ interface GetAllRidesOptions {
 
 export type RideRepositoryInterface = Repository<RideEntity> & {
   createOne(ride: RideEntityInterface): Promise<RideEntityInterface>;
+  getOneById(id: string): Promise<RideEntityInterface | null> 
   getAllForSearch({distanceFilter, departureDate}:GetAllRidesOptions): Promise<SearchedRide[]>;
 };
 
@@ -30,6 +31,16 @@ export const RideRepository: RideRepositoryInterface = AppDataSource.getReposito
     const newRide = this.create(ride);
     await this.save(newRide);
     return newRide;
+  },
+  getOneById(id: string): Promise<RideEntityInterface | null> {
+      const query = this.createQueryBuilder('ride')
+        .where('ride.id = :id', { id })
+        .leftJoinAndSelect('ride.driver', 'driver')
+        .leftJoinAndSelect('ride.car', 'car')
+        
+      const user = query.getOne();
+  
+      return user;
   },
   async getAllForSearch({ distanceFilter, departureDate }: GetAllRidesOptions = {}): Promise<SearchedRide[]> {
     const query = this.createQueryBuilder('ride')

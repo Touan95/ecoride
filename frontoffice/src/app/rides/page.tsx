@@ -21,6 +21,7 @@ const rideApiToRideCard = (apiRide: SearchedRide): RideCardProps => {
   const seatsLeft = apiRide.car.seats - (apiRide.reservedSeats ?? 0);
 
   return {
+    id: apiRide.id,
     arrivalCity: apiRide.arrivalLocation.city ?? '',
     departureCity: apiRide.departureLocation.city ?? '',
     arrivalDate: apiRide.arrivalDate,
@@ -121,8 +122,8 @@ export default function Rides() {
         <RidesFilters onFiltersChange={onFiltersChange} />
         <div className="flex flex-col gap-5">
           <Typography variant="h3">Résultat(s) de la recherche</Typography>
-          {rideCardData.map((ride, index) => {
-            return <RideCard key={index} {...ride} onDetailClick={onDetailClick(index.toString())} />;
+          {rideCardData.map((ride) => {
+            return <RideCard key={ride.id} {...ride} onDetailClick={onDetailClick(ride.id)} />;
           })}
         </div>
       </SectionContainer>

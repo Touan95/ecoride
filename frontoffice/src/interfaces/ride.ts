@@ -1,7 +1,6 @@
-import { driverMock } from '@/interfaces/driver';
-import { CarLight, carMock } from '@/interfaces/car';
+import { Car, CarLight } from '@/interfaces/car';
 import { RideLocation, RideStatus } from '@/api/lib/user';
-import { UserLight } from '@/interfaces/user';
+import { User, UserLight } from '@/interfaces/user';
 
 export interface Ride {
   id: string;
@@ -19,14 +18,7 @@ export interface SearchedRide extends Ride {
   driver: UserLight;
 }
 
-export const rideMock: Ride = {
-  driver: driverMock,
-  car: carMock,
-  price: 100,
-  reservedSeats: 2,
-  arrivalDate: new Date('December 17, 2025 04:24:00'),
-  departureDate: new Date('December 17, 2025 02:34:00'),
-  arrivalLocation: 'Paris',
-  departureLocation: 'Marseille',
-  duration: 5400000
-};
+export interface PublicRideDetails extends Ride {
+  car: Car;
+  driver: User;
+}

@@ -11,6 +11,7 @@ import {
   DeleteCarParams,
   deleteCarRequest,
   getOneUserRequest,
+  getRideDetailsRequest,
   GetSearchedRidesParams,
   getSearchedRidesRequest,
   PutCarParams,
@@ -97,4 +98,8 @@ export const useRideCar = ({ onSuccess, onError }: UseMutationOptions<BaseAPIRes
 
 export const useGetSearchedRides = ({ ...params }: GetSearchedRidesParams) => {
   return useQuery(['referent_issues', params], () => getSearchedRidesRequest(params));
+};
+
+export const useGetRideDetails = (rideId?: string) => {
+  return useQuery(['ride', rideId], () => getRideDetailsRequest(rideId ?? ''), { enabled: !!rideId });
 };
