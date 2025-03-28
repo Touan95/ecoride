@@ -8,7 +8,7 @@ import { LoggedUser } from '@/interfaces/user';
 import { useGetMe } from '@/api/hooks/useAuthAPI';
 import { useRouter } from 'next/navigation';
 
-const REFETCH_INTERVAL = 15 * 1000; // 15 minutes
+const REFETCH_INTERVAL = 15 * 60 * 1000; // 15 minutes
 
 type DecodedRefreshToken = {
   iat: number;

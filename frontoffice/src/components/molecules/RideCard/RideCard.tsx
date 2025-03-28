@@ -7,6 +7,7 @@ import duration from 'dayjs/plugin/duration';
 import 'dayjs/locale/fr';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { Button } from '@/components/molecules/Button';
+import { formatDuration } from '@/utils/durations';
 
 dayjs.locale('fr');
 dayjs.extend(duration);
@@ -14,9 +15,11 @@ dayjs.extend(duration);
 export interface RideCardProps {
   driverImage: string;
   driverName: string;
-  driverRate: number;
+  driverRate?: number;
   seatsLeft: number;
   price: number;
+  departureCity: string;
+  arrivalCity: string;
   departureDate: Date;
   arrivalDate: Date;
   duration: number;
@@ -31,6 +34,8 @@ export const RideCard = ({
   seatsLeft,
   price,
   departureDate,
+  departureCity,
+  arrivalCity,
   arrivalDate,
   isGreen,
   duration,
@@ -44,7 +49,7 @@ export const RideCard = ({
   const formattedArrivalDate = arrival.format('dddd D MMMM YYYY');
   const formattedArrivalTime = arrival.format('HH:mm');
 
-  const formattedDuration = dayjs.duration(duration).format('H:mm');
+  const formattedDuration = formatDuration(duration);
 
   const seatLeftText = seatsLeft > 1 ? `${seatsLeft} places disponibles` : `${seatsLeft} place disponible`;
   const bgColorClassname = isGreen ? 'bg-primary-300' : 'bg-primary-50';
@@ -66,13 +71,16 @@ export const RideCard = ({
           <Typography align="center" variant="small" color="primary">
             {driverRate}
           </Typography>
-          <TbStarFilled size={14} className="text-primary-900" />
+          <TbStarFilled size={14} className={clsxm('text-primary-900', !driverRate && 'opacity-50')} />
         </div>
       </div>
       <div className="flex flex-1 justify-center items-center">
         <div>
           <Typography align="center" variant="small" color="primary" customClassName="mb-2">
             Départ
+          </Typography>
+          <Typography align="center" variant="cardTitleSm" color="primary">
+            {departureCity}
           </Typography>
           <Typography align="center" variant="cardTitleSm" color="primary">
             {formattedDepartureDate}
@@ -110,6 +118,9 @@ export const RideCard = ({
         <div>
           <Typography align="center" variant="small" color="primary" customClassName="mb-2">
             Arrivée
+          </Typography>
+          <Typography align="center" variant="cardTitleSm" color="primary">
+            {arrivalCity}
           </Typography>
           <Typography align="center" variant="cardTitleSm" color="primary">
             {formattedArrivalDate}

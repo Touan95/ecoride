@@ -22,7 +22,10 @@ export interface User {
   acceptsPets: boolean;
   customRules: string[];
   credits: number;
+  rate: number | null;
 }
+
+export interface UserLight extends Pick<User, "id" | "avatarUrl" | "username" | "rate"> {}
 
 export interface UserEntityInterface extends User {
   ridesAsDriver: RideEntityInterface[];
@@ -66,6 +69,9 @@ export class UserEntity implements UserEntityInterface {
 
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   credits: number;
+
+  @Column({ type: 'decimal', precision: 10, scale: 2, nullable: true })
+  rate: number | null;
 
   @OneToMany(() => RideEntity, (ride) => ride.driver)
   ridesAsDriver: RideEntityInterface[];

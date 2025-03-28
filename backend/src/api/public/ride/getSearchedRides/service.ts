@@ -1,4 +1,4 @@
-import { RideEntityInterface } from "../../../../entities/ride.entity";
+import { SearchedRide } from "../../../../entities/ride.entity";
 import { PointDistanceFilter, RideRepositoryInterface } from "../../../../repositories/ride.repository";
 
 interface GetSearchedRidesService {
@@ -19,7 +19,7 @@ export const service = ({
   departureLatitude,
   departureLongitude,
   rideRepository
-}: GetSearchedRidesService): Promise<RideEntityInterface[]> => {
+}: GetSearchedRidesService): Promise<SearchedRide[]> => {
 
   const distanceFilter: PointDistanceFilter = {
     arrival: (arrivalLatitude && arrivalLongitude) ? {

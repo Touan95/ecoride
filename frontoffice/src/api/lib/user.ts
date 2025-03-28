@@ -2,7 +2,7 @@ import axiosInstance from '@/configs/axios';
 import { BaseAPIResponse } from './types';
 import { User, UserType } from '@/interfaces/user';
 import { Car, Energy } from '@/interfaces/car';
-import { Ride } from '@/interfaces/ride';
+import { SearchedRide } from '@/interfaces/ride';
 
 export interface ChangeUserTypeParams {
   userId: string;
@@ -70,8 +70,15 @@ export interface GetSearchedRidesParams {
   departureDate?: Date;
 }
 
+export enum RideStatus {
+  UPCOMING = 'upcoming',
+  ONGOING = 'ongoing',
+  COMPLETED = 'completed',
+  CANCELLED = 'cancelled'
+}
+
 interface GetSearchedRidesResponse {
-  rides: Ride[];
+  rides: SearchedRide[];
 }
 
 export const changeUserTypeRequest = async (params: ChangeUserTypeParams): Promise<BaseAPIResponse> => {

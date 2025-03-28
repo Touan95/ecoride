@@ -44,6 +44,7 @@ export default async ({
       credits: 20,
       customRules: [],
       type: UserType.PASSENGER,
+      rate: null
     });
   });
 

@@ -1,9 +1,9 @@
-import { Ride, RideEntityInterface } from "../../../../entities/ride.entity";
+import { SearchedRide } from "../../../../entities/ride.entity";
 
 export interface SerializedGetSearchedRides {
-  rides: Ride[];
+  rides: SearchedRide[];
 }
 
-export const serializer = (rides: RideEntityInterface[]): SerializedGetSearchedRides => {
+export const serializer = (rides: SearchedRide[]): SerializedGetSearchedRides => {
   return { rides };
 };

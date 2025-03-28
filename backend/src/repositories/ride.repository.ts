@@ -1,6 +1,6 @@
 import { Repository } from 'typeorm';
 import { AppDataSource } from '../loader/database';
-import { RideEntity, RideEntityInterface } from '../entities/ride.entity';
+import { RideEntity, RideEntityInterface, SearchedRide } from '../entities/ride.entity';
 
 interface DistanceProps { 
   latitude: number; 
@@ -20,7 +20,7 @@ interface GetAllRidesOptions {
 
 export type RideRepositoryInterface = Repository<RideEntity> & {
   createOne(ride: RideEntityInterface): Promise<RideEntityInterface>;
-  getAllForSearch({distanceFilter, departureDate}:GetAllRidesOptions): Promise<RideEntity[]>;
+  getAllForSearch({distanceFilter, departureDate}:GetAllRidesOptions): Promise<SearchedRide[]>;
 };
 
 export const RideRepository: RideRepositoryInterface = AppDataSource.getRepository(
@@ -31,8 +31,21 @@ export const RideRepository: RideRepositoryInterface = AppDataSource.getReposito
     await this.save(newRide);
     return newRide;
   },
-  async getAllForSearch({ distanceFilter, departureDate }: GetAllRidesOptions = {}): Promise<RideEntity[]> {
+  async getAllForSearch({ distanceFilter, departureDate }: GetAllRidesOptions = {}): Promise<SearchedRide[]> {
     const query = this.createQueryBuilder('ride')
+      .leftJoin('ride.driver', 'driver')
+      .addSelect([
+        'driver.id',
+        'driver.avatarUrl',
+        'driver.username',
+        'driver.rate'
+      ])
+      .leftJoin('ride.car', 'car')
+      .addSelect([
+        'car.id',
+        'car.seats',
+        'car.energy',
+      ]);
 
     if (distanceFilter?.departure && distanceFilter?.arrival) {
       query.andWhere(`

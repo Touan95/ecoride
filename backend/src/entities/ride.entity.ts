@@ -8,8 +8,8 @@ import {
   ManyToOne,
   PrimaryColumn,
 } from 'typeorm';
-import { UserEntity, UserEntityInterface } from './user.entity';
-import { CarEntity, CarEntityInterface } from './car.entity';
+import { UserEntity, UserEntityInterface, UserLight } from './user.entity';
+import { CarEntity, CarEntityInterface, CarLight } from './car.entity';
 import { Point } from 'geojson';
 
 export enum RideStatus {
@@ -42,6 +42,11 @@ export interface Ride {
   arrivalPoint: Point;
   departurePoint: Point;
   status: RideStatus;
+}
+
+export interface SearchedRide extends Ride {
+  car: CarLight
+  driver: UserLight
 }
 
 export interface RideEntityInterface extends Ride {
