@@ -147,3 +147,13 @@ export const getDriverRidesRequest = async (): Promise<DriverRide[]> => {
   const { data } = await axiosInstance.get(`/user/rides/driver`);
   return data.rides;
 };
+
+export const cancelPassengerRideRequest = async (rideId: string): Promise<BaseAPIResponse> => {
+  const { data } = await axiosInstance.patch(`/user/ride/${rideId}/cancel/passenger`);
+  return data;
+};
+
+export const cancelDriverRideRequest = async (rideId: string): Promise<BaseAPIResponse> => {
+  const { data } = await axiosInstance.patch(`/user/ride/${rideId}/cancel/driver`);
+  return data;
+};

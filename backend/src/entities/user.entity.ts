@@ -61,7 +61,7 @@ export class UserEntity implements UserEntityInterface {
   @Column({ type: 'jsonb', default: [] })
   customRules: string[];
 
-  @Column({ type: 'decimal', precision: 10, scale: 2 })
+  @Column()
   credits: number;
 
   @Column({ type: 'decimal', precision: 10, scale: 2, nullable: true })

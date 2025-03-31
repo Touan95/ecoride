@@ -28,4 +28,6 @@ export enum ResponseCodes {
   DELETE_CAR_SUCCESS = 'delete-car-success',
   CREATE_RIDE_SUCCESS = 'create-ride-success',
   BOOK_SEAT_SUCCESS = 'book-seat-success',
+  CANCEL_BOOKING_SUCCESS = 'book-booking-success',
+  CANCEL_RIDE_SUCCESS = 'book-ride-success',
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import { useGetDriverRides, useGetPassengerRides } from '@/api/hooks/useUserAPI';
+import { useCancelDriverRide, useCancelPassengerRide, useGetDriverRides, useGetPassengerRides } from '@/api/hooks/useUserAPI';
 import { Typography } from '@/components/atoms/Typography';
 import SectionContainer from '@/components/layout/SectionContainer';
 import { UserRideCard, UserRideCardProps } from '@/components/molecules/UserRideCard';
@@ -47,17 +47,19 @@ export default function UserRides() {
   const router = useRouter();
   const { data: passengerRides, isLoading: isPassengerRidesLoading } = useGetPassengerRides();
   const { data: driverRides, isLoading: isDriverRidesLoading } = useGetDriverRides();
+  const cancelPassengerRide = useCancelPassengerRide({});
+  const cancelDriverRide = useCancelDriverRide({});
 
   const onDetailClick = (id: string) => () => {
     router.push(`/rides/${id}`);
   };
 
   const onPassengerCancelClick = (id: string) => () => {
-    router.push(`/rides/${id}`);
+    cancelPassengerRide.mutate(id);
   };
 
   const onDriverCancelClick = (id: string) => () => {
-    router.push(`/rides/${id}`);
+    cancelDriverRide.mutate(id);
   };
 
   const passengerContent = useMemo(() => {
@@ -66,7 +68,14 @@ export default function UserRides() {
       return (
         <div className="flex flex-col gap-3">
           {passengerCardData.map((ride) => {
-            return <UserRideCard key={ride.id} {...ride} onDetailClick={onDetailClick(ride.id)} />;
+            return (
+              <UserRideCard
+                key={ride.id}
+                {...ride}
+                onDetailClick={onDetailClick(ride.id)}
+                onCancelClick={onPassengerCancelClick(ride.id)}
+              />
+            );
           })}
         </div>
       );
@@ -87,7 +96,9 @@ export default function UserRides() {
       return (
         <div className="flex flex-col gap-3">
           {driverCardData.map((ride) => {
-            return <UserRideCard key={ride.id} {...ride} onDetailClick={onDetailClick(ride.id)} />;
+            return (
+              <UserRideCard key={ride.id} {...ride} onDetailClick={onDetailClick(ride.id)} onCancelClick={onDriverCancelClick(ride.id)} />
+            );
           })}
         </div>
       );

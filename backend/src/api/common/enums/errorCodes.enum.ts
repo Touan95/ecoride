@@ -50,7 +50,11 @@ export enum ErrorCodes {
   //
   CAR_NOT_FOUND = 'car-not-found',
   RIDE_NOT_FOUND = 'ride-not-found',
+  RIDE_PASSENGER_NOT_FOUND = 'ride-passenger-not-found',
   USER_ALREADY_PASSENGER = 'user-already-passenger',
+  USER_NOT_PASSENGER = 'user-not-passenger',
+  USER_NOT_DRIVER = 'user-not-driver',
+  RIDE_BALANCE_ISSUE = 'ride-balance-issue',
   USER_IS_DRIVER = 'user-is-driver',
   RIDE_FULLY_BOOKED = 'ride-fully-booked',
   NOT_ENOUGH_CREDITS = 'not-enough-credits',

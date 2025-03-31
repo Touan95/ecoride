@@ -5,6 +5,8 @@ import {
   AddRideParams,
   addRideRequest,
   bookRideRequest,
+  cancelDriverRideRequest,
+  cancelPassengerRideRequest,
   ChangeDriverPreferencesParams,
   changeDriverPreferencesRequest,
   ChangeUserTypeParams,
@@ -26,10 +28,10 @@ export const useChangeUserTypeMutation = ({ onSuccess }: UseMutationOptions<Base
   const queryClient = useQueryClient();
   return useMutation<BaseAPIResponse, ErrorResponse, ChangeUserTypeParams>(changeUserTypeRequest, {
     onSuccess: (data, params, context) => {
-      queryClient.invalidateQueries({ queryKey: ['user', params.userId] });
       if (onSuccess) {
         onSuccess(data, params, context);
       }
+      queryClient.invalidateQueries({ queryKey: ['user', params.userId] });
     }
   });
 };
@@ -40,10 +42,10 @@ export const useChangeDriverPreferencesMutation = ({
   const queryClient = useQueryClient();
   return useMutation<BaseAPIResponse, ErrorResponse, ChangeDriverPreferencesParams>(changeDriverPreferencesRequest, {
     onSuccess: (data, params, context) => {
-      queryClient.invalidateQueries({ queryKey: ['user', params.userId] });
       if (onSuccess) {
         onSuccess(data, params, context);
       }
+      queryClient.invalidateQueries({ queryKey: ['user', params.userId] });
     }
   });
 };
@@ -78,11 +80,11 @@ export const useDeleteCarMutation = ({ onSuccess, onError }: UseMutationOptions<
   const queryClient = useQueryClient();
   return useMutation<BaseAPIResponse, ErrorResponse, DeleteCarParams>(deleteCarRequest, {
     onSuccess: (data, params, context) => {
-      queryClient.invalidateQueries('cars');
-      queryClient.invalidateQueries({ queryKey: ['car', params.carId] });
       if (onSuccess) {
         onSuccess(data, params, context);
       }
+      queryClient.invalidateQueries('cars');
+      queryClient.invalidateQueries({ queryKey: ['car', params.carId] });
     },
     onError
   });
@@ -100,7 +102,7 @@ export const useRideCar = ({ onSuccess, onError }: UseMutationOptions<BaseAPIRes
 };
 
 export const useGetSearchedRides = ({ ...params }: GetSearchedRidesParams) => {
-  return useQuery(['referent_issues', params], () => getSearchedRidesRequest(params));
+  return useQuery(['searched_rides', params], () => getSearchedRidesRequest(params));
 };
 
 export const useGetRideDetails = (rideId?: string) => {
@@ -113,8 +115,10 @@ export const useBookRide = ({ onSuccess, onError }: UseMutationOptions<BaseAPIRe
     onSuccess: (data, rideId, context) => {
       if (onSuccess) {
         onSuccess(data, rideId, context);
-        queryClient.invalidateQueries({ queryKey: ['ride', rideId] });
       }
+      queryClient.invalidateQueries({ queryKey: ['ride', rideId] });
+      queryClient.invalidateQueries({ queryKey: ['passenger_rides'] });
+      queryClient.invalidateQueries({ queryKey: ['driver_rides'] });
     },
     onError
   });
@@ -126,4 +130,34 @@ export const useGetPassengerRides = () => {
 
 export const useGetDriverRides = () => {
   return useQuery(['driver_rides'], () => getDriverRidesRequest());
+};
+
+export const useCancelPassengerRide = ({ onSuccess, onError }: UseMutationOptions<BaseAPIResponse, ErrorResponse, string>) => {
+  const queryClient = useQueryClient();
+  return useMutation((rideId) => cancelPassengerRideRequest(rideId), {
+    onSuccess: (data, rideId, context) => {
+      if (onSuccess) {
+        onSuccess(data, rideId, context);
+      }
+      queryClient.invalidateQueries({ queryKey: ['ride', rideId] });
+      queryClient.invalidateQueries({ queryKey: ['passenger_rides'] });
+      queryClient.invalidateQueries({ queryKey: ['driver_rides'] });
+    },
+    onError
+  });
+};
+
+export const useCancelDriverRide = ({ onSuccess, onError }: UseMutationOptions<BaseAPIResponse, ErrorResponse, string>) => {
+  const queryClient = useQueryClient();
+  return useMutation((rideId) => cancelDriverRideRequest(rideId), {
+    onSuccess: (data, rideId, context) => {
+      if (onSuccess) {
+        onSuccess(data, rideId, context);
+      }
+      queryClient.invalidateQueries({ queryKey: ['ride', rideId] });
+      queryClient.invalidateQueries({ queryKey: ['passenger_rides'] });
+      queryClient.invalidateQueries({ queryKey: ['driver_rides'] });
+    },
+    onError
+  });
 };

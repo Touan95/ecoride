@@ -78,9 +78,10 @@ export const service = async ({
       credits: newUserCredits
     }
   
+    const ridePassenger = await ridePassengerRepository.getOneByIds(userId, rideId);
 
     const newRidePassenger : RidePassengerEntityInterface = {
-      id: uuid(),
+      id: ridePassenger?.id ?? uuid(),
       canceled: false,
       createdAt: now,
       user,
@@ -88,8 +89,9 @@ export const service = async ({
       updatedAt: now
     }
 
+
     await rideRepository.updateRide(updateRide, transactionalEntityManager);
     await userRepository.updateUser(userId, updateUser, transactionalEntityManager);
-    await ridePassengerRepository.createOne(newRidePassenger, transactionalEntityManager);
+    await ridePassengerRepository.createOrUpdate(newRidePassenger, transactionalEntityManager);
   });
 };
