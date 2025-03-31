@@ -27,6 +27,7 @@ export type RideRepositoryInterface = Repository<RideEntity> & {
   getOneById(id: string): Promise<RideEntityInterface | null> 
   getAllForSearch({distanceFilter, departureDate}:GetAllRidesOptions): Promise<SearchedRide[]>;
   updateRide(ride: SavedRide, entityManager?: EntityManager): Promise<void>
+  getAllByDriverId(driverId: string): Promise<RideEntityInterface[]>
 };
 
 export const RideRepository: RideRepositoryInterface = AppDataSource.getRepository(
@@ -117,5 +118,20 @@ export const RideRepository: RideRepositoryInterface = AppDataSource.getReposito
     const rideEntity = this.create(ride);
 
     await manager.save(RideEntity, rideEntity)
+  },
+  async getAllByDriverId(driverId: string): Promise<RideEntityInterface[]> {
+    const query = this.createQueryBuilder('ride')
+      .leftJoin('ride.driver', 'driver')
+      .addSelect([
+        'driver.id',
+      ])
+      .leftJoin('ride.car', 'car')
+      .addSelect([
+        'car.seats',
+      ])
+      .where('driver.id = :driverId', { driverId })
+      .orderBy('ride.departure_date', 'DESC'); 
+
+    return query.getMany();
   }
 });

@@ -23,3 +23,7 @@ export interface PublicRideDetails extends Ride {
   car: Car;
   driver: User;
 }
+
+export interface DriverRide extends Ride {
+  carSeats: number;
+}

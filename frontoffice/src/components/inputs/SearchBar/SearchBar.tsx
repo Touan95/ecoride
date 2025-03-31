@@ -13,7 +13,6 @@ interface SearchInputProps {
 export const SearchBar = ({ placeholder }: SearchInputProps) => {
   const router = useRouter();
   const [selectedAddress, setSelectedAddress] = useState<AddressItemLight | undefined>(undefined);
-  console.log('🚀 ~ selectedAddress:', selectedAddress);
 
   const onDepartureSelect = (_location: RideLocation, rawAddress: AddressItemLight) => {
     setSelectedAddress(rawAddress);

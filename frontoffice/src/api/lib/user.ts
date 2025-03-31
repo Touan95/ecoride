@@ -2,7 +2,8 @@ import axiosInstance from '@/configs/axios';
 import { BaseAPIResponse } from './types';
 import { User, UserType } from '@/interfaces/user';
 import { Car, Energy } from '@/interfaces/car';
-import { PublicRideDetails, SearchedRide } from '@/interfaces/ride';
+import { DriverRide, PublicRideDetails, SearchedRide } from '@/interfaces/ride';
+import { PassengerRide } from '@/interfaces/ridePassenger';
 
 export interface ChangeUserTypeParams {
   userId: string;
@@ -135,4 +136,14 @@ export const getRideDetailsRequest = async (rideId: string): Promise<PublicRideD
 export const bookRideRequest = async (rideId: string): Promise<BaseAPIResponse> => {
   const { data } = await axiosInstance.put(`/user/ride/${rideId}/book`);
   return data;
+};
+
+export const getPassengerRidesRequest = async (): Promise<PassengerRide[]> => {
+  const { data } = await axiosInstance.get(`/user/rides/passenger`);
+  return data.rides;
+};
+
+export const getDriverRidesRequest = async (): Promise<DriverRide[]> => {
+  const { data } = await axiosInstance.get(`/user/rides/driver`);
+  return data.rides;
 };

@@ -31,7 +31,6 @@ const rideApiToRideCard = (apiRide: SearchedRide): RideCardProps => {
     driverRate: apiRide.driver?.rate ?? undefined,
     duration,
     isGreen,
-    onDetailClick: () => console.log('clicked'),
     price: apiRide.price,
     seatsLeft
   };

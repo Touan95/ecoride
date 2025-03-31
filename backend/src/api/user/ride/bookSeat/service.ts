@@ -54,9 +54,7 @@ export const service = async ({
   }
   
   const currentUserCredits = user.credits
-  console.log("🚀 ~ currentUserCredits:", currentUserCredits)
   const ridePrice = ride.price
-  console.log("🚀 ~ ridePrice:", ridePrice)
   if (currentUserCredits < ridePrice) {
     throw userInsufficientCreditsError();
   }
@@ -65,9 +63,7 @@ export const service = async ({
     const newPassengers = [...currentPassengers, user]
     const currentRideBalance = ride.balance
     const newUserCredits = currentUserCredits - ridePrice
-    console.log("🚀 ~ newUserCredits:", newUserCredits)
     const newRideBalance = currentRideBalance + ridePrice
-    console.log("🚀 ~ newRideBalance:", newRideBalance)
     const now = new Date()
   
     const updateRide : UpdateRide = {

@@ -146,7 +146,6 @@ const AddressAutocompleteInput = ({
       return;
     }
 
-    console.log('🚀 ~ location:', location.address?.town);
     const rideLocation: RideLocation = {
       address: location.display_name,
       postalCode: location.address?.postcode ?? null,

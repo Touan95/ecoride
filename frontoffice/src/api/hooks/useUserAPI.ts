@@ -11,7 +11,9 @@ import {
   changeUserTypeRequest,
   DeleteCarParams,
   deleteCarRequest,
+  getDriverRidesRequest,
   getOneUserRequest,
+  getPassengerRidesRequest,
   getRideDetailsRequest,
   GetSearchedRidesParams,
   getSearchedRidesRequest,
@@ -116,4 +118,12 @@ export const useBookRide = ({ onSuccess, onError }: UseMutationOptions<BaseAPIRe
     },
     onError
   });
+};
+
+export const useGetPassengerRides = () => {
+  return useQuery(['passenger_rides'], () => getPassengerRidesRequest());
+};
+
+export const useGetDriverRides = () => {
+  return useQuery(['driver_rides'], () => getDriverRidesRequest());
 };

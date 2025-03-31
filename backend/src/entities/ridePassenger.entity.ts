@@ -16,7 +16,6 @@ export interface RidePassenger {
   updatedAt: Date;
   canceled: boolean;
 }
-
 export interface RidePassengerEntityInterface extends RidePassenger {
   user: UserEntityInterface;
   ride: RideEntityInterface;
