@@ -19,6 +19,7 @@ import { isCarGreen } from '@/utils/car';
 import { useParams } from 'next/navigation';
 import { useBookRide, useGetRideDetails } from '@/api/hooks/useUserAPI';
 import { DEFAULT_AVATAR_URL } from '@/interfaces/user';
+import { RideStatus } from '@/api/lib/user';
 
 const rideApiToItinerary = (apiRide: PublicRideDetails): ItineraryProps => {
   return {
@@ -70,6 +71,17 @@ export default function Rides() {
   });
 
   const isGreen = ride ? isCarGreen(ride.car) : false;
+  const isSeatAvailable = ride ? ride.car.seats - (ride.reservedSeats ?? 0) > 0 : false;
+  const isUserTheDriver = isLogged && user?.id === ride?.driver.id;
+
+  const canStartRide = useMemo(() => {
+    if (!ride?.departureDate) return false;
+
+    const departureTime = new Date(ride.departureDate).getTime();
+    const now = Date.now();
+
+    return now >= departureTime - 60 * 60 * 1000 && now < departureTime;
+  }, [ride?.departureDate]);
 
   const itineraryData = useMemo(() => {
     if (ride) {
@@ -95,9 +107,6 @@ export default function Rides() {
     }
   }, [ride]);
 
-  const isSeatAvailable = ride ? ride.car.seats - (ride.reservedSeats ?? 0) > 0 : false;
-  const isUserTheDriver = isLogged && user?.id === ride?.driver.id;
-
   const openLoginModal = () => {
     setLoginModalOpen(true);
   };
@@ -120,6 +129,10 @@ export default function Rides() {
     } else {
       openLoginModal();
     }
+  };
+
+  const onStartRide = () => {
+    console.log('🚀 ~ onStartRide:');
   };
 
   const onConfirmBooking = () => {
@@ -152,6 +165,42 @@ export default function Rides() {
     registerMutation.mutate(data);
   };
 
+  const renderAction = useMemo(() => {
+    if (isUserTheDriver && !canStartRide) {
+      return (
+        <Typography variant="cardTitleSm" align="center">
+          Vous êtes le conducteur. Vous pourrez démarrer ce trajet jusqu’à 1 heure avant l’heure de départ prévue.
+        </Typography>
+      );
+    } else if (isUserTheDriver && canStartRide) {
+      return <Button onClick={onStartRide}>{"C'est parti !"}</Button>;
+    } else if (ride?.status === RideStatus.CANCELLED) {
+      return (
+        <Typography variant="cardTitleSm" align="center">
+          Le conducteur a annulé ce trajet
+        </Typography>
+      );
+    } else if (ride?.status === RideStatus.ONGOING) {
+      return (
+        <Typography variant="cardTitle" align="center">
+          Ce co-voiturage est sur la route !
+        </Typography>
+      );
+    } else if (ride?.status === RideStatus.COMPLETED) {
+      return (
+        <Typography variant="cardTitle" align="center">
+          Ce trajet est fini !
+        </Typography>
+      );
+    } else {
+      return (
+        <Button disabled={!isSeatAvailable} onClick={onBookClick}>
+          Réserver
+        </Button>
+      );
+    }
+  }, [isUserTheDriver, canStartRide, ride?.status, isSeatAvailable, onBookClick, onStartRide]);
+
   if (!ride) {
     return null;
   }
@@ -169,15 +218,7 @@ export default function Rides() {
           <div className="flex flex-col gap-4">
             {infoData && <InfoCard {...infoData} />}
             <PriceCard price={ride.price} />
-            {isUserTheDriver ? (
-              <Typography variant="cardTitle" align="center">
-                Vous êtes le conducteur
-              </Typography>
-            ) : (
-              <Button disabled={!isSeatAvailable} onClick={onBookClick}>
-                Réserver
-              </Button>
-            )}
+            {renderAction}
           </div>
         </div>
       </SectionContainer>

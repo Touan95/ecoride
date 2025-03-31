@@ -116,6 +116,7 @@ export default function UserRides() {
   return (
     <>
       <SectionContainer className="flex flex-col gap-5 my-10">
+        <Typography variant="title">Vos trajets</Typography>
         <Tabs defaultValue="passenger" className="w-full gap-5">
           <TabsList className="grid w-full grid-cols-2 gap-4">
             <TabsTrigger value="passenger">
