@@ -11,7 +11,7 @@ export const service = async ({
   rideId,
   rideRepository,
 }: GetRideDetailsServiceOptions): Promise<RideEntityInterface> => {
-  const ride = await rideRepository.getOneById(rideId);
+  const ride = await rideRepository.getOneByIdForDetails(rideId);
   if (!ride) {
     throw rideNotFoundError();
   }

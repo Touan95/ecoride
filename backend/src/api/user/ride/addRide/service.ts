@@ -72,7 +72,8 @@ export const service = async ({
       type: 'Point',
       coordinates: [arrivalLocation.coordinate.longitude, arrivalLocation.coordinate.latitude],
     },
-    passengers:[]
+    passengers:[],
+    balance:0
   });
 
   return newRide;

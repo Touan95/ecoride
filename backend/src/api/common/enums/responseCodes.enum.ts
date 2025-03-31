@@ -21,11 +21,11 @@ export enum ResponseCodes {
   REQUEST_ISSUE_APPROVED_SUCCESSFULLY = 'request-issue-approved-successfully',
   REQUEST_ISSUE_DISAPPROVED_SUCCESSFULLY = 'request-issue-disapproved-successfully',
   //
-  CREATE_TRANSACTION_SUCCESS = 'create-transaction-success',
   USER_TYPE_CHANGE_SUCCESS = 'user-type-change-success',
   DRIVER_PREFERENCES_CHANGE_SUCCESS = 'driver-preferences-change-success',
   CREATE_CAR_SUCCESS = 'create-car-success',
   UPDATE_CAR_SUCCESS = 'update-car-success',
   DELETE_CAR_SUCCESS = 'delete-car-success',
   CREATE_RIDE_SUCCESS = 'create-ride-success',
+  BOOK_SEAT_SUCCESS = 'book-seat-success',
 }

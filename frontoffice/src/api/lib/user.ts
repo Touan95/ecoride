@@ -131,3 +131,8 @@ export const getRideDetailsRequest = async (rideId: string): Promise<PublicRideD
   const { data } = await axiosInstance.get(`/ride/${rideId}`);
   return data;
 };
+
+export const bookRideRequest = async (rideId: string): Promise<BaseAPIResponse> => {
+  const { data } = await axiosInstance.put(`/user/ride/${rideId}/book`);
+  return data;
+};

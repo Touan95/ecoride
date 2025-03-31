@@ -1,6 +1,9 @@
-import { Repository } from 'typeorm';
+import { EntityManager, Repository } from 'typeorm';
 import { AppDataSource } from '../loader/database';
 import { RideEntity, RideEntityInterface, SearchedRide } from '../entities/ride.entity';
+
+export type UpdateRide = Partial<Omit<RideEntity, 'id'>>;
+export type SavedRide = Partial<RideEntity>;
 
 interface DistanceProps { 
   latitude: number; 
@@ -20,8 +23,10 @@ interface GetAllRidesOptions {
 
 export type RideRepositoryInterface = Repository<RideEntity> & {
   createOne(ride: RideEntityInterface): Promise<RideEntityInterface>;
+  getOneByIdForDetails(id: string): Promise<RideEntityInterface | null> 
   getOneById(id: string): Promise<RideEntityInterface | null> 
   getAllForSearch({distanceFilter, departureDate}:GetAllRidesOptions): Promise<SearchedRide[]>;
+  updateRide(ride: SavedRide, entityManager?: EntityManager): Promise<void>
 };
 
 export const RideRepository: RideRepositoryInterface = AppDataSource.getRepository(
@@ -32,11 +37,22 @@ export const RideRepository: RideRepositoryInterface = AppDataSource.getReposito
     await this.save(newRide);
     return newRide;
   },
-  getOneById(id: string): Promise<RideEntityInterface | null> {
+  getOneByIdForDetails(id: string): Promise<RideEntityInterface | null> {
       const query = this.createQueryBuilder('ride')
         .where('ride.id = :id', { id })
         .leftJoinAndSelect('ride.driver', 'driver')
         .leftJoinAndSelect('ride.car', 'car')
+        
+        const user = query.getOne();
+        
+        return user;
+      },
+      getOneById(id: string): Promise<RideEntityInterface | null> {
+        const query = this.createQueryBuilder('ride')
+        .where('ride.id = :id', { id })
+        .leftJoinAndSelect('ride.passengers', 'passengers')
+        .leftJoinAndSelect('ride.car', 'car')
+        .leftJoinAndSelect('ride.driver', 'driver')
         
       const user = query.getOne();
   
@@ -95,5 +111,11 @@ export const RideRepository: RideRepositoryInterface = AppDataSource.getReposito
     }
 
     return query.getMany();
+  },
+  async updateRide(ride: SavedRide, entityManager?: EntityManager): Promise<void> {
+    const manager = entityManager ?? this.manager;
+    const rideEntity = this.create(ride);
+
+    await manager.save(RideEntity, rideEntity)
   }
 });

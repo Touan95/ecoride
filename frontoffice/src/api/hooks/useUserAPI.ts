@@ -4,6 +4,7 @@ import {
   addCarRequest,
   AddRideParams,
   addRideRequest,
+  bookRideRequest,
   ChangeDriverPreferencesParams,
   changeDriverPreferencesRequest,
   ChangeUserTypeParams,
@@ -102,4 +103,17 @@ export const useGetSearchedRides = ({ ...params }: GetSearchedRidesParams) => {
 
 export const useGetRideDetails = (rideId?: string) => {
   return useQuery(['ride', rideId], () => getRideDetailsRequest(rideId ?? ''), { enabled: !!rideId });
+};
+
+export const useBookRide = ({ onSuccess, onError }: UseMutationOptions<BaseAPIResponse, ErrorResponse, string>) => {
+  const queryClient = useQueryClient();
+  return useMutation((rideId) => bookRideRequest(rideId), {
+    onSuccess: (data, rideId, context) => {
+      if (onSuccess) {
+        onSuccess(data, rideId, context);
+        queryClient.invalidateQueries({ queryKey: ['ride', rideId] });
+      }
+    },
+    onError
+  });
 };

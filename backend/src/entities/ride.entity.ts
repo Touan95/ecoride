@@ -35,6 +35,7 @@ export interface Ride {
   id: string;
   reservedSeats: number | null;
   price: number;
+  balance: number;
   departureDate: Date;
   arrivalDate: Date;
   arrivalLocation: RideLocation;
@@ -70,6 +71,9 @@ export class RideEntity implements RideEntityInterface {
 
   @Column()
   price: number;
+
+  @Column()
+  balance: number;
 
   @Column()
   @Index('ride_departure_date_index', ['departureDate'])
@@ -117,7 +121,7 @@ export class RideEntity implements RideEntityInterface {
 
   @ManyToMany(() => UserEntity)
   @JoinTable({
-    name: 'ride_passenger', // Nom de la table de jointure
+    name: 'ride_user_passenger', // Nom de la table de jointure
     joinColumn: {
       name: 'rideId',
       referencedColumnName: 'id',

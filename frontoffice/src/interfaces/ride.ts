@@ -11,6 +11,7 @@ export interface Ride {
   arrivalLocation: RideLocation;
   departureLocation: RideLocation;
   status: RideStatus;
+  balance: number;
 }
 
 export interface SearchedRide extends Ride {

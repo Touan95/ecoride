@@ -1,8 +1,6 @@
-import { Column, Entity, Index, ManyToMany, OneToMany, PrimaryColumn } from 'typeorm';
-import { RideEntity, RideEntityInterface } from './ride.entity';
+import { Column, Entity, Index, OneToMany, PrimaryColumn } from 'typeorm';
 import { CarEntity, CarEntityInterface } from './car.entity';
 import { RideHistoryEntity, RideHistoryEntityInterface } from './rideHistory.entity';
-import { TransactionEntity, TransactionEntityInterface } from './transaction.entity';
 
 export enum UserType {
   DRIVER = 'driver',
@@ -28,12 +26,8 @@ export interface User {
 export interface UserLight extends Pick<User, "id" | "avatarUrl" | "username" | "rate"> {}
 
 export interface UserEntityInterface extends User {
-  ridesAsDriver: RideEntityInterface[];
-  ridesAsPassenger: RideEntityInterface[];
   cars: CarEntityInterface[];
   rideHistory: RideHistoryEntityInterface[];
-  transactionAsPayer: TransactionEntityInterface[];
-  transactionAsReceiver: TransactionEntityInterface[];
 }
 
 @Entity('user')
@@ -73,21 +67,9 @@ export class UserEntity implements UserEntityInterface {
   @Column({ type: 'decimal', precision: 10, scale: 2, nullable: true })
   rate: number | null;
 
-  @OneToMany(() => RideEntity, (ride) => ride.driver)
-  ridesAsDriver: RideEntityInterface[];
-
-  @ManyToMany(() => RideEntity, (ride) => ride.passengers)
-  ridesAsPassenger: RideEntityInterface[];
-
   @OneToMany(() => CarEntity, (car) => car.owner, { cascade: true, onDelete: 'CASCADE' })
   cars: CarEntity[];
 
   @OneToMany(() => RideHistoryEntity, (history) => history.user)
   rideHistory: RideHistoryEntity[];
-
-  @OneToMany(() => TransactionEntity, (transaction) => transaction.payer)
-  transactionAsPayer: TransactionEntity[];
-
-  @OneToMany(() => TransactionEntity, (transaction) => transaction.receiver)
-  transactionAsReceiver: TransactionEntity[];
 }

@@ -17,7 +17,7 @@ import { LoginSchemaType, RegisterSchemaType } from '@/schemas/auth';
 import { useAuthContext } from '@/contexts/auth';
 import { isCarGreen } from '@/utils/car';
 import { useParams } from 'next/navigation';
-import { useGetRideDetails } from '@/api/hooks/useUserAPI';
+import { useBookRide, useGetRideDetails } from '@/api/hooks/useUserAPI';
 import { DEFAULT_AVATAR_URL } from '@/interfaces/user';
 
 const rideApiToItinerary = (apiRide: PublicRideDetails): ItineraryProps => {
@@ -56,13 +56,18 @@ const rideApiToDriverCard = (apiRide: PublicRideDetails): DriverCardProps => {
 };
 
 export default function Rides() {
-  const { saveToken } = useAuthContext();
-  const isConnected = false;
+  const { saveToken, isLogged, user } = useAuthContext();
   const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
   const [confirmBookingModalOpen, setConfirmBookingModalOpen] = useState<boolean>(false);
   const { id: rideId } = useParams<{ id: string }>();
 
-  const { data: ride } = useGetRideDetails(rideId);
+  const { data: ride, refetch: refetchRide } = useGetRideDetails(rideId);
+
+  const bookRide = useBookRide({
+    onSuccess: () => {
+      refetchRide();
+    }
+  });
 
   const isGreen = ride ? isCarGreen(ride.car) : false;
 
@@ -90,7 +95,8 @@ export default function Rides() {
     }
   }, [ride]);
 
-  const isAvailable = ride ? ride.car.seats - (ride.reservedSeats ?? 0) > 0 : false;
+  const isSeatAvailable = ride ? ride.car.seats - (ride.reservedSeats ?? 0) > 0 : false;
+  const isUserTheDriver = isLogged && user?.id === ride?.driver.id;
 
   const openLoginModal = () => {
     setLoginModalOpen(true);
@@ -109,7 +115,7 @@ export default function Rides() {
   };
 
   const onBookClick = () => {
-    if (isConnected) {
+    if (isLogged) {
       openConfirmBookingModal();
     } else {
       openLoginModal();
@@ -117,6 +123,7 @@ export default function Rides() {
   };
 
   const onConfirmBooking = () => {
+    bookRide.mutate(rideId);
     console.log('Booking confirmed');
   };
 
@@ -162,9 +169,15 @@ export default function Rides() {
           <div className="flex flex-col gap-4">
             {infoData && <InfoCard {...infoData} />}
             <PriceCard price={ride.price} />
-            <Button disabled={!isAvailable} onClick={onBookClick}>
-              Réserver
-            </Button>
+            {isUserTheDriver ? (
+              <Typography variant="cardTitle" align="center">
+                Vous êtes le conducteur
+              </Typography>
+            ) : (
+              <Button disabled={!isSeatAvailable} onClick={onBookClick}>
+                Réserver
+              </Button>
+            )}
           </div>
         </div>
       </SectionContainer>
