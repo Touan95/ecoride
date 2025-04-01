@@ -6,6 +6,11 @@ import { processTransaction } from '../../../../core/database/processTransaction
 import userNotDriverError from '../../../common/errors/userNotDriver.error';
 import rideBalanceIssueError from '../../../common/errors/rideBalanceIssue.error';
 import { RideStatus } from '../../../../entities/ride.entity';
+import { emailSender } from '../../../../services/emailSender';
+import dayjs from 'dayjs';
+import 'dayjs/locale/fr';
+
+dayjs.locale('fr')
 
 const checkBalanceGoodForRefund = (ridePrice: number, balance: number, passengerCount: number) => {
   return (balance / passengerCount === ridePrice)
@@ -44,6 +49,8 @@ export const service = async ({
     throw rideBalanceIssueError();
   }
 
+  const passengers = ride.passengers
+
   await processTransaction(async (transactionalEntityManager) => {
     
     const updateRide : UpdateRide = {
@@ -55,7 +62,6 @@ export const service = async ({
     
     await rideRepository.updateRide(updateRide, transactionalEntityManager);
     
-    const passengers = ride.passengers
     const ridePrice = ride.price
 
     passengers.map(async (passenger)=>{
@@ -71,4 +77,18 @@ export const service = async ({
     })
     
   });
+
+  const formattedEmailDate = dayjs(ride.departureDate).format('dddd D MMMM à HH[h]mm');
+
+  passengers.map(async (passenger)=>{
+    void emailSender.rideCancelledByDriver({
+      arrivalCity: ride.arrivalLocation.city ?? '', 
+      departureCity: ride.departureLocation.city ?? '',
+      departureDate: formattedEmailDate,
+      email: passenger.email,
+      username: passenger.username
+    })
+  })
+
+  
 };

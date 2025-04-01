@@ -6,6 +6,7 @@ import duration from 'dayjs/plugin/duration';
 import 'dayjs/locale/fr';
 import { IconType } from 'react-icons';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { formatDuration } from '@/utils/durations';
 
 dayjs.locale('fr');
 dayjs.extend(duration);
@@ -50,7 +51,7 @@ const InfoCardItem = ({ label, value, bigValue, valueIcon: Icon, valueIconToolti
 };
 
 export const InfoCard = ({ duration, isGreen, carBrand, carModel, carEnergy, seats, reservedSeats = 0 }: InfoCardProps) => {
-  const formattedDuration = dayjs.duration(duration).format('H:mm');
+  const formattedDuration = formatDuration(duration);
 
   const seatsLeft = seats - reservedSeats;
 

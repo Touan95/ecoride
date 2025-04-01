@@ -5,8 +5,7 @@ import handlebars from 'handlebars';
 const ENCODING = 'utf8';
 const PARTIAL_NAME = 'layout';
 
-const INTERNAL_TEMPLATE_PATH = resolve(__dirname, '../../static/templates/internal.template.hbs');
-const PUBLIC_TEMPLATE_PATH = resolve(__dirname, '../../static/templates/public.template.hbs');
+const TEMPLATE_PATH = resolve(__dirname, '../../static/templates/main.template.hbs');
 
 export interface DefaultParamsEmailRenderer {
   email: string;
@@ -17,7 +16,6 @@ export interface DefaultParamsEmailRenderer {
 export type TemplateParams = { [key: string]: any } & DefaultParamsEmailRenderer;
 
 interface EmailRendererOptions {
-  baseTemplate: 'internal' | 'public';
   subTemplatePath: string;
   params?: TemplateParams;
 }
@@ -29,14 +27,11 @@ interface EmailRendererOptions {
  * @param params params passed into template
  */
 export async function emailRenderer({
-  baseTemplate,
   subTemplatePath,
   params,
 }: EmailRendererOptions): Promise<string> {
-  const BASE_TEMPLATE_PATH =
-    baseTemplate === 'internal' ? INTERNAL_TEMPLATE_PATH : PUBLIC_TEMPLATE_PATH;
 
-  const baseSource = await promises.readFile(BASE_TEMPLATE_PATH, ENCODING);
+  const baseSource = await promises.readFile(TEMPLATE_PATH, ENCODING);
   const templateSource = await promises.readFile(subTemplatePath, ENCODING);
 
   handlebars.registerPartial(PARTIAL_NAME, templateSource);

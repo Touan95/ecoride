@@ -119,6 +119,7 @@ export const useBookRide = ({ onSuccess, onError }: UseMutationOptions<BaseAPIRe
       queryClient.invalidateQueries({ queryKey: ['ride', rideId] });
       queryClient.invalidateQueries({ queryKey: ['passenger_rides'] });
       queryClient.invalidateQueries({ queryKey: ['driver_rides'] });
+      queryClient.invalidateQueries({ queryKey: ['user'] });
     },
     onError
   });
@@ -142,6 +143,7 @@ export const useCancelPassengerRide = ({ onSuccess, onError }: UseMutationOption
       queryClient.invalidateQueries({ queryKey: ['ride', rideId] });
       queryClient.invalidateQueries({ queryKey: ['passenger_rides'] });
       queryClient.invalidateQueries({ queryKey: ['driver_rides'] });
+      queryClient.invalidateQueries({ queryKey: ['user'] });
     },
     onError
   });
