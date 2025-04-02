@@ -12,6 +12,8 @@ export interface Ride {
   departureLocation: RideLocation;
   status: RideStatus;
   balance: number;
+  startDate: Date | null;
+  endDate: Date | null;
 }
 
 export interface SearchedRide extends Ride {
@@ -22,6 +24,7 @@ export interface SearchedRide extends Ride {
 export interface PublicRideDetails extends Ride {
   car: Car;
   driver: User;
+  passengerIds: string[];
 }
 
 export interface DriverRide extends Ride {

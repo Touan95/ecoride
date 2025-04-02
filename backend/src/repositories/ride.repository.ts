@@ -42,7 +42,9 @@ export const RideRepository: RideRepositoryInterface = AppDataSource.getReposito
     const query = this.createQueryBuilder('ride')
       .where('ride.id = :id', { id })
       .leftJoinAndSelect('ride.driver', 'driver')
-      .leftJoinAndSelect('ride.car', 'car');
+      .leftJoinAndSelect('ride.car', 'car')
+      .leftJoin('ride.passengers', 'passengers')
+      .addSelect(['passengers.id']);
 
     const user = query.getOne();
 

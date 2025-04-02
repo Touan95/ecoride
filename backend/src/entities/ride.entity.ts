@@ -38,6 +38,8 @@ export interface Ride {
   balance: number;
   departureDate: Date;
   arrivalDate: Date;
+  startDate: Date | null;
+  endDate: Date | null;
   arrivalLocation: RideLocation;
   departureLocation: RideLocation;
   arrivalPoint: Point;
@@ -53,6 +55,7 @@ export interface SearchedRide extends Ride {
 export interface PublicRideDetails extends Ride {
   car: CarEntityInterface;
   driver: UserEntityInterface;
+  passengerIds: string[];
 }
 
 export interface RideEntityInterface extends Ride {
@@ -81,6 +84,12 @@ export class RideEntity implements RideEntityInterface {
 
   @Column()
   arrivalDate: Date;
+
+  @Column({ type: 'timestamp', nullable: true })
+  startDate: Date | null;
+
+  @Column({ type: 'timestamp', nullable: true })
+  endDate: Date | null;
 
   @Column('geometry', {
     spatialFeatureType: 'Point',

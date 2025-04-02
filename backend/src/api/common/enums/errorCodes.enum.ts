@@ -58,4 +58,7 @@ export enum ErrorCodes {
   USER_IS_DRIVER = 'user-is-driver',
   RIDE_FULLY_BOOKED = 'ride-fully-booked',
   NOT_ENOUGH_CREDITS = 'not-enough-credits',
+  RIDE_START_TOO_SOON = 'ride-start-too-soon',
+  RIDE_NOT_UPCOMING = 'ride-not-upcoming',
+  RIDE_NOT_ONGOING = 'ride-not-ongoing',
 }

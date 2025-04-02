@@ -13,6 +13,7 @@ import {
   changeUserTypeRequest,
   DeleteCarParams,
   deleteCarRequest,
+  endRideRequest,
   getDriverRidesRequest,
   getOneUserRequest,
   getPassengerRidesRequest,
@@ -20,7 +21,8 @@ import {
   GetSearchedRidesParams,
   getSearchedRidesRequest,
   PutCarParams,
-  putCarRequest
+  putCarRequest,
+  startRideRequest
 } from '../lib/user';
 import { BaseAPIResponse, ErrorResponse } from '../lib/types';
 
@@ -152,6 +154,36 @@ export const useCancelPassengerRide = ({ onSuccess, onError }: UseMutationOption
 export const useCancelDriverRide = ({ onSuccess, onError }: UseMutationOptions<BaseAPIResponse, ErrorResponse, string>) => {
   const queryClient = useQueryClient();
   return useMutation((rideId) => cancelDriverRideRequest(rideId), {
+    onSuccess: (data, rideId, context) => {
+      if (onSuccess) {
+        onSuccess(data, rideId, context);
+      }
+      queryClient.invalidateQueries({ queryKey: ['ride', rideId] });
+      queryClient.invalidateQueries({ queryKey: ['passenger_rides'] });
+      queryClient.invalidateQueries({ queryKey: ['driver_rides'] });
+    },
+    onError
+  });
+};
+
+export const useStartRide = ({ onSuccess, onError }: UseMutationOptions<BaseAPIResponse, ErrorResponse, string>) => {
+  const queryClient = useQueryClient();
+  return useMutation((rideId) => startRideRequest(rideId), {
+    onSuccess: (data, rideId, context) => {
+      if (onSuccess) {
+        onSuccess(data, rideId, context);
+      }
+      queryClient.invalidateQueries({ queryKey: ['ride', rideId] });
+      queryClient.invalidateQueries({ queryKey: ['passenger_rides'] });
+      queryClient.invalidateQueries({ queryKey: ['driver_rides'] });
+    },
+    onError
+  });
+};
+
+export const useEndRide = ({ onSuccess, onError }: UseMutationOptions<BaseAPIResponse, ErrorResponse, string>) => {
+  const queryClient = useQueryClient();
+  return useMutation((rideId) => endRideRequest(rideId), {
     onSuccess: (data, rideId, context) => {
       if (onSuccess) {
         onSuccess(data, rideId, context);
