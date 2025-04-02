@@ -15,12 +15,18 @@ export default async (
   next: NextFunction,
 ): Promise<Response | void> => {
   try {
-    const { arrivalLatitude, arrivalLongitude, departureDate, departureLatitude, departureLongitude } = req.query;
+    const {
+      arrivalLatitude,
+      arrivalLongitude,
+      departureDate,
+      departureLatitude,
+      departureLongitude,
+    } = req.query;
     const rides = await service({
       arrivalLatitude,
-      arrivalLongitude, 
-      departureDate, 
-      departureLatitude, 
+      arrivalLongitude,
+      departureDate,
+      departureLatitude,
       departureLongitude,
       rideRepository: AppDataSource.manager.withRepository(RideRepository),
     });

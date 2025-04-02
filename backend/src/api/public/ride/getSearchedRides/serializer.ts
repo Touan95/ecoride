@@ -1,4 +1,4 @@
-import { SearchedRide } from "../../../../entities/ride.entity";
+import { SearchedRide } from '../../../../entities/ride.entity';
 
 export interface SerializedGetSearchedRides {
   rides: SearchedRide[];

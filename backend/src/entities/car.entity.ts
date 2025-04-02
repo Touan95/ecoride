@@ -20,7 +20,7 @@ export interface Car {
   energy: Energy;
 }
 
-export interface CarLight extends Pick<Car, "id" | "energy" | "seats"> {}
+export type CarLight = Pick<Car, 'id' | 'energy' | 'seats'>;
 
 export interface CarEntityInterface extends Car {
   owner: UserEntityInterface;

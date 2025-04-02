@@ -2,7 +2,7 @@
 
 import { Typography } from '@/components/atoms/Typography';
 import { Button } from '@/components/molecules/Button';
-import AddressAutocompleteInput, { AddressItemLight } from '../AddressAutocompleteInput/AddressAutocompleteInput';
+import AddressAutocompleteInput, { AddressItemLight, OnSelectAddressProps } from '../AddressAutocompleteInput/AddressAutocompleteInput';
 import { useState } from 'react';
 import { RideLocation } from '@/api/lib/user';
 import { DateInput } from '@/components/inputs/DateInput';
@@ -17,10 +17,10 @@ export const SearchRides = ({ initialDeparture, onSearch }: SearchRidesProps) =>
   const [departureLocation, setDepartureLocation] = useState<RideLocation | undefined>(undefined);
   const [arrivalLocation, setArrivalLocation] = useState<RideLocation | undefined>(undefined);
   const [departureDate, setDepartureDate] = useState<Date | undefined>(undefined);
-  const onDepartureSelect = (location?: RideLocation) => {
+  const onDepartureSelect = ({ location }: OnSelectAddressProps) => {
     setDepartureLocation(location);
   };
-  const onArrivalSelect = (location?: RideLocation) => {
+  const onArrivalSelect = ({ location }: OnSelectAddressProps) => {
     setArrivalLocation(location);
   };
   const onDateSelect = (date: Date | undefined) => {

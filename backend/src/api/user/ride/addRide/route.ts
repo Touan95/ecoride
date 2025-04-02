@@ -18,7 +18,8 @@ export default async (
 ): Promise<Response | void> => {
   try {
     const { userId } = req.params;
-    const { arrivalLocation, carId, departureLocation, price, arrivalDate, departureDate } = req.body;
+    const { arrivalLocation, carId, departureLocation, price, arrivalDate, departureDate } =
+      req.body;
 
     await service({
       userId,

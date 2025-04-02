@@ -23,7 +23,7 @@ export interface User {
   rate: number | null;
 }
 
-export interface UserLight extends Pick<User, "id" | "avatarUrl" | "username" | "rate"> {}
+export type UserLight = Pick<User, 'id' | 'avatarUrl' | 'username' | 'rate'>;
 
 export interface UserEntityInterface extends User {
   cars: CarEntityInterface[];

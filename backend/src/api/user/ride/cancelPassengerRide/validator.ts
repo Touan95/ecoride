@@ -10,7 +10,7 @@ export interface CancelPassengerRideRequest {
 export const cancelPassengerRideValidator = {
   params: validator.object({
     rideId: validator.string().uuid().required(),
-  })
+  }),
 };
 
 export default buildValidationMiddleware(cancelPassengerRideValidator);

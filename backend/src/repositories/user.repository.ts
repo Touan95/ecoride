@@ -52,7 +52,12 @@ export const UserRepository: UserRepositoryInterface = AppDataSource.getReposito
   },
   async updateUser(userId: string, user: UpdateUser, entityManager?: EntityManager): Promise<void> {
     const manager = entityManager ?? this.manager;
-    await manager.createQueryBuilder(UserEntity, 'user').update().set(user).where({ id: userId }).execute();
+    await manager
+      .createQueryBuilder(UserEntity, 'user')
+      .update()
+      .set(user)
+      .where({ id: userId })
+      .execute();
   },
   async createOne(user: User): Promise<User> {
     const newUser = this.create(user);

@@ -12,8 +12,7 @@ import { format } from 'date-fns';
 import 'dayjs/locale/fr';
 import clsxm from '@/utils/clsxm';
 import { fr } from 'date-fns/locale';
-import AddressAutocompleteInput from '@/components/molecules/AddressAutocompleteInput/AddressAutocompleteInput';
-import { RideLocation } from '@/api/lib/user';
+import AddressAutocompleteInput, { OnSelectAddressProps } from '@/components/molecules/AddressAutocompleteInput/AddressAutocompleteInput';
 import { TbMap2 } from 'react-icons/tb';
 
 interface ItineraryFieldsProps {
@@ -42,9 +41,11 @@ export const ItineraryFields = ({ form }: ItineraryFieldsProps) => {
     form.setValue(dateType, newDate);
   };
 
-  const handleSelectLocation = (locationType: 'departureLocation' | 'arrivalLocation') => (location?: RideLocation) => {
-    form.setValue(locationType, location);
-  };
+  const handleSelectLocation =
+    (locationType: 'departureLocation' | 'arrivalLocation') =>
+    ({ location }: OnSelectAddressProps) => {
+      form.setValue(locationType, location);
+    };
 
   const renderDatePicker = (dateType: 'arrivalDate' | 'departureDate') => {
     return (

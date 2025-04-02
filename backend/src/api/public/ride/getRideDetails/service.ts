@@ -1,6 +1,6 @@
-import { RideEntityInterface } from "../../../../entities/ride.entity";
-import { RideRepositoryInterface } from "../../../../repositories/ride.repository";
-import rideNotFoundError from "../../../common/errors/rideNotFound.error";
+import { RideEntityInterface } from '../../../../entities/ride.entity';
+import { RideRepositoryInterface } from '../../../../repositories/ride.repository';
+import rideNotFoundError from '../../../common/errors/rideNotFound.error';
 
 export interface GetRideDetailsServiceOptions {
   rideId: string;

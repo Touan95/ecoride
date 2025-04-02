@@ -1,5 +1,5 @@
-import { buildValidationMiddleware } from "../../../../core/middlewares";
-import validator from "../../../../core/validator";
+import { buildValidationMiddleware } from '../../../../core/middlewares';
+import validator from '../../../../core/validator';
 
 export interface GetRideDetailsRequest {
   params: {

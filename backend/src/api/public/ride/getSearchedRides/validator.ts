@@ -1,13 +1,13 @@
-import { buildValidationMiddleware } from "../../../../core/middlewares";
-import validator from "../../../../core/validator";
+import { buildValidationMiddleware } from '../../../../core/middlewares';
+import validator from '../../../../core/validator';
 
 export interface GetSearchedRidesRequest {
   query: {
-    departureLatitude?: number
-    departureLongitude?: number
-    arrivalLatitude?: number
-    arrivalLongitude?: number
-    departureDate?: Date
+    departureLatitude?: number;
+    departureLongitude?: number;
+    arrivalLatitude?: number;
+    arrivalLongitude?: number;
+    departureDate?: Date;
   };
 }
 

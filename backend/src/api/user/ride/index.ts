@@ -7,9 +7,9 @@ import { cancelPassengerRide } from './cancelPassengerRide';
 import { cancelDriverRide } from './cancelDriverRide';
 
 export const userRideRouter = Router()
-    .use(addRide)
-    .use(bookSeat)
-    .use(getPassengerRides)
-    .use(getDriverRides)
-    .use(cancelPassengerRide)
-    .use(cancelDriverRide)
+  .use(addRide)
+  .use(bookSeat)
+  .use(getPassengerRides)
+  .use(getDriverRides)
+  .use(cancelPassengerRide)
+  .use(cancelDriverRide);

@@ -64,8 +64,12 @@ export interface AddressItem {
 
 export type AddressItemLight = Pick<AddressItem, 'osm_id' | 'osm_type' | 'lat' | 'lon' | 'display_name'>;
 
+export interface OnSelectAddressProps {
+  location?: RideLocation;
+  rawAddress?: AddressItemLight;
+}
 interface AddressAutocompleteInputProps {
-  onSelect: (location?: RideLocation, rawAddress?: AddressItemLight) => void;
+  onSelect: ({ location, rawAddress }: OnSelectAddressProps) => void;
   className?: string;
   placeholder?: string;
   initialLocation?: AddressItemLight;
@@ -164,7 +168,7 @@ const AddressAutocompleteInput = ({
       osm_type: location.osm_type
     };
 
-    onSelect(rideLocation, lightLocation);
+    onSelect({ location: rideLocation, rawAddress: lightLocation });
   }, [location]);
 
   useEffect(() => {
@@ -175,7 +179,7 @@ const AddressAutocompleteInput = ({
 
   useEffect(() => {
     if (!selectedAddress) {
-      onSelect(undefined, undefined);
+      onSelect({});
     }
   }, [selectedAddress]);
 

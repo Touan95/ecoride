@@ -10,7 +10,7 @@ export interface CancelDriverRideRequest {
 export const cancelDriverRideValidator = {
   params: validator.object({
     rideId: validator.string().uuid().required(),
-  })
+  }),
 };
 
 export default buildValidationMiddleware(cancelDriverRideValidator);

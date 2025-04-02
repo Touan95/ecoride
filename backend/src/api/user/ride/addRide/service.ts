@@ -10,14 +10,14 @@ import carNotFoundError from '../../../common/errors/carNotFound.error';
 export interface AddRideServiceOptions {
   userId: string;
   userRepository: UserRepositoryInterface;
-  arrivalLocation: RideLocation,
-  departureLocation: RideLocation,
-  carId: string,
-  price: number,
-  arrivalDate: Date,
-  departureDate: Date,
-  rideRepository: RideRepositoryInterface,
-  carRepository: CarRepositoryInterface,
+  arrivalLocation: RideLocation;
+  departureLocation: RideLocation;
+  carId: string;
+  price: number;
+  arrivalDate: Date;
+  departureDate: Date;
+  rideRepository: RideRepositoryInterface;
+  carRepository: CarRepositoryInterface;
 }
 
 export const service = async ({
@@ -30,19 +30,19 @@ export const service = async ({
   arrivalDate,
   departureDate,
   rideRepository,
-  carRepository
+  carRepository,
 }: AddRideServiceOptions): Promise<RideEntityInterface | undefined> => {
   const user = await userRepository.getOneForAccount(userId);
   if (!user) {
     throw userNotFoundError();
   }
-  
-  const userCarIds = user.cars?.map((car)=> car.id) ?? []
-  
-  if(!userCarIds.includes(carId)){
+
+  const userCarIds = user.cars?.map((car) => car.id) ?? [];
+
+  if (!userCarIds.includes(carId)) {
     throw userCarNotFoundError();
   }
-  
+
   const car = await carRepository.getOneById(carId);
   if (!car) {
     throw carNotFoundError();
@@ -51,7 +51,7 @@ export const service = async ({
   const carWithOwner = {
     ...car,
     owner: user,
-  }
+  };
 
   const newRide = await rideRepository.createOne({
     id: uuid(),
@@ -72,8 +72,8 @@ export const service = async ({
       type: 'Point',
       coordinates: [arrivalLocation.coordinate.longitude, arrivalLocation.coordinate.latitude],
     },
-    passengers:[],
-    balance:0
+    passengers: [],
+    balance: 0,
   });
 
   return newRide;

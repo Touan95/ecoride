@@ -1,7 +1,9 @@
 'use client';
 
-import { RideLocation } from '@/api/lib/user';
-import AddressAutocompleteInput, { AddressItemLight } from '@/components/molecules/AddressAutocompleteInput/AddressAutocompleteInput';
+import AddressAutocompleteInput, {
+  AddressItemLight,
+  OnSelectAddressProps
+} from '@/components/molecules/AddressAutocompleteInput/AddressAutocompleteInput';
 import { Button } from '@/components/molecules/Button';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -14,7 +16,7 @@ export const SearchBar = ({ placeholder }: SearchInputProps) => {
   const router = useRouter();
   const [selectedAddress, setSelectedAddress] = useState<AddressItemLight | undefined>(undefined);
 
-  const onDepartureSelect = (_location: RideLocation, rawAddress: AddressItemLight) => {
+  const onDepartureSelect = ({ rawAddress }: OnSelectAddressProps) => {
     setSelectedAddress(rawAddress);
   };
 

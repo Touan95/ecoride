@@ -30,7 +30,6 @@ export async function emailRenderer({
   subTemplatePath,
   params,
 }: EmailRendererOptions): Promise<string> {
-
   const baseSource = await promises.readFile(TEMPLATE_PATH, ENCODING);
   const templateSource = await promises.readFile(subTemplatePath, ENCODING);
 

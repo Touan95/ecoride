@@ -10,7 +10,7 @@ export interface BookSeatRequest {
 export const bookSeatValidator = {
   params: validator.object({
     rideId: validator.string().uuid().required(),
-  })
+  }),
 };
 
 export default buildValidationMiddleware(bookSeatValidator);

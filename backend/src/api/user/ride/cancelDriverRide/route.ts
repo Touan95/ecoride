@@ -17,7 +17,7 @@ export default async (
 ): Promise<Response | void> => {
   try {
     const { rideId } = req.params;
-    const { userId } = req.jwt
+    const { userId } = req.jwt;
 
     await service({
       userId,

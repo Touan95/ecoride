@@ -10,17 +10,17 @@ import { emailSender } from '../../../../services/emailSender';
 import dayjs from 'dayjs';
 import 'dayjs/locale/fr';
 
-dayjs.locale('fr')
+dayjs.locale('fr');
 
 const checkBalanceGoodForRefund = (ridePrice: number, balance: number, passengerCount: number) => {
-  return (balance / passengerCount === ridePrice)
-}
+  return balance / passengerCount === ridePrice;
+};
 
 export interface CancelPassengerRideServiceOptions {
   userId: string;
   rideId: string;
   userRepository: UserRepositoryInterface;
-  rideRepository: RideRepositoryInterface,
+  rideRepository: RideRepositoryInterface;
 }
 
 export const service = async ({
@@ -38,57 +38,56 @@ export const service = async ({
   if (!ride) {
     throw rideNotFoundError();
   }
-  
-  const userIsNotDriver = ride.driver.id !== userId
+
+  const userIsNotDriver = ride.driver.id !== userId;
   if (userIsNotDriver) {
     throw userNotDriverError();
   }
 
-  const isBalanceGoodForRefund = checkBalanceGoodForRefund(ride.price, ride.balance, ride.reservedSeats ?? 0)
+  const isBalanceGoodForRefund = checkBalanceGoodForRefund(
+    ride.price,
+    ride.balance,
+    ride.reservedSeats ?? 0,
+  );
   if (!isBalanceGoodForRefund) {
     throw rideBalanceIssueError();
   }
 
-  const passengers = ride.passengers
+  const passengers = ride.passengers;
 
   await processTransaction(async (transactionalEntityManager) => {
-    
-    const updateRide : UpdateRide = {
-      ...ride, 
+    const updateRide: UpdateRide = {
+      ...ride,
       balance: 0,
-      status: RideStatus.CANCELLED
-    }
-    
-    
-    await rideRepository.updateRide(updateRide, transactionalEntityManager);
-    
-    const ridePrice = ride.price
+      status: RideStatus.CANCELLED,
+    };
 
-    passengers.map(async (passenger)=>{
-      const {id: passengerId, ...passengerRest} = passenger
-      const currentPassengerCredits = passenger.credits
-      const newPassengerCredits = currentPassengerCredits + ridePrice
-      const updatePassenger : UpdateUser = {
-        ...passengerRest, 
-        credits: newPassengerCredits
-      }
-      
+    await rideRepository.updateRide(updateRide, transactionalEntityManager);
+
+    const ridePrice = ride.price;
+
+    passengers.map(async (passenger) => {
+      const { id: passengerId, ...passengerRest } = passenger;
+      const currentPassengerCredits = passenger.credits;
+      const newPassengerCredits = currentPassengerCredits + ridePrice;
+      const updatePassenger: UpdateUser = {
+        ...passengerRest,
+        credits: newPassengerCredits,
+      };
+
       await userRepository.updateUser(passengerId, updatePassenger, transactionalEntityManager);
-    })
-    
+    });
   });
 
   const formattedEmailDate = dayjs(ride.departureDate).format('dddd D MMMM à HH[h]mm');
 
-  passengers.map(async (passenger)=>{
+  passengers.map(async (passenger) => {
     void emailSender.rideCancelledByDriver({
-      arrivalCity: ride.arrivalLocation.city ?? '', 
+      arrivalCity: ride.arrivalLocation.city ?? '',
       departureCity: ride.departureLocation.city ?? '',
       departureDate: formattedEmailDate,
       email: passenger.email,
-      username: passenger.username
-    })
-  })
-
-  
+      username: passenger.username,
+    });
+  });
 };

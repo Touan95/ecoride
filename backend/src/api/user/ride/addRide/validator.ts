@@ -8,12 +8,12 @@ export interface AddRideRequest {
     userId: string;
   };
   body: {
-    departureLocation: RideLocation
-    arrivalLocation: RideLocation
-    price: number
-    carId: string
-    arrivalDate: Date
-    departureDate: Date
+    departureLocation: RideLocation;
+    arrivalLocation: RideLocation;
+    price: number;
+    carId: string;
+    arrivalDate: Date;
+    departureDate: Date;
   };
 }
 
@@ -22,8 +22,8 @@ export const addRideValidator = {
     userId: validator.string().uuid().required(),
   }),
   body: validator.object({
-    departureLocation:rideLocationValidator,
-    arrivalLocation:rideLocationValidator,
+    departureLocation: rideLocationValidator,
+    arrivalLocation: rideLocationValidator,
     carId: validator.string().uuid().required(),
     price: validator.number().required(),
     arrivalDate: validator.date().required(),

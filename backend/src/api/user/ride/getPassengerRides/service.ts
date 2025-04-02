@@ -1,14 +1,13 @@
-import { RidePassengerEntityInterface } from "../../../../entities/ridePassenger.entity";
-import { RidePassengerRepositoryInterface } from "../../../../repositories/ridePassenger.repository";
-import { UserRepositoryInterface } from "../../../../repositories/user.repository";
-import userNotFoundError from "../../../common/errors/userNotFound.error";
+import { RidePassengerEntityInterface } from '../../../../entities/ridePassenger.entity';
+import { RidePassengerRepositoryInterface } from '../../../../repositories/ridePassenger.repository';
+import { UserRepositoryInterface } from '../../../../repositories/user.repository';
+import userNotFoundError from '../../../common/errors/userNotFound.error';
 
 interface GetPassengerRidesService {
-  userId: string
-  userRepository: UserRepositoryInterface
-  ridePassengerRepository: RidePassengerRepositoryInterface
+  userId: string;
+  userRepository: UserRepositoryInterface;
+  ridePassengerRepository: RidePassengerRepositoryInterface;
 }
-
 
 export const service = async ({
   userId,
@@ -20,5 +19,5 @@ export const service = async ({
     throw userNotFoundError();
   }
 
-  return await ridePassengerRepository.getAllByPassengerId(userId)
+  return await ridePassengerRepository.getAllByPassengerId(userId);
 };

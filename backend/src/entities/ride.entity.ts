@@ -46,13 +46,13 @@ export interface Ride {
 }
 
 export interface SearchedRide extends Ride {
-  car: CarLight
-  driver: UserLight
+  car: CarLight;
+  driver: UserLight;
 }
 
 export interface PublicRideDetails extends Ride {
-  car: CarEntityInterface
-  driver: UserEntityInterface
+  car: CarEntityInterface;
+  driver: UserEntityInterface;
 }
 
 export interface RideEntityInterface extends Ride {

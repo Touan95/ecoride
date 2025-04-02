@@ -6,7 +6,6 @@ import { HttpStatuses } from '../../../../core/httpStatuses';
 import { UserRepository } from '../../../../repositories/user.repository';
 import { RidePassengerRepository } from '../../../../repositories/ridePassenger.repository';
 
-
 export default async (
   req: Request,
   res: Response,
