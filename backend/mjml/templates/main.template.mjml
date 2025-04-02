@@ -13,12 +13,12 @@
 
     <!-- header -->
     <mj-section background-color="#e7f4e4" padding="35px 25px 35px 25px">
-      <mj-column width="33%" border-right="2px solid #F2F2FC">
+      <mj-column width="33%" border-right="2px solid #2b4225">
         <mj-image
-          href="https://signaleo.co/mairie"
-          src="https://signaleo.co/images/logo-signaleo.png"
+          href="https://ecoride-sooty.vercel.app"
+          src="https://ecoride-sooty.vercel.app/assets/ecoride-primary.png"
           padding="4px 30px 4px 0px"
-          width="145px"          
+          width="100px"          
         />
       </mj-column>
       <mj-column width="67%" padding="12px 0px 0px 30px">
@@ -52,8 +52,8 @@
                 >
       <mj-column width="100%">
         <mj-image
-                  href="https://signaleo.co/mairie"
-                  src="https://signaleo.co/images/signaleo-new-circular.webp"
+                  href="https://ecoride-sooty.vercel.app"
+                  src="https://ecoride-sooty.vercel.app/assets/logo-primary.png"
                   width="40px"
                   align="center"
                   padding="0"
