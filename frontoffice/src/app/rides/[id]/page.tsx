@@ -56,6 +56,37 @@ const rideApiToDriverCard = (apiRide: PublicRideDetails): DriverCardProps => {
   };
 };
 
+const getRideAction = (status: RideStatus, bookComponent: React.ReactNode, isDriver?: boolean): React.ReactNode => {
+  switch (status) {
+    case RideStatus.UPCOMING:
+      return isDriver ? (
+        <Typography variant="cardTitleSm" align="center">
+          Vous êtes le conducteur. Vous pourrez démarrer ce trajet jusqu’à 1 heure avant l’heure de départ prévue.
+        </Typography>
+      ) : (
+        bookComponent
+      );
+    case RideStatus.ONGOING:
+      return (
+        <Typography variant="cardTitleSm" align="center">
+          {isDriver ? 'Vous êtes en route !' : 'Ce co-voiturage est sur la route !'}
+        </Typography>
+      );
+    case RideStatus.CANCELLED:
+      return (
+        <Typography variant="cardTitleSm" align="center">
+          {isDriver ? 'Vous avez annulé ce trajet' : 'Le conducteur a annulé ce trajet'}
+        </Typography>
+      );
+    case RideStatus.COMPLETED:
+      return (
+        <Typography variant="cardTitleSm" align="center">
+          Ce trajet est fini !
+        </Typography>
+      );
+  }
+};
+
 export default function Rides() {
   const { saveToken, isLogged, user } = useAuthContext();
   const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
@@ -166,38 +197,16 @@ export default function Rides() {
   };
 
   const renderAction = useMemo(() => {
-    if (isUserTheDriver && !canStartRide) {
-      return (
-        <Typography variant="cardTitleSm" align="center">
-          Vous êtes le conducteur. Vous pourrez démarrer ce trajet jusqu’à 1 heure avant l’heure de départ prévue.
-        </Typography>
-      );
-    } else if (isUserTheDriver && canStartRide) {
+    const bookComponent = (
+      <Button disabled={!isSeatAvailable} onClick={onBookClick}>
+        Réserver
+      </Button>
+    );
+
+    if (isUserTheDriver && canStartRide) {
       return <Button onClick={onStartRide}>{"C'est parti !"}</Button>;
-    } else if (ride?.status === RideStatus.CANCELLED) {
-      return (
-        <Typography variant="cardTitleSm" align="center">
-          Le conducteur a annulé ce trajet
-        </Typography>
-      );
-    } else if (ride?.status === RideStatus.ONGOING) {
-      return (
-        <Typography variant="cardTitle" align="center">
-          Ce co-voiturage est sur la route !
-        </Typography>
-      );
-    } else if (ride?.status === RideStatus.COMPLETED) {
-      return (
-        <Typography variant="cardTitle" align="center">
-          Ce trajet est fini !
-        </Typography>
-      );
     } else {
-      return (
-        <Button disabled={!isSeatAvailable} onClick={onBookClick}>
-          Réserver
-        </Button>
-      );
+      return ride?.status && getRideAction(ride.status, bookComponent, isUserTheDriver);
     }
   }, [isUserTheDriver, canStartRide, ride?.status, isSeatAvailable, onBookClick, onStartRide]);
 
