@@ -118,7 +118,8 @@ export const Typography = ({
           color === 'orange' && 'text-orange-500',
           color === 'blue' && 'text-[#140B7C]',
           color === 'success' && 'text-[#2CB661]',
-          color === 'darkBlue' && 'text-slate-900'
+          color === 'darkBlue' && 'text-slate-900',
+          color === 'placeholder' && 'text-placeholder'
         ],
         [
           gradiant === 'primary' &&

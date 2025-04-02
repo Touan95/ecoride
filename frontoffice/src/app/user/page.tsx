@@ -1,12 +1,8 @@
 'use client';
 
 import SectionContainer from '@/components/layout/SectionContainer';
-import { Ride, rideMock } from '@/interfaces/ride';
 import { useState } from 'react';
-import { ItineraryProps } from '@/components/molecules/Itinerary';
-import { InfoCardProps } from '@/components/molecules/InfoCard';
 import { Typography } from '@/components/atoms/Typography';
-import { DriverCardProps } from '@/components/molecules/DriverCard';
 import { useAuthContext } from '@/contexts/auth';
 import { AccountDetailsCard } from '@/components/molecules/AccountDetailsCard';
 import { userMock, UserType } from '@/interfaces/user';
@@ -18,45 +14,8 @@ import { DriverPreferencesModal } from '@/components/organisms/DriverPreferences
 import { AccountCarsCard } from '@/components/molecules/AccountCarsCard';
 import { CarDetailsModal } from '@/components/organisms/CarDetailsModal';
 import { Car } from '@/interfaces/car';
-import { isCarGreen } from '@/utils/car';
 import { AddCarParams } from '@/api/lib/user';
 import { ConfirmCarDeletionModal } from '@/components/organisms/ConfirmCarDeletionModal';
-
-const ride = rideMock;
-
-const rideApiToItinerary = (apiRide: Ride): ItineraryProps => {
-  return {
-    arrivalDate: apiRide.arrivalDate,
-    departureDate: apiRide.departureDate,
-    arrivalLocation: apiRide.arrivalLocation,
-    departureLocation: apiRide.departureLocation
-  };
-};
-
-const rideApiToInfoCard = (apiRide: Ride): InfoCardProps => {
-  const isGreen = isCarGreen(apiRide.car);
-  return {
-    carBrand: apiRide.car.brand,
-    carEnergy: apiRide.car.energy,
-    carModel: apiRide.car.model,
-    seats: apiRide.car.seats,
-    reservedSeats: apiRide.reservedSeats,
-    duration: apiRide.duration,
-    isGreen
-  };
-};
-
-const rideApiToDriverCard = (apiRide: Ride): DriverCardProps => {
-  return {
-    avatar: apiRide.driver.avatar,
-    rating: apiRide.driver.rate,
-    username: apiRide.driver.username,
-    acceptsPets: apiRide.driver.acceptsPets,
-    acceptsSmoking: apiRide.driver.acceptsSmoking,
-    customRules: apiRide.driver.customRules,
-    reviews: apiRide.driver.reviews
-  };
-};
 
 export default function Rides() {
   const { user } = useAuthContext();
@@ -165,7 +124,7 @@ export default function Rides() {
             type={apiUser.type}
             onUserTypeEdit={openUserTypeModal}
           />
-          <CreditAmountCard credits={200} />
+          <CreditAmountCard credits={apiUser.credits} />
         </div>
         {driverCardsVisible && (
           <>

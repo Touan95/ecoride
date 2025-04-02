@@ -8,8 +8,9 @@ import {
   ManyToOne,
   PrimaryColumn,
 } from 'typeorm';
-import { UserEntity, UserEntityInterface } from './user.entity';
-import { CarEntity, CarEntityInterface } from './car.entity';
+import { UserEntity, UserEntityInterface, UserLight } from './user.entity';
+import { CarEntity, CarEntityInterface, CarLight } from './car.entity';
+import { Point } from 'geojson';
 
 export enum RideStatus {
   UPCOMING = 'upcoming',
@@ -23,7 +24,7 @@ export interface Coordinate {
   longitude: number;
 }
 
-export interface Location {
+export interface RideLocation {
   address: string | null;
   postalCode: string | null;
   city: string | null;
@@ -31,14 +32,27 @@ export interface Location {
 }
 
 export interface Ride {
+  id: string;
   reservedSeats: number | null;
   price: number;
+  balance: number;
   departureDate: Date;
   arrivalDate: Date;
-  duration: number;
-  arrivalLocation: Location;
-  departureLocation: Location;
+  arrivalLocation: RideLocation;
+  departureLocation: RideLocation;
+  arrivalPoint: Point;
+  departurePoint: Point;
   status: RideStatus;
+}
+
+export interface SearchedRide extends Ride {
+  car: CarLight;
+  driver: UserLight;
+}
+
+export interface PublicRideDetails extends Ride {
+  car: CarEntityInterface;
+  driver: UserEntityInterface;
 }
 
 export interface RideEntityInterface extends Ride {
@@ -59,22 +73,38 @@ export class RideEntity implements RideEntityInterface {
   price: number;
 
   @Column()
+  balance: number;
+
+  @Column()
   @Index('ride_departure_date_index', ['departureDate'])
   departureDate: Date;
 
   @Column()
   arrivalDate: Date;
 
-  @Column()
-  duration: number;
+  @Column('geometry', {
+    spatialFeatureType: 'Point',
+    srid: 4326,
+    select: false,
+  })
+  @Index({ spatial: true })
+  arrivalPoint: Point;
+
+  @Column('geometry', {
+    spatialFeatureType: 'Point',
+    srid: 4326,
+    select: false,
+  })
+  @Index({ spatial: true })
+  departurePoint: Point;
 
   @Column('jsonb')
   @Index('ride_arrival_location_index', ['arrivalLocation'])
-  arrivalLocation: Location;
+  arrivalLocation: RideLocation;
 
   @Column('jsonb')
   @Index('ride_departure_location_index', ['departureLocation'])
-  departureLocation: Location;
+  departureLocation: RideLocation;
 
   @Column({ type: 'enum', enum: RideStatus, default: RideStatus.UPCOMING })
   @Index('ride_status_index', ['status'])
@@ -91,7 +121,7 @@ export class RideEntity implements RideEntityInterface {
 
   @ManyToMany(() => UserEntity)
   @JoinTable({
-    name: 'ride_passenger', // Nom de la table de jointure
+    name: 'ride_user_passenger', // Nom de la table de jointure
     joinColumn: {
       name: 'rideId',
       referencedColumnName: 'id',

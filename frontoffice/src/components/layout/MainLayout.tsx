@@ -9,7 +9,7 @@ export default function MainLayout({ children }: LayoutProps) {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      <div className="flex flex-1 h-full flex-col justify-center items-center bg-primary-100">{children}</div>
+      <div className="flex flex-1 h-full flex-col items-center bg-primary-100">{children}</div>
       <Footer />
     </div>
   );

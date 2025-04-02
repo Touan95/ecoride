@@ -7,6 +7,7 @@ import { FontInitializer } from '@/components/atoms/FontInitializer';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { AuthProvider } from '@/contexts/auth';
 import 'react-day-picker/dist/style.css';
+import { Suspense } from 'react';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -39,7 +40,9 @@ export default function RootLayout({
         <FontInitializer />
         <QueryClientProvider client={queryClient}>
           <AuthProvider>
-            <MainLayout>{children}</MainLayout>
+            <MainLayout>
+              <Suspense fallback={<div>Chargement...</div>}>{children}</Suspense>
+            </MainLayout>
           </AuthProvider>
         </QueryClientProvider>
       </body>

@@ -20,8 +20,10 @@ export interface CarCardProps {
   model: string;
   seats: number;
   energy: Energy;
-  onEditClick: () => void;
-  onRemoveClick: () => void;
+  onEditClick?: () => void;
+  onRemoveClick?: () => void;
+  onSelectClick?: () => void;
+  isSelected?: boolean;
 }
 
 export const CarCard = ({
@@ -32,8 +34,10 @@ export const CarCard = ({
   model,
   seats,
   energy,
+  isSelected = false,
   onEditClick,
-  onRemoveClick
+  onRemoveClick,
+  onSelectClick
 }: CarCardProps) => {
   dayjs.locale('fr');
   dayjs.extend(duration);
@@ -42,7 +46,9 @@ export const CarCard = ({
   const bgColorClassname = isGreen ? 'bg-primary-300' : 'bg-primary-200';
 
   return (
-    <div className={clsxm(['w-full rounded-xl flex flex-col p-5 shadow gap-3', bgColorClassname])}>
+    <div
+      className={clsxm(['w-full rounded-xl flex flex-col p-5 shadow gap-3', bgColorClassname, isSelected && 'ring-4 ring-secondary-600'])}
+    >
       <div className="flex gap-10">
         <div className="w-full">
           <AccountCardField labelClassname="w-50" smallValue label="Marque">
@@ -68,10 +74,17 @@ export const CarCard = ({
           </AccountCardField>
         </div>
         <div className="flex flex-col gap-5 justify-center">
-          <Button onClick={onEditClick}>Modifier</Button>
-          <Button color="secondary" onClick={onRemoveClick}>
-            Supprimer
-          </Button>
+          {onSelectClick && (
+            <Button onClick={onSelectClick} disabled={isSelected}>
+              Choisir
+            </Button>
+          )}
+          {onEditClick && <Button onClick={onEditClick}>Modifier</Button>}
+          {onRemoveClick && (
+            <Button color="secondary" onClick={onRemoveClick}>
+              Supprimer
+            </Button>
+          )}
         </div>
       </div>
       {isGreen && (

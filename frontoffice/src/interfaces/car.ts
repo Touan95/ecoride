@@ -17,6 +17,8 @@ export interface Car {
   energy: Energy;
 }
 
+export type CarLight = Pick<Car, 'id' | 'energy' | 'seats'>;
+
 export const carMock: Car = {
   id: 'fdsfsqdgfqsdfgsdf',
   seats: 3,

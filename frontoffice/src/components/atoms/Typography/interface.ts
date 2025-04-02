@@ -37,6 +37,7 @@ export type TextColor =
   | 'blue'
   | 'success'
   | 'red'
-  | 'darkBlue';
+  | 'darkBlue'
+  | 'placeholder';
 
 export type Gradiant = 'primary' | 'secondary' | 'tertiary' | 'quatro' | 'cinquo' | 'star';

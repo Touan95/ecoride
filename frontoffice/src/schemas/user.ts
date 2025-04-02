@@ -27,3 +27,35 @@ export const carDetailsFormSchema = z.object({
 });
 
 export type CarDetailsFormSchemaType = z.infer<typeof carDetailsFormSchema>;
+
+const locationSchema = z.object({
+  address: z.string().max(255).nullable(),
+  postalCode: z
+    .string()
+    .regex(/^\d{4,10}$/)
+    .nullable(),
+  city: z.string().max(100).nullable(),
+  coordinate: z.object({
+    latitude: z.number().min(-90).max(90),
+    longitude: z.number().min(-180).max(180)
+  })
+});
+
+export const addRideFormSchema = z.object({
+  departureLocation: locationSchema,
+  arrivalLocation: locationSchema,
+  carId: z.string(),
+  price: z.number(),
+  arrivalDate: z.date(),
+  departureDate: z.date()
+});
+
+export type AddRideFormSchemaType = z.infer<typeof addRideFormSchema>;
+
+export const searchRidesFormSchema = z.object({
+  departureLocation: locationSchema.optional(),
+  arrivalLocation: locationSchema.optional(),
+  departureDate: z.date().optional()
+});
+
+export type SearchRidesFormSchemaType = z.infer<typeof searchRidesFormSchema>;

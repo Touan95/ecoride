@@ -1,0 +1,83 @@
+<mjml>
+  <mj-head>
+    <mj-font name="Outfit" href="https://fonts.googleapis.com/css?family=Outfit:400,700" />
+    <mj-attributes>
+      <mj-all font-family="Outfit, Arial, sans-serif" />
+      <mj-text align="center"/>
+    </mj-attributes>
+  </mj-head>
+
+  <mj-body background-color="#FBFBFC">
+    <!-- séparateur -->
+    <mj-section background-color="#FBFBFC" padding-bottom="0px" />
+
+    <!-- header -->
+    <mj-section background-color="#e7f4e4" padding="35px 25px 35px 25px">
+      <mj-column width="33%" border-right="2px solid #F2F2FC">
+        <mj-image
+          href="https://signaleo.co/mairie"
+          src="https://signaleo.co/images/logo-signaleo.png"
+          padding="4px 30px 4px 0px"
+          width="145px"          
+        />
+      </mj-column>
+      <mj-column width="67%" padding="12px 0px 0px 30px">
+        <mj-text
+          align="left"
+          color="#2b4225"
+          font-size="12px"
+          font-weight="bold"
+          padding="0px 0px 2px 0px"
+        >
+          EcoRide
+        </mj-text>
+        <mj-text align="left" color="#2b4225" font-size="12px" padding="2px 0px 0px 0px">
+          Partageons la route, préservons la planète !
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- séparateur -->
+    <mj-section background-color="#FBFBFC" padding-bottom="0px" />
+
+    <mj-raw> {{> layout }} </mj-raw>
+
+    <!-- séparateur -->
+    <mj-section background-color="#FBFBFC" padding-bottom="0px" />
+
+    <!-- footer -->
+    <mj-section
+                background-color="#e7f4e4"
+                
+                >
+      <mj-column width="100%">
+        <mj-image
+                  href="https://signaleo.co/mairie"
+                  src="https://signaleo.co/images/signaleo-new-circular.webp"
+                  width="40px"
+                  align="center"
+                  padding="0"
+                  />
+        <mj-text
+                 align="center"
+                 color="#2b4225"
+                 font-size="11px"
+                 padding="15px 0px 0px 0px"
+                 >
+          🌱 Roulez malin, roulez vert. 🚗♻️
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    
+    <mj-section padding="10px 0px 0px 0px">
+      <mj-column width="100%" padding="0">
+        <mj-text color="#9393A8" font-size="10px" font-style="italic" padding="0">
+          Cet e-mail a été envoyé à <a href="mailto:{{email}}" style="color:#9393a8; font-weight: 700">{{email}}</a>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    
+    <!-- séparateur -->
+    <mj-section background-color="#FBFBFC" padding-bottom="0px" />
+  </mj-body>
+</mjml>
