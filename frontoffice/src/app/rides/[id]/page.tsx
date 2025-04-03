@@ -26,6 +26,7 @@ import {
   rideApiToInfoCard,
   rideApiToItinerary
 } from '@/app/rides/[id]/utils';
+import { AddReviewCard } from '@/components/organisms/AddReviewCard';
 
 export default function Rides() {
   const { saveToken, isLogged, user } = useAuthContext();
@@ -48,10 +49,14 @@ export default function Rides() {
 
   const isGreen = ride ? isCarGreen(ride.car) : false;
   const isSeatAvailable = ride ? ride.car.seats - (ride.reservedSeats ?? 0) > 0 : false;
-  const isUserTheDriver = isLogged && user?.id === ride?.driver.id;
-  const isUserPassenger = isLogged && !!user?.id && !!ride?.passengerIds.includes(user.id);
-  const isPassengerAddReview = ride?.status === RideStatus.COMPLETED && isUserPassenger && reviewParams === 'true';
-  const isLoggedOutAddReview = ride?.status === RideStatus.COMPLETED && !isLogged && reviewParams === 'true';
+  const isUserTheDriver = isLogged && !!user && user.id === ride?.driver.id;
+  const isUserPassenger = isLogged && !!user && !!user.id && !!ride?.passengerIds.includes(user.id);
+
+  const isAddReviewVisible = useMemo(() => {
+    const isPassengerAddReview = ride?.status === RideStatus.COMPLETED && isUserPassenger && reviewParams === 'true';
+    const isLoggedOutAddReview = ride?.status === RideStatus.COMPLETED && !isLogged && !user && reviewParams === 'true';
+    return isPassengerAddReview || isLoggedOutAddReview;
+  }, [ride?.status, isUserPassenger, reviewParams, isLogged, user]);
 
   const canStartRide = useMemo(() => {
     if (!ride?.departureDate) {
@@ -162,6 +167,11 @@ export default function Rides() {
     registerMutation.mutate(data);
   };
 
+  const onAddReview = (rating: number, review: string) => {
+    console.log('🚀 ~ review:', review);
+    console.log('🚀 ~ rating:', rating);
+  };
+
   const renderAction = useMemo(() => {
     if (!ride?.status) {
       return;
@@ -194,6 +204,7 @@ export default function Rides() {
               {isGreen && <GreenCard />}
               {itineraryData && <Itinerary {...itineraryData} />}
               {driverData && <DriverCard {...driverData} />}
+              {isAddReviewVisible && <AddReviewCard onSubmit={onAddReview} onLoginClick={openLoginModal} isLogged={isLogged && !!user} />}
             </div>
             <div className="flex flex-col gap-4">
               {infoData && <InfoCard {...infoData} />}
@@ -201,7 +212,6 @@ export default function Rides() {
               {renderAction}
             </div>
           </div>
-          {/* {isAddReviewVisible && <div className="border">Test</div>} */}
         </div>
       </SectionContainer>
       <LoginModal isOpen={loginModalOpen} onClose={closeLoginModal} onLogin={onLogin} onRegister={onRegister} />

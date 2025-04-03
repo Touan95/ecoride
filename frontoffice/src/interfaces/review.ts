@@ -1,3 +1,5 @@
+export const REVIEW_MAX_LENGTH = 300;
+
 export interface Review {
   reviewer: string;
   rating: number;
