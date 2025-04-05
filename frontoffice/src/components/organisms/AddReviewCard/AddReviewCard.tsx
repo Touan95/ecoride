@@ -9,22 +9,29 @@ import { inputClassname } from '@/components/ui/input';
 import { REVIEW_MAX_LENGTH } from '@/interfaces/review';
 import { Button } from '@/components/molecules/Button';
 import { Rating } from '@/components/molecules/Rating';
+import { Checkbox } from '@/components/ui/checkbox';
 
 dayjs.locale('fr');
 dayjs.extend(duration);
 
 export interface AddReviewCardProps {
-  onSubmit?: (rating: number, review: string) => void;
+  onSubmit?: (rating: number, comment: string, dispute: boolean) => void;
   isLogged?: boolean;
   onLoginClick?: () => void;
+  hasAlreadyReviewed?: boolean;
 }
 
-export const AddReviewCard = ({ onSubmit, isLogged = false, onLoginClick }: AddReviewCardProps) => {
+export const AddReviewCard = ({ onSubmit, isLogged = false, onLoginClick, hasAlreadyReviewed = false }: AddReviewCardProps) => {
   const [rating, setRating] = useState<number>(3);
-  const [review, setReview] = useState('');
+  const [comment, setComment] = useState('');
+  const [dispute, setDispute] = useState(false);
 
-  const onReviewChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setReview(event.target.value);
+  const onCommentChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setComment(event.target.value);
+  };
+
+  const onDisputeChange = (checked: boolean) => {
+    setDispute(checked);
   };
 
   const onRateChange = (newRating: number) => {
@@ -37,31 +44,43 @@ export const AddReviewCard = ({ onSubmit, isLogged = false, onLoginClick }: AddR
 
   const onSubmitReview = () => {
     if (onSubmit) {
-      onSubmit(rating, review);
+      onSubmit(rating, comment, dispute);
     }
   };
 
   const loggedInContent = useMemo(() => {
-    return (
-      <>
-        <Typography variant="cardTitle">{"Qu'avez-vous pensé de ce trajet"}</Typography>
-        <Rating onRate={onRateChange} rating={rating} className="w-full justify-center" />
-        <div className="flex flex-col">
-          <Textarea
-            placeholder="Votre avis"
-            maxLength={REVIEW_MAX_LENGTH}
-            onChange={onReviewChange}
-            value={review}
-            className={clsxm(inputClassname, 'rounded-lg focus-visible:ring-[1px] resize-y w-full max-w-[656px]')}
-          />
-          <Typography variant="small" align="right">{`${review.length}/${REVIEW_MAX_LENGTH}`}</Typography>
-        </div>
-        <Button className="w-40 self-end" onClick={onSubmitReview}>
-          Envoyer
-        </Button>
-      </>
-    );
-  }, [onRateChange, rating, onReviewChange, review, onSubmitReview]);
+    if (hasAlreadyReviewed) {
+      return <Typography variant="cardTitleSm">Merci ! Vous avez déjà laissé un avis sur ce trajet</Typography>;
+    } else {
+      return (
+        <>
+          <Typography variant="cardTitle">{"Qu'avez-vous pensé de ce trajet"}</Typography>
+          <Rating onRate={onRateChange} rating={rating} className="w-full justify-center" />
+          <div className="flex flex-col">
+            <Textarea
+              placeholder="Votre avis"
+              maxLength={REVIEW_MAX_LENGTH}
+              onChange={onCommentChange}
+              value={comment}
+              className={clsxm(inputClassname, 'rounded-lg focus-visible:ring-[1px] resize-y w-full max-w-[656px] mb-2')}
+            />
+            <div className="flex justify-between">
+              <div className="flex items-center gap-2">
+                <Checkbox id="dispute" checked={dispute} onCheckedChange={onDisputeChange} />
+                <Typography variant="small" htmlFor="dispute">
+                  Je souhaite faire une réclamation
+                </Typography>
+              </div>
+              <Typography variant="small" align="right">{`${comment.length}/${REVIEW_MAX_LENGTH}`}</Typography>
+            </div>
+          </div>
+          <Button className="w-40 self-end" onClick={onSubmitReview}>
+            Envoyer
+          </Button>
+        </>
+      );
+    }
+  }, [onRateChange, rating, onCommentChange, comment, onSubmitReview, hasAlreadyReviewed]);
 
   const loggedOutContent = useMemo(() => {
     return (

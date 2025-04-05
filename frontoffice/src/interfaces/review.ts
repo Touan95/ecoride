@@ -1,16 +1,14 @@
 export const REVIEW_MAX_LENGTH = 300;
 
 export interface Review {
-  reviewer: string;
+  username: string;
+  userId: string;
+  driverId: string;
+  rideId: string;
   rating: number;
-  date: Date;
-  comment: string;
+  createdAt: Date;
+  updatedAt: Date;
+  comment?: string | null;
+  approved: boolean;
+  dispute: boolean;
 }
-
-export const reviewMock: Review = {
-  reviewer: 'Jane',
-  rating: 4,
-  date: new Date(),
-  comment:
-    'John est un excellent chauffeur ! Ponctuel, courtois et très professionnel, il met un point d’honneur à assurer un trajet agréable. Son véhicule est propre et confortable, et il conduit de manière fluide et sécurisée. Je recommande vivement !'
-};

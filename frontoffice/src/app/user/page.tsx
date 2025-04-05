@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { Typography } from '@/components/atoms/Typography';
 import { useAuthContext } from '@/contexts/auth';
 import { AccountDetailsCard } from '@/components/molecules/AccountDetailsCard';
-import { userMock, UserType } from '@/interfaces/user';
+import { DEFAULT_AVATAR_URL, UserType } from '@/interfaces/user';
 import { CreditAmountCard } from '@/components/molecules/CreditAmountCard';
 import { UserTypeModal } from '@/components/organisms/UserTypeModal';
 import { useAddCar, useDeleteCarMutation, useGetOneUser, usePutCar } from '@/api/hooks/useUserAPI';
@@ -120,7 +120,7 @@ export default function Rides() {
           <AccountDetailsCard
             username={apiUser.username}
             email={apiUser.email}
-            avatarUrl={userMock.avatarUrl}
+            avatarUrl={apiUser.avatarUrl ?? DEFAULT_AVATAR_URL}
             type={apiUser.type}
             onUserTypeEdit={openUserTypeModal}
           />
