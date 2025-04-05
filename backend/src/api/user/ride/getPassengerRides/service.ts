@@ -19,5 +19,5 @@ export const service = async ({
     throw userNotFoundError();
   }
 
-  return await ridePassengerRepository.getAllByPassengerId(userId);
+  return ridePassengerRepository.getAllByPassengerId(userId);
 };

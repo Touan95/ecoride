@@ -47,6 +47,7 @@ export enum ErrorCodes {
   INVITE_DOES_NOT_EXIST = 'invite-does-not-exists',
   INTERNAL_SERVER_ERROR = 'internal-server-error',
   FORBIDDEN_ADMIN_ACCESS = 'forbidden-admin-access',
+  FORBIDDEN_STAFF_ACCESS = 'forbidden-staff-access',
   //
   CAR_NOT_FOUND = 'car-not-found',
   RIDE_NOT_FOUND = 'ride-not-found',
@@ -62,4 +63,6 @@ export enum ErrorCodes {
   RIDE_NOT_UPCOMING = 'ride-not-upcoming',
   RIDE_NOT_ONGOING = 'ride-not-ongoing',
   RIDE_ALREADY_REVIEWED = 'ride-already-reviewed',
+  USER_NOT_STAFF = 'user-not-staff',
+  REVIEW_ALREADY_APPROVED = 'review-already-approved',
 }

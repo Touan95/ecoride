@@ -6,9 +6,9 @@ export interface AddReviewRequest {
     rideId: string;
   };
   body: {
-    rating: number
-    comment: string
-    dispute: boolean
+    rating: number;
+    comment: string;
+    dispute: boolean;
   };
 }
 

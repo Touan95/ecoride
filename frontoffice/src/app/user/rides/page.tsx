@@ -3,45 +3,10 @@
 import { useCancelDriverRide, useCancelPassengerRide, useGetDriverRides, useGetPassengerRides } from '@/api/hooks/useUserAPI';
 import { Typography } from '@/components/atoms/Typography';
 import SectionContainer from '@/components/layout/SectionContainer';
-import { UserRideCard, UserRideCardProps } from '@/components/molecules/UserRideCard';
+import { DriverRideList } from '@/components/organisms/DriverRideList';
+import { PassengerRideList } from '@/components/organisms/PassengerRideList';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { DriverRide } from '@/interfaces/ride';
-import { PassengerRide } from '@/interfaces/ridePassenger';
 import { useRouter } from 'next/navigation';
-import { useMemo } from 'react';
-
-const passengerRideApiToUserRideCard = (apiRide: PassengerRide): UserRideCardProps => {
-  const duration = new Date(apiRide.arrivalDate).getTime() - new Date(apiRide.departureDate).getTime();
-
-  return {
-    id: apiRide.id,
-    arrivalCity: apiRide.arrivalLocation.city ?? '',
-    departureCity: apiRide.departureLocation.city ?? '',
-    arrivalDate: apiRide.arrivalDate,
-    departureDate: apiRide.departureDate,
-    duration,
-    price: apiRide.price,
-    isCancelledByPassenger: apiRide.canceled,
-    status: apiRide.status
-  };
-};
-
-const driverRideApiToUserRideCard = (apiRide: DriverRide): UserRideCardProps => {
-  const duration = new Date(apiRide.arrivalDate).getTime() - new Date(apiRide.departureDate).getTime();
-  const seatsLeft = apiRide.carSeats - (apiRide.reservedSeats ?? 0);
-
-  return {
-    id: apiRide.id,
-    arrivalCity: apiRide.arrivalLocation.city ?? '',
-    departureCity: apiRide.departureLocation.city ?? '',
-    arrivalDate: apiRide.arrivalDate,
-    departureDate: apiRide.departureDate,
-    duration,
-    price: apiRide.price,
-    status: apiRide.status,
-    seatsLeft
-  };
-};
 
 export default function UserRides() {
   const router = useRouter();
@@ -62,57 +27,6 @@ export default function UserRides() {
     cancelDriverRide.mutate(id);
   };
 
-  const passengerContent = useMemo(() => {
-    if (passengerRides && passengerRides.length > 0) {
-      const passengerCardData = passengerRides.map((ride) => passengerRideApiToUserRideCard(ride));
-      return (
-        <div className="flex flex-col gap-3">
-          {passengerCardData.map((ride) => {
-            return (
-              <UserRideCard
-                key={ride.id}
-                {...ride}
-                onDetailClick={onDetailClick(ride.id)}
-                onCancelClick={onPassengerCancelClick(ride.id)}
-              />
-            );
-          })}
-        </div>
-      );
-    } else {
-      return (
-        <div className="p-10">
-          <Typography variant="cardTitleSm" align="center">
-            {"Vous n'avez aucun trajet en tant que passager"}
-          </Typography>
-        </div>
-      );
-    }
-  }, [passengerRides, onDetailClick]);
-
-  const driverContent = useMemo(() => {
-    if (driverRides && driverRides.length > 0) {
-      const driverCardData = driverRides.map((ride) => driverRideApiToUserRideCard(ride));
-      return (
-        <div className="flex flex-col gap-3">
-          {driverCardData.map((ride) => {
-            return (
-              <UserRideCard key={ride.id} {...ride} onDetailClick={onDetailClick(ride.id)} onCancelClick={onDriverCancelClick(ride.id)} />
-            );
-          })}
-        </div>
-      );
-    } else {
-      return (
-        <div className="p-10">
-          <Typography variant="cardTitleSm" align="center">
-            {"Vous n'avez aucun trajet en tant que conducteur"}
-          </Typography>
-        </div>
-      );
-    }
-  }, [driverRides, onDetailClick]);
-
   return (
     <>
       <SectionContainer className="flex flex-col gap-5 my-10">
@@ -127,8 +41,16 @@ export default function UserRides() {
             </TabsTrigger>
           </TabsList>
 
-          {!isPassengerRidesLoading && <TabsContent value="passenger">{passengerContent}</TabsContent>}
-          {!isDriverRidesLoading && <TabsContent value="driver">{driverContent}</TabsContent>}
+          {!isPassengerRidesLoading && passengerRides && (
+            <TabsContent value="passenger">
+              <PassengerRideList onCancelClick={onPassengerCancelClick} onDetailClick={onDetailClick} rides={passengerRides} />
+            </TabsContent>
+          )}
+          {!isDriverRidesLoading && driverRides && (
+            <TabsContent value="driver">
+              <DriverRideList onCancelClick={onDriverCancelClick} onDetailClick={onDetailClick} rides={driverRides} />
+            </TabsContent>
+          )}
         </Tabs>
       </SectionContainer>
     </>

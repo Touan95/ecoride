@@ -1,9 +1,11 @@
-import { UpdateUser, UserRepositoryInterface } from '../../../../repositories/user.repository';
+import { v4 as uuid } from 'uuid';
+import { UserRepositoryInterface } from '../../../../repositories/user.repository';
 import userNotFoundError from '../../../common/errors/userNotFound.error';
 import { RideRepositoryInterface } from '../../../../repositories/ride.repository';
 import rideNotFoundError from '../../../common/errors/rideNotFound.error';
 import { ReviewType, RideReview } from '../../../../models/rideReview.model';
 import rideAlreadyReviewedError from '../../../common/errors/rideAlreadyReviewed.error';
+import { MongoError } from 'typeorm';
 
 export interface AddReviewServiceOptions {
   userId: string;
@@ -34,10 +36,11 @@ export const service = async ({
     throw rideNotFoundError();
   }
 
-  const now = new Date()
-  const driverId = ride.driver.id
+  const now = new Date();
+  const driverId = ride.driver.id;
 
   const reviewObject: ReviewType = {
+    _id: uuid(),
     createdAt: now,
     updatedAt: now,
     driverId,
@@ -45,38 +48,18 @@ export const service = async ({
     comment,
     rideId,
     userId,
-    approved: false,
+    approved: null,
     dispute,
-    username: user.username
-  }
+    username: user.username,
+  };
 
   const review = new RideReview(reviewObject);
   try {
     await review.save();
-    //A faire lors de l'approve review
-    const driverRatingsResult = await RideReview.aggregate([
-      { $match: { driverId } },  // Match all reviews for this driver
-      { $group: { _id: "$driverId", averageRating: { $avg: "$rating" } } }  // Group by driver and calculate average rating
-    ]);
-
-    // Get the average rating (or 0 if no reviews found)
-    const averageRating = driverRatingsResult.length > 0 ? driverRatingsResult[0].averageRating as number : 0;
-
-    const driver = await userRepository.getOneById(driverId);
-    if (!driver) {
-      throw userNotFoundError();
-    }
-
-    const updatedDriver:UpdateUser = {
-      ...driver,
-      rate: averageRating
-    } 
-    await userRepository.updateUser(driverId, updatedDriver);
-
-    return review; 
-  } catch (error:any) {
-    if (error.code === 11000) {
-      throw rideAlreadyReviewedError()
+    return review;
+  } catch (error) {
+    if ((error as MongoError)?.code === 11000) {
+      throw rideAlreadyReviewedError();
     }
     throw error;
   }

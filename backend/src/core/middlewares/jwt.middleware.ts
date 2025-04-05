@@ -3,6 +3,9 @@ import { NextFunction, Request, RequestHandler, Response } from 'express';
 import { invalidJwtTokenFormatError } from '../../api/common/errors/invalidJwtTokenFormatError';
 import { AuthObject, RequestWithJwt } from '../jwt/AuthObject';
 import { buildAccessTokenObject, checkAndReturnAuthAccessToken } from '../jwt/verifyToken';
+import { buildError } from '../buildError';
+import { ErrorCodes } from '../../api/common/enums/errorCodes.enum';
+import { HttpStatuses } from '../httpStatuses';
 
 export interface IRequestWithJwt extends Request {
   jwt: AuthObject;
@@ -11,7 +14,36 @@ export interface IRequestWithJwt extends Request {
 export interface JwtMiddlewareOptions {
   isOptional?: boolean;
   requiresAdmin?: boolean;
+  requiresStaff?: boolean;
 }
+
+const checkAdminRequirement = (
+  options: JwtMiddlewareOptions | undefined,
+  authObject: AuthObject,
+): void => {
+  if (options?.requiresAdmin && !authObject.isAdmin) {
+    throw buildError({
+      message: 'Attempt to log as an admin',
+      publicMessage: 'Forbidden',
+      code: ErrorCodes.FORBIDDEN_ADMIN_ACCESS,
+      statusCode: HttpStatuses.FORBIDDEN,
+    });
+  }
+};
+
+const checkStaffRequirement = (
+  options: JwtMiddlewareOptions | undefined,
+  authObject: AuthObject,
+): void => {
+  if (options?.requiresStaff && !authObject.isStaff) {
+    throw buildError({
+      message: 'Attempt to log as a staff',
+      publicMessage: 'Forbidden',
+      code: ErrorCodes.FORBIDDEN_STAFF_ACCESS,
+      statusCode: HttpStatuses.FORBIDDEN,
+    });
+  }
+};
 
 export const jwtMiddleware =
   (options?: JwtMiddlewareOptions): RequestHandler =>
@@ -28,7 +60,8 @@ export const jwtMiddleware =
 
       if (authObject) {
         req.jwt = authObject;
-        // checkAdminRequirement(options, authObject);
+        checkAdminRequirement(options, authObject);
+        checkStaffRequirement(options, authObject);
       }
 
       return next();

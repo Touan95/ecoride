@@ -10,7 +10,8 @@ import { useAuthContext } from '@/contexts/auth';
 
 interface ConnectedMenuProps {
   username: string;
-  isDriver?: boolean;
+  isDriver: boolean;
+  isStaff: boolean;
 }
 
 const AccountButton = () => {
@@ -35,7 +36,7 @@ const LogoutButton = () => {
   );
 };
 
-export const ConnectedMenu = ({ username, isDriver = false }: ConnectedMenuProps) => {
+export const ConnectedMenu = ({ username, isDriver, isStaff }: ConnectedMenuProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -50,6 +51,7 @@ export const ConnectedMenu = ({ username, isDriver = false }: ConnectedMenuProps
               {username}
             </Typography>
           </div>
+          {isStaff && <NavbarLink href="/staff" label="Espace employé" variant="dropdown" />}
           {isDriver && <NavbarLink href="/rides/add" label="Conduire" variant="dropdown" />}
           <NavbarLink href="/user" label="Préférences" variant="dropdown" />
           <NavbarLink href="/user/rides" label="Mes trajets" variant="dropdown" />

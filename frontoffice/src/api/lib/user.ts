@@ -99,6 +99,10 @@ interface GetRideReviewsResponse {
   allReviewerIds: string[];
 }
 
+interface GetReviewsToApproveResponse {
+  reviews: Review[];
+}
+
 export const changeUserTypeRequest = async (params: ChangeUserTypeParams): Promise<BaseAPIResponse> => {
   const { userId, ...bodyParams } = params;
   const { data } = await axiosInstance.patch(`/user/${userId}/type`, bodyParams);
@@ -195,5 +199,16 @@ export const getRideReviewsRequest = async (params: GetReviewParams): Promise<Ge
   const { rideId, ...queryParams } = params;
   const { data } = await axiosInstance.get(`/ride/${rideId}/reviews`, { params: queryParams });
 
+  return data;
+};
+
+export const getReviewsToApproveRequest = async (): Promise<GetReviewsToApproveResponse> => {
+  const { data } = await axiosInstance.get(`/staff/reviews`);
+
+  return data;
+};
+
+export const approveReviewRequest = async (reviewId: string): Promise<BaseAPIResponse> => {
+  const { data } = await axiosInstance.patch(`/staff/review/${reviewId}/approve`);
   return data;
 };

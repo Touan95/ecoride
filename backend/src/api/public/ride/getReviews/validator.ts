@@ -4,10 +4,10 @@ import validator from '../../../../core/validator';
 export interface GetReviewsRequest {
   params: {
     rideId: string;
-  },
-  query:{
-    approvedOnly?: boolean
-  }
+  };
+  query: {
+    approvedOnly?: boolean;
+  };
 }
 
 export const getReviewsValidator = {

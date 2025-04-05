@@ -12,7 +12,7 @@ interface EmailParams {
 }
 
 export const sendPassengersRideCompleted = async (params: EmailParams): Promise<void> => {
-  const rideUrl = `https://ecoride-sooty.vercel.app/rides/${params.rideId}?review=true`
+  const rideUrl = `https://ecoride-sooty.vercel.app/rides/${params.rideId}?review=true`;
   const rideCompletedHtml = await emailRenderer({
     subTemplatePath: resolve(__dirname, './templates/rideCompleted.template.hbs'),
     params: {
@@ -21,7 +21,7 @@ export const sendPassengersRideCompleted = async (params: EmailParams): Promise<
       endDate: params.endDate,
       username: params.username,
       email: params.email,
-      rideUrl
+      rideUrl,
     },
   });
 

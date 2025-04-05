@@ -168,7 +168,7 @@ export default function Rides() {
   };
 
   const onRegister = (data: RegisterSchemaType) => {
-    registerMutation.mutate(data);
+    registerMutation.mutate({ ...data, isStaff: false });
   };
 
   const onAddReview = (rating: number, comment: string, dispute: boolean) => {

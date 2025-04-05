@@ -34,15 +34,15 @@ export const service = async ({
     throw userNotDriverError();
   }
 
-  const canEndRideStatus = ride.status === RideStatus.ONGOING
-  if(!canEndRideStatus){
+  const canEndRideStatus = ride.status === RideStatus.ONGOING;
+  if (!canEndRideStatus) {
     throw rideEndStatusError();
   }
 
   const updateRide: UpdateRide = {
     ...ride,
     status: RideStatus.COMPLETED,
-    endDate: new Date()
+    endDate: new Date(),
   };
   await rideRepository.updateRide(updateRide);
 };

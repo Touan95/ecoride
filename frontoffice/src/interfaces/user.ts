@@ -15,6 +15,9 @@ export interface User {
   type: UserType;
   acceptsSmoking: boolean;
   acceptsPets: boolean;
+  isStaff: boolean;
+  isAdmin: boolean;
+  isBlocked: boolean;
   customRules: string[];
   credits: number;
   rate: number | null;
@@ -22,4 +25,4 @@ export interface User {
 
 export type UserLight = Pick<User, 'id' | 'avatarUrl' | 'username' | 'rate'>;
 
-export type LoggedUser = Pick<User, 'id' | 'type' | 'username' | 'email'>;
+export type LoggedUser = Pick<User, 'id' | 'type' | 'username' | 'email' | 'isAdmin' | 'isStaff' | 'isBlocked'>;

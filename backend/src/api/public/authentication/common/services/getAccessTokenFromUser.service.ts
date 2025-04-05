@@ -7,5 +7,7 @@ export const getAccessTokenFromUser = async (user: UserEntityInterface): Promise
     type: user.type,
     userId: user.id,
     username: user.username,
+    isAdmin: user.isAdmin,
+    isStaff: user.isStaff,
   });
 };

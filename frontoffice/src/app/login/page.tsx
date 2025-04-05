@@ -31,7 +31,7 @@ export default function Login() {
   };
 
   const onRegister = (data: RegisterSchemaType) => {
-    registerMutation.mutate(data);
+    registerMutation.mutate({ ...data, isStaff: false });
   };
 
   return (

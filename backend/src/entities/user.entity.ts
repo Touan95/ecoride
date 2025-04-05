@@ -18,6 +18,9 @@ export interface User {
   type: UserType;
   acceptsSmoking: boolean;
   acceptsPets: boolean;
+  isStaff: boolean;
+  isAdmin: boolean;
+  isBlocked: boolean;
   customRules: string[];
   credits: number;
   rate: number | null;
@@ -57,6 +60,15 @@ export class UserEntity implements UserEntityInterface {
 
   @Column({ type: 'boolean', default: false })
   acceptsPets: boolean;
+
+  @Column({ type: 'boolean', default: false })
+  isAdmin: boolean;
+
+  @Column({ type: 'boolean', default: false })
+  isStaff: boolean;
+
+  @Column({ type: 'boolean', default: false })
+  isBlocked: boolean;
 
   @Column({ type: 'jsonb', default: [] })
   customRules: string[];
