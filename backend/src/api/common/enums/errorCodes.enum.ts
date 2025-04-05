@@ -61,4 +61,5 @@ export enum ErrorCodes {
   RIDE_START_TOO_SOON = 'ride-start-too-soon',
   RIDE_NOT_UPCOMING = 'ride-not-upcoming',
   RIDE_NOT_ONGOING = 'ride-not-ongoing',
+  RIDE_ALREADY_REVIEWED = 'ride-already-reviewed',
 }

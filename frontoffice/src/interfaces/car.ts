@@ -18,14 +18,3 @@ export interface Car {
 }
 
 export type CarLight = Pick<Car, 'id' | 'energy' | 'seats'>;
-
-export const carMock: Car = {
-  id: 'fdsfsqdgfqsdfgsdf',
-  seats: 3,
-  brand: 'Volkswagen',
-  model: 'Jetta',
-  energy: Energy.DIESEL,
-  color: ' Vert',
-  plateNumber: 'DC-ERE-ZZ',
-  registrationDate: new Date()
-};

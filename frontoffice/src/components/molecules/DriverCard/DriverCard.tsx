@@ -6,6 +6,7 @@ import duration from 'dayjs/plugin/duration';
 import 'dayjs/locale/fr';
 import Image from 'next/image';
 import { useMemo } from 'react';
+import { Review } from '@/interfaces/review';
 
 dayjs.locale('fr');
 dayjs.extend(duration);
@@ -13,7 +14,7 @@ dayjs.extend(duration);
 export interface DriverReviewProps {
   reviewer: string;
   rating: number;
-  comment: string;
+  comment?: string;
   date: Date;
 }
 
@@ -24,24 +25,33 @@ export interface DriverCardProps {
   acceptsPets?: boolean;
   acceptsSmoking?: boolean;
   customRules?: string[];
-  reviews?: DriverReviewProps[];
+  reviews?: Review[];
 }
 
 const DriverReview = ({ reviewer, rating, comment, date }: DriverReviewProps) => {
+  const dateToFormat = dayjs(date);
+  const formattedDate = dateToFormat.format('DD/MM/YYYY');
   return (
     <div className="flex">
-      <div className="flex flex-col w-50">
-        <Typography>{reviewer}</Typography>
+      <div className="flex flex-col w-26 border-r">
+        <Typography variant="cardTitleSm">{reviewer}</Typography>
+        <Typography variant="extraSmall" color="primary">
+          {formattedDate}
+        </Typography>
         <div className="flex items-center gap-1">
-          <Typography align="center" variant="small" color="primary">
+          <Typography align="center" variant="cardTitle" color="primary">
             {`${rating}/5`}
           </Typography>
           <TbStarFilled size={14} className="text-primary-900" />
         </div>
       </div>
-      <Typography variant="small" color="primary">
-        {comment}
-      </Typography>
+      <div className="pl-5">
+        {comment && (
+          <Typography variant="small" color="primary">
+            {comment}
+          </Typography>
+        )}
+      </div>
     </div>
   );
 };
@@ -57,12 +67,18 @@ export const DriverCard = ({ username, avatar, rating, acceptsPets, acceptsSmoki
   const reviewsContent = useMemo(() => {
     if (reviews && reviews.length > 0) {
       return reviews.map((review, index) => (
-        <DriverReview key={index} reviewer={review.reviewer} rating={review.rating} comment={review.comment} date={review.date} />
+        <DriverReview
+          key={index}
+          reviewer={review.username}
+          rating={review.rating}
+          comment={review.comment ?? undefined}
+          date={review.createdAt}
+        />
       ));
     }
     return (
       <Typography variant="cardTitleSm" align="center" customClassName="mb-16">
-        {"Ce conducteur ne possède pas encore d'avis."}
+        {"Ce conducteur n'a pas encore reçu d'avis validé."}
       </Typography>
     );
   }, [reviews]);

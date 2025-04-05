@@ -16,7 +16,7 @@ import { LoginSchemaType, RegisterSchemaType } from '@/schemas/auth';
 import { useAuthContext } from '@/contexts/auth';
 import { isCarGreen } from '@/utils/car';
 import { useParams, useSearchParams } from 'next/navigation';
-import { useBookRide, useEndRide, useGetRideDetails, useStartRide } from '@/api/hooks/useUserAPI';
+import { useAddReview, useBookRide, useEndRide, useGetRideDetails, useGetRideReviews, useStartRide } from '@/api/hooks/useUserAPI';
 import { RideStatus } from '@/api/lib/user';
 import {
   getDriverAction,
@@ -26,6 +26,7 @@ import {
   rideApiToInfoCard,
   rideApiToItinerary
 } from '@/app/rides/[id]/utils';
+import { AddReviewCard } from '@/components/organisms/AddReviewCard';
 
 export default function Rides() {
   const { saveToken, isLogged, user } = useAuthContext();
@@ -37,8 +38,12 @@ export default function Rides() {
   const [confirmBookingModalOpen, setConfirmBookingModalOpen] = useState<boolean>(false);
 
   const { data: ride, refetch: refetchRide } = useGetRideDetails(rideId);
+  const { data: reviewsData } = useGetRideReviews({ rideId, approvedOnly: true });
+  const approvedReviews = reviewsData ? reviewsData.reviews : [];
+  const allReviewerIds = reviewsData ? reviewsData.allReviewerIds : [];
   const startRide = useStartRide({});
   const endRide = useEndRide({});
+  const addReview = useAddReview({});
 
   const bookRide = useBookRide({
     onSuccess: () => {
@@ -48,10 +53,15 @@ export default function Rides() {
 
   const isGreen = ride ? isCarGreen(ride.car) : false;
   const isSeatAvailable = ride ? ride.car.seats - (ride.reservedSeats ?? 0) > 0 : false;
-  const isUserTheDriver = isLogged && user?.id === ride?.driver.id;
-  const isUserPassenger = isLogged && !!user?.id && !!ride?.passengerIds.includes(user.id);
-  const isPassengerAddReview = ride?.status === RideStatus.COMPLETED && isUserPassenger && reviewParams === 'true';
-  const isLoggedOutAddReview = ride?.status === RideStatus.COMPLETED && !isLogged && reviewParams === 'true';
+  const isUserTheDriver = isLogged && !!user && user.id === ride?.driver.id;
+  const isUserPassenger = isLogged && !!user && !!user.id && !!ride?.passengerIds.includes(user.id);
+  const hasAlreadyReviewed = isUserPassenger && !!allReviewerIds.find((id) => id === user.id);
+
+  const isAddReviewVisible = useMemo(() => {
+    const isPassengerAddReview = ride?.status === RideStatus.COMPLETED && isUserPassenger;
+    const isLoggedOutAddReview = ride?.status === RideStatus.COMPLETED && !isLogged && !user && reviewParams === 'true';
+    return isPassengerAddReview || isLoggedOutAddReview;
+  }, [ride?.status, isUserPassenger, reviewParams, isLogged, user]);
 
   const canStartRide = useMemo(() => {
     if (!ride?.departureDate) {
@@ -90,11 +100,11 @@ export default function Rides() {
 
   const driverData = useMemo(() => {
     if (ride) {
-      return rideApiToDriverCard(ride);
+      return rideApiToDriverCard(ride, approvedReviews);
     } else {
       return undefined;
     }
-  }, [ride]);
+  }, [ride, approvedReviews]);
 
   const openLoginModal = () => {
     setLoginModalOpen(true);
@@ -134,7 +144,6 @@ export default function Rides() {
 
   const onConfirmBooking = () => {
     bookRide.mutate(rideId);
-    console.log('Booking confirmed');
   };
 
   const loginMutation = useLoginMutation({
@@ -160,6 +169,10 @@ export default function Rides() {
 
   const onRegister = (data: RegisterSchemaType) => {
     registerMutation.mutate(data);
+  };
+
+  const onAddReview = (rating: number, comment: string, dispute: boolean) => {
+    addReview.mutate({ comment, rating, rideId, dispute });
   };
 
   const renderAction = useMemo(() => {
@@ -194,6 +207,14 @@ export default function Rides() {
               {isGreen && <GreenCard />}
               {itineraryData && <Itinerary {...itineraryData} />}
               {driverData && <DriverCard {...driverData} />}
+              {isAddReviewVisible && (
+                <AddReviewCard
+                  onSubmit={onAddReview}
+                  onLoginClick={openLoginModal}
+                  isLogged={isLogged && !!user}
+                  hasAlreadyReviewed={hasAlreadyReviewed}
+                />
+              )}
             </div>
             <div className="flex flex-col gap-4">
               {infoData && <InfoCard {...infoData} />}
@@ -201,7 +222,6 @@ export default function Rides() {
               {renderAction}
             </div>
           </div>
-          {/* {isAddReviewVisible && <div className="border">Test</div>} */}
         </div>
       </SectionContainer>
       <LoginModal isOpen={loginModalOpen} onClose={closeLoginModal} onLogin={onLogin} onRegister={onRegister} />

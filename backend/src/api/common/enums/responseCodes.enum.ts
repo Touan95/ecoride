@@ -32,4 +32,5 @@ export enum ResponseCodes {
   CANCEL_RIDE_SUCCESS = 'book-ride-success',
   START_RIDE_SUCCESS = 'start-ride-success',
   END_RIDE_SUCCESS = 'end-ride-success',
+  ADD_REVIEW_SUCCESS = 'add-review-success',
 }

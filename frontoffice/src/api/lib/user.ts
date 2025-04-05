@@ -4,6 +4,7 @@ import { User, UserType } from '@/interfaces/user';
 import { Car, Energy } from '@/interfaces/car';
 import { DriverRide, PublicRideDetails, SearchedRide } from '@/interfaces/ride';
 import { PassengerRide } from '@/interfaces/ridePassenger';
+import { Review } from '@/interfaces/review';
 
 export interface ChangeUserTypeParams {
   userId: string;
@@ -80,6 +81,22 @@ export enum RideStatus {
 
 interface GetSearchedRidesResponse {
   rides: SearchedRide[];
+}
+
+export interface AddReviewParams {
+  rideId: string;
+  rating: number;
+  comment: string;
+  dispute: boolean;
+}
+export interface GetReviewParams {
+  rideId: string;
+  approvedOnly?: boolean;
+}
+
+interface GetRideReviewsResponse {
+  reviews: Review[];
+  allReviewerIds: string[];
 }
 
 export const changeUserTypeRequest = async (params: ChangeUserTypeParams): Promise<BaseAPIResponse> => {
@@ -165,5 +182,18 @@ export const startRideRequest = async (rideId: string): Promise<BaseAPIResponse>
 
 export const endRideRequest = async (rideId: string): Promise<BaseAPIResponse> => {
   const { data } = await axiosInstance.patch(`/user/ride/${rideId}/end`);
+  return data;
+};
+
+export const addReviewRequest = async (params: AddReviewParams): Promise<BaseAPIResponse> => {
+  const { rideId, ...bodyParams } = params;
+  const { data } = await axiosInstance.post(`/user/ride/${rideId}/review`, bodyParams);
+  return data;
+};
+
+export const getRideReviewsRequest = async (params: GetReviewParams): Promise<GetRideReviewsResponse> => {
+  const { rideId, ...queryParams } = params;
+  const { data } = await axiosInstance.get(`/ride/${rideId}/reviews`, { params: queryParams });
+
   return data;
 };

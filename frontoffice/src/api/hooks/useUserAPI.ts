@@ -2,6 +2,8 @@ import { useMutation, UseMutationOptions, useQuery, useQueryClient } from 'react
 import {
   AddCarParams,
   addCarRequest,
+  AddReviewParams,
+  addReviewRequest,
   AddRideParams,
   addRideRequest,
   bookRideRequest,
@@ -17,7 +19,9 @@ import {
   getDriverRidesRequest,
   getOneUserRequest,
   getPassengerRidesRequest,
+  GetReviewParams,
   getRideDetailsRequest,
+  getRideReviewsRequest,
   GetSearchedRidesParams,
   getSearchedRidesRequest,
   PutCarParams,
@@ -194,4 +198,22 @@ export const useEndRide = ({ onSuccess, onError }: UseMutationOptions<BaseAPIRes
     },
     onError
   });
+};
+
+export const useAddReview = ({ onSuccess, onError }: UseMutationOptions<BaseAPIResponse, ErrorResponse, AddReviewParams>) => {
+  const queryClient = useQueryClient();
+  return useMutation((params) => addReviewRequest(params), {
+    onSuccess: (data, params, context) => {
+      if (onSuccess) {
+        onSuccess(data, params, context);
+      }
+      queryClient.invalidateQueries({ queryKey: ['reviews', params.rideId] });
+      queryClient.invalidateQueries({ queryKey: ['ride', params.rideId] });
+    },
+    onError
+  });
+};
+
+export const useGetRideReviews = (params: GetReviewParams) => {
+  return useQuery(['reviews', params.rideId], () => getRideReviewsRequest(params));
 };

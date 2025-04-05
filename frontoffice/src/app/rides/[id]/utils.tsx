@@ -7,6 +7,7 @@ import { Button } from '@/components/molecules/Button';
 import { isCarGreen } from '@/utils/car';
 import { DEFAULT_AVATAR_URL } from '@/interfaces/user';
 import { RideStatus } from '@/api/lib/user';
+import { Review } from '@/interfaces/review';
 
 export const rideApiToItinerary = (apiRide: PublicRideDetails): ItineraryProps => {
   return {
@@ -31,7 +32,7 @@ export const rideApiToInfoCard = (apiRide: PublicRideDetails): InfoCardProps => 
   };
 };
 
-export const rideApiToDriverCard = (apiRide: PublicRideDetails): DriverCardProps => {
+export const rideApiToDriverCard = (apiRide: PublicRideDetails, reviews: Review[]): DriverCardProps => {
   return {
     avatar: apiRide.driver.avatarUrl ?? DEFAULT_AVATAR_URL,
     rating: apiRide.driver.rate ?? undefined,
@@ -39,7 +40,7 @@ export const rideApiToDriverCard = (apiRide: PublicRideDetails): DriverCardProps
     acceptsPets: apiRide.driver.acceptsPets,
     acceptsSmoking: apiRide.driver.acceptsSmoking,
     customRules: apiRide.driver.customRules,
-    reviews: [] //apiRide.driver.reviews
+    reviews
   };
 };
 
