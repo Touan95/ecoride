@@ -5,6 +5,7 @@ import { RideRepositoryInterface } from '../../../../repositories/ride.repositor
 import rideNotFoundError from '../../../common/errors/rideNotFound.error';
 import { ReviewType, RideReview } from '../../../../models/rideReview.model';
 import rideAlreadyReviewedError from '../../../common/errors/rideAlreadyReviewed.error';
+import { MongoError } from 'typeorm';
 
 export interface AddReviewServiceOptions {
   userId: string;
@@ -35,8 +36,8 @@ export const service = async ({
     throw rideNotFoundError();
   }
 
-  const now = new Date()
-  const driverId = ride.driver.id
+  const now = new Date();
+  const driverId = ride.driver.id;
 
   const reviewObject: ReviewType = {
     _id: uuid(),
@@ -49,16 +50,16 @@ export const service = async ({
     userId,
     approved: null,
     dispute,
-    username: user.username
-  }
+    username: user.username,
+  };
 
   const review = new RideReview(reviewObject);
   try {
     await review.save();
-    return review; 
-  } catch (error:any) {
-    if (error.code === 11000) {
-      throw rideAlreadyReviewedError()
+    return review;
+  } catch (error) {
+    if ((error as MongoError)?.code === 11000) {
+      throw rideAlreadyReviewedError();
     }
     throw error;
   }

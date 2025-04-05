@@ -9,10 +9,10 @@ import rideStartStatusError from '../../../common/errors/rideStartStatus.error';
 
 const checkCanStartRideTime = (departureDate: Date, nowDate: Date) => {
   const departureTime = departureDate.getTime();
-  const now = nowDate.getTime()
+  const now = nowDate.getTime();
 
-  return now >= departureTime - 60 * 60 * 1000
-}
+  return now >= departureTime - 60 * 60 * 1000;
+};
 
 export interface StartRideServiceOptions {
   userId: string;
@@ -41,22 +41,22 @@ export const service = async ({
   if (!isUserTheDriver) {
     throw userNotDriverError();
   }
-  
-  const canStartRideStatus = ride.status === RideStatus.UPCOMING
-  if(!canStartRideStatus){
+
+  const canStartRideStatus = ride.status === RideStatus.UPCOMING;
+  if (!canStartRideStatus) {
     throw rideStartStatusError();
   }
 
-  const now = new Date()
-  const canStartRideTime = checkCanStartRideTime(ride.departureDate, now)
-  if(!canStartRideTime){
+  const now = new Date();
+  const canStartRideTime = checkCanStartRideTime(ride.departureDate, now);
+  if (!canStartRideTime) {
     throw rideStartTooSoonError();
   }
 
   const updateRide: UpdateRide = {
     ...ride,
     status: RideStatus.ONGOING,
-    startDate: now
+    startDate: now,
   };
   await rideRepository.updateRide(updateRide);
 };

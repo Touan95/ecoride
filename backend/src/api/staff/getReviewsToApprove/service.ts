@@ -1,7 +1,7 @@
-import RideReview, { ReviewType } from "../../../models/rideReview.model";
-import { UserRepositoryInterface } from "../../../repositories/user.repository";
-import userNotFoundError from "../../common/errors/userNotFound.error";
-import userNotStaffError from "../../common/errors/userNotStaff.error";
+import RideReview, { ReviewType } from '../../../models/rideReview.model';
+import { UserRepositoryInterface } from '../../../repositories/user.repository';
+import userNotFoundError from '../../common/errors/userNotFound.error';
+import userNotStaffError from '../../common/errors/userNotStaff.error';
 
 export interface GetReviewToApproveServiceOptions {
   userId: string;
@@ -16,15 +16,10 @@ export const service = async ({
   if (!user) {
     throw userNotFoundError();
   }
-  
+
   if (!user.isStaff) {
     throw userNotStaffError();
   }
 
-  try {
-    const reviews = await RideReview.find({ approved: null }).sort({ createdAt: 1 });
-    return reviews;
-  } catch (error) {
-    throw error;
-  }
+  return RideReview.find({ approved: null }).sort({ createdAt: 1 });
 };

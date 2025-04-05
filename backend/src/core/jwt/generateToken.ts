@@ -35,7 +35,7 @@ export const generateToken = <T extends object>({
 
 export const generateAccessToken = (
   generateJwtOptions: AuthObject,
-  expiresIn?: number,
+  // expiresIn?: number,
 ): Promise<string> =>
   generateToken<AuthObject>({
     // expiresIn: expiresIn ?? config.ACCESS_TOKEN_LIFE,
@@ -45,7 +45,7 @@ export const generateAccessToken = (
 
 export const generateRefreshToken = (
   generateRefreshJwtOptions: RefreshTokenAuthObjectType,
-  expiresIn?: number,
+  // expiresIn?: number,
 ): Promise<string> =>
   generateToken<RefreshTokenAuthObjectType>({
     // expiresIn: expiresIn ?? config.REFRESH_TOKEN_LIFE,

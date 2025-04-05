@@ -19,5 +19,5 @@ export const service = async ({
     throw userNotFoundError();
   }
 
-  return await rideRepository.getAllByDriverId(userId);
+  return rideRepository.getAllByDriverId(userId);
 };

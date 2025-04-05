@@ -35,22 +35,25 @@ export default async ({
   await processTransaction(async (transactionalEntityManager) => {
     const hashedPassword = await hashPassword(password);
 
-    newUser = await userRepository.createOne({
-      id: uuid(),
-      email,
-      password: hashedPassword,
-      username,
-      acceptsPets: true,
-      acceptsSmoking: true,
-      avatarUrl: null,
-      credits: 20,
-      customRules: [],
-      type: UserType.PASSENGER,
-      rate: null,
-      isAdmin: false,
-      isBlocked: false,
-      isStaff
-    }, transactionalEntityManager);
+    newUser = await userRepository.createOne(
+      {
+        id: uuid(),
+        email,
+        password: hashedPassword,
+        username,
+        acceptsPets: true,
+        acceptsSmoking: true,
+        avatarUrl: null,
+        credits: 20,
+        customRules: [],
+        type: UserType.PASSENGER,
+        rate: null,
+        isAdmin: false,
+        isBlocked: false,
+        isStaff,
+      },
+      transactionalEntityManager,
+    );
   });
 
   return newUser;

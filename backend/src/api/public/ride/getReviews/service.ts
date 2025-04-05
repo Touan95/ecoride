@@ -16,10 +16,5 @@ export const service = async ({
     throw rideNotFoundError();
   }
 
-  try {
-    const reviews = await RideReview.find({ rideId }).sort({ createdAt: -1 });
-    return reviews;
-  } catch (error) {
-    throw error;
-  }
+  return RideReview.find({ rideId }).sort({ createdAt: -1 });
 };

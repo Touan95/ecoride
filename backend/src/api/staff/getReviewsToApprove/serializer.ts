@@ -1,9 +1,9 @@
-import { ReviewType } from "../../../models/rideReview.model";
+import { ReviewType } from '../../../models/rideReview.model';
 
 interface SerializedReviewsToApprove {
-  reviews: ReviewType[]
+  reviews: ReviewType[];
 }
 
-export const serializer = (reviews: ReviewType[]):SerializedReviewsToApprove => {
-  return { reviews }
+export const serializer = (reviews: ReviewType[]): SerializedReviewsToApprove => {
+  return { reviews };
 };

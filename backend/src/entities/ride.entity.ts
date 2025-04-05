@@ -45,7 +45,7 @@ export interface Ride {
   arrivalPoint: Point;
   departurePoint: Point;
   status: RideStatus;
-  servicePaid: boolean
+  servicePaid: boolean;
 }
 
 export interface SearchedRide extends Ride {

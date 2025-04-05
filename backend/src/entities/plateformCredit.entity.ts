@@ -1,7 +1,6 @@
 import { Column, Entity, Index, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { RideEntity, RideEntityInterface } from './ride.entity';
 
-
 export interface PlatformCredit {
   id: string;
   credit: number;

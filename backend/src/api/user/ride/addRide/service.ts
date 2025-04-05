@@ -74,9 +74,9 @@ export const service = async ({
     },
     passengers: [],
     balance: 0,
-    servicePaid: false, 
-    startDate: null, 
-    endDate: null
+    servicePaid: false,
+    startDate: null,
+    endDate: null,
   });
 
   return newRide;

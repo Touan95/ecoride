@@ -5,7 +5,6 @@ import { AppDataSource } from '../../../loader/database';
 import { UserRepository } from '../../../repositories/user.repository';
 import { HttpStatuses } from '../../../core/httpStatuses';
 
-
 export default async (
   req: Request,
   res: Response,
