@@ -5,6 +5,8 @@ export interface AuthObject {
   email: string;
   username: string;
   type: UserType;
+  isAdmin: boolean;
+  isStaff: boolean;
 }
 
 export interface RequestWithJwt extends Request {

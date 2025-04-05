@@ -9,7 +9,7 @@ export type UserRepositoryInterface = Repository<UserEntity> & {
   getOneById(id: string, withPassword?: boolean): Promise<UserEntityInterface | null>;
   getOneForAccount(id: string, withPassword?: boolean): Promise<UserEntityInterface | null>;
   updateUser(userId: string, user: UpdateUser, entityManager?: EntityManager): Promise<void>;
-  createOne(user: User): Promise<User>;
+  createOne(user: User, entityManager?: EntityManager): Promise<User>;
 };
 
 export const UserRepository: UserRepositoryInterface = AppDataSource.getRepository(
@@ -59,9 +59,10 @@ export const UserRepository: UserRepositoryInterface = AppDataSource.getReposito
       .where({ id: userId })
       .execute();
   },
-  async createOne(user: User): Promise<User> {
+  async createOne(user: User, entityManager?: EntityManager): Promise<User> {
+    const manager = entityManager ?? this.manager;
     const newUser = this.create(user);
-    await this.save(newUser);
+    await manager.save(newUser);
     return newUser;
   },
 });

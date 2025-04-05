@@ -45,6 +45,7 @@ export interface Ride {
   arrivalPoint: Point;
   departurePoint: Point;
   status: RideStatus;
+  servicePaid: boolean
 }
 
 export interface SearchedRide extends Ride {
@@ -118,6 +119,9 @@ export class RideEntity implements RideEntityInterface {
   @Column({ type: 'enum', enum: RideStatus, default: RideStatus.UPCOMING })
   @Index('ride_status_index', ['status'])
   status: RideStatus;
+
+  @Column({ type: 'boolean', default: false })
+  servicePaid: boolean;
 
   @ManyToOne(() => UserEntity)
   @Index('ride_driver_index', ['driver'])

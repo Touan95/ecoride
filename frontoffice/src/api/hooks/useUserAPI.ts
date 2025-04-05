@@ -6,6 +6,7 @@ import {
   addReviewRequest,
   AddRideParams,
   addRideRequest,
+  approveReviewRequest,
   bookRideRequest,
   cancelDriverRideRequest,
   cancelPassengerRideRequest,
@@ -20,6 +21,7 @@ import {
   getOneUserRequest,
   getPassengerRidesRequest,
   GetReviewParams,
+  getReviewsToApproveRequest,
   getRideDetailsRequest,
   getRideReviewsRequest,
   GetSearchedRidesParams,
@@ -216,4 +218,22 @@ export const useAddReview = ({ onSuccess, onError }: UseMutationOptions<BaseAPIR
 
 export const useGetRideReviews = (params: GetReviewParams) => {
   return useQuery(['reviews', params.rideId], () => getRideReviewsRequest(params));
+};
+
+export const useGetReviewsToApprove = () => {
+  return useQuery(['reviews_to_approve'], () => getReviewsToApproveRequest());
+};
+
+export const useApproveReview = ({ onSuccess, onError }: UseMutationOptions<BaseAPIResponse, ErrorResponse, string>) => {
+  const queryClient = useQueryClient();
+  return useMutation((reviewId) => approveReviewRequest(reviewId), {
+    onSuccess: (data, rideId, context) => {
+      if (onSuccess) {
+        onSuccess(data, rideId, context);
+      }
+      queryClient.invalidateQueries({ queryKey: ['reviews'] });
+      queryClient.invalidateQueries({ queryKey: ['reviews_to_approve'] });
+    },
+    onError
+  });
 };

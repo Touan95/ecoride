@@ -14,6 +14,7 @@ export interface Ride {
   balance: number;
   startDate: Date | null;
   endDate: Date | null;
+  servicePaid: boolean;
 }
 
 export interface SearchedRide extends Ride {

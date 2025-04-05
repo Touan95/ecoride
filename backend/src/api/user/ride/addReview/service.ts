@@ -1,4 +1,5 @@
-import { UpdateUser, UserRepositoryInterface } from '../../../../repositories/user.repository';
+import { v4 as uuid } from 'uuid';
+import { UserRepositoryInterface } from '../../../../repositories/user.repository';
 import userNotFoundError from '../../../common/errors/userNotFound.error';
 import { RideRepositoryInterface } from '../../../../repositories/ride.repository';
 import rideNotFoundError from '../../../common/errors/rideNotFound.error';
@@ -38,6 +39,7 @@ export const service = async ({
   const driverId = ride.driver.id
 
   const reviewObject: ReviewType = {
+    _id: uuid(),
     createdAt: now,
     updatedAt: now,
     driverId,
@@ -45,7 +47,7 @@ export const service = async ({
     comment,
     rideId,
     userId,
-    approved: false,
+    approved: null,
     dispute,
     username: user.username
   }
@@ -53,26 +55,6 @@ export const service = async ({
   const review = new RideReview(reviewObject);
   try {
     await review.save();
-    //A faire lors de l'approve review
-    const driverRatingsResult = await RideReview.aggregate([
-      { $match: { driverId } },  // Match all reviews for this driver
-      { $group: { _id: "$driverId", averageRating: { $avg: "$rating" } } }  // Group by driver and calculate average rating
-    ]);
-
-    // Get the average rating (or 0 if no reviews found)
-    const averageRating = driverRatingsResult.length > 0 ? driverRatingsResult[0].averageRating as number : 0;
-
-    const driver = await userRepository.getOneById(driverId);
-    if (!driver) {
-      throw userNotFoundError();
-    }
-
-    const updatedDriver:UpdateUser = {
-      ...driver,
-      rate: averageRating
-    } 
-    await userRepository.updateUser(driverId, updatedDriver);
-
     return review; 
   } catch (error:any) {
     if (error.code === 11000) {

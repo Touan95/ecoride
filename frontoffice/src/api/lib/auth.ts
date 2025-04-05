@@ -16,6 +16,7 @@ export type RegisterParams = {
   username: string;
   email: string;
   password: string;
+  isStaff: boolean;
 };
 
 export const loginRequest = async ({ email, password }: LoginParams): Promise<TokenResponse> => {
@@ -30,11 +31,12 @@ export const loginRequest = async ({ email, password }: LoginParams): Promise<To
   return data;
 };
 
-export const registerRequest = async ({ email, password, username }: RegisterParams): Promise<User> => {
+export const registerRequest = async ({ email, password, username, isStaff }: RegisterParams): Promise<User> => {
   const { data } = await axiosInstance.post('/register', {
     email,
     password,
-    username
+    username,
+    isStaff
   });
 
   return data;

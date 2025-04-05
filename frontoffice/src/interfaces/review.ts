@@ -1,6 +1,7 @@
 export const REVIEW_MAX_LENGTH = 300;
 
 export interface Review {
+  _id: string;
   username: string;
   userId: string;
   driverId: string;
@@ -9,6 +10,6 @@ export interface Review {
   createdAt: Date;
   updatedAt: Date;
   comment?: string | null;
-  approved: boolean;
-  dispute: boolean;
+  approved: boolean | null;
+  dispute: boolean | null;
 }

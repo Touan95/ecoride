@@ -6,6 +6,7 @@ export interface RegisterRequest {
     email: string;
     password: string;
     username: string;
+    isStaff: boolean;
   };
 }
 
@@ -14,6 +15,7 @@ export const registerValidator = {
     email: validator.string().email().required(),
     password: validator.string().required(),
     username: validator.string().required(),
+    isStaff: validator.boolean().required(),
   }),
 };
 

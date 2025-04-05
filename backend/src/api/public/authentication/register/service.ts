@@ -9,6 +9,7 @@ export interface RegisterServiceOptions {
   email: string;
   password: string;
   username: string;
+  isStaff: boolean;
   userRepository: UserRepositoryInterface;
 }
 
@@ -21,6 +22,7 @@ export default async ({
   email,
   password,
   username,
+  isStaff,
   userRepository,
 }: RegisterServiceOptions): Promise<UserEntityInterface | undefined> => {
   const user = await userRepository.getOneByEmail(email);
@@ -45,7 +47,10 @@ export default async ({
       customRules: [],
       type: UserType.PASSENGER,
       rate: null,
-    });
+      isAdmin: false,
+      isBlocked: false,
+      isStaff
+    }, transactionalEntityManager);
   });
 
   return newUser;
