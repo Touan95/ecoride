@@ -19,10 +19,6 @@ export const sendEmail: MailerFunction = async (options: MailerSendOptions): Pro
 
   const transporter = createTransport({
     url: config.SMTP_URL,
-    auth: {
-      user: 'apikey',
-      pass: config.MAILER_API_KEY,
-    },
   });
 
   await transporter.sendMail({
