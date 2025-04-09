@@ -5,7 +5,7 @@ import { attachLoggerMiddleware } from '../core/middlewares/attachLogger.middlew
 import { defaultCacheMiddleware } from '../core/middlewares/cacheControl.middleware';
 import mongoose from 'mongoose';
 
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/ecoride_reviews';
+const MONGO_URI = process.env.MONGO_URI ?? '';
 
 mongoose
   .connect(MONGO_URI)
