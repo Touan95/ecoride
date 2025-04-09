@@ -1,6 +1,6 @@
 #!/bin/bash
 # Exécute le script de préparation
-./heroku-build.sh
+./prepare-heroku.sh
 
 # Continue avec la construction standard
 cd backend

@@ -10,16 +10,16 @@
     "start": "node dist/index.js",
     "build": "tsc -p ./tsconfig.build.json && npm run mjml2html && npm run copy-templates",
     "lint": "eslint src/ --fix",
-    "lint:fix": "npm lint --fix",
+    "lint:fix": "npm run lint --fix",
     "copy-templates": "copyfiles -u 1 './src/**/*.hbs' ./dist",
     "mjml2html:main": "./node_modules/.bin/mjml -r ./mjml/templates/main.template.mjml -o ./src/static/templates/main.template.hbs",
     "mjml2html": "npm run mjml2html:main",
-    "typeorm:drop": "typeorm-ts-node-commonjs schema:drop -d ./src/loader/ormconfig.ts",
-    "migration:generate": "typeorm-ts-node-commonjs migration:generate -d ./src/loader/ormconfig.ts",
-    "migration:run": "typeorm-ts-node-commonjs migration:run -d ./src/loader/ormconfig.ts",
-    "migration:revert": "typeorm-ts-node-commonjs migration:revert -d ./src/loader/ormconfig.ts",
-    "migration:create": "typeorm-ts-node-commonjs migration:create",
-    "fixtures:load": "fixtures-ts-node-commonjs load ./fixtures --dataSource=./src/loader/ormconfig.ts --debug",
+    "typeorm:drop": "./node_modules/.bin/typeorm-ts-node-commonjs schema:drop -d ./src/loader/ormconfig.ts",
+    "migration:generate": "./node_modules/.bin/typeorm-ts-node-commonjs migration:generate -d ./src/loader/ormconfig.ts",
+    "migration:run": "./node_modules/.bin/typeorm-ts-node-commonjs migration:run -d ./src/loader/ormconfig.ts",
+    "migration:revert": "./node_modules/.bin/typeorm-ts-node-commonjs migration:revert -d ./src/loader/ormconfig.ts",
+    "migration:create": "./node_modules/.bin/typeorm-ts-node-commonjs migration:create",
+    "fixtures:load": "./node_modules/.bin/fixtures-ts-node-commonjs load ./fixtures --dataSource=./src/loader/ormconfig.ts --debug",
     "reload-database": "npm run typeorm:drop && npm run migration:run && npm run fixtures:load",
     "heroku-postbuild": "npm run build"
   },
@@ -49,7 +49,10 @@
     "sanitize-html": "2.11.0",
     "sharp": "0.32.5",
     "typeorm": "0.3.17",
-    "uuid": "9.0.0"
+    "uuid": "9.0.0",
+    "typeorm-ts-node-commonjs": "^0.3.17",
+    "ts-node": "^10.9.1",
+    "typeorm-fixtures-cli": "^4.0.0"
   },
   "devDependencies": {
     "@snowpact/eslint-config": "^1.5.3",
@@ -81,8 +84,6 @@
     "nodemon": "^3.0.1",
     "prettier": "^3.1.0",
     "supertest": "^6.3.3",
-    "ts-node": "^10.9.1",
-    "typeorm-fixtures-cli": "^4.0.0",
     "typescript": "^5.7.3"
   }
 }
