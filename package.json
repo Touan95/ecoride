@@ -1,5 +1,11 @@
 {
   "name": "ecoride",
+  "engines": {
+    "node": "20.x"
+  },
+  "cacheDirectories": [
+    "backend/node_modules"
+  ],
   "private": true,
   "version": "0.0.0",
   "type": "module",
