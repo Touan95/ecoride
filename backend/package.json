@@ -2,6 +2,9 @@
   "name": "ecoride-backend",
   "version": "0.0.6",
   "main": "src/index.ts",
+  "engines": {
+    "node": "20.x"
+  },
   "scripts": {
     "dev": "nodemon",
     "start": "node dist/index.js",
