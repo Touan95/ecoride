@@ -7,10 +7,9 @@ export interface AppConfig {
   ALLOWED_ORIGINS: string[];
   ACCESS_TOKEN_SECRET: string;
   REFRESH_TOKEN_SECRET: string;
+  MONGO_URI: string;
   ACCESS_TOKEN_LIFE: number;
   REFRESH_TOKEN_LIFE: number;
-  RESET_PASSWORD_TOKEN_SECRET: string;
-  RESET_PASSWORD_TOKEN_LIFE: string;
 }
 
 const REQUIRED_VARIABLES: string[] = [
@@ -18,6 +17,7 @@ const REQUIRED_VARIABLES: string[] = [
   'REFRESH_TOKEN_SECRET',
   'ACCESS_TOKEN_LIFE',
   'REFRESH_TOKEN_LIFE',
+  'MONGO_URI'
 ];
 
 function checkRequiredVariables(config: NodeJS.ProcessEnv): void {
@@ -41,8 +41,7 @@ function parseConfig(config: any): AppConfig {
     REFRESH_TOKEN_SECRET: config.REFRESH_TOKEN_SECRET,
     ACCESS_TOKEN_LIFE: config.ACCESS_TOKEN_LIFE,
     REFRESH_TOKEN_LIFE: config.REFRESH_TOKEN_LIFE,
-    RESET_PASSWORD_TOKEN_SECRET: config.RESET_PASSWORD_TOKEN_SECRET,
-    RESET_PASSWORD_TOKEN_LIFE: config.RESET_PASSWORD_TOKEN_LIFE ?? '3d',
+    MONGO_URI: config.MONGO_URI
   };
 }
 

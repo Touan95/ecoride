@@ -17,7 +17,7 @@
     "be-local": "pnpm env:local pnpm --filter ecoride-backend",
     "docker:start": "docker-compose up -d --remove-orphans",
     "docker:stop": "docker-compose stop",
-    "start:database": "pnpm docker:start database-ecoride adminer",
+    "start:database": "pnpm docker:start database-ecoride adminer mongodb",
     "start:mailhog": "pnpm docker:start mailhog",
     "start:pg-admin": "pnpm docker:start pg-admin",
     "stop": "pnpm docker:stop database-ecoride adminer mailhog pg-admin",
