@@ -1,7 +1,14 @@
+import { useTestMail } from '@/api/hooks/useAuthAPI';
 import { Typography } from '@/components/atoms/Typography';
+import { Button } from '@/components/molecules/Button';
 import Link from 'next/link';
 
 export const Footer = () => {
+  const testMail = useTestMail();
+
+  const onTestMail = () => {
+    testMail.mutate();
+  };
   return (
     <div className="w-full flex flex-col bg-primary-700 items-center bottom-0">
       <img src={'/assets/logo-white.png'} alt={''} className="h-20 w-20 object-cover p-4" />
@@ -25,6 +32,7 @@ export const Footer = () => {
             Nous contacter
           </Typography>
         </Link>
+        <Button onClick={onTestMail}>Test mail</Button>
       </div>
     </div>
   );

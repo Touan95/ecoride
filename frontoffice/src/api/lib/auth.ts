@@ -46,3 +46,9 @@ export const getMe = async (): Promise<LoggedUser> => {
   const { data } = await axiosInstance.get('/user/me/');
   return data;
 };
+
+export const testMailRequest = async (): Promise<void> => {
+  const { data } = await axiosInstance.post('/testmail');
+
+  return data;
+};
