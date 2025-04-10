@@ -2,6 +2,7 @@ import apiRouter from '../api';
 import config from './config';
 import buildApp from './app';
 import { initDatabase } from './database';
+import { buildConfig } from '../core/mailer/config';
 
 export default async (): Promise<void> => {
   try {
@@ -12,9 +13,11 @@ export default async (): Promise<void> => {
       router: apiRouter,
     });
 
+    const mailConfig = buildConfig();
+
     app.listen(config.PORT, () =>
       console.log(
-        `App is running on ${config.PORT} port. Allowed origin is ${config.ALLOWED_ORIGINS}`,
+        `App is running on ${config.PORT} port. Allowed origin is ${config.ALLOWED_ORIGINS}. Mailer config is SMTP_URL=${mailConfig.SMTP_URL} | FROM_EMAIL=${mailConfig.FROM_EMAIL}`,
       ),
     );
   } catch (error) {
