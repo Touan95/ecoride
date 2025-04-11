@@ -11,7 +11,7 @@
     "build": "tsc -p ./tsconfig.build.json && npm run mjml2html && npm run copy-templates",
     "lint": "eslint src/ --fix",
     "lint:fix": "npm run lint --fix",
-    "copy-templates": "npm run copyfiles -u 1 './src/**/*.hbs' ./dist",
+    "copy-templates": "copyfiles -u 1 './src/**/*.hbs' ./dist",
     "mjml2html:main": "./node_modules/.bin/mjml -r ./mjml/templates/main.template.mjml -o ./src/static/templates/main.template.hbs",
     "mjml2html": "npm run mjml2html:main",
     "typeorm:drop": "./node_modules/.bin/typeorm-ts-node-commonjs schema:drop -d ./src/loader/ormconfig.ts",
