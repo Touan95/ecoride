@@ -8,8 +8,8 @@
   "scripts": {
     "dev": "nodemon",
     "start": "node dist/index.js",
-    "build": "tsc -p ./tsconfig.build.json && pnpm mjml2html && pnpm copy-templates",
-    "gcp-build": "tsc -p ./tsconfig.build.json  && pnpm mjml2html && pnpm copy-templates",
+    "build": "tsc -p ./tsconfig.build.json",
+    "gcp-build": "tsc -p ./tsconfig.build.json && pnpm mjml2html && pnpm copy-templates",
     "lint": "eslint src/ --fix",
     "lint:fix": "pnpm lint --fix",
     "copy-templates": "pnpm copyfiles -u 1 './src/**/*.hbs' ./dist",
