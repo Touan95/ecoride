@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "nodemon",
     "start": "node dist/index.js",
-    "build": "tsc -p ./tsconfig.build.json && npm run mjml2html && npm run copy-templates",
+    "build": "tsc -p ./tsconfig.build.json && npm run mjml2html && node copyAssets.js",
     "lint": "eslint src/ --fix",
     "lint:fix": "npm run lint --fix",
     "copy-templates": "copyfiles -u 1 './src/**/*.hbs' ./dist",
