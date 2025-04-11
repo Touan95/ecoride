@@ -52,6 +52,8 @@
     "uuid": "9.0.0",
     "typeorm-ts-node-commonjs": "^0.3.17",
     "ts-node": "^10.9.1",
+    "mjml": "^4.14.1",
+    "copyfiles": "^2.4.1",
     "typeorm-fixtures-cli": "^4.0.0"
   },
   "devDependencies": {
@@ -74,12 +76,10 @@
     "@types/uuid": "^9.0.2",
     "@typescript-eslint/eslint-plugin": "^8.24.1",
     "@typescript-eslint/parser": "8.24.1",
-    "copyfiles": "^2.4.1",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "2.26.0",
     "eslint-plugin-prettier": "^5.0.1",
-    "mjml": "^4.14.1",
     "msw": "^2.0.1",
     "nodemon": "^3.0.1",
     "prettier": "^3.1.0",
