@@ -14,17 +14,22 @@ export default function Staff() {
   const { user } = useAuthContext();
   const { data: reviewsData } = useGetReviewsToApprove();
   const approveReview = useApproveReview({});
-  const reviewsToApprove = reviewsData ? reviewsData.reviews : [];
+  const allReviews = reviewsData ? reviewsData.reviews : [];
+  const reviewsToApprove = allReviews.filter((review) => !review.dispute);
+  const reviewsInDispute = allReviews.filter((review) => review.dispute);
   const isAdmin = !!user?.isAdmin;
   const isStaff = !!user?.isStaff;
 
-  const onDetailClick = (id: string) => () => {
-    router.push(`/rides/${id}`);
+  const onRideDetailClick = (rideId: string) => () => {
+    router.push(`/rides/${rideId}`);
+  };
+
+  const onDisputeDetailClick = (reviewId: string) => () => {
+    router.push(`/staff/disputes/${reviewId}`);
   };
 
   const onApproveReview = (id: string) => () => {
     approveReview.mutate(id);
-    // cancelPassengerRide.mutate(id);
   };
 
   if (!isStaff) {
@@ -51,9 +56,11 @@ export default function Staff() {
           </TabsList>
 
           <TabsContent value="reviews">
-            <StaffReviewList reviews={reviewsToApprove} onApproveClick={onApproveReview} onDetailClick={onDetailClick} />
+            <StaffReviewList reviews={reviewsToApprove} onApproveClick={onApproveReview} onDetailClick={onRideDetailClick} />
           </TabsContent>
-          {<TabsContent value="dispute"></TabsContent>}
+          <TabsContent value="dispute">
+            <StaffReviewList reviews={reviewsInDispute} onDetailClick={onDisputeDetailClick} dispute />
+          </TabsContent>
           {<TabsContent value="admin"></TabsContent>}
         </Tabs>
       </SectionContainer>

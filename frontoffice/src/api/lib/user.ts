@@ -103,6 +103,12 @@ interface GetReviewsToApproveResponse {
   reviews: Review[];
 }
 
+export interface ResolveDisputeParams {
+  reviewId: string;
+  approveReview: boolean;
+  refundPassenger: boolean;
+}
+
 export const changeUserTypeRequest = async (params: ChangeUserTypeParams): Promise<BaseAPIResponse> => {
   const { userId, ...bodyParams } = params;
   const { data } = await axiosInstance.patch(`/user/${userId}/type`, bodyParams);
@@ -210,5 +216,16 @@ export const getReviewsToApproveRequest = async (): Promise<GetReviewsToApproveR
 
 export const approveReviewRequest = async (reviewId: string): Promise<BaseAPIResponse> => {
   const { data } = await axiosInstance.patch(`/staff/review/${reviewId}/approve`);
+  return data;
+};
+
+export const getOneReviewRequest = async (reviewId: string): Promise<Review> => {
+  const { data } = await axiosInstance.get(`/staff/review/${reviewId}`);
+  return data;
+};
+
+export const resolveDisputeRequest = async (params: ResolveDisputeParams): Promise<BaseAPIResponse> => {
+  const { reviewId, ...bodyParams } = params;
+  const { data } = await axiosInstance.patch(`/staff/review/${reviewId}/dispute`, bodyParams);
   return data;
 };

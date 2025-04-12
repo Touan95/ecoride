@@ -12,7 +12,6 @@ export interface ReviewToApproveCardProps {
   id: string;
   rideId: string;
   date: Date;
-  dispute?: boolean;
   username: string;
   comment: string;
   rate: number;
@@ -20,15 +19,7 @@ export interface ReviewToApproveCardProps {
   onApproveClick?: () => void;
 }
 
-export const ReviewToApproveCard = ({
-  date,
-  dispute,
-  username,
-  comment,
-  rate,
-  onDetailClick,
-  onApproveClick
-}: ReviewToApproveCardProps) => {
+export const ReviewToApproveCard = ({ date, username, comment, rate, onDetailClick, onApproveClick }: ReviewToApproveCardProps) => {
   const reviewDate = dayjs(date);
   const formattedReviewDate = reviewDate.format('DD MMMM YYYY');
 
@@ -52,11 +43,13 @@ export const ReviewToApproveCard = ({
       <div className="flex gap-4">
         <div>
           <Button className="mt-3 w-26" onClick={onDetailClick} variant="outlined">
-            Voir trajet
+            Voir détails
           </Button>
-          <Button className="mt-3 w-26" onClick={onApproveClick} variant="outlined" disabled={dispute}>
-            Approuver
-          </Button>
+          {onApproveClick && (
+            <Button className="mt-3 w-26" onClick={onApproveClick} variant="outlined">
+              Approuver
+            </Button>
+          )}
         </div>
       </div>
     </div>

@@ -5,7 +5,8 @@ import rideNotFoundError from '../../../common/errors/rideNotFound.error';
 import userNotDriverError from '../../../common/errors/userNotDriver.error';
 import { RideStatus } from '../../../../entities/ride.entity';
 import rideEndStatusError from '../../../common/errors/rideEndStatus.error';
-
+import { emailSender } from '../../../../services/emailSender';
+import dayjs from 'dayjs';
 export interface EndRideServiceOptions {
   userId: string;
   rideId: string;
@@ -39,10 +40,27 @@ export const service = async ({
     throw rideEndStatusError();
   }
 
+  const endDate = new Date();
+
   const updateRide: UpdateRide = {
     ...ride,
     status: RideStatus.COMPLETED,
-    endDate: new Date(),
+    endDate,
   };
   await rideRepository.updateRide(updateRide);
+
+  const passengers = ride.passengers;
+
+  const formattedEmailDate = dayjs(endDate).format('dddd D MMMM à HH[h]mm');
+
+  passengers.map(async (passenger) => {
+    void emailSender.rideCompleted({
+      departureCity: ride.departureLocation.city ?? '',
+      arrivalCity: ride.arrivalLocation.city ?? '',
+      endDate: formattedEmailDate,
+      email: passenger.email,
+      username: passenger.username,
+      rideId: ride.id,
+    });
+  });
 };

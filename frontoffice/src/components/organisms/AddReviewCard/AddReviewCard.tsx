@@ -50,7 +50,12 @@ export const AddReviewCard = ({ onSubmit, isLogged = false, onLoginClick, hasAlr
 
   const loggedInContent = useMemo(() => {
     if (hasAlreadyReviewed) {
-      return <Typography variant="cardTitleSm">Merci ! Vous avez déjà laissé un avis sur ce trajet</Typography>;
+      return (
+        <Typography variant="cardTitleSm">
+          Merci ! Vous avez déjà laissé un avis sur ce trajet. <br />
+          S’il n’apparaît pas encore, c’est simplement qu’il est en attente de validation par notre équipe.
+        </Typography>
+      );
     } else {
       return (
         <>

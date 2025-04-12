@@ -9,22 +9,34 @@ import { getUserTypeLabel } from '@/utils/values';
 export interface AccountCardProps {
   username: string;
   email: string;
-  avatarUrl: string | null;
+  avatarUrl?: string;
+  title?: string;
+  notCentered?: boolean;
   type: UserType;
   onUsernameEdit?: () => void;
   onEmailEdit?: () => void;
   onUserTypeEdit?: () => void;
 }
 
-export const AccountDetailsCard = ({ username, email, avatarUrl, type, onUsernameEdit, onEmailEdit, onUserTypeEdit }: AccountCardProps) => {
+export const AccountDetailsCard = ({
+  title = 'Vos informations',
+  username,
+  email,
+  avatarUrl,
+  type,
+  notCentered = false,
+  onUsernameEdit,
+  onEmailEdit,
+  onUserTypeEdit
+}: AccountCardProps) => {
   return (
-    <div className={clsxm(['w-full rounded-xl flex flex-col p-5 shadow bg-primary-50 gap-3 items-center'])}>
-      <Typography align="center" variant="cardTitle" color="primary">
-        Vos informations
+    <div className={clsxm(['w-full rounded-xl flex flex-col p-5 shadow bg-primary-50 gap-3', !notCentered && 'items-center'])}>
+      <Typography align={!notCentered ? 'center' : undefined} variant="cardTitle" color="primary">
+        {title}
       </Typography>
-      <div className="flex gap-5 items-center">
+      <div className={clsxm('flex gap-5 items-center')}>
         {avatarUrl && <Image src={avatarUrl} height={80} width={80} className="rounded-full w-20" alt={`${username}-avatar-image`} />}
-        <div className="flex flex-col">
+        <div className="flex flex-col w-full">
           <AccountCardField labelClassname="w-30" onEdit={onUsernameEdit} label="Pseudonyme">
             {username}
           </AccountCardField>

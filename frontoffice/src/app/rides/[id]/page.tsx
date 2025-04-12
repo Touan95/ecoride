@@ -63,6 +63,8 @@ export default function Rides() {
     return isPassengerAddReview || isLoggedOutAddReview;
   }, [ride?.status, isUserPassenger, reviewParams, isLogged, user]);
 
+  const isNotPassengerAddReview = ride?.status === RideStatus.COMPLETED && isLogged && !isUserPassenger && reviewParams === 'true';
+
   const canStartRide = useMemo(() => {
     if (!ride?.departureDate) {
       return false;
@@ -214,6 +216,11 @@ export default function Rides() {
                   isLogged={isLogged && !!user}
                   hasAlreadyReviewed={hasAlreadyReviewed}
                 />
+              )}
+              {isNotPassengerAddReview && (
+                <Typography variant="cardTitleSm">
+                  {"Vous ne pouvez pas laisser d'avis car vous n'avez pas participé à ce trajet."}
+                </Typography>
               )}
             </div>
             <div className="flex flex-col gap-4">

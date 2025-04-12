@@ -5,7 +5,8 @@ import { Review } from '@/interfaces/review';
 interface StaffReviewList {
   reviews: Review[];
   onDetailClick: (rideId: string) => () => void;
-  onApproveClick: (commentId: string) => () => void;
+  onApproveClick?: (commentId: string) => () => void;
+  dispute?: boolean;
 }
 
 const reviewApiToCard = (apiReview: Review): ReviewToApproveCardProps => {
@@ -14,13 +15,12 @@ const reviewApiToCard = (apiReview: Review): ReviewToApproveCardProps => {
     rideId: apiReview.rideId,
     comment: apiReview.comment ?? '',
     date: apiReview.createdAt,
-    dispute: apiReview.dispute ?? undefined,
     rate: apiReview.rating,
     username: apiReview.username
   };
 };
 
-export const StaffReviewList = ({ onDetailClick, reviews, onApproveClick }: StaffReviewList) => {
+export const StaffReviewList = ({ onDetailClick, reviews, onApproveClick, dispute = false }: StaffReviewList) => {
   if (reviews.length > 0) {
     const reviewCardData = reviews.map((review) => reviewApiToCard(review));
     return (
@@ -30,8 +30,8 @@ export const StaffReviewList = ({ onDetailClick, reviews, onApproveClick }: Staf
             <ReviewToApproveCard
               key={review.id}
               {...review}
-              onDetailClick={onDetailClick(review.rideId)}
-              onApproveClick={onApproveClick(review.id)}
+              onDetailClick={onDetailClick(dispute ? review.id : review.rideId)}
+              onApproveClick={onApproveClick && onApproveClick(review.id)}
             />
           );
         })}
@@ -41,7 +41,7 @@ export const StaffReviewList = ({ onDetailClick, reviews, onApproveClick }: Staf
     return (
       <div className="p-10">
         <Typography variant="cardTitleSm" align="center">
-          {"Il n'y a aucun avis à valider"}
+          {`Il n'y a aucun ${dispute ? 'litige' : 'avis'} à valider`}
         </Typography>
       </div>
     );

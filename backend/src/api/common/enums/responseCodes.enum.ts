@@ -34,4 +34,5 @@ export enum ResponseCodes {
   END_RIDE_SUCCESS = 'end-ride-success',
   ADD_REVIEW_SUCCESS = 'add-review-success',
   APPROVE_REVIEW_SUCCESS = 'approve-review-success',
+  RESOLVE_DISPUTE_SUCCESS = 'resolve-dispute-success',
 }

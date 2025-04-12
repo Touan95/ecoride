@@ -65,4 +65,5 @@ export enum ErrorCodes {
   RIDE_ALREADY_REVIEWED = 'ride-already-reviewed',
   USER_NOT_STAFF = 'user-not-staff',
   REVIEW_ALREADY_APPROVED = 'review-already-approved',
+  REVIEW_NOT_FOUND = 'review-not-found',
 }

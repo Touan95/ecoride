@@ -1,4 +1,5 @@
 import { Energy } from '@/interfaces/car';
+import { DisputeCreditAction, DisputeReviewAction } from '@/interfaces/review';
 import { UserType } from '@/interfaces/user';
 import { z } from 'zod';
 
@@ -59,3 +60,10 @@ export const searchRidesFormSchema = z.object({
 });
 
 export type SearchRidesFormSchemaType = z.infer<typeof searchRidesFormSchema>;
+
+export const disputeResolutionActionFormSchema = z.object({
+  credits: z.nativeEnum(DisputeCreditAction),
+  review: z.nativeEnum(DisputeReviewAction)
+});
+
+export type DisputeResolutionActionFormSchemaType = z.infer<typeof disputeResolutionActionFormSchema>;

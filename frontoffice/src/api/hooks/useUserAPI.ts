@@ -18,6 +18,7 @@ import {
   deleteCarRequest,
   endRideRequest,
   getDriverRidesRequest,
+  getOneReviewRequest,
   getOneUserRequest,
   getPassengerRidesRequest,
   GetReviewParams,
@@ -28,6 +29,8 @@ import {
   getSearchedRidesRequest,
   PutCarParams,
   putCarRequest,
+  ResolveDisputeParams,
+  resolveDisputeRequest,
   startRideRequest
 } from '../lib/user';
 import { BaseAPIResponse, ErrorResponse } from '../lib/types';
@@ -236,4 +239,22 @@ export const useApproveReview = ({ onSuccess, onError }: UseMutationOptions<Base
     },
     onError
   });
+};
+
+export const useResolveDispute = ({ onSuccess, onError }: UseMutationOptions<BaseAPIResponse, ErrorResponse, ResolveDisputeParams>) => {
+  const queryClient = useQueryClient();
+  return useMutation((params) => resolveDisputeRequest(params), {
+    onSuccess: (data, params, context) => {
+      if (onSuccess) {
+        onSuccess(data, params, context);
+      }
+      queryClient.invalidateQueries({ queryKey: ['reviews'] });
+      queryClient.invalidateQueries({ queryKey: ['reviews_to_approve'] });
+    },
+    onError
+  });
+};
+
+export const useGetOneReview = (reviewId?: string) => {
+  return useQuery(['review', reviewId], () => getOneReviewRequest(reviewId ?? ''), { enabled: !!reviewId });
 };
