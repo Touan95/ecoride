@@ -4,10 +4,10 @@ import validator from '../../../core/validator';
 export interface ResolveDisputeRequest {
   params: {
     reviewId: string;
-  },
-  body:{
-    refundPassenger : boolean
-    approveReview : boolean
+  };
+  body: {
+    refundPassenger: boolean;
+    approveReview: boolean;
   };
 }
 

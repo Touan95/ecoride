@@ -7,6 +7,11 @@ import { RideStatus } from '../../../../entities/ride.entity';
 import rideEndStatusError from '../../../common/errors/rideEndStatus.error';
 import { emailSender } from '../../../../services/emailSender';
 import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 export interface EndRideServiceOptions {
   userId: string;
   rideId: string;
@@ -51,13 +56,14 @@ export const service = async ({
 
   const passengers = ride.passengers;
 
-  const formattedEmailDate = dayjs(endDate).format('dddd D MMMM à HH[h]mm');
+  const formattedEmailDate = dayjs(endDate).tz('Europe/Paris').format('dddd D MMMM à HH[h]mm');
 
   passengers.map(async (passenger) => {
     void emailSender.rideCompleted({
       departureCity: ride.departureLocation.city ?? '',
       arrivalCity: ride.arrivalLocation.city ?? '',
       endDate: formattedEmailDate,
+
       email: passenger.email,
       username: passenger.username,
       rideId: ride.id,

@@ -28,6 +28,7 @@ export default function Disputes() {
   const resolveDispute = useResolveDispute({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['ride', ride?.id] });
+      queryClient.invalidateQueries({ queryKey: ['user', driver?.id] });
     }
   });
 

@@ -1,5 +1,5 @@
 import RideReview, { ReviewType } from '../../../models/rideReview.model';
-import {  UserRepositoryInterface } from '../../../repositories/user.repository';
+import { UserRepositoryInterface } from '../../../repositories/user.repository';
 import reviewNotFoundError from '../../common/errors/reviewNotFound.error';
 import userNotFoundError from '../../common/errors/userNotFound.error';
 import userNotStaffError from '../../common/errors/userNotStaff.error';

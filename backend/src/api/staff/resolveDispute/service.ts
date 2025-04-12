@@ -55,7 +55,6 @@ export const service = async ({
     const rideId = updatedReview?.rideId;
 
     if (!driverId) {
-      console.log("🚀 ~ A")
       throw userNotFoundError();
     }
 
@@ -73,13 +72,11 @@ export const service = async ({
 
     const driver = await userRepository.getOneById(driverId);
     if (!driver) {
-      console.log("🚀 ~ B")
       throw userNotFoundError();
     }
 
     const passenger = await userRepository.getOneById(passengerId);
     if (!passenger) {
-      console.log("🚀 ~ C")
       throw userNotFoundError();
     }
 
@@ -89,13 +86,13 @@ export const service = async ({
     }
 
     const hasAlreadyPaidService = ride.servicePaid;
-    const appliedServiceFee = (hasAlreadyPaidService || refundPassenger) ? 0 : SERVICE_FEE;
+    const appliedServiceFee = hasAlreadyPaidService || refundPassenger ? 0 : SERVICE_FEE;
     const ridePrice = ride.price;
     const initialRideBalance = ride.balance;
     const initialDriverCredits = driver.credits;
-    const driverRideEarnings = refundPassenger ? 0 : ridePrice
+    const driverRideEarnings = refundPassenger ? 0 : ridePrice;
     const initialPassengerCredits = passenger.credits;
-    const passengerRefundAmount = refundPassenger ? ridePrice : 0
+    const passengerRefundAmount = refundPassenger ? ridePrice : 0;
 
     if (!hasAlreadyPaidService && !refundPassenger) {
       const newPlatformCredit: PlatformCreditEntityInterface = {

@@ -17,7 +17,7 @@ const REQUIRED_VARIABLES: string[] = [
   'REFRESH_TOKEN_SECRET',
   'ACCESS_TOKEN_LIFE',
   'REFRESH_TOKEN_LIFE',
-  'MONGO_URI'
+  'MONGO_URI',
 ];
 
 function checkRequiredVariables(config: NodeJS.ProcessEnv): void {
@@ -41,7 +41,7 @@ function parseConfig(config: any): AppConfig {
     REFRESH_TOKEN_SECRET: config.REFRESH_TOKEN_SECRET,
     ACCESS_TOKEN_LIFE: config.ACCESS_TOKEN_LIFE,
     REFRESH_TOKEN_LIFE: config.REFRESH_TOKEN_LIFE,
-    MONGO_URI: config.MONGO_URI
+    MONGO_URI: config.MONGO_URI,
   };
 }
 
