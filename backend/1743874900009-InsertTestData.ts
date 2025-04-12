@@ -26,10 +26,10 @@ export class InsertTestData1743874900009 implements MigrationInterface {
     for (let i = 0; i < 30; i++) {
       const currentDate = new Date();
       currentDate.setDate(currentDate.getDate() - i);
-      
+
       // Génération d'un nombre aléatoire de trajets pour ce jour (entre 5 et 20)
       const rideCount = Math.floor(Math.random() * 15) + 5;
-      
+
       for (let j = 0; j < rideCount; j++) {
         // Insertion du trajet avec UUID généré par PostgreSQL
         await queryRunner.query(`
@@ -84,4 +84,4 @@ export class InsertTestData1743874900009 implements MigrationInterface {
       DELETE FROM "car" WHERE "id" = '9187705b-075a-4ed1-ac41-f9b29f9d3215';
     `);
   }
-} 
+}

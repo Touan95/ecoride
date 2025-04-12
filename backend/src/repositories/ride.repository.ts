@@ -1,6 +1,11 @@
 import { EntityManager, Repository } from 'typeorm';
 import { AppDataSource } from '../loader/database';
-import { DailyStatistics, RideEntity, RideEntityInterface, SearchedRide } from '../entities/ride.entity';
+import {
+  DailyStatistics,
+  RideEntity,
+  RideEntityInterface,
+  SearchedRide,
+} from '../entities/ride.entity';
 import { PlatformCreditEntity } from '../entities/plateformCredit.entity';
 
 export type UpdateRide = Partial<Omit<RideEntity, 'id'>>;
@@ -138,19 +143,19 @@ export const RideRepository: RideRepositoryInterface = AppDataSource.getReposito
   },
   async getDailyStatistics(): Promise<DailyStatistics[]> {
     const query = this.createQueryBuilder('ride')
-    .select("DATE(ride.endDate)", "date")
-    .addSelect("COUNT(DISTINCT ride.id)", "rides")
-    .addSelect("COALESCE(SUM(pc.credit), 0)", "credits")
-    .leftJoin(PlatformCreditEntity, 'pc', 'pc.ride = ride.id')
-    .where('ride.endDate IS NOT NULL')
-    .andWhere('ride.status = :status', { status: 'completed' });
+      .select('DATE(ride.endDate)', 'date')
+      .addSelect('COUNT(DISTINCT ride.id)', 'rides')
+      .addSelect('COALESCE(SUM(pc.credit), 0)', 'credits')
+      .leftJoin(PlatformCreditEntity, 'pc', 'pc.ride = ride.id')
+      .where('ride.endDate IS NOT NULL')
+      .andWhere('ride.status = :status', { status: 'completed' });
 
     const results = await query
-    .groupBy("DATE(ride.endDate)")
-    .orderBy("DATE(ride.endDate)", "DESC")
-    .getRawMany();
-    
-    return results.map(result => ({
+      .groupBy('DATE(ride.endDate)')
+      .orderBy('DATE(ride.endDate)', 'DESC')
+      .getRawMany();
+
+    return results.map((result) => ({
       date: new Date(result.date),
       rides: Number(result.rides),
       credits: Number(result.credits),

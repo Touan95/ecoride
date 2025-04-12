@@ -10,4 +10,4 @@ export const staffRouter = Router()
   .use(getReviewsToApprove)
   .use(getOneReview)
   .use(approveReview)
-  .use(resolveDispute)
+  .use(resolveDispute);

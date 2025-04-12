@@ -1,4 +1,4 @@
-import { DailyStatistics } from "../../../entities/ride.entity";
+import { DailyStatistics } from '../../../entities/ride.entity';
 
 interface SerializedStatistics {
   dailyStatistics: DailyStatistics[];

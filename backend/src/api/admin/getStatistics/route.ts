@@ -3,11 +3,8 @@ import { service } from './service';
 import { UserRepository } from '../../../repositories/user.repository';
 import { AppDataSource } from '../../../loader/database';
 import { HttpStatuses } from '../../../core/httpStatuses';
-import { ValidatedRequest } from '../../../core/utils/validatedExpressRequest';
-import { GetOneReviewRequest } from './validator';
 import { serializer } from './serializer';
 import { RideRepository } from '../../../repositories/ride.repository';
-
 
 export default async (
   req: Request,
