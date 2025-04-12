@@ -31,3 +31,9 @@ export interface PublicRideDetails extends Ride {
 export interface DriverRide extends Ride {
   carSeats: number;
 }
+
+export interface DailyStatistics {
+  date: Date;
+  rides: number;
+  credits: number;
+}

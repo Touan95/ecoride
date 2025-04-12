@@ -35,4 +35,5 @@ export enum ResponseCodes {
   ADD_REVIEW_SUCCESS = 'add-review-success',
   APPROVE_REVIEW_SUCCESS = 'approve-review-success',
   RESOLVE_DISPUTE_SUCCESS = 'resolve-dispute-success',
+  GIVE_STAFF_ACCESS_SUCCESS = 'give-staff-access-success',
 }

@@ -12,9 +12,11 @@ import { loginFormSchema, LoginSchemaType } from '@/schemas/auth';
 interface LoginFormProps {
   onLogin: ({ email, password }: { email: string; password: string }) => void;
   onCreateAccountClick?: () => void;
+  title?: string;
+  buttonTitle?: string;
 }
 
-export const LoginForm = ({ onLogin, onCreateAccountClick }: LoginFormProps) => {
+export const LoginForm = ({ onLogin, onCreateAccountClick, title = 'Connectez-vous', buttonTitle = 'Se connecter' }: LoginFormProps) => {
   const form = useForm<LoginSchemaType>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
@@ -30,7 +32,7 @@ export const LoginForm = ({ onLogin, onCreateAccountClick }: LoginFormProps) => 
   return (
     <Form {...form}>
       <Typography variant="title" tag="p">
-        Connectez-vous
+        {title}
       </Typography>
       <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-5">
         <FormField
@@ -59,7 +61,7 @@ export const LoginForm = ({ onLogin, onCreateAccountClick }: LoginFormProps) => 
             </FormItem>
           )}
         />
-        <Button type="submit">Se connecter</Button>
+        <Button type="submit">{buttonTitle}</Button>
       </form>
       {onCreateAccountClick && (
         <div className="mt-6">

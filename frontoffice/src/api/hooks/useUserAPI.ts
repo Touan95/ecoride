@@ -27,6 +27,8 @@ import {
   getRideReviewsRequest,
   GetSearchedRidesParams,
   getSearchedRidesRequest,
+  getStatisticsRequest,
+  giveStaffAccessRequest,
   PutCarParams,
   putCarRequest,
   ResolveDisputeParams,
@@ -257,4 +259,15 @@ export const useResolveDispute = ({ onSuccess, onError }: UseMutationOptions<Bas
 
 export const useGetOneReview = (reviewId?: string) => {
   return useQuery(['review', reviewId], () => getOneReviewRequest(reviewId ?? ''), { enabled: !!reviewId });
+};
+
+export const useGiveStaffAccess = ({ onSuccess, onError }: UseMutationOptions<BaseAPIResponse, ErrorResponse, string>) => {
+  return useMutation((email) => giveStaffAccessRequest(email), {
+    onSuccess,
+    onError
+  });
+};
+
+export const useGetStatistics = (enabled: boolean = false) => {
+  return useQuery(['statistics'], () => getStatisticsRequest(), { enabled });
 };

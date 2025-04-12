@@ -12,9 +12,11 @@ import { registerFormSchema, RegisterSchemaType } from '@/schemas/auth';
 interface RegisterFormProps {
   onRegister: ({ username, email, password }: { username: string; email: string; password: string }) => void;
   onLoginClick?: () => void;
+  title?: string;
+  buttonTitle?: string;
 }
 
-export const RegisterForm = ({ onRegister, onLoginClick }: RegisterFormProps) => {
+export const RegisterForm = ({ onRegister, onLoginClick, title = 'Inscrivez-vous', buttonTitle = "S'inscrire" }: RegisterFormProps) => {
   const form = useForm<RegisterSchemaType>({
     resolver: zodResolver(registerFormSchema),
     defaultValues: {
@@ -31,7 +33,7 @@ export const RegisterForm = ({ onRegister, onLoginClick }: RegisterFormProps) =>
   return (
     <Form {...form}>
       <Typography variant="title" tag="p">
-        Inscrivez-vous
+        {title}
       </Typography>
       <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-5">
         <FormField
@@ -73,7 +75,7 @@ export const RegisterForm = ({ onRegister, onLoginClick }: RegisterFormProps) =>
             </FormItem>
           )}
         />
-        <Button type="submit">{"S'inscrire"}</Button>
+        <Button type="submit">{buttonTitle}</Button>
       </form>
       {onLoginClick && (
         <div className="mt-6">

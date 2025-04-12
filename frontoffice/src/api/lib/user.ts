@@ -2,7 +2,7 @@ import axiosInstance from '@/configs/axios';
 import { BaseAPIResponse } from './types';
 import { User, UserType } from '@/interfaces/user';
 import { Car, Energy } from '@/interfaces/car';
-import { DriverRide, PublicRideDetails, SearchedRide } from '@/interfaces/ride';
+import { DailyStatistics, DriverRide, PublicRideDetails, SearchedRide } from '@/interfaces/ride';
 import { PassengerRide } from '@/interfaces/ridePassenger';
 import { Review } from '@/interfaces/review';
 
@@ -101,6 +101,11 @@ interface GetRideReviewsResponse {
 
 interface GetReviewsToApproveResponse {
   reviews: Review[];
+}
+interface GetStatisticsResponse {
+  dailyStatistics: DailyStatistics[];
+  totalCredits: number;
+  totalRides: number;
 }
 
 export interface ResolveDisputeParams {
@@ -227,5 +232,15 @@ export const getOneReviewRequest = async (reviewId: string): Promise<Review> => 
 export const resolveDisputeRequest = async (params: ResolveDisputeParams): Promise<BaseAPIResponse> => {
   const { reviewId, ...bodyParams } = params;
   const { data } = await axiosInstance.patch(`/staff/review/${reviewId}/dispute`, bodyParams);
+  return data;
+};
+
+export const giveStaffAccessRequest = async (email: string): Promise<BaseAPIResponse> => {
+  const { data } = await axiosInstance.patch(`/admin/user/${email}/staff`);
+  return data;
+};
+
+export const getStatisticsRequest = async (): Promise<GetStatisticsResponse> => {
+  const { data } = await axiosInstance.get(`/admin/statistics`);
   return data;
 };

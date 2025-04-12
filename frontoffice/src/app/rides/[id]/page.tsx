@@ -9,7 +9,7 @@ import { PriceCard } from '@/components/molecules/PriceCard';
 import { DriverCard } from '@/components/molecules/DriverCard';
 import { GreenCard } from '@/components/molecules/GreenCard';
 import { Button } from '@/components/molecules/Button';
-import { LoginModal } from '@/components/organisms/LoginModal';
+import { LogOrRegisterModal } from '@/components/organisms/LoginModal';
 import { ConfirmBookingModal } from '@/components/organisms/ConfirmBookingModal';
 import { useLoginMutation, useRegisterMutation } from '@/api/hooks/useAuthAPI';
 import { LoginSchemaType, RegisterSchemaType } from '@/schemas/auth';
@@ -231,7 +231,7 @@ export default function Rides() {
           </div>
         </div>
       </SectionContainer>
-      <LoginModal isOpen={loginModalOpen} onClose={closeLoginModal} onLogin={onLogin} onRegister={onRegister} />
+      <LogOrRegisterModal isOpen={loginModalOpen} onClose={closeLoginModal} onLogin={onLogin} onRegister={onRegister} />
       <ConfirmBookingModal
         isOpen={confirmBookingModalOpen}
         onClose={closeConfirmBookingModal}

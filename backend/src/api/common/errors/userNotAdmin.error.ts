@@ -4,8 +4,8 @@ import { ErrorCodes } from '../enums/errorCodes.enum';
 
 export default (): IAppError =>
   buildError({
-    message: 'User not staff',
-    publicMessage: 'User not staff',
-    code: ErrorCodes.USER_NOT_STAFF,
+    message: 'User not admin',
+    publicMessage: 'User not admin',
+    code: ErrorCodes.USER_NOT_ADMIN,
     statusCode: HttpStatuses.FORBIDDEN,
   });

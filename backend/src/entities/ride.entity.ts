@@ -65,6 +65,12 @@ export interface RideEntityInterface extends Ride {
   passengers: UserEntityInterface[];
 }
 
+export interface DailyStatistics {
+  date: Date;
+  rides: number;
+  credits: number;
+}
+
 @Entity('ride')
 export class RideEntity implements RideEntityInterface {
   @PrimaryColumn({ type: 'uuid' })
