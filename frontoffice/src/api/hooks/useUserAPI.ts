@@ -7,6 +7,7 @@ import {
   AddRideParams,
   addRideRequest,
   approveReviewRequest,
+  blockUserRequest,
   bookRideRequest,
   cancelDriverRideRequest,
   cancelPassengerRideRequest,
@@ -17,6 +18,7 @@ import {
   DeleteCarParams,
   deleteCarRequest,
   endRideRequest,
+  getAllStaffRequest,
   getDriverRidesRequest,
   getOneReviewRequest,
   getOneUserRequest,
@@ -28,12 +30,17 @@ import {
   GetSearchedRidesParams,
   getSearchedRidesRequest,
   getStatisticsRequest,
+  GetUserForAdminParams,
+  getUserForAdminRequest,
+  GetUserForAdminResponse,
   giveStaffAccessRequest,
   PutCarParams,
   putCarRequest,
   ResolveDisputeParams,
   resolveDisputeRequest,
-  startRideRequest
+  startRideRequest,
+  unblockUserRequest,
+  getBlockedUsersRequest
 } from '../lib/user';
 import { BaseAPIResponse, ErrorResponse } from '../lib/types';
 
@@ -270,4 +277,54 @@ export const useGiveStaffAccess = ({ onSuccess, onError }: UseMutationOptions<Ba
 
 export const useGetStatistics = (enabled: boolean = false) => {
   return useQuery(['statistics'], () => getStatisticsRequest(), { enabled });
+};
+
+export const useGetAllStaff = () => {
+  return useQuery(['all_staff'], () => getAllStaffRequest());
+};
+
+export const useBlockUser = ({ onSuccess, onError }: UseMutationOptions<BaseAPIResponse, ErrorResponse, string>) => {
+  const queryClient = useQueryClient();
+  return useMutation((userId) => blockUserRequest(userId), {
+    onSuccess: (data, params, context) => {
+      if (onSuccess) {
+        onSuccess(data, params, context);
+      }
+      queryClient.invalidateQueries({ queryKey: ['all_staff'] });
+      queryClient.invalidateQueries({ queryKey: ['blocked_users'] });
+    },
+    onError
+  });
+};
+
+export const useUnblockUser = ({ onSuccess, onError }: UseMutationOptions<BaseAPIResponse, ErrorResponse, string>) => {
+  const queryClient = useQueryClient();
+  return useMutation((userId) => unblockUserRequest(userId), {
+    onSuccess: (data, params, context) => {
+      if (onSuccess) {
+        onSuccess(data, params, context);
+      }
+      queryClient.invalidateQueries({ queryKey: ['all_staff'] });
+      queryClient.invalidateQueries({ queryKey: ['blocked_users'] });
+    },
+    onError
+  });
+};
+
+export const useGetBlockedUsers = () => {
+  return useQuery(['blocked_users'], () => getBlockedUsersRequest());
+};
+
+export const useGetUserForAdmin = (
+  params: GetUserForAdminParams,
+  { onSuccess }: { onSuccess?: (data: GetUserForAdminResponse) => void }
+) => {
+  return useQuery(['user_for_admin', params], () => getUserForAdminRequest(params), {
+    enabled: false,
+    onSuccess: (data) => {
+      if (onSuccess) {
+        onSuccess(data);
+      }
+    }
+  });
 };

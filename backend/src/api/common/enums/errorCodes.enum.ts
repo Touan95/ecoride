@@ -67,4 +67,6 @@ export enum ErrorCodes {
   USER_NOT_ADMIN = 'user-not-admin',
   REVIEW_ALREADY_APPROVED = 'review-already-approved',
   REVIEW_NOT_FOUND = 'review-not-found',
+  USER_ALREADY_BLOCKED = 'user-already-blocked',
+  USER_NOT_BLOCKED = 'user-not-blocked',
 }

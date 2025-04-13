@@ -114,6 +114,23 @@ export interface ResolveDisputeParams {
   refundPassenger: boolean;
 }
 
+export interface GetAllStaffResponse {
+  allStaff: User[];
+}
+
+export interface GetUserForAdminParams {
+  username?: string;
+  email?: string;
+}
+
+export interface GetUserForAdminResponse {
+  user: User | null;
+}
+
+export interface GetBlockedUsersResponse {
+  blockedUsers: User[];
+}
+
 export const changeUserTypeRequest = async (params: ChangeUserTypeParams): Promise<BaseAPIResponse> => {
   const { userId, ...bodyParams } = params;
   const { data } = await axiosInstance.patch(`/user/${userId}/type`, bodyParams);
@@ -242,5 +259,30 @@ export const giveStaffAccessRequest = async (email: string): Promise<BaseAPIResp
 
 export const getStatisticsRequest = async (): Promise<GetStatisticsResponse> => {
   const { data } = await axiosInstance.get(`/admin/statistics`);
+  return data;
+};
+
+export const getAllStaffRequest = async (): Promise<GetAllStaffResponse> => {
+  const { data } = await axiosInstance.get(`/admin/staff`);
+  return data;
+};
+
+export const blockUserRequest = async (userId: string): Promise<BaseAPIResponse> => {
+  const { data } = await axiosInstance.patch(`/admin/user/${userId}/block`);
+  return data;
+};
+
+export const unblockUserRequest = async (userId: string): Promise<BaseAPIResponse> => {
+  const { data } = await axiosInstance.patch(`/admin/user/${userId}/unblock`);
+  return data;
+};
+
+export const getUserForAdminRequest = async (params: GetUserForAdminParams): Promise<GetUserForAdminResponse> => {
+  const { data } = await axiosInstance.get(`/admin/user`, { params });
+  return data;
+};
+
+export const getBlockedUsersRequest = async (): Promise<GetBlockedUsersResponse> => {
+  const { data } = await axiosInstance.get(`/admin/users/blocked`);
   return data;
 };

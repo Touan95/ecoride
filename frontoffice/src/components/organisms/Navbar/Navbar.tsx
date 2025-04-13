@@ -21,7 +21,12 @@ export const Navbar = () => {
           <NavbarLink href="/contact" label="Nous contacter" />
           <div className="flex-1" />
           {connectedNavbar ? (
-            <ConnectedMenu username={user.username} isDriver={user.type !== UserType.PASSENGER} isStaff={user.isStaff} />
+            <ConnectedMenu
+              username={user.username}
+              isDriver={user.type !== UserType.PASSENGER}
+              isStaff={user.isStaff}
+              isAdmin={user.isAdmin}
+            />
           ) : (
             <NavbarLink href="/login" label="Se connecter" />
           )}

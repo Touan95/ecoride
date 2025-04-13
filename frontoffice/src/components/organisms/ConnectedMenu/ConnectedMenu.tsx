@@ -12,6 +12,7 @@ interface ConnectedMenuProps {
   username: string;
   isDriver: boolean;
   isStaff: boolean;
+  isAdmin: boolean;
 }
 
 const AccountButton = () => {
@@ -36,7 +37,7 @@ const LogoutButton = () => {
   );
 };
 
-export const ConnectedMenu = ({ username, isDriver, isStaff }: ConnectedMenuProps) => {
+export const ConnectedMenu = ({ username, isDriver, isStaff, isAdmin }: ConnectedMenuProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -46,15 +47,17 @@ export const ConnectedMenu = ({ username, isDriver, isStaff }: ConnectedMenuProp
       </DropdownMenuTrigger>
       <DropdownMenuContent className="px-5 py-2 w-48 bg-primary-300 border-primary-800">
         <div className="flex flex-col items-end gap-2">
-          <div className="border-b w-full">
-            <Typography variant="cardTitle" color="black" align="right">
-              {username}
-            </Typography>
-          </div>
-          {isStaff && <NavbarLink href="/staff" label="Espace employé" variant="dropdown" />}
+          <Typography variant="cardTitle" color="black" align="right">
+            {username}
+          </Typography>
+          <div className="border-b w-full" />
           {isDriver && <NavbarLink href="/rides/add" label="Conduire" variant="dropdown" />}
           <NavbarLink href="/user" label="Préférences" variant="dropdown" />
           <NavbarLink href="/user/rides" label="Mes trajets" variant="dropdown" />
+          <div className="border-b w-full" />
+          {isAdmin && <NavbarLink href="/admin" label="Administrateur" variant="dropdown" />}
+          {isStaff && <NavbarLink href="/staff" label="Employé" variant="dropdown" />}
+          <div className="border-b w-full" />
           <LogoutButton />
         </div>
       </DropdownMenuContent>

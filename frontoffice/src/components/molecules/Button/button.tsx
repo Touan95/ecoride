@@ -7,7 +7,7 @@ type ButtonColor = 'primary' | 'secondary' | 'tertiary';
 type ButtonVariant = 'solid' | 'outlined';
 export interface ButtonProps {
   className?: string;
-  children: string;
+  children: string | React.ReactNode;
   color?: ButtonColor;
   variant?: ButtonVariant;
   onClick?: () => void;
