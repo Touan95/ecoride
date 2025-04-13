@@ -31,7 +31,7 @@ export const SearchUserModal = ({ isOpen, onClose, onBlockUser, onUnblockUser }:
   }, [isOpen]);
 
   const searchUser = useGetUserForAdmin(
-    { username, email },
+    { username, email, notStaff: true },
     {
       onSuccess: (data) => {
         setUser(data.user);

@@ -15,13 +15,15 @@ export default async (
   next: NextFunction,
 ): Promise<Response | void> => {
   try {
-    const { username, email } = req.query;
+    const { username, email, staffOnly, notStaff } = req.query;
     const { userId: adminId } = req.jwt;
 
     const user = await service({
       username,
       email,
       adminId,
+      staffOnly,
+      notStaff,
       userRepository: AppDataSource.manager.withRepository(UserRepository),
     });
 

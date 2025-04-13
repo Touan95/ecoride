@@ -5,6 +5,8 @@ export interface GetUserForAdminRequest {
   query: {
     username: string;
     email: string;
+    staffOnly: boolean;
+    notStaff: boolean;
   };
 }
 
@@ -13,6 +15,8 @@ export const getUserForAdminValidator = {
     .object({
       username: validator.string(),
       email: validator.string().email(),
+      staffOnly: validator.boolean(),
+      notStaff: validator.boolean(),
     })
     .or('username', 'email'),
 };

@@ -69,4 +69,5 @@ export enum ErrorCodes {
   REVIEW_NOT_FOUND = 'review-not-found',
   USER_ALREADY_BLOCKED = 'user-already-blocked',
   USER_NOT_BLOCKED = 'user-not-blocked',
+  USER_BLOCKED = 'user-blocked',
 }

@@ -6,6 +6,8 @@ import userNotFoundError from '../../common/errors/userNotFound.error';
 export interface GetUserForAdminServiceOptions {
   username: string;
   email: string;
+  staffOnly: boolean;
+  notStaff: boolean;
   adminId: string;
   userRepository: UserRepositoryInterface;
 }
@@ -13,6 +15,8 @@ export interface GetUserForAdminServiceOptions {
 export const service = async ({
   username,
   email,
+  staffOnly,
+  notStaff,
   adminId,
   userRepository,
 }: GetUserForAdminServiceOptions): Promise<User | null> => {
@@ -27,13 +31,25 @@ export const service = async ({
 
   if (email) {
     const user = await userRepository.getOneByEmail(email);
+    if (staffOnly && !user?.isStaff) {
+      return null;
+    }
 
+    if (notStaff && user?.isStaff) {
+      return null;
+    }
     return user ?? null;
   }
 
   if (username) {
     const user = await userRepository.getOneByUsername(username);
+    if (staffOnly && !user?.isStaff) {
+      return null;
+    }
 
+    if (notStaff && user?.isStaff) {
+      return null;
+    }
     return user ?? null;
   }
 

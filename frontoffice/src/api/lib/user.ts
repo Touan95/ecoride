@@ -121,6 +121,8 @@ export interface GetAllStaffResponse {
 export interface GetUserForAdminParams {
   username?: string;
   email?: string;
+  staffOnly?: boolean;
+  notStaff?: boolean;
 }
 
 export interface GetUserForAdminResponse {

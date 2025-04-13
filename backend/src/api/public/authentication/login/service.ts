@@ -3,6 +3,7 @@ import badCredentialsError from '../../../common/errors/badCredentials.error';
 import { generateRefreshToken } from '../../../../core/jwt/generateToken';
 import { getAccessTokenFromUser } from '../common/services/getAccessTokenFromUser.service';
 import { UserRepositoryInterface } from '../../../../repositories/user.repository';
+import userBlockedError from '../../../common/errors/userBlocked.error';
 
 export interface LoginServiceOptions {
   email: string;
@@ -28,6 +29,10 @@ export default async ({
   const isGoodPassword = await argon2.verify(user.password, password);
   if (!isGoodPassword) {
     throw badCredentialsError();
+  }
+
+  if (user.isBlocked) {
+    throw userBlockedError();
   }
 
   const accessToken = await getAccessTokenFromUser(user);
