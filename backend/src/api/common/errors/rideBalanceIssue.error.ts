@@ -4,8 +4,8 @@ import { ErrorCodes } from '../enums/errorCodes.enum';
 
 export default (): IAppError =>
   buildError({
-    message: 'The ride balance does not match with the number of passengers',
-    publicMessage: 'The ride balance does not match with the number of passengers',
+    message: 'Ride has balance issues',
+    publicMessage: 'Problème de solde pour le trajet',
     code: ErrorCodes.RIDE_BALANCE_ISSUE,
-    statusCode: HttpStatuses.FORBIDDEN,
+    statusCode: HttpStatuses.CONFLICT,
   });

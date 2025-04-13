@@ -4,8 +4,8 @@ import { ErrorCodes } from '../enums/errorCodes.enum';
 
 export default (): IAppError =>
   buildError({
-    message: 'You have already reviewed this ride',
-    publicMessage: 'You have already reviewed this ride',
+    message: 'Ride is already reviewed',
+    publicMessage: 'Le trajet a déjà été évalué',
     code: ErrorCodes.RIDE_ALREADY_REVIEWED,
-    statusCode: HttpStatuses.FORBIDDEN,
+    statusCode: HttpStatuses.CONFLICT,
   });

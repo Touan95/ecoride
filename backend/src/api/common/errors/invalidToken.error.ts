@@ -4,8 +4,8 @@ import { ErrorCodes } from '../enums/errorCodes.enum';
 
 export default (): IAppError =>
   buildError({
-    message: 'Unauthorized access',
-    publicMessage: 'Invalid token',
+    message: 'Invalid token',
+    publicMessage: 'Token invalide',
     code: ErrorCodes.INVALID_TOKEN_UNAUTHORIZED,
     statusCode: HttpStatuses.UNAUTHORIZED,
   });

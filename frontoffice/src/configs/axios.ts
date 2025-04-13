@@ -2,6 +2,7 @@ import axios from 'axios';
 
 import { getCookie } from '@/utils/cookie';
 import { apiUrl } from './config';
+import toast from 'react-hot-toast';
 
 const axiosInstance = axios.create({
   baseURL: apiUrl,
@@ -34,11 +35,14 @@ axiosInstance.interceptors.request.use((config) => {
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error?.response?.status === 401) {
-      if (error.response.config.url.includes('/authentication/refresh')) {
-        // onRefreshError();
-      } else {
-        // onTokenError();
+    if (error.response) {
+      toast.error(error.response.data.message);
+      if (error.response.status === 401) {
+        if (error.response.config.url.includes('/authentication/refresh')) {
+          // onRefreshError();
+        } else {
+          // onTokenError();
+        }
       }
     }
 

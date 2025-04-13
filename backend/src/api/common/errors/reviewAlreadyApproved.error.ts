@@ -4,8 +4,8 @@ import { ErrorCodes } from '../enums/errorCodes.enum';
 
 export default (): IAppError =>
   buildError({
-    message: 'This review has already been (un)approved',
-    publicMessage: 'This review has already been (un)approved',
+    message: 'Review is already approved',
+    publicMessage: "L'avis est déjà approuvé",
     code: ErrorCodes.REVIEW_ALREADY_APPROVED,
-    statusCode: HttpStatuses.FORBIDDEN,
+    statusCode: HttpStatuses.CONFLICT,
   });

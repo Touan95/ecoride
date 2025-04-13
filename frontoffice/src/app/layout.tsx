@@ -9,6 +9,7 @@ import { AuthProvider } from '@/contexts/auth';
 import 'react-day-picker/dist/style.css';
 import { Suspense } from 'react';
 import { Typography } from '@/components/atoms/Typography';
+import { Toaster } from 'react-hot-toast';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -42,6 +43,7 @@ export default function RootLayout({
         <QueryClientProvider client={queryClient}>
           <AuthProvider>
             <MainLayout>
+              <Toaster position="bottom-right" />
               <Suspense
                 fallback={
                   <Typography variant="cardTitle" color="primary" customClassName="mt-40">

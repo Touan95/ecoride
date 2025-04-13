@@ -4,8 +4,8 @@ import { ErrorCodes } from '../enums/errorCodes.enum';
 
 export default (): IAppError =>
   buildError({
-    message: 'This user already exists with this email',
-    publicMessage: 'This user already exists with this email',
+    message: 'User email already exists',
+    publicMessage: 'Cet email est déjà utilisé',
     code: ErrorCodes.USER_EMAIL_ALREADY_EXISTS,
-    statusCode: HttpStatuses.BAD_REQUEST,
+    statusCode: HttpStatuses.CONFLICT,
   });

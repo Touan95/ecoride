@@ -4,8 +4,8 @@ import { ErrorCodes } from '../enums/errorCodes.enum';
 
 export default (): IAppError =>
   buildError({
-    message: 'User is not a passenger of this ride',
-    publicMessage: 'User is not a passenger of this ride',
+    message: 'User is not a passenger',
+    publicMessage: "L'utilisateur n'est pas un passager",
     code: ErrorCodes.USER_NOT_PASSENGER,
     statusCode: HttpStatuses.FORBIDDEN,
   });

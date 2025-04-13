@@ -4,8 +4,8 @@ import { ErrorCodes } from '../enums/errorCodes.enum';
 
 export default (): IAppError =>
   buildError({
-    message: 'User not blocked',
-    publicMessage: 'User not blocked',
+    message: 'User is not blocked',
+    publicMessage: "L'utilisateur n'est pas bloqué",
     code: ErrorCodes.USER_NOT_BLOCKED,
-    statusCode: HttpStatuses.FORBIDDEN,
+    statusCode: HttpStatuses.BAD_REQUEST,
   });

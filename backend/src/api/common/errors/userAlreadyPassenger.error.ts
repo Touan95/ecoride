@@ -4,8 +4,8 @@ import { ErrorCodes } from '../enums/errorCodes.enum';
 
 export default (): IAppError =>
   buildError({
-    message: 'User is already a passenger of this ride',
-    publicMessage: 'User is already a passenger of this ride',
+    message: 'User is already a passenger',
+    publicMessage: "L'utilisateur est déjà un passager",
     code: ErrorCodes.USER_ALREADY_PASSENGER,
     statusCode: HttpStatuses.CONFLICT,
   });

@@ -5,7 +5,7 @@ import { ErrorCodes } from '../enums/errorCodes.enum';
 export default (): IAppError =>
   buildError({
     message: 'You are not allowed to end this ride with this status',
-    publicMessage: 'You are not allowed to end this ride with this status',
-    code: ErrorCodes.RIDE_NOT_UPCOMING,
+    publicMessage: 'Vous ne pouvez pas terminer ce trajet avec ce statut',
+    code: ErrorCodes.RIDE_NOT_ONGOING,
     statusCode: HttpStatuses.FORBIDDEN,
   });

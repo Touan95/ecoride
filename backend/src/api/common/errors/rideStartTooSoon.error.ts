@@ -4,8 +4,8 @@ import { ErrorCodes } from '../enums/errorCodes.enum';
 
 export default (): IAppError =>
   buildError({
-    message: 'You are not allowed to start this ride yet',
-    publicMessage: 'You are not allowed to start this ride yet',
+    message: 'Ride start time is too soon',
+    publicMessage: 'Le trajet commence trop tôt',
     code: ErrorCodes.RIDE_START_TOO_SOON,
-    statusCode: HttpStatuses.FORBIDDEN,
+    statusCode: HttpStatuses.BAD_REQUEST,
   });

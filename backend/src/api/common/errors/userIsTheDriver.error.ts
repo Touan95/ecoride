@@ -4,8 +4,8 @@ import { ErrorCodes } from '../enums/errorCodes.enum';
 
 export default (): IAppError =>
   buildError({
-    message: 'User is the driver and cannot be added as a passenger',
-    publicMessage: 'User is the driver and cannot be added as a passenger',
+    message: 'User is the driver',
+    publicMessage: "L'utilisateur est le conducteur",
     code: ErrorCodes.USER_IS_DRIVER,
-    statusCode: HttpStatuses.BAD_REQUEST,
+    statusCode: HttpStatuses.FORBIDDEN,
   });

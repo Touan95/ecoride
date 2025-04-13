@@ -5,7 +5,7 @@ import { ErrorCodes } from '../enums/errorCodes.enum';
 export default (): IAppError =>
   buildError({
     message: 'User car not found',
-    publicMessage: 'User car not found',
-    code: ErrorCodes.USER_NOT_FOUND,
+    publicMessage: "Voiture de l'utilisateur non trouvée",
+    code: ErrorCodes.CAR_NOT_FOUND,
     statusCode: HttpStatuses.NOT_FOUND,
   });
