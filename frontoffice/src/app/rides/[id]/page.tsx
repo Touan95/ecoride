@@ -12,7 +12,6 @@ import { Button } from '@/components/molecules/Button';
 import { LogOrRegisterModal } from '@/components/organisms/LoginModal';
 import { ConfirmBookingModal } from '@/components/organisms/ConfirmBookingModal';
 import { useLoginMutation, useRegisterMutation } from '@/api/hooks/useAuthAPI';
-import { LoginSchemaType, RegisterSchemaType } from '@/schemas/auth';
 import { useAuthContext } from '@/contexts/auth';
 import { isCarGreen } from '@/utils/car';
 import { useParams, useSearchParams } from 'next/navigation';
@@ -27,6 +26,7 @@ import {
   rideApiToItinerary
 } from '@/app/rides/[id]/utils';
 import { AddReviewCard } from '@/components/organisms/AddReviewCard';
+import { LoginParams, RegisterParams } from '@/api/lib/auth';
 
 export default function Rides() {
   const { saveToken, isLogged, user } = useAuthContext();
@@ -165,11 +165,11 @@ export default function Rides() {
     }
   });
 
-  const onLogin = (data: LoginSchemaType) => {
+  const onLogin = (data: LoginParams) => {
     loginMutation.mutate(data);
   };
 
-  const onRegister = (data: RegisterSchemaType) => {
+  const onRegister = (data: Omit<RegisterParams, 'isStaff'>) => {
     registerMutation.mutate({ ...data, isStaff: false });
   };
 
