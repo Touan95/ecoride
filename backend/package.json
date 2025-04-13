@@ -10,8 +10,6 @@
     "start": "node dist/index.js",
     "build": "tsc -p ./tsconfig.build.json",
     "gcp-build": "tsc -p ./tsconfig.build.json && pnpm mjml2html && pnpm copy-templates",
-    "lint": "eslint src/ --fix",
-    "lint:fix": "pnpm lint --fix",
     "copy-templates": "pnpm copyfiles -u 1 './src/**/*.hbs' ./dist",
     "mjml2html:main": "./node_modules/.bin/mjml -r ./mjml/templates/main.template.mjml -o ./src/static/templates/main.template.hbs",
     "mjml2html": "pnpm mjml2html:main",
@@ -22,7 +20,8 @@
     "migration:create": "pnpm typeorm-ts-node-commonjs migration:create",
     "fixtures:load": "fixtures-ts-node-commonjs load ./fixtures --dataSource=./src/loader/ormconfig.ts --debug",
     "reload-database": "pnpm typeorm:drop && pnpm migration:run && pnpm fixtures:load",
-    "heroku-postbuild": "npm run build && ./node_modules/.bin/mjml -r ./mjml/templates/main.template.mjml -o ./src/static/templates/main.template.hbs && copyfiles -u 1 './src/**/*.hbs' ./dist"
+    "heroku-postbuild": "npm run build && ./node_modules/.bin/mjml -r ./mjml/templates/main.template.mjml -o ./src/static/templates/main.template.hbs && copyfiles -u 1 './src/**/*.hbs' ./dist",
+    "lint": "eslint ."
   },
   "dependencies": {
     "argon2": "^0.41.1",
@@ -32,7 +31,6 @@
     "cors": "2.8.5",
     "dayjs": "1.11.10",
     "dayjs-plugin-utc": "^0.1.2",
-    "eslint-plugin-unused-imports": "^4.1.4",
     "express": "4.18.2",
     "express-pino-logger": "7.0.0",
     "express-rate-limit": "^6.7.1",
@@ -56,7 +54,7 @@
     "uuid": "9.0.0"
   },
   "devDependencies": {
-    "@snowpact/eslint-config": "^1.5.3",
+    "@eslint/js": "^9.19.0",
     "@types/body-parser": "^1.19.2",
     "@types/cors": "^2.8.13",
     "@types/express": "^4.17.17",
@@ -73,23 +71,23 @@
     "@types/sharp": "^0.32.0",
     "@types/supertest": "^2.0.12",
     "@types/uuid": "^9.0.2",
-    "@typescript-eslint/eslint-plugin": "^8.29.1",
-    "@typescript-eslint/parser": "8.24.1",
-    "eslint": "^8.57.1",
-    "eslint-config-prettier": "^8.10.0",
-    "eslint-plugin-import": "2.26.0",
+    "eslint": "^9.19.0",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-import-resolver-typescript": "^3.7.0",
+    "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-prettier": "^5.2.3",
+    "eslint-plugin-unused-imports": "^4.1.4",
+    "globals": "^15.14.0",
     "msw": "^2.0.1",
     "nodemon": "^3.0.1",
     "prettier": "^3.4.2",
     "supertest": "^6.3.3",
     "ts-node": "^10.9.1",
     "typeorm-fixtures-cli": "^4.0.0",
-    "typescript": "^5.7.3"
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.23.0"
   },
   "resolutions": {
-    "@typescript-eslint/eslint-plugin": "^6.10.0",
-    "@typescript-eslint/parser": "6.10.0",
     "prettier": "^3.1.0"
   }
 }
