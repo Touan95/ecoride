@@ -16,6 +16,7 @@ import { CarDetailsModal } from '@/components/organisms/CarDetailsModal';
 import { Car } from '@/interfaces/car';
 import { AddCarParams } from '@/api/lib/user';
 import { ConfirmCarDeletionModal } from '@/components/organisms/ConfirmCarDeletionModal';
+import { ChangePasswordModal } from '@/components/organisms/ChangePasswordModal';
 
 export default function Rides() {
   const { user } = useAuthContext();
@@ -44,7 +45,7 @@ export default function Rides() {
   const [driverPreferencesModalOpen, setDriverPreferencesModalOpen] = useState<boolean>(false);
   const [carDetailsModalProp, setCarDetailsModalProp] = useState<Car | 'new' | undefined>(undefined);
   const [carToRemoveID, setCarToRemoveID] = useState<string | undefined>(undefined);
-
+  const [changePasswordModalOpen, setChangePasswordModalOpen] = useState<boolean>(false);
   const driverCardsVisible = apiUser?.type === UserType.DRIVER || apiUser?.type === UserType.BOTH;
 
   const driverPreferences = {
@@ -80,6 +81,14 @@ export default function Rides() {
 
   const closeCarDetailsModal = () => {
     setCarDetailsModalProp(undefined);
+  };
+
+  const openChangePasswordModal = () => {
+    setChangePasswordModalOpen(true);
+  };
+
+  const closeChangePasswordModal = () => {
+    setChangePasswordModalOpen(false);
   };
 
   const onCarDetailsSubmit = (params: Omit<AddCarParams, 'userId'>) => {
@@ -123,6 +132,7 @@ export default function Rides() {
             avatarUrl={apiUser.avatarUrl ?? DEFAULT_AVATAR_URL}
             type={apiUser.type}
             onUserTypeEdit={openUserTypeModal}
+            onPasswordEdit={openChangePasswordModal}
           />
           <CreditAmountCard credits={apiUser.credits} />
         </div>
@@ -138,6 +148,7 @@ export default function Rides() {
           </>
         )}
       </SectionContainer>
+      <ChangePasswordModal isOpen={changePasswordModalOpen} onClose={closeChangePasswordModal} />
       <UserTypeModal
         isOpen={userTypeModalOpen}
         onClose={closeUserTypeModal}

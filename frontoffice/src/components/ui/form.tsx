@@ -108,8 +108,8 @@ const FormMessage = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<
     const body = error ? String(error?.message) : children;
 
     return (
-      <div ref={ref} id={formMessageId} className={clsxm('h-6', className)} {...props}>
-        <Typography color="red" variant="small">
+      <div ref={ref} id={formMessageId} className={clsxm('h-4', className)} {...props}>
+        <Typography color="red" variant="extraSmall">
           {body}
         </Typography>
       </div>

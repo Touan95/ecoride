@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { RegisterForm } from '../RegisterForm';
 import { LoginForm } from '../LoginForm';
+import { LoginParams, RegisterParams } from '@/api/lib/auth';
 
 export interface LogOrRegisterProps {
-  onLogin?: ({ email, password }: { email: string; password: string }) => void;
-  onRegister?: ({ username, email, password }: { username: string; email: string; password: string }) => void;
+  onLogin?: (params: LoginParams) => void;
+  onRegister?: (params: Omit<RegisterParams, 'isStaff'>) => void;
   registerTitle?: string;
   registerButtonTitle?: string;
   loginTitle?: string;

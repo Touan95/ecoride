@@ -1,9 +1,9 @@
 'use client';
 
 import { useLoginMutation, useRegisterMutation } from '@/api/hooks/useAuthAPI';
+import { LoginParams, RegisterParams } from '@/api/lib/auth';
 import { LogOrRegister } from '@/components/organisms/LogOrRegister';
 import { useAuthContext } from '@/contexts/auth';
-import { LoginSchemaType, RegisterSchemaType } from '@/schemas/auth';
 import { useRouter } from 'next/navigation';
 
 export default function Login() {
@@ -26,16 +26,16 @@ export default function Login() {
     }
   });
 
-  const onLogin = (data: LoginSchemaType) => {
+  const onLogin = (data: LoginParams) => {
     loginMutation.mutate(data);
   };
 
-  const onRegister = (data: RegisterSchemaType) => {
+  const onRegister = (data: Omit<RegisterParams, 'isStaff'>) => {
     registerMutation.mutate({ ...data, isStaff: false });
   };
 
   return (
-    <div>
+    <div className="mt-10 w-80">
       <LogOrRegister onLogin={onLogin} onRegister={onRegister} />
     </div>
   );

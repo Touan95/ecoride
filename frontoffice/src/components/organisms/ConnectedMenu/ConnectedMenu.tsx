@@ -54,7 +54,7 @@ export const ConnectedMenu = ({ username, isDriver, isStaff, isAdmin }: Connecte
           {isDriver && <NavbarLink href="/rides/add" label="Conduire" variant="dropdown" />}
           <NavbarLink href="/user" label="Préférences" variant="dropdown" />
           <NavbarLink href="/user/rides" label="Mes trajets" variant="dropdown" />
-          <div className="border-b w-full" />
+          {(isAdmin || isStaff) && <div className="border-b w-full" />}
           {isAdmin && <NavbarLink href="/admin" label="Administrateur" variant="dropdown" />}
           {isStaff && <NavbarLink href="/staff" label="Employé" variant="dropdown" />}
           <div className="border-b w-full" />

@@ -38,4 +38,5 @@ export enum ResponseCodes {
   GIVE_STAFF_ACCESS_SUCCESS = 'give-staff-access-success',
   BLOCK_USER_SUCCESS = 'block-user-success',
   UNBLOCK_USER_SUCCESS = 'unblock-user-success',
+  CHANGE_PASSWORD_SUCCESS = 'change-password-success',
 }

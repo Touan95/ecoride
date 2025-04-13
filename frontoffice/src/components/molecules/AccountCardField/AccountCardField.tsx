@@ -32,10 +32,12 @@ export const AccountCardField = ({ icon: Icon, label, children, onEdit, labelCla
         </Typography>
       </div>
       <div className="flex gap-1.5 items-center">
-        <div className="flex justify-center items-center w-5">
-          {onEdit && <TbEdit className="text-primary-900 cursor-pointer" size={30} onClick={onEdit} />}
-        </div>
         {childrenComponent()}
+        {onEdit && (
+          <div className="flex justify-center items-center w-5">
+            <TbEdit className="text-primary-900 cursor-pointer" size={30} onClick={onEdit} />
+          </div>
+        )}
       </div>
     </div>
   );

@@ -8,9 +8,10 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/molecules/Button';
 import { Typography } from '@/components/atoms/Typography';
 import { registerFormSchema, RegisterSchemaType } from '@/schemas/auth';
+import { RegisterParams } from '@/api/lib/auth';
 
 interface RegisterFormProps {
-  onRegister: ({ username, email, password }: { username: string; email: string; password: string }) => void;
+  onRegister: (params: Omit<RegisterParams, 'isStaff'>) => void;
   onLoginClick?: () => void;
   title?: string;
   buttonTitle?: string;
@@ -22,20 +23,25 @@ export const RegisterForm = ({ onRegister, onLoginClick, title = 'Inscrivez-vous
     defaultValues: {
       username: '',
       email: '',
-      password: ''
+      password: '',
+      confirmPassword: ''
     }
   });
+
+  const { errors } = form.formState;
 
   const onSubmit = (values: RegisterSchemaType) => {
     onRegister({ ...values });
   };
+
+  const buttonDisabled = form.formState.isSubmitting || Object.keys(errors).length > 0;
 
   return (
     <Form {...form}>
       <Typography variant="title" tag="p">
         {title}
       </Typography>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-5">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-1">
         <FormField
           control={form.control}
           name="username"
@@ -75,7 +81,22 @@ export const RegisterForm = ({ onRegister, onLoginClick, title = 'Inscrivez-vous
             </FormItem>
           )}
         />
-        <Button type="submit">{buttonTitle}</Button>
+        <FormField
+          control={form.control}
+          name="confirmPassword"
+          render={({ field }) => (
+            <FormItem>
+              <Typography variant="cardTitleSm">Vérification du mot de passe</Typography>
+              <FormControl>
+                <Input type="password" placeholder="Vérification du mot de passe" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit" disabled={buttonDisabled} className="mt-4">
+          {buttonTitle}
+        </Button>
       </form>
       {onLoginClick && (
         <div className="mt-6">

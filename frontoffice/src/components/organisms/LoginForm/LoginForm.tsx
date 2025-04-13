@@ -25,6 +25,10 @@ export const LoginForm = ({ onLogin, onCreateAccountClick, title = 'Connectez-vo
     }
   });
 
+  const { errors } = form.formState;
+
+  const buttonDisabled = form.formState.isSubmitting || Object.keys(errors).length > 0;
+
   const onSubmit = (values: LoginSchemaType) => {
     onLogin({ ...values });
   };
@@ -34,7 +38,7 @@ export const LoginForm = ({ onLogin, onCreateAccountClick, title = 'Connectez-vo
       <Typography variant="title" tag="p">
         {title}
       </Typography>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-5">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-1">
         <FormField
           control={form.control}
           name="email"
@@ -61,7 +65,9 @@ export const LoginForm = ({ onLogin, onCreateAccountClick, title = 'Connectez-vo
             </FormItem>
           )}
         />
-        <Button type="submit">{buttonTitle}</Button>
+        <Button type="submit" className="mt-4" disabled={buttonDisabled}>
+          {buttonTitle}
+        </Button>
       </form>
       {onCreateAccountClick && (
         <div className="mt-6">

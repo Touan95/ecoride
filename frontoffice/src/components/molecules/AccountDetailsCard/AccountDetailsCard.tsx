@@ -16,6 +16,7 @@ export interface AccountCardProps {
   onUsernameEdit?: () => void;
   onEmailEdit?: () => void;
   onUserTypeEdit?: () => void;
+  onPasswordEdit?: () => void;
 }
 
 export const AccountDetailsCard = ({
@@ -27,7 +28,8 @@ export const AccountDetailsCard = ({
   notCentered = false,
   onUsernameEdit,
   onEmailEdit,
-  onUserTypeEdit
+  onUserTypeEdit,
+  onPasswordEdit
 }: AccountCardProps) => {
   return (
     <div className={clsxm(['w-full rounded-xl flex flex-col p-5 shadow bg-primary-50 gap-3', !notCentered && 'items-center'])}>
@@ -42,6 +44,9 @@ export const AccountDetailsCard = ({
           </AccountCardField>
           <AccountCardField labelClassname="w-30" onEdit={onEmailEdit} label="Adresse email">
             {email}
+          </AccountCardField>
+          <AccountCardField labelClassname="w-30" onEdit={onPasswordEdit} label="Mot de passe">
+            ****
           </AccountCardField>
           <AccountCardField labelClassname="w-30" onEdit={onUserTypeEdit} label="Profil">
             {getUserTypeLabel(type)}

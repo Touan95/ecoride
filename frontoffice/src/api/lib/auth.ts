@@ -19,6 +19,11 @@ export type RegisterParams = {
   isStaff: boolean;
 };
 
+export type ChangePasswordParams = {
+  oldPassword: string;
+  newPassword: string;
+};
+
 export const loginRequest = async ({ email, password }: LoginParams): Promise<TokenResponse> => {
   const { data } = await axiosInstance.post('/login', {
     email,
@@ -49,6 +54,15 @@ export const getMe = async (): Promise<LoggedUser> => {
 
 export const testMailRequest = async (): Promise<void> => {
   const { data } = await axiosInstance.post('/testmail');
+
+  return data;
+};
+
+export const changePasswordRequest = async ({ oldPassword, newPassword }: ChangePasswordParams): Promise<void> => {
+  const { data } = await axiosInstance.patch('/user/password', {
+    oldPassword,
+    newPassword
+  });
 
   return data;
 };

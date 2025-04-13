@@ -1,7 +1,17 @@
 import { useMutation, UseMutationOptions, useQuery, useQueryClient } from 'react-query';
 
 import { ErrorResponse } from '../lib/types';
-import { getMe, LoginParams, loginRequest, RegisterParams, registerRequest, testMailRequest, TokenResponse } from '../lib/auth';
+import {
+  ChangePasswordParams,
+  changePasswordRequest,
+  getMe,
+  LoginParams,
+  loginRequest,
+  RegisterParams,
+  registerRequest,
+  testMailRequest,
+  TokenResponse
+} from '../lib/auth';
 import { User } from '@/interfaces/user';
 
 export const useLoginMutation = ({ onSuccess, onError }: UseMutationOptions<TokenResponse, ErrorResponse, LoginParams>) => {
@@ -35,4 +45,11 @@ export const useGetMe = ({ disabled, refetchInterval }: { disabled?: boolean; re
 
 export const useTestMail = () => {
   return useMutation(() => testMailRequest(), {});
+};
+
+export const useChangePasswordMutation = ({ onSuccess, onError }: UseMutationOptions<void, ErrorResponse, ChangePasswordParams>) => {
+  return useMutation((params) => changePasswordRequest(params), {
+    onSuccess,
+    onError
+  });
 };

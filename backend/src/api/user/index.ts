@@ -6,11 +6,13 @@ import { getOneUser } from './getOne';
 import { changeDriverPreferences } from './changeDriverPreferences';
 import { userCarRouter } from './car';
 import { userRideRouter } from './ride';
+import { changePassword } from './changePassword';
 
 export const userRouter = Router()
   .use(jwtMiddleware({}))
   .use(getMe)
   .use(changeType)
+  .use(changePassword)
   .use(changeDriverPreferences)
   .use(getOneUser)
   .use(userCarRouter)
