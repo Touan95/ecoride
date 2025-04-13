@@ -13,9 +13,10 @@ export interface AccountCarsCardProps {
   onRemoveCar?: (carId: string) => void;
   onSelectCar?: (carId: string) => void;
   selectedCarIds?: string[];
+  error?: string;
 }
 
-export const AccountCarsCard = ({ cars, onAddCar, onEditCar, onRemoveCar, onSelectCar, selectedCarIds }: AccountCarsCardProps) => {
+export const AccountCarsCard = ({ cars, onAddCar, onEditCar, onRemoveCar, onSelectCar, selectedCarIds, error }: AccountCarsCardProps) => {
   const handleEditCar = (carId: string) => () => {
     if (onEditCar) {
       onEditCar(carId);
@@ -66,7 +67,18 @@ export const AccountCarsCard = ({ cars, onAddCar, onEditCar, onRemoveCar, onSele
         </Button>
       </div>
       <TbCar size={50} className="text-primary-900" />
-      <div className="w-full flex flex-col gap-4">{List()}</div>
+      <div className="w-full flex flex-col gap-4">
+        <>
+          <div className="h-4">
+            {error && (
+              <Typography variant="extraSmall" color="red">
+                {error}
+              </Typography>
+            )}
+          </div>
+          {List()}
+        </>
+      </div>
     </div>
   );
 };

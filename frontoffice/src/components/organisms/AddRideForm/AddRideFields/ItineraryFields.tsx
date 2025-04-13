@@ -18,9 +18,11 @@ import { TbMap2 } from 'react-icons/tb';
 interface ItineraryFieldsProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   form: any;
+  departureLocationError?: string;
+  arrivalLocationError?: string;
 }
 
-export const ItineraryFields = ({ form }: ItineraryFieldsProps) => {
+export const ItineraryFields = ({ form, departureLocationError, arrivalLocationError }: ItineraryFieldsProps) => {
   const handleDateSelect = (dateType: 'arrivalDate' | 'departureDate') => (date: Date | undefined) => {
     if (date) {
       form.setValue(dateType, date);
@@ -142,7 +144,7 @@ export const ItineraryFields = ({ form }: ItineraryFieldsProps) => {
             Départ
           </Typography>
           <Typography variant="cardTitleSm">Où</Typography>
-          <AddressAutocompleteInput onSelect={handleSelectLocation('departureLocation')} />
+          <AddressAutocompleteInput onSelect={handleSelectLocation('departureLocation')} error={departureLocationError} />
           {renderDatePicker('departureDate')}
         </div>
         <div className="flex flex-col gap-4">
@@ -150,7 +152,7 @@ export const ItineraryFields = ({ form }: ItineraryFieldsProps) => {
             Arrivée
           </Typography>
           <Typography variant="cardTitleSm">Où</Typography>
-          <AddressAutocompleteInput onSelect={handleSelectLocation('arrivalLocation')} />
+          <AddressAutocompleteInput onSelect={handleSelectLocation('arrivalLocation')} error={arrivalLocationError} />
           {renderDatePicker('arrivalDate')}
         </div>
       </div>

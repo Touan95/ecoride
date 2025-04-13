@@ -8,7 +8,7 @@ import { Button } from '@/components/molecules/Button';
 import { Typography } from '@/components/atoms/Typography';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import 'dayjs/locale/fr';
-import { disputeResolutionActionFormSchema, DisputeResolutionActionFormSchemaType } from '@/schemas/user';
+import { disputeResolutionActionFormSchema, DisputeResolutionActionFormSchemaType } from '@/schemas/staff';
 import { DisputeCreditAction, DisputeReviewAction } from '@/interfaces/review';
 import dayjs from 'dayjs';
 

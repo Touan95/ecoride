@@ -1,7 +1,7 @@
 import { BaseModal } from '@/components/molecules/BaseModal';
 import { ContentContainer } from '@/components/molecules/BaseModal/ContentContainer';
 import { DisputeResolutionForm } from '../DisputeResolutionForm';
-import { DisputeResolutionActionFormSchemaType } from '@/schemas/user';
+import { DisputeResolutionActionFormSchemaType } from '@/schemas/staff';
 
 export interface DisputeResolutionModalProps {
   isOpen: boolean;

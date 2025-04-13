@@ -12,3 +12,5 @@ export const getRideStatusLabel = (status: RideStatus) => {
       return 'A venir';
   }
 };
+
+export const SERVICE_FEE = 2;

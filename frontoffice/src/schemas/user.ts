@@ -1,30 +1,41 @@
 import { Energy } from '@/interfaces/car';
-import { DisputeCreditAction, DisputeReviewAction } from '@/interfaces/review';
 import { UserType } from '@/interfaces/user';
 import { z } from 'zod';
+import { SchemaError } from './errors';
+import { SERVICE_FEE } from '@/utils/ride';
 
 export const userTypeFormSchema = z.object({
-  type: z.enum([UserType.PASSENGER, UserType.DRIVER, UserType.BOTH])
+  type: z.enum([UserType.PASSENGER, UserType.DRIVER, UserType.BOTH]).refine((value) => value !== undefined, {
+    message: SchemaError.REQUIRED
+  })
 });
 
 export type UserTypeFormSchemaType = z.infer<typeof userTypeFormSchema>;
 
 export const driverPreferencesFormSchema = z.object({
-  acceptsPets: z.boolean(),
-  acceptsSmoking: z.boolean(),
+  acceptsPets: z.boolean().refine((value) => value !== undefined, {
+    message: SchemaError.REQUIRED
+  }),
+  acceptsSmoking: z.boolean().refine((value) => value !== undefined, {
+    message: SchemaError.REQUIRED
+  }),
   customRules: z.array(z.string())
 });
 
 export type DriverPreferencesFormSchemaType = z.infer<typeof driverPreferencesFormSchema>;
 
 export const carDetailsFormSchema = z.object({
-  plateNumber: z.string(),
-  registrationDate: z.date(),
-  color: z.string(),
-  brand: z.string(),
-  model: z.string(),
+  plateNumber: z.string().nonempty({ message: SchemaError.REQUIRED }),
+  registrationDate: z.date().refine((value) => !isNaN(value.getTime()), {
+    message: SchemaError.REQUIRED
+  }),
+  color: z.string().nonempty({ message: SchemaError.REQUIRED }),
+  brand: z.string().nonempty({ message: SchemaError.REQUIRED }),
+  model: z.string().nonempty({ message: SchemaError.REQUIRED }),
   seats: z.number().min(0),
-  energy: z.nativeEnum(Energy)
+  energy: z.nativeEnum(Energy).refine((value) => value !== undefined, {
+    message: SchemaError.REQUIRED
+  })
 });
 
 export type CarDetailsFormSchemaType = z.infer<typeof carDetailsFormSchema>;
@@ -45,10 +56,14 @@ const locationSchema = z.object({
 export const addRideFormSchema = z.object({
   departureLocation: locationSchema,
   arrivalLocation: locationSchema,
-  carId: z.string(),
-  price: z.number(),
-  arrivalDate: z.date(),
-  departureDate: z.date()
+  carId: z.string().nonempty({ message: "L'ID de la voiture est requis." }),
+  price: z.number().min(SERVICE_FEE + 1, { message: SchemaError.RIDE_PRICE }),
+  arrivalDate: z.date().refine((value) => !isNaN(value.getTime()), {
+    message: SchemaError.REQUIRED
+  }),
+  departureDate: z.date().refine((value) => !isNaN(value.getTime()), {
+    message: SchemaError.REQUIRED
+  })
 });
 
 export type AddRideFormSchemaType = z.infer<typeof addRideFormSchema>;
@@ -60,10 +75,3 @@ export const searchRidesFormSchema = z.object({
 });
 
 export type SearchRidesFormSchemaType = z.infer<typeof searchRidesFormSchema>;
-
-export const disputeResolutionActionFormSchema = z.object({
-  credits: z.nativeEnum(DisputeCreditAction),
-  review: z.nativeEnum(DisputeReviewAction)
-});
-
-export type DisputeResolutionActionFormSchemaType = z.infer<typeof disputeResolutionActionFormSchema>;

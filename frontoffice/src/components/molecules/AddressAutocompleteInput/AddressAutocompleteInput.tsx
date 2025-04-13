@@ -4,6 +4,7 @@ import { useQuery } from 'react-query';
 import { Coordinate, RideLocation } from '@/api/lib/user';
 import { Input, inputClassname } from '@/components/ui/input';
 import clsxm from '@/utils/clsxm';
+import { Typography } from '@/components/atoms/Typography';
 
 const fetchSuggestions = async (query: string) => {
   if (!query) return [];
@@ -73,13 +74,15 @@ interface AddressAutocompleteInputProps {
   className?: string;
   placeholder?: string;
   initialLocation?: AddressItemLight;
+  error?: string;
 }
 
 const AddressAutocompleteInput = ({
   onSelect,
   className,
   placeholder = 'Entrez une adresse',
-  initialLocation
+  initialLocation,
+  error
 }: AddressAutocompleteInputProps) => {
   const [debouncedValue, setDebouncedValue] = useState<string>('');
   const [query, setQuery] = useState(initialLocation ? initialLocation.display_name : '');
@@ -223,6 +226,13 @@ const AddressAutocompleteInput = ({
         onBlur={onBlur}
         className={className}
       />
+      <div className="h-4 mt-1">
+        {error && (
+          <Typography variant="extraSmall" color="red">
+            {error}
+          </Typography>
+        )}
+      </div>
       {dropdownVisible && isFocused && (
         <div className={clsxm(inputClassname, 'h-fit rounded-3xl absolute z-[9999] mt-2 p-0')} onMouseDown={(e) => e.preventDefault()}>
           <ul className="flex flex-col py-6 w-full">

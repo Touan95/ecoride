@@ -20,8 +20,9 @@ import { fr } from 'date-fns/locale';
 import dayjs from 'dayjs';
 import 'dayjs/locale/fr';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { AddCarParams } from '@/api/lib/user';
+import { SchemaError } from '@/schemas/errors';
 
 dayjs.locale('fr');
 
@@ -55,9 +56,21 @@ export const CarDetailsForm = ({ onSubmit, initialValues, editMode = false }: Ca
     }
   });
 
+  const { errors, submitCount } = form.formState;
+
+  const isButtonDisabled = useMemo(() => {
+    return form.formState.isSubmitting || Object.values(errors).some((error) => error !== undefined);
+  }, [errors, form.formState.isSubmitting]);
+
   const handleSubmit = (values: CarDetailsFormSchemaType) => {
     onSubmit({ ...values });
   };
+
+  useEffect(() => {
+    if (submitCount > 0 && form.getValues('energy') === Energy.UNKNOWN) {
+      form.setError('energy', { type: 'required', message: SchemaError.REQUIRED });
+    }
+  }, [submitCount, form.getValues('energy')]);
 
   return (
     <Form {...form}>
@@ -228,7 +241,7 @@ export const CarDetailsForm = ({ onSubmit, initialValues, editMode = false }: Ca
             />
           </div>
         </div>
-        <Button type="submit" className="w-40" disabled={!form.formState.isDirty}>
+        <Button type="submit" className="w-40" disabled={isButtonDisabled}>
           {editMode ? 'Modifier' : 'Ajouter'}
         </Button>
       </form>

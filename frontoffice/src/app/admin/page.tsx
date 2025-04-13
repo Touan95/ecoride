@@ -16,12 +16,12 @@ import clsxm from '@/utils/clsxm';
 import { LogOrRegisterModal } from '@/components/organisms/LoginModal';
 import { useRegisterMutation } from '@/api/hooks/useAuthAPI';
 import { useState } from 'react';
-import { RegisterSchemaType } from '@/schemas/auth';
 import { StaffAccessModal } from '@/components/organisms/StaffAccessModal';
 import { AdminCharts } from '@/components/molecules/AdminCharts';
 import { StaffUserList } from '@/components/molecules/StaffUserList';
 import { BlockedUserList } from '@/components/molecules/BlockedUserList';
 import { SearchUserModal } from '@/components/organisms/SearchUserModal';
+import { RegisterParams } from '@/api/lib/auth';
 
 export default function Staff() {
   const { user } = useAuthContext();
@@ -56,7 +56,7 @@ export default function Staff() {
     }
   });
 
-  const onRegister = (data: RegisterSchemaType) => {
+  const onRegister = (data: Omit<RegisterParams, 'isStaff'>) => {
     registerMutation.mutate({ ...data, isStaff: true });
   };
 

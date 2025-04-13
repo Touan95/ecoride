@@ -1,12 +1,12 @@
 import { BaseModal } from '@/components/molecules/BaseModal';
 import { ContentContainer } from '@/components/molecules/BaseModal/ContentContainer';
 import { LogOrRegister } from '../LogOrRegister';
-
+import { LoginParams, RegisterParams } from '@/api/lib/auth';
 export interface LogOrRegisterModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onLogin?: ({ email, password }: { email: string; password: string }) => void;
-  onRegister?: ({ username, email, password }: { username: string; email: string; password: string }) => void;
+  onLogin?: (params: LoginParams) => void;
+  onRegister?: (params: Omit<RegisterParams, 'isStaff'>) => void;
   loginTitle?: string;
   loginButtonTitle?: string;
   registerTitle?: string;

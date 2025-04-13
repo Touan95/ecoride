@@ -41,7 +41,7 @@ export const RegisterForm = ({ onRegister, onLoginClick, title = 'Inscrivez-vous
       <Typography variant="title" tag="p">
         {title}
       </Typography>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-1">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-2">
         <FormField
           control={form.control}
           name="username"

@@ -16,10 +16,17 @@ interface ChangePasswordFormProps {
 
 export const ChangePasswordForm = ({ onSuccess }: ChangePasswordFormProps) => {
   const form = useForm<ChangePasswordFormSchemaType>({
-    resolver: zodResolver(changePasswordFormSchema)
+    resolver: zodResolver(changePasswordFormSchema),
+    defaultValues: {
+      oldPassword: '',
+      newPassword: '',
+      confirmPassword: ''
+    }
   });
 
-  const buttonDisabled = form.formState.isSubmitting || !form.formState.isValid;
+  const { errors } = form.formState;
+
+  const buttonDisabled = form.formState.isSubmitting || Object.keys(errors).length > 0;
 
   const changeUserPasswordMutation = useChangePasswordMutation({
     onSuccess: () => {
@@ -41,7 +48,7 @@ export const ChangePasswordForm = ({ onSuccess }: ChangePasswordFormProps) => {
       <Typography variant="title" tag="p">
         Changer le mot de passe
       </Typography>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-5">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-2">
         <FormField
           control={form.control}
           name="oldPassword"

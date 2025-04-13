@@ -14,7 +14,7 @@ import { rideApiToInfoCard, rideApiToItinerary } from '@/app/rides/[id]/utils';
 import { DisputeDetails } from '@/components/molecules/DisputeDetails';
 import { DisputeResolutionModal } from '@/components/organisms/DisputeResolutionModal';
 import { Button } from '@/components/molecules/Button';
-import { DisputeResolutionActionFormSchemaType } from '@/schemas/user';
+import { DisputeResolutionActionFormSchemaType } from '@/schemas/staff';
 import { DisputeCreditAction, DisputeReviewAction } from '@/interfaces/review';
 import { useQueryClient } from 'react-query';
 
