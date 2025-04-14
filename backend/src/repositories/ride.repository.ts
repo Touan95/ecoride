@@ -4,6 +4,7 @@ import {
   DailyStatistics,
   RideEntity,
   RideEntityInterface,
+  RideStatus,
   SearchedRide,
 } from '../entities/ride.entity';
 import { PlatformCreditEntity } from '../entities/plateformCredit.entity';
@@ -25,13 +26,22 @@ export interface PointDistanceFilter {
 interface GetAllRidesOptions {
   distanceFilter?: PointDistanceFilter;
   departureDate?: Date;
+  statuses?: RideStatus[];
+  onlyAvailable?: boolean;
+  onlyInTheFuture?: boolean;
 }
 
 export type RideRepositoryInterface = Repository<RideEntity> & {
   createOne(ride: RideEntityInterface): Promise<RideEntityInterface>;
   getOneByIdForDetails(id: string): Promise<RideEntityInterface | null>;
   getOneById(id: string): Promise<RideEntityInterface | null>;
-  getAllForSearch({ distanceFilter, departureDate }: GetAllRidesOptions): Promise<SearchedRide[]>;
+  getAllForSearch({
+    distanceFilter,
+    departureDate,
+    statuses,
+    onlyAvailable,
+    onlyInTheFuture,
+  }: GetAllRidesOptions): Promise<SearchedRide[]>;
   updateRide(ride: SavedRide, entityManager?: EntityManager): Promise<void>;
   getAllByDriverId(driverId: string): Promise<RideEntityInterface[]>;
   getDailyStatistics(): Promise<DailyStatistics[]>;
@@ -68,9 +78,13 @@ export const RideRepository: RideRepositoryInterface = AppDataSource.getReposito
 
     return user;
   },
-  async getAllForSearch({ distanceFilter, departureDate }: GetAllRidesOptions = {}): Promise<
-    SearchedRide[]
-  > {
+  async getAllForSearch({
+    distanceFilter,
+    departureDate,
+    statuses,
+    onlyAvailable,
+    onlyInTheFuture,
+  }: GetAllRidesOptions = {}): Promise<SearchedRide[]> {
     const query = this.createQueryBuilder('ride')
       .leftJoin('ride.driver', 'driver')
       .addSelect(['driver.id', 'driver.avatarUrl', 'driver.username', 'driver.rate'])
@@ -86,10 +100,10 @@ export const RideRepository: RideRepositoryInterface = AppDataSource.getReposito
         {
           latD: distanceFilter.departure.latitude,
           lngD: distanceFilter.departure.longitude,
-          distanceD: distanceFilter.departure.radiusKm,
+          distanceD: distanceFilter.departure.radiusKm * 1000,
           latA: distanceFilter.arrival.latitude,
           lngA: distanceFilter.arrival.longitude,
-          distanceA: distanceFilter.arrival.radiusKm,
+          distanceA: distanceFilter.arrival.radiusKm * 1000,
         },
       );
     } else if (distanceFilter?.departure) {
@@ -100,7 +114,7 @@ export const RideRepository: RideRepositoryInterface = AppDataSource.getReposito
         {
           latD: distanceFilter.departure.latitude,
           lngD: distanceFilter.departure.longitude,
-          distanceD: distanceFilter.departure.radiusKm,
+          distanceD: distanceFilter.departure.radiusKm * 1000,
         },
       );
     } else if (distanceFilter?.arrival) {
@@ -111,18 +125,37 @@ export const RideRepository: RideRepositoryInterface = AppDataSource.getReposito
         {
           latA: distanceFilter.arrival.latitude,
           lngA: distanceFilter.arrival.longitude,
-          distanceA: distanceFilter.arrival.radiusKm,
+          distanceA: distanceFilter.arrival.radiusKm * 1000,
         },
       );
     }
 
     if (departureDate) {
-      query.andWhere('DATE(ride.departure_date) = :departureDate', {
-        departureDate: departureDate.toISOString().split('T')[0],
+      const startOfDay = new Date(departureDate);
+      startOfDay.setHours(0, 0, 0, 0);
+
+      const endOfDay = new Date(departureDate);
+      endOfDay.setHours(23, 59, 59, 999);
+
+      query.andWhere('ride.departure_date BETWEEN :startOfDay AND :endOfDay', {
+        startOfDay,
+        endOfDay,
       });
     }
 
-    return query.getMany();
+    if (statuses) {
+      query.andWhere('ride.status IN (:...statuses)', { statuses });
+    }
+
+    if (onlyAvailable) {
+      query.andWhere('car.seats - ride.reservedSeats > 0');
+    }
+
+    if (onlyInTheFuture) {
+      query.andWhere('ride.departure_date > :now', { now: new Date() });
+    }
+
+    return query.orderBy('ride.departure_date', 'ASC').getMany();
   },
   async updateRide(ride: SavedRide, entityManager?: EntityManager): Promise<void> {
     const manager = entityManager ?? this.manager;

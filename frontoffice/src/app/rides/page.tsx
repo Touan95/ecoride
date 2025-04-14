@@ -1,20 +1,20 @@
 'use client';
 
 import { useGetSearchedRides } from '@/api/hooks/useUserAPI';
-import { GetSearchedRidesParams } from '@/api/lib/user';
+import { GetSearchedRidesParams, RideStatus } from '@/api/lib/user';
 import { Typography } from '@/components/atoms/Typography';
 import SectionContainer from '@/components/layout/SectionContainer';
-import { AddressItemLight } from '@/components/molecules/AddressAutocompleteInput/AddressAutocompleteInput';
+import { OnSelectAddressProps } from '@/components/molecules/AddressAutocompleteInput/AddressAutocompleteInput';
 import { RideCard, RideCardProps } from '@/components/molecules/RideCard';
 import { RidesFilters, RidesFiltersType } from '@/components/molecules/RidesFilters';
 import { SearchRides } from '@/components/molecules/SearchRides';
 import { SearchedRide } from '@/interfaces/ride';
 import { DEFAULT_AVATAR_URL } from '@/interfaces/user';
-import { SearchRidesFormSchemaType } from '@/schemas/user';
 import { isCarGreen } from '@/utils/car';
+import { AddressItemLight } from '@/utils/openStreetMap';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
-
+import dayjs from 'dayjs';
 const rideApiToRideCard = (apiRide: SearchedRide): RideCardProps => {
   const isGreen = isCarGreen(apiRide.car);
   const duration = new Date(apiRide.arrivalDate).getTime() - new Date(apiRide.departureDate).getTime();
@@ -63,34 +63,87 @@ const filterRides = (rides: SearchedRide[], filters: RidesFiltersType): Searched
 };
 
 export default function Rides() {
+  const [initialArrival, setInitialArrival] = useState<AddressItemLight | undefined>(undefined);
+  const [departure, setDeparture] = useState<AddressItemLight | undefined>(undefined);
+  const [arrival, setArrival] = useState<AddressItemLight | undefined>(undefined);
+  const [departureDate, setDepartureDate] = useState<Date | undefined>(undefined);
   const [appliedFilters, setAppliedFilters] = useState<RidesFiltersType>({});
-  const [initialDeparture, setInitialDeparture] = useState<AddressItemLight | undefined>(undefined);
+  const [selectedDepartureAddress, setSelectedDepartureAddress] = useState<AddressItemLight | undefined>(undefined);
+  const [selectedArrivalAddress, setSelectedArrivalAddress] = useState<AddressItemLight | undefined>(undefined);
+  const [selectedDepartureDate, setSelectedDepartureDate] = useState<Date | undefined>(undefined);
   const [searchRidesParams, setSearchRidesParams] = useState<GetSearchedRidesParams | undefined>(undefined);
   const router = useRouter();
   const searchParams = useSearchParams();
-  const departureParams = searchParams.get('departure');
-  const { data: ridesResponse, refetch } = useGetSearchedRides({ ...searchRidesParams });
+  const { data: ridesResponse, refetch } = useGetSearchedRides({
+    ...searchRidesParams,
+    statuses: [RideStatus.UPCOMING],
+    onlyAvailable: true,
+    onlyInTheFuture: true
+  });
 
-  const apiRides = ridesResponse?.rides ?? [];
-
-  const filteredRides = useMemo(() => {
-    return filterRides(apiRides, appliedFilters);
-  }, [appliedFilters, apiRides]);
-
-  const rideCardData = useMemo(() => {
-    return filteredRides.map((ride) => rideApiToRideCard(ride));
-  }, [filteredRides]);
+  const { rides: apiRides, fallbackRide } = ridesResponse ?? { rides: [], fallbackRide: undefined };
 
   useEffect(() => {
-    if (departureParams) {
-      try {
-        const parsedData = JSON.parse(decodeURIComponent(departureParams as string));
-        setInitialDeparture(parsedData);
-      } catch (error) {
-        console.error('Invalid data format', error);
+    try {
+      const departureParams = searchParams.get('departure');
+      const arrivalParams = searchParams.get('arrival');
+      const departureDateParams = searchParams.get('departureDate');
+      const initialArrivalParams = searchParams.get('initialArrival');
+
+      let newSearchParams: GetSearchedRidesParams = {};
+
+      if (initialArrivalParams) {
+        const parsedInitialArrival = JSON.parse(decodeURIComponent(initialArrivalParams)) as AddressItemLight;
+        setInitialArrival(parsedInitialArrival);
+        newSearchParams = {
+          arrivalLatitude: parsedInitialArrival?.lat ? Number(parsedInitialArrival.lat) : undefined,
+          arrivalLongitude: parsedInitialArrival?.lon ? Number(parsedInitialArrival.lon) : undefined
+        };
+      } else {
+        if (departureParams) {
+          const parsedDeparture = JSON.parse(decodeURIComponent(departureParams)) as AddressItemLight;
+          setDeparture(parsedDeparture);
+          newSearchParams.departureLatitude = parsedDeparture?.lat ? Number(parsedDeparture.lat) : undefined;
+          newSearchParams.departureLongitude = parsedDeparture?.lon ? Number(parsedDeparture.lon) : undefined;
+        }
+
+        if (arrivalParams) {
+          const parsedArrival = JSON.parse(decodeURIComponent(arrivalParams)) as AddressItemLight;
+          setArrival(parsedArrival);
+          newSearchParams.arrivalLatitude = parsedArrival?.lat ? Number(parsedArrival.lat) : undefined;
+          newSearchParams.arrivalLongitude = parsedArrival?.lon ? Number(parsedArrival.lon) : undefined;
+        }
+
+        if (departureDateParams) {
+          const parsedDate = new Date(departureDateParams);
+          setDepartureDate(parsedDate);
+          newSearchParams.departureDate = parsedDate;
+        }
       }
+
+      setSearchRidesParams(newSearchParams);
+    } catch (error) {
+      console.error('Error parsing URL parameters:', error);
     }
-  }, [departureParams]);
+  }, [searchParams]);
+
+  const onSearch = () => {
+    const newSearchParams = new URLSearchParams();
+
+    if (selectedDepartureAddress) {
+      newSearchParams.set('departure', encodeURIComponent(JSON.stringify(selectedDepartureAddress)));
+    }
+    if (selectedArrivalAddress) {
+      newSearchParams.set('arrival', encodeURIComponent(JSON.stringify(selectedArrivalAddress)));
+    }
+    if (selectedDepartureDate) {
+      newSearchParams.set('departureDate', selectedDepartureDate.toISOString());
+    }
+
+    newSearchParams.delete('initialArrival');
+
+    router.push(`/rides?${newSearchParams.toString()}`);
+  };
 
   const onFiltersChange = (filters: RidesFiltersType) => {
     setAppliedFilters(filters);
@@ -100,30 +153,69 @@ export default function Rides() {
     router.push(`/rides/${id}`);
   };
 
-  const onSearch = (params: SearchRidesFormSchemaType) => {
-    setSearchRidesParams({
-      departureLatitude: params.departureLocation?.coordinate.latitude,
-      departureLongitude: params.departureLocation?.coordinate.longitude,
-      arrivalLatitude: params.arrivalLocation?.coordinate.latitude,
-      arrivalLongitude: params.arrivalLocation?.coordinate.longitude,
-      departureDate: params.departureDate
-    });
+  const onDepartureSelect = ({ rawAddress }: OnSelectAddressProps) => {
+    setSelectedDepartureAddress(rawAddress);
+  };
+
+  const onArrivalSelect = ({ rawAddress }: OnSelectAddressProps) => {
+    setSelectedArrivalAddress(rawAddress);
+  };
+
+  const onDateSelect = (date: Date | undefined) => {
+    setSelectedDepartureDate(date);
   };
 
   useEffect(() => {
     refetch();
   }, [searchRidesParams]);
 
+  const filteredRides = useMemo(() => {
+    return filterRides(apiRides, appliedFilters);
+  }, [appliedFilters, apiRides]);
+
+  const rideCardData = useMemo(() => {
+    return filteredRides.map((ride) => rideApiToRideCard(ride));
+  }, [filteredRides]);
+
+  const renderRides = useMemo(() => {
+    if (rideCardData.length > 0) {
+      return (
+        <>
+          {rideCardData.map((ride) => {
+            return <RideCard key={ride.id} {...ride} onDetailClick={onDetailClick(ride.id)} />;
+          })}
+        </>
+      );
+    } else if (fallbackRide) {
+      const departure = dayjs(fallbackRide.departureDate);
+      const formattedDepartureDate = departure.format('dddd D MMMM YYYY');
+      return (
+        <Typography variant="cardTitleSm" align="center">
+          {`Aucun trajet ne correspond à votre recherche pour cette date.`}
+          <br /> {`Cependant, un trajet similaire est disponible le ${formattedDepartureDate}`}
+        </Typography>
+      );
+    } else {
+      return <Typography variant="h3">Aucun résultat trouvé pour votre recherche</Typography>;
+    }
+  }, [rideCardData, fallbackRide]);
+
   return (
     <>
-      <SearchRides initialDeparture={initialDeparture} onSearch={onSearch} />
+      <SearchRides
+        arrival={initialArrival ?? arrival}
+        departure={departure}
+        departureDate={departureDate}
+        onSearch={onSearch}
+        onDepartureSelect={onDepartureSelect}
+        onArrivalSelect={onArrivalSelect}
+        onDateSelect={onDateSelect}
+      />
       <SectionContainer className="flex flex-col gap-5 my-10">
         <RidesFilters onFiltersChange={onFiltersChange} />
         <div className="flex flex-col gap-5">
           <Typography variant="h3">Résultat(s) de la recherche</Typography>
-          {rideCardData.map((ride) => {
-            return <RideCard key={ride.id} {...ride} onDetailClick={onDetailClick(ride.id)} />;
-          })}
+          {renderRides}
         </div>
       </SectionContainer>
     </>

@@ -70,6 +70,9 @@ export interface GetSearchedRidesParams {
   arrivalLatitude?: number;
   arrivalLongitude?: number;
   departureDate?: Date;
+  statuses?: RideStatus[];
+  onlyAvailable?: boolean;
+  onlyInTheFuture?: boolean;
 }
 
 export enum RideStatus {
@@ -81,6 +84,7 @@ export enum RideStatus {
 
 interface GetSearchedRidesResponse {
   rides: SearchedRide[];
+  fallbackRide?: SearchedRide;
 }
 
 export interface AddReviewParams {

@@ -1,10 +1,8 @@
 'use client';
 
-import AddressAutocompleteInput, {
-  AddressItemLight,
-  OnSelectAddressProps
-} from '@/components/molecules/AddressAutocompleteInput/AddressAutocompleteInput';
+import AddressAutocompleteInput, { OnSelectAddressProps } from '@/components/molecules/AddressAutocompleteInput/AddressAutocompleteInput';
 import { Button } from '@/components/molecules/Button';
+import { AddressItemLight } from '@/utils/openStreetMap';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -21,12 +19,16 @@ export const SearchBar = ({ placeholder }: SearchInputProps) => {
   };
 
   const onSearch = () => {
-    const query = encodeURIComponent(JSON.stringify(selectedAddress));
-    router.push(`/rides?departure=${query}`);
+    if (selectedAddress) {
+      const query = encodeURIComponent(JSON.stringify(selectedAddress));
+      router.push(`/rides?initialArrival=${query}`);
+    } else {
+      router.push(`/rides`);
+    }
   };
   return (
     <div className="flex flex-col gap-5 items-center">
-      <AddressAutocompleteInput onSelect={onDepartureSelect} className="p-8" placeholder={placeholder} />
+      <AddressAutocompleteInput big onSelect={onDepartureSelect} className="p-8" placeholder={placeholder} />
       <Button className="w-fit px-20 py-7" onClick={onSearch}>
         Rechercher
       </Button>

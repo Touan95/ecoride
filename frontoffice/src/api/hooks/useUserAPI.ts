@@ -121,12 +121,14 @@ export const useRideCar = ({ onSuccess, onError }: UseMutationOptions<BaseAPIRes
   });
 };
 
-export const useGetSearchedRides = ({ ...params }: GetSearchedRidesParams) => {
-  return useQuery(['searched_rides', params], () => getSearchedRidesRequest(params));
+export const useGetSearchedRides = (params: GetSearchedRidesParams) => {
+  return useQuery(['searched_rides', params], () => getSearchedRidesRequest(params), {
+    enabled: !!params && Object.keys(params).length > 0
+  });
 };
 
 export const useGetRideDetails = (rideId?: string) => {
-  return useQuery(['ride', rideId], () => getRideDetailsRequest(rideId ?? ''), { enabled: !!rideId });
+  return useQuery(['ride', rideId], () => getRideDetailsRequest(rideId ?? ''));
 };
 
 export const useBookRide = ({ onSuccess, onError }: UseMutationOptions<BaseAPIResponse, ErrorResponse, string>) => {

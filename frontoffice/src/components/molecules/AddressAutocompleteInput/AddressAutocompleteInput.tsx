@@ -1,69 +1,11 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
-import axios from 'axios';
 import { useQuery } from 'react-query';
-import { Coordinate, RideLocation } from '@/api/lib/user';
+import { RideLocation } from '@/api/lib/user';
 import { Input, inputClassname } from '@/components/ui/input';
 import clsxm from '@/utils/clsxm';
 import { Typography } from '@/components/atoms/Typography';
-
-const fetchSuggestions = async (query: string) => {
-  if (!query) return [];
-
-  const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&addressdetails=1&limit=5&countrycodes=fr`;
-
-  const response = await axios.get(url);
-  return response.data;
-};
-
-const fetchReversedLocation = async ({ latitude, longitude }: Coordinate) => {
-  const url = `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`;
-
-  const response = await axios.get(url);
-  return response.data;
-};
-
-const fetchLookedUpLocation = async (osm_type: string, osm_id: string) => {
-  const type = osm_type[0].toUpperCase();
-  const url = `https://nominatim.openstreetmap.org/lookup?osm_ids=${type}${osm_id}&format=json`;
-
-  const response = await axios.get(url);
-  return response.data;
-};
-
-export interface AddressItem {
-  place_id: number;
-  licence: string;
-  osm_type: string;
-  osm_id: string;
-  boundingbox: [string, string, string, string];
-  lat: string;
-  lon: string;
-  display_name: string;
-  class: string;
-  type: string;
-  importance: number;
-  icon: string;
-  address: {
-    city?: string;
-    town?: string;
-    village?: string;
-    state_district?: string;
-    state?: string;
-    ISO3166_2_lvl4?: string;
-    postcode?: string;
-    country: string;
-    country_code: string;
-  };
-  extratags?: {
-    capital?: string;
-    website?: string;
-    wikidata?: string;
-    wikipedia?: string;
-    population?: string;
-  };
-}
-
-export type AddressItemLight = Pick<AddressItem, 'osm_id' | 'osm_type' | 'lat' | 'lon' | 'display_name'>;
+import { AddressItem, AddressItemLight, fetchLookedUpLocation, fetchReversedLocation, fetchSuggestions } from '@/utils/openStreetMap';
+import { TbX } from 'react-icons/tb';
 
 export interface OnSelectAddressProps {
   location?: RideLocation;
@@ -75,6 +17,7 @@ interface AddressAutocompleteInputProps {
   placeholder?: string;
   initialLocation?: AddressItemLight;
   error?: string;
+  big?: boolean;
 }
 
 const AddressAutocompleteInput = ({
@@ -82,7 +25,8 @@ const AddressAutocompleteInput = ({
   className,
   placeholder = 'Entrez une adresse',
   initialLocation,
-  error
+  error,
+  big = false
 }: AddressAutocompleteInputProps) => {
   const [debouncedValue, setDebouncedValue] = useState<string>('');
   const [query, setQuery] = useState(initialLocation ? initialLocation.display_name : '');
@@ -202,11 +146,7 @@ const AddressAutocompleteInput = ({
   };
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (selectedAddress) {
-      resetValues();
-    } else {
-      setQuery(e.target.value);
-    }
+    setQuery(e.target.value);
   };
 
   const resetValues = () => {
@@ -217,15 +157,24 @@ const AddressAutocompleteInput = ({
 
   return (
     <div className="relative w-full">
-      <Input
-        ref={inputRef}
-        placeholder={placeholder}
-        value={query}
-        onChange={onChange}
-        onFocus={onFocus}
-        onBlur={onBlur}
-        className={className}
-      />
+      <div className="relative">
+        <Input
+          ref={inputRef}
+          placeholder={placeholder}
+          value={query}
+          onChange={onChange}
+          onFocus={onFocus}
+          onBlur={onBlur}
+          className={className}
+        />
+        <TbX
+          onClick={resetValues}
+          className={clsxm(
+            'cursor-pointer absolute text-primary-900 top-1/2 right-4 transform -translate-y-1/2',
+            big && 'border border-primary-900 rounded-full'
+          )}
+        />
+      </div>
       <div className="h-4 mt-1">
         {error && (
           <Typography variant="extraSmall" color="red">
@@ -234,7 +183,7 @@ const AddressAutocompleteInput = ({
         )}
       </div>
       {dropdownVisible && isFocused && (
-        <div className={clsxm(inputClassname, 'h-fit rounded-3xl absolute z-[9999] mt-2 p-0')} onMouseDown={(e) => e.preventDefault()}>
+        <div className={clsxm(inputClassname, 'h-fit rounded-3xl absolute z-[9999] -mt-4 p-0')} onMouseDown={(e) => e.preventDefault()}>
           <ul className="flex flex-col py-6 w-full">
             {isLoading && <p className="p-2">Chargement...</p>}
             {isError && <p className="p-2">Erreur de chargement des suggestions</p>}

@@ -1,4 +1,4 @@
-import { SearchedRide } from '../../../../entities/ride.entity';
+import { RideStatus, SearchedRide } from '../../../../entities/ride.entity';
 import {
   PointDistanceFilter,
   RideRepositoryInterface,
@@ -11,18 +11,29 @@ interface GetSearchedRidesService {
   departureLatitude?: number;
   departureLongitude?: number;
   rideRepository: RideRepositoryInterface;
+  statuses?: RideStatus[];
+  onlyAvailable?: boolean;
+  onlyInTheFuture?: boolean;
+}
+
+export interface GetSearchedRidesResponse {
+  results: SearchedRide[];
+  fallbackRide?: SearchedRide;
 }
 
 const DISTANCE_RADIUS_KM = 5;
 
-export const service = ({
+export const service = async ({
   arrivalLatitude,
   arrivalLongitude,
   departureDate,
   departureLatitude,
   departureLongitude,
   rideRepository,
-}: GetSearchedRidesService): Promise<SearchedRide[]> => {
+  statuses,
+  onlyAvailable,
+  onlyInTheFuture,
+}: GetSearchedRidesService): Promise<GetSearchedRidesResponse> => {
   const distanceFilter: PointDistanceFilter = {
     arrival:
       arrivalLatitude && arrivalLongitude
@@ -42,5 +53,28 @@ export const service = ({
         : undefined,
   };
 
-  return rideRepository.getAllForSearch({ departureDate, distanceFilter });
+  const results = await rideRepository.getAllForSearch({
+    departureDate,
+    distanceFilter,
+    statuses,
+    onlyAvailable,
+    onlyInTheFuture,
+  });
+
+  if (results.length === 0 && !!departureDate) {
+    const ridesIgnoreDate = await rideRepository.getAllForSearch({
+      distanceFilter,
+      statuses,
+      onlyAvailable,
+      onlyInTheFuture,
+    });
+    return {
+      results,
+      fallbackRide: ridesIgnoreDate[0],
+    };
+  }
+
+  return {
+    results,
+  };
 };

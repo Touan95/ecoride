@@ -17,12 +17,37 @@ interface DateInputProps {
   placeholder?: string;
   onChange?: (date: Date) => void;
   className?: string;
+  fromDate?: Date;
+  toDate?: Date;
+  disable?: 'futur' | 'past';
+  initialDate?: Date;
 }
 
-export const DateInput = ({ placeholder = 'Choisir une date', onChange, className = '' }: DateInputProps) => {
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
-  const [formattedDate, setFormattedDate] = useState<string | undefined>(undefined);
+const getDisabledDatesFromNow = (disable?: 'futur' | 'past') => {
+  const now = new Date();
+
+  switch (disable) {
+    case 'futur':
+      return (date: Date) => date > now;
+    case 'past':
+      return (date: Date) => date < now;
+  }
+};
+
+export const DateInput = ({
+  placeholder = 'Choisir une date',
+  onChange,
+  className = '',
+  fromDate,
+  toDate,
+  disable,
+  initialDate
+}: DateInputProps) => {
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(initialDate);
+  const [formattedDate, setFormattedDate] = useState<string | undefined>(initialDate ? dayjs(initialDate).format('DD/MM/YYYY') : undefined);
   const [open, setOpen] = useState(false);
+
+  const disabledDates = getDisabledDatesFromNow(disable);
 
   const onSelect = (date: Date | undefined) => {
     if (date) {
@@ -53,11 +78,11 @@ export const DateInput = ({ placeholder = 'Choisir une date', onChange, classNam
           mode="single"
           selected={selectedDate}
           onSelect={onSelect}
-          disabled={(date) => date > new Date() || date < new Date('1900-01-01')}
+          disabled={disabledDates}
           initialFocus
           locale={fr}
-          fromDate={new Date('1900-01-01')}
-          toDate={new Date()}
+          fromDate={fromDate}
+          toDate={toDate}
           captionLayout="dropdown"
         />
       </PopoverContent>

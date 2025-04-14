@@ -21,6 +21,9 @@ export default async (
       departureDate,
       departureLatitude,
       departureLongitude,
+      statuses,
+      onlyAvailable,
+      onlyInTheFuture,
     } = req.query;
     const rides = await service({
       arrivalLatitude,
@@ -28,6 +31,9 @@ export default async (
       departureDate,
       departureLatitude,
       departureLongitude,
+      statuses,
+      onlyAvailable,
+      onlyInTheFuture,
       rideRepository: AppDataSource.manager.withRepository(RideRepository),
     });
 

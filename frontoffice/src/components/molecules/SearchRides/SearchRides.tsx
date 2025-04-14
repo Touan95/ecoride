@@ -2,34 +2,38 @@
 
 import { Typography } from '@/components/atoms/Typography';
 import { Button } from '@/components/molecules/Button';
-import AddressAutocompleteInput, { AddressItemLight, OnSelectAddressProps } from '../AddressAutocompleteInput/AddressAutocompleteInput';
-import { useState } from 'react';
-import { RideLocation } from '@/api/lib/user';
+import AddressAutocompleteInput, { OnSelectAddressProps } from '../AddressAutocompleteInput/AddressAutocompleteInput';
 import { DateInput } from '@/components/inputs/DateInput';
-import { SearchRidesFormSchemaType } from '@/schemas/user';
+import { AddressItemLight } from '@/utils/openStreetMap';
 
 interface SearchRidesProps {
-  initialDeparture?: AddressItemLight;
-  onSearch: (params: SearchRidesFormSchemaType) => void;
+  arrival?: AddressItemLight;
+  departure?: AddressItemLight;
+  departureDate?: Date;
+  onSearch: () => void;
+  onDepartureSelect: (location: OnSelectAddressProps) => void;
+  onArrivalSelect: (location: OnSelectAddressProps) => void;
+  onDateSelect: (date: Date | undefined) => void;
 }
 
-export const SearchRides = ({ initialDeparture, onSearch }: SearchRidesProps) => {
-  const [departureLocation, setDepartureLocation] = useState<RideLocation | undefined>(undefined);
-  const [arrivalLocation, setArrivalLocation] = useState<RideLocation | undefined>(undefined);
-  const [departureDate, setDepartureDate] = useState<Date | undefined>(undefined);
-  const onDepartureSelect = ({ location }: OnSelectAddressProps) => {
-    setDepartureLocation(location);
+export const SearchRides = ({
+  arrival,
+  departure,
+  departureDate,
+  onSearch,
+  onDepartureSelect,
+  onArrivalSelect,
+  onDateSelect
+}: SearchRidesProps) => {
+  const now = new Date();
+  const handleDepartureSelect = (location: OnSelectAddressProps) => {
+    onDepartureSelect(location);
   };
-  const onArrivalSelect = ({ location }: OnSelectAddressProps) => {
-    setArrivalLocation(location);
+  const handleArrivalSelect = (location: OnSelectAddressProps) => {
+    onArrivalSelect(location);
   };
-  const onDateSelect = (date: Date | undefined) => {
-    setDepartureDate(date);
-  };
-  const handleOnSearch = () => {
-    if (departureLocation || arrivalLocation || departureDate) {
-      onSearch({ arrivalLocation, departureDate, departureLocation });
-    }
+  const handleDateSelect = (date: Date | undefined) => {
+    onDateSelect(date);
   };
   return (
     <div className="w-full h-[400px] relative">
@@ -41,16 +45,31 @@ export const SearchRides = ({ initialDeparture, onSearch }: SearchRidesProps) =>
           </Typography>
           <div className="grid grid-cols-[2fr_2fr_1fr_0.5fr] gap-4">
             <AddressAutocompleteInput
-              onSelect={onDepartureSelect}
+              onSelect={handleDepartureSelect}
               className="p-8"
               placeholder="Lieu de départ"
-              initialLocation={initialDeparture}
+              initialLocation={departure}
+              big
             />
-            <AddressAutocompleteInput onSelect={onArrivalSelect} className="p-8" placeholder="Lieu de destination" />
-            <DateInput onChange={onDateSelect} placeholder="Date de trajet" className="p-8 w-44" />
-            <Button className="w-full h-full" onClick={handleOnSearch}>
-              Rechercher
-            </Button>
+            <AddressAutocompleteInput
+              onSelect={handleArrivalSelect}
+              className="p-8"
+              placeholder="Lieu de destination"
+              initialLocation={arrival}
+              big
+            />
+            <DateInput
+              onChange={handleDateSelect}
+              placeholder="Date de trajet"
+              className="p-8 w-44"
+              fromDate={now}
+              initialDate={departureDate}
+            />
+            <div className="pb-5">
+              <Button className="w-full h-full" onClick={onSearch}>
+                Rechercher
+              </Button>
+            </div>
           </div>
         </div>
       </div>
