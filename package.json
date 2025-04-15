@@ -32,7 +32,6 @@
     "lint": "pnpm -r run lint"
   },
   "devDependencies": {
-    "concurrently": "^9.1.2",
     "env-cmd": "^10.1.0"
   },
   "workspaces": [
