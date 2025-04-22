@@ -1,6 +1,5 @@
 import { Column, Entity, Index, OneToMany, PrimaryColumn } from 'typeorm';
 import { CarEntity, CarEntityInterface } from './car.entity';
-import { RideHistoryEntity, RideHistoryEntityInterface } from './rideHistory.entity';
 
 export enum UserType {
   DRIVER = 'driver',
@@ -30,7 +29,6 @@ export type UserLight = Pick<User, 'id' | 'avatarUrl' | 'username' | 'rate'>;
 
 export interface UserEntityInterface extends User {
   cars: CarEntityInterface[];
-  rideHistory: RideHistoryEntityInterface[];
 }
 
 @Entity('user')
@@ -81,7 +79,4 @@ export class UserEntity implements UserEntityInterface {
 
   @OneToMany(() => CarEntity, (car) => car.owner, { cascade: true, onDelete: 'CASCADE' })
   cars: CarEntity[];
-
-  @OneToMany(() => RideHistoryEntity, (history) => history.user)
-  rideHistory: RideHistoryEntity[];
 }

@@ -30,7 +30,7 @@ Start docker then run :
 ```bash
 pnpm docker:start           # Start containers
 pnpm start:database         # Start database (should be started before starting backend)
-pnpm migration:run          # Run database migration
 pnpm dev:be                 # Start backend
+pnpm migration:run          # Run database migration
 pnpm dev:fo                 # Start frontoffice
 ```

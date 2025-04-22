@@ -1,6 +1,6 @@
 'use client';
 
-import { useAddCar, useGetOneUser, useRideCar } from '@/api/hooks/useUserAPI';
+import { useAddCar, useGetOneUser, useAddRide } from '@/api/hooks/useUserAPI';
 import { AddCarParams, AddRideParams } from '@/api/lib/user';
 import { Typography } from '@/components/atoms/Typography';
 import SectionContainer from '@/components/layout/SectionContainer';
@@ -14,7 +14,7 @@ export default function AddRide() {
   const { data: apiUser, refetch: refetchUser } = useGetOneUser(user?.id);
   const cars = apiUser?.cars ?? [];
 
-  const addRide = useRideCar({});
+  const addRide = useAddRide({});
 
   const addCar = useAddCar({
     onSuccess: () => {

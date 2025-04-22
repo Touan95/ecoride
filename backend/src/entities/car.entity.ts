@@ -1,4 +1,4 @@
-import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { UserEntity, UserEntityInterface } from './user.entity';
 
 export enum Energy {
@@ -32,7 +32,6 @@ export class CarEntity implements CarEntityInterface {
   id: string;
 
   @Column()
-  @Index({ unique: true })
   plateNumber: string;
 
   @Column({ type: 'date' })
