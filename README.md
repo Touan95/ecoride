@@ -17,15 +17,17 @@ The project is built with a strong focus on performance, security, accessibility
 
 ## 📦 Monorepo Structure
 
+```
 ecoride/
 ├── backend/ # Node.js API (Express + TypeORM)
 ├── frontend/ # Next.js frontend application
 ├── README.md # Monorepo documentation (you are here)
 ├── pnpm-workspace.yaml # pnpm workspace configuration
+```
 
 This project uses [pnpm workspaces](https://pnpm.io/workspaces) for monorepo management.
 
-## 🚀 Getting Started
+## 🚀 Getting Started for local development
 
 1. Copy the environment file :
 
@@ -43,8 +45,8 @@ pnpm migration:run          # Run database migration
 pnpm dev:fe                 # Start frontend
 ```
 
-Frontend available at http://localhost:3000/
-Backend API available at http://localhost:8080/api
+- Frontend available at http://localhost:3000/
+- Backend API available at http://localhost:8080/api
 
 ## 🌱 About
 
