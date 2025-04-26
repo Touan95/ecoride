@@ -6,8 +6,8 @@ import { ConnectedMenu } from '../ConnectedMenu';
 import { UserType } from '@/interfaces/user';
 
 export const Navbar = () => {
-  const { isLogged, user } = useAuthContext();
-  const connectedNavbar = isLogged && user;
+  const { user } = useAuthContext();
+  const connectedNavbar = !!user;
 
   return (
     <SectionContainer fluid className="bg-primary-700 sticky top-0 z-1">

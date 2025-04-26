@@ -1,53 +1,67 @@
-import axios from 'axios';
+import axios, { InternalAxiosRequestConfig } from 'axios';
+import { toast } from 'react-hot-toast';
 
+import { refreshTokenRequest } from '@/api/lib/auth';
 import { getCookie } from '@/utils/cookie';
+
 import { apiUrl } from './config';
-import toast from 'react-hot-toast';
 
-const axiosInstance = axios.create({
-  baseURL: apiUrl,
-  headers: {
-    Accept: 'application/json',
-    'Accept-Encoding': 'gzip',
-    'Accept-Language': /*i18n.resolvedLanguage ||*/ 'fr',
-    'Content-Type': 'application/json'
-  }
-});
+type OriginalRequest = InternalAxiosRequestConfig & { _isRetry?: boolean };
 
-axiosInstance.interceptors.request.use((config) => {
-  const token = getCookie('accessToken');
-  config.baseURL = apiUrl;
+const skipTokenError = ['/refresh', '/refresh/', '/login', '/login/'];
+const skipToast = ['/agent/organization/zone'];
 
-  config.headers = config.headers || {};
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  config.headers['Accept-Language'] = /*i18n.resolvedLanguage ||*/ 'fr';
+const defaultToastConfig = {
+  duration: 3000,
+  id: 'api-error'
+};
 
-  if (token) {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    config.headers.Authorization = `Bearer ${token}`;
-  }
+export const configureAxios = ({ onTokenError }: { onTokenError: () => void }) => {
+  axios.interceptors.request.use((config) => {
+    const token = getCookie('accessToken');
 
-  return config;
-});
+    config.baseURL = apiUrl;
+    config.headers = config.headers || {};
 
-axiosInstance.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response) {
-      toast.error(error.response.data.message);
-      if (error.response.status === 401) {
-        if (error.response.config.url.includes('/authentication/refresh')) {
-          // onRefreshError();
-        } else {
-          // onTokenError();
-        }
-      }
+    config.headers.Accept = 'application/json';
+    config.headers['Accept-Language'] = 'fr';
+    config.headers['Content-Type'] = config.headers['Content-Type'] ?? 'application/json';
+
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
     }
 
-    return Promise.reject(error?.response?.data);
-  }
-);
+    return config;
+  });
 
-export default axiosInstance;
+  axios.interceptors.response.use(
+    (response) => response,
+    async (error) => {
+      const originalRequest: OriginalRequest = error.config;
+      const message = error?.response?.data?.message;
+      const statusCode = error?.response?.status;
+
+      const isRetry = originalRequest?._isRetry;
+      const url = error?.config.url;
+
+      if (statusCode === 401 && isRetry) {
+        onTokenError();
+        toast.error(message, defaultToastConfig);
+      } else if (statusCode === 401 && !skipTokenError.includes(url) && !isRetry) {
+        originalRequest._isRetry = true;
+        try {
+          await refreshTokenRequest();
+          return axios.request(originalRequest);
+        } catch {
+          onTokenError();
+          toast.error(message, defaultToastConfig);
+        }
+      } else {
+        if (!skipToast.includes(url)) {
+          toast.error(message, defaultToastConfig);
+        }
+      }
+      return Promise.reject(error?.response?.data);
+    }
+  );
+};
