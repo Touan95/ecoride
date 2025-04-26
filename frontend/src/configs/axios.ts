@@ -9,7 +9,7 @@ import { apiUrl } from './config';
 type OriginalRequest = InternalAxiosRequestConfig & { _isRetry?: boolean };
 
 const skipTokenError = ['/refresh', '/refresh/', '/login', '/login/'];
-const skipToast = ['/agent/organization/zone'];
+const skipToast: string[] = [];
 
 const defaultToastConfig = {
   duration: 3000,
