@@ -3,7 +3,7 @@ import clsxm from '@/utils/clsxm';
 import 'dayjs/locale/fr';
 import { UserType } from '@/interfaces/user';
 import Image from 'next/image';
-import { AccountCardField } from '../../molecules/AccountCardField';
+import { AccountCardField } from '../AccountCardField';
 import { getUserTypeLabel } from '@/utils/values';
 
 export interface AccountCardProps {
