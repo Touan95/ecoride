@@ -11,8 +11,7 @@
   "type": "module",
   "scripts": {
     "env:local": "env-cmd -f .env.local",
-    "fo": "pnpm --filter ecoride-frontoffice",
-    "bo": "pnpm --filter ecoride-backoffice",
+    "fe": "pnpm --filter ecoride-frontend",
     "be": "pnpm --filter ecoride-backend",
     "be-local": "pnpm env:local pnpm --filter ecoride-backend",
     "docker:start": "docker-compose up -d --remove-orphans",
@@ -27,8 +26,7 @@
     "migration:generate": "pnpm be-local run migration:generate",
     "fixtures:load": "pnpm be-local typeorm:drop && pnpm migration:run && pnpm be-local run fixtures:load",
     "dev:be": "pnpm be-local run dev",
-    "dev:fo": "pnpm fo run dev",
-    "dev:bo": "pnpm bo run dev",
+    "dev:fe": "pnpm fe run dev",
     "lint": "pnpm -r run lint"
   },
   "devDependencies": {
@@ -36,6 +34,6 @@
   },
   "workspaces": [
     "backend/*",
-    "frontoffice/*"
+    "frontend/*"
   ]
 }
