@@ -4,19 +4,7 @@ export type TextAlign = 'left' | 'center' | 'right' | 'justify';
 
 export type BreakWords = 'normal' | 'words' | 'all';
 
-export type VariantType =
-  | 'h1'
-  | 'h2'
-  | 'h3'
-  | 'h4'
-  | 'h5'
-  | 'cardTitle'
-  | 'cardTitleSm'
-  | 'paragraph'
-  | 'small'
-  | 'extraSmall'
-  | 'formTitle'
-  | 'title';
+export type VariantType = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'cardTitle' | 'cardTitleSm' | 'paragraph' | 'small' | 'extraSmall' | 'title';
 
 export type TextTransform = 'capitalize' | 'lowercase' | 'uppercase';
 

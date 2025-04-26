@@ -21,7 +21,7 @@ export const service = async ({
     throw userNotFoundError();
   }
 
-  const updateIssueValues: UpdateUser = { acceptsSmoking, acceptsPets, customRules };
+  const updateUserValues: UpdateUser = { acceptsSmoking, acceptsPets, customRules };
 
-  await userRepository.updateUser(userId, updateIssueValues);
+  await userRepository.updateUser(userId, updateUserValues);
 };

@@ -40,7 +40,6 @@ export const VARIANT_TO_TAG: Record<VariantType, HTMLTag> = {
   cardTitleSm: 'h3',
   small: 'p',
   paragraph: 'p',
-  formTitle: 'p',
   extraSmall: 'p'
 };
 
