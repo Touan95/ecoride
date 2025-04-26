@@ -110,7 +110,7 @@ export const useDeleteCarMutation = ({ onSuccess, onError }: UseMutationOptions<
   });
 };
 
-export const useRideCar = ({ onSuccess, onError }: UseMutationOptions<BaseAPIResponse, ErrorResponse, AddRideParams>) => {
+export const useAddRide = ({ onSuccess, onError }: UseMutationOptions<BaseAPIResponse, ErrorResponse, AddRideParams>) => {
   return useMutation((params) => addRideRequest(params), {
     onSuccess: (data, params, context) => {
       if (onSuccess) {

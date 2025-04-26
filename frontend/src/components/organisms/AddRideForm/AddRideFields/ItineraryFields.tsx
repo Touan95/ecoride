@@ -23,6 +23,8 @@ interface ItineraryFieldsProps {
 }
 
 export const ItineraryFields = ({ form, departureLocationError, arrivalLocationError }: ItineraryFieldsProps) => {
+  const now = new Date();
+
   const handleDateSelect = (dateType: 'arrivalDate' | 'departureDate') => (date: Date | undefined) => {
     if (date) {
       form.setValue(dateType, date);
@@ -78,6 +80,7 @@ export const ItineraryFields = ({ form, departureLocationError, arrivalLocationE
                     initialFocus
                     locale={fr}
                     captionLayout="dropdown"
+                    fromDate={now}
                   />
                   <div className="rdp p-3">
                     <Typography color="black" align="center" customClassName="text-sm font-medium pt-1 h-7 content-center">
