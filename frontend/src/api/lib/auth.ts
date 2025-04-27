@@ -1,6 +1,6 @@
-import axiosInstance from '@/configs/axios';
+import axios from 'axios';
 import { LoggedUser, User } from '@/interfaces/user';
-import { setCookie } from '@/utils/cookie';
+import { getCookie, setCookie } from '@/utils/cookie';
 
 export type TokenResponse = {
   accessToken: string;
@@ -25,7 +25,7 @@ export type ChangePasswordParams = {
 };
 
 export const loginRequest = async ({ email, password }: LoginParams): Promise<TokenResponse> => {
-  const { data } = await axiosInstance.post('/login', {
+  const { data } = await axios.post('/login', {
     email,
     password
   });
@@ -37,7 +37,7 @@ export const loginRequest = async ({ email, password }: LoginParams): Promise<To
 };
 
 export const registerRequest = async ({ email, password, username, isStaff }: RegisterParams): Promise<User> => {
-  const { data } = await axiosInstance.post('/register', {
+  const { data } = await axios.post('/register', {
     email,
     password,
     username,
@@ -48,21 +48,33 @@ export const registerRequest = async ({ email, password, username, isStaff }: Re
 };
 
 export const getMe = async (): Promise<LoggedUser> => {
-  const { data } = await axiosInstance.get('/user/me/');
+  const { data } = await axios.get('/user/me/');
   return data;
 };
 
 export const testMailRequest = async (): Promise<void> => {
-  const { data } = await axiosInstance.post('/testmail');
+  const { data } = await axios.post('/testmail');
 
   return data;
 };
 
 export const changePasswordRequest = async ({ oldPassword, newPassword }: ChangePasswordParams): Promise<void> => {
-  const { data } = await axiosInstance.patch('/user/password', {
+  const { data } = await axios.patch('/user/password', {
     oldPassword,
     newPassword
   });
+
+  return data;
+};
+
+export const refreshTokenRequest = async (): Promise<TokenResponse> => {
+  const { data } = await axios.post('/refresh', {
+    refreshToken: getCookie('refreshToken'),
+    accessToken: getCookie('accessToken')
+  });
+
+  setCookie('accessToken', data.accessToken);
+  setCookie('refreshToken', data.refreshToken);
 
   return data;
 };

@@ -1,12 +1,13 @@
 import dayjs from 'dayjs';
 import { jwtDecode } from 'jwt-decode';
-import React, { createContext, PropsWithChildren, useContext, useEffect, useRef } from 'react';
+import React, { createContext, PropsWithChildren, useContext, useRef, useState } from 'react';
 import { useQueryClient } from 'react-query';
 
 import { getCookie, removeCookie, setCookie } from '@/utils/cookie';
 import { LoggedUser } from '@/interfaces/user';
 import { useGetMe } from '@/api/hooks/useAuthAPI';
 import { useRouter } from 'next/navigation';
+import { configureAxios } from '@/configs/axios';
 
 const REFETCH_INTERVAL = 15 * 60 * 1000; // 15 minutes
 
@@ -20,7 +21,6 @@ type DecodedRefreshToken = {
 type AuthContextType = {
   expirationDate: Date | null;
   user: LoggedUser | null;
-  isLogged: boolean;
   isReady: boolean;
   saveToken: (accessToken: string, refreshToken: string) => void;
   clearUser: () => void;
@@ -29,58 +29,76 @@ type AuthContextType = {
 export const initialContext: AuthContextType = {
   expirationDate: null,
   user: null,
-  isLogged: false,
   isReady: false,
   saveToken: () => {},
   clearUser: () => {}
 };
 
+const decodeExpirationDate = (refreshToken: string | null) => {
+  if (!refreshToken) {
+    return null;
+  }
+
+  try {
+    const decodedToken = jwtDecode(refreshToken) as DecodedRefreshToken;
+    return dayjs.unix(decodedToken.exp ?? 0).toDate();
+  } catch (error) {
+    return null;
+  }
+};
+
 export const AuthContext = createContext<AuthContextType>(initialContext);
 
 export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
-  const [expirationDate, setExpirationDate] = React.useState<Date | null>(null);
-  const [isLogged, setIsLogged] = React.useState(false);
-  const isReady = useRef(false);
-  const { replace } = useRouter();
+  const [isReady, setIsReady] = useState(getCookie('accessToken') === null);
+  const isAxiosConfigured = useRef(false);
+  const expirationDate = useRef<Date | null>(decodeExpirationDate(getCookie('refreshToken') ?? null));
 
+  const { replace } = useRouter();
   const queryClient = useQueryClient();
 
-  const { data: user } = useGetMe({ disabled: !isLogged, refetchInterval: REFETCH_INTERVAL });
+  const clearUser = () => {
+    removeCookie('accessToken');
+    removeCookie('refreshToken');
+
+    expirationDate.current = null;
+
+    queryClient.removeQueries();
+    replace('/login');
+  };
+
+  const { data: user, refetch: refreshUser } = useGetMe({
+    disabled: getCookie('accessToken') === null,
+    refetchInterval: REFETCH_INTERVAL,
+    onSettled: () => {
+      setIsReady(true);
+    }
+  });
 
   const saveToken = (accessToken: string, refreshToken: string) => {
-    const decodedToken = jwtDecode(refreshToken) as DecodedRefreshToken;
-    setExpirationDate(dayjs.unix(decodedToken.exp ?? 0).toDate());
+    expirationDate.current = decodeExpirationDate(refreshToken);
 
     setCookie('accessToken', accessToken);
     setCookie('refreshToken', refreshToken);
 
-    setIsLogged(true);
+    refreshUser();
   };
 
-  const clearUser = () => {
-    setIsLogged(false);
-    removeCookie('accessToken');
-    removeCookie('refreshToken');
-    queryClient.removeQueries();
-    replace('/');
-  };
-
-  useEffect(() => {
-    const accessToken = getCookie('accessToken');
-    const refreshToken = getCookie('refreshToken');
-
-    if (accessToken && refreshToken) {
-      saveToken(accessToken, refreshToken);
-    }
-  }, []);
+  if (!isAxiosConfigured.current) {
+    configureAxios({
+      onTokenError: () => {
+        clearUser();
+      }
+    });
+    isAxiosConfigured.current = true;
+  }
 
   const contextValue: AuthContextType = {
     user: user ?? null,
     saveToken,
     clearUser,
-    isLogged,
-    expirationDate,
-    isReady: isReady.current
+    expirationDate: expirationDate.current,
+    isReady
   };
 
   return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>;
