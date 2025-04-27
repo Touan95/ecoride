@@ -1,4 +1,4 @@
-export const DEFAULT_AVATAR_URL = 'https://cdn.sanity.io/images/87dmpjr7/production/538bf74e8ed2d58ca18713ec29cf52d834230e12-920x1000.png';
+export const DEFAULT_AVATAR_URL = 'https://ecoride-sooty.vercel.app/assets/avatars/avatar_0-circle.png';
 
 export enum UserType {
   DRIVER = 'driver',
