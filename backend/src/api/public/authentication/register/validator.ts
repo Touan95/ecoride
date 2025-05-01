@@ -1,5 +1,6 @@
 import { buildValidationMiddleware } from '../../../../core/middlewares';
 import { validator } from '../../../../core/validator';
+import { passwordRegex } from '../common/const/regex';
 
 export interface RegisterRequest {
   body: {
@@ -13,7 +14,7 @@ export interface RegisterRequest {
 export const registerValidator = {
   body: validator.object({
     email: validator.string().email().required(),
-    password: validator.string().required(),
+    password: validator.string().regex(passwordRegex).required(),
     username: validator.string().required(),
     isStaff: validator.boolean().required(),
   }),

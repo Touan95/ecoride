@@ -4,9 +4,7 @@ import { SchemaError } from './errors';
 
 export const loginFormSchema = z.object({
   email: z.string().min(1, { message: SchemaError.REQUIRED }).email(SchemaError.INVALID_EMAIL),
-  password: z.string().min(1, { message: SchemaError.REQUIRED }).regex(passwordRegex, {
-    message: SchemaError.INVALID_PASSWORD
-  })
+  password: z.string().min(1, { message: SchemaError.REQUIRED })
 });
 
 export type LoginSchemaType = z.infer<typeof loginFormSchema>;

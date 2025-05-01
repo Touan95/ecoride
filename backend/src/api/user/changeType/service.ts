@@ -18,7 +18,7 @@ export const service = async ({
     throw userNotFoundError();
   }
 
-  const updateIssueValues: UpdateUser = { type: userType };
+  const updateUserValues: UpdateUser = { type: userType };
 
-  await userRepository.updateUser(userId, updateIssueValues);
+  await userRepository.updateUser(userId, updateUserValues);
 };

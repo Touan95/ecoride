@@ -29,7 +29,7 @@ import { AddReviewCard } from '@/components/organisms/AddReviewCard';
 import { LoginParams, RegisterParams } from '@/api/lib/auth';
 
 export default function Rides() {
-  const { saveToken, isLogged, user } = useAuthContext();
+  const { saveToken, user } = useAuthContext();
   const searchParams = useSearchParams();
   const reviewParams = searchParams.get('review');
   const { id: rideId } = useParams<{ id: string }>();
@@ -53,17 +53,17 @@ export default function Rides() {
 
   const isGreen = ride ? isCarGreen(ride.car) : false;
   const isSeatAvailable = ride ? ride.car.seats - (ride.reservedSeats ?? 0) > 0 : false;
-  const isUserTheDriver = isLogged && !!user && user.id === ride?.driver.id;
-  const isUserPassenger = isLogged && !!user && !!user.id && !!ride?.passengerIds.includes(user.id);
+  const isUserTheDriver = !!user && user.id === ride?.driver.id;
+  const isUserPassenger = !!user && !!user.id && !!ride?.passengerIds.includes(user.id);
   const hasAlreadyReviewed = isUserPassenger && !!allReviewerIds.find((id) => id === user.id);
 
   const isAddReviewVisible = useMemo(() => {
     const isPassengerAddReview = ride?.status === RideStatus.COMPLETED && isUserPassenger;
-    const isLoggedOutAddReview = ride?.status === RideStatus.COMPLETED && !isLogged && !user && reviewParams === 'true';
+    const isLoggedOutAddReview = ride?.status === RideStatus.COMPLETED && !user && reviewParams === 'true';
     return isPassengerAddReview || isLoggedOutAddReview;
-  }, [ride?.status, isUserPassenger, reviewParams, isLogged, user]);
+  }, [ride?.status, isUserPassenger, reviewParams, user]);
 
-  const isNotPassengerAddReview = ride?.status === RideStatus.COMPLETED && isLogged && !isUserPassenger && reviewParams === 'true';
+  const isNotPassengerAddReview = ride?.status === RideStatus.COMPLETED && !!user && !isUserPassenger && reviewParams === 'true';
 
   const canStartRide = useMemo(() => {
     if (!ride?.departureDate) {
@@ -125,7 +125,7 @@ export default function Rides() {
   };
 
   const onBookClick = () => {
-    if (isLogged) {
+    if (user) {
       openConfirmBookingModal();
     } else {
       openLoginModal();
@@ -213,7 +213,7 @@ export default function Rides() {
                 <AddReviewCard
                   onSubmit={onAddReview}
                   onLoginClick={openLoginModal}
-                  isLogged={isLogged && !!user}
+                  isLogged={!!user}
                   hasAlreadyReviewed={hasAlreadyReviewed}
                 />
               )}

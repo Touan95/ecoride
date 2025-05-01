@@ -39,8 +39,24 @@ export const useRegisterMutation = ({ onSuccess, onError }: UseMutationOptions<U
   });
 };
 
-export const useGetMe = ({ disabled, refetchInterval }: { disabled?: boolean; refetchInterval?: number }) => {
-  return useQuery('me', getMe, { enabled: !disabled, refetchInterval });
+export const useGetMe = ({
+  disabled,
+  refetchInterval,
+  onSettled
+}: {
+  disabled?: boolean;
+  refetchInterval?: number;
+  onSettled?: () => void;
+}) => {
+  return useQuery('me', getMe, {
+    enabled: !disabled,
+    refetchInterval,
+    onSettled: () => {
+      if (onSettled) {
+        onSettled();
+      }
+    }
+  });
 };
 
 export const useTestMail = () => {

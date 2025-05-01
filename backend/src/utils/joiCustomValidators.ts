@@ -1,6 +1,5 @@
-import { IssueProcessingStatus } from '../api/common/enums/IssueProcessingStatus.enum';
 import validator from '../core/validator';
-import { containOnlyNumbers, stringToCleanArray } from './formatTools';
+import { containOnlyNumbers } from './formatTools';
 
 export const validateStringWithOnlyNumber = (value: string): number => {
   const validString = !containOnlyNumbers(value);
@@ -10,16 +9,6 @@ export const validateStringWithOnlyNumber = (value: string): number => {
   }
   throw new Error('not a number');
 };
-
-export function validateStatus(str: string): string {
-  const newSpl = stringToCleanArray(str);
-  for (const s of newSpl) {
-    if (!Object.values(IssueProcessingStatus).includes(s as IssueProcessingStatus)) {
-      throw new Error(`${s} is not a good status`);
-    }
-  }
-  return str;
-}
 
 export const rideLocationValidator = validator.object({
   address: validator.string().allow(null, '').max(255).messages({
