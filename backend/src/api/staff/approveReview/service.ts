@@ -26,61 +26,85 @@ export const service = async ({
   rideRepository,
   platformCreditRepository,
 }: ApproveReviewOptions): Promise<void> => {
+  // Vérifie que l'utilisateur existe
   const user = await userRepository.getOneById(userId);
   if (!user) {
     throw userNotFoundError();
   }
 
+  // Vérifie que l'utilisateur est un staff
   if (!user.isStaff) {
     throw userNotStaffError();
   }
 
+  // Effectue les opérations dans une transaction
   await processTransaction(async (transactionalEntityManager) => {
+    // Récupère l'avis et met à jour son statut
     const updatedReview = await RideReview.findOneAndUpdate(
       { _id: reviewId, approved: null },
       { $set: { approved: true } },
       { new: true, projection: { driverId: 1, rideId: 1 } },
     );
 
+    // Vérifie si l'avis n'a pas déjà été approuvé
     if (!updatedReview) {
       throw reviewAlreadyApprovedError();
     }
 
+    // Récupère l'identifiant du conducteur et du trajet
     const driverId = updatedReview?.driverId;
     const rideId = updatedReview?.rideId;
 
+    // Vérifie que l'Id du conducteur existe
     if (!driverId) {
       throw userNotFoundError();
     }
 
+    // Vérifie que l'Id du trajet existe
     if (!rideId) {
       throw rideNotFoundError();
     }
 
+    // Récupère la moyenne des notes du conducteur
     const driverRatingsResult = await RideReview.aggregate([
+      // Filtre les avis dont le driverId est celui du conducteur et qui ont été approuvés
       { $match: { driverId, approved: true } },
+      // Calcule la moyenne des notes des avis récupérés
       { $group: { _id: '$driverId', averageRating: { $avg: '$rating' } } },
     ]);
 
+    // Si aucun avis n'a été trouvé, la note moyenne est de 0
     const averageRating =
       driverRatingsResult.length > 0 ? (driverRatingsResult[0].averageRating as number) : 0;
 
+    // Récupère le conducteur
     const driver = await userRepository.getOneById(driverId);
+    // Vérifie que le conducteur existe
     if (!driver) {
       throw userNotFoundError();
     }
 
+    // Récupère le trajet
     const ride = await rideRepository.getOneById(rideId);
+    // Vérifie que le trajet existe
     if (!ride) {
       throw rideNotFoundError();
     }
 
+    // Vérifie si le service a déjà été payé
     const hasAlreadyPaidService = ride.servicePaid;
+
+    // Calcule la commission du service à appliquer
     const appliedServiceFee = hasAlreadyPaidService ? 0 : SERVICE_FEE;
+
+    // Récupère le prix du trajet
     const ridePrice = ride.price;
+
+    // Récupère le solde initial du trajet et du conducteur
     const initialRideBalance = ride.balance;
     const initialDriverCredits = driver.credits;
 
+    // Si le service n'a pas été payé, on crée une nouvelle commission
     if (!hasAlreadyPaidService) {
       const newPlatformCredit: PlatformCreditEntityInterface = {
         id: uuid(),
@@ -92,23 +116,28 @@ export const service = async ({
       await platformCreditRepository.createOne(newPlatformCredit, transactionalEntityManager);
     }
 
+    // Crée un conducteur avec le solde et la note moyenne mis à jour
     const updatedDriverCreditsAndRating: UpdateUser = {
       ...driver,
       rate: averageRating,
       credits: initialDriverCredits + ridePrice - appliedServiceFee,
     };
 
+    // Crée un trajet avec le solde et la commission mis à jour
     const updateRideBalance: UpdateRide = {
       ...ride,
       balance: initialRideBalance - ridePrice,
       servicePaid: true,
     };
 
+    // Met à jour le conducteur
     await userRepository.updateUser(
       driverId,
       updatedDriverCreditsAndRating,
       transactionalEntityManager,
     );
+
+    // Met à jour le trajet
     await rideRepository.updateRide(updateRideBalance);
   });
 };
