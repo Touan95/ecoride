@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import { jwtDecode } from 'jwt-decode';
-import React, { createContext, PropsWithChildren, useContext, useRef, useState } from 'react';
+import React, { createContext, PropsWithChildren, useContext, useRef, useState, useEffect } from 'react';
 import { useQueryClient } from 'react-query';
 
 import { getCookie, removeCookie, setCookie } from '@/utils/cookie';
@@ -57,6 +57,12 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const { replace } = useRouter();
   const queryClient = useQueryClient();
 
+  const [enabled, setEnabled] = useState(false);
+
+  useEffect(() => {
+    setEnabled(getCookie('accessToken') != null);
+  }, [getCookie('accessToken')]);
+
   const clearUser = () => {
     removeCookie('accessToken');
     removeCookie('refreshToken');
@@ -68,11 +74,9 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
   };
 
   const { data: user, refetch: refreshUser } = useGetMe({
-    disabled: getCookie('accessToken') === null,
-    refetchInterval: REFETCH_INTERVAL,
-    onSettled: () => {
-      setIsReady(true);
-    }
+    disabled: !enabled,
+    refetchInterval: enabled ? REFETCH_INTERVAL : undefined,
+    onSettled: () => setIsReady(true)
   });
 
   const saveToken = (accessToken: string, refreshToken: string) => {
