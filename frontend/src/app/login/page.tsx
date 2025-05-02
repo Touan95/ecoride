@@ -1,42 +1,15 @@
-'use client';
+import { defaultSeoValues } from '@/configs/siteSettings';
+import { generatePageMetadata } from '@/utils/seo';
+import { seoData, SEO_PAGES } from '@/utils/seoPages';
+import { Metadata } from 'next';
+import LoginPageClient from './client';
 
-import { useLoginMutation, useRegisterMutation } from '@/api/hooks/useAuthAPI';
-import { LoginParams, RegisterParams } from '@/api/lib/auth';
-import { LogOrRegister } from '@/components/organisms/LogOrRegister';
-import { useAuthContext } from '@/contexts/auth';
-import { useRouter } from 'next/navigation';
+export const metadata: Metadata = await generatePageMetadata({
+  templateTitle: seoData[SEO_PAGES.PUBLIC_AUTH].title,
+  description: seoData[SEO_PAGES.PUBLIC_AUTH].description,
+  defaultMeta: defaultSeoValues
+});
 
-export default function Login() {
-  const router = useRouter();
-  const { saveToken } = useAuthContext();
-
-  const loginMutation = useLoginMutation({
-    onSuccess: (data) => {
-      saveToken(data.accessToken, data.refreshToken);
-      router.replace('/');
-    }
-  });
-  const registerMutation = useRegisterMutation({
-    onSuccess: (_data, variables) => {
-      const loginData = {
-        email: variables.email,
-        password: variables.password
-      };
-      loginMutation.mutate(loginData);
-    }
-  });
-
-  const onLogin = (data: LoginParams) => {
-    loginMutation.mutate(data);
-  };
-
-  const onRegister = (data: Omit<RegisterParams, 'isStaff'>) => {
-    registerMutation.mutate({ ...data, isStaff: false });
-  };
-
-  return (
-    <div className="mt-10 w-80">
-      <LogOrRegister onLogin={onLogin} onRegister={onRegister} />
-    </div>
-  );
+export default function LoginPage() {
+  return <LoginPageClient />;
 }

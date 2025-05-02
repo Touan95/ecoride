@@ -1,6 +1,5 @@
 'use client';
 
-import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import MainLayout from '@/components/layout/MainLayout';
 import { FontInitializer } from '@/components/atoms/FontInitializer';
@@ -10,16 +9,6 @@ import 'react-day-picker/dist/style.css';
 import { Suspense } from 'react';
 import { Typography } from '@/components/atoms/Typography';
 import { Toaster } from 'react-hot-toast';
-
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin']
-});
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin']
-});
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -37,8 +26,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="fr">
+      <body>
         <FontInitializer />
         <QueryClientProvider client={queryClient}>
           <AuthProvider>

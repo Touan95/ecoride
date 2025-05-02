@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://ecoride-sooty.vercel.app
+
+# Sitemaps
+Sitemap: https://ecoride-sooty.vercel.app/sitemap.xml
