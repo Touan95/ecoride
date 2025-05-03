@@ -5,6 +5,7 @@ export enum SEO_PAGES {
   PUBLIC_CONTACT = 'public-contact',
   PUBLIC_LEGAL_MENTIONS = 'public-legal-mentions',
   PUBLIC_AUTH = 'public-auth',
+  PUBLIC_NOT_FOUND = 'public-not-found',
   USER_ACCOUNT = 'user-account',
   USER_ADD_RIDE = 'user-add-ride',
   USER_RIDES = 'user-rides',
@@ -66,5 +67,9 @@ export const seoData: Record<SEO_PAGES, { title: string; description: string }> 
   [SEO_PAGES.STAFF_DISPUTE_DETAIL]: {
     title: 'Détail du litige',
     description: 'Consultez les détails d’un litige et arbitrez les réclamations entre passagers et conducteurs.'
+  },
+  [SEO_PAGES.PUBLIC_NOT_FOUND]: {
+    title: 'Page non trouvée',
+    description: 'La page que vous cherchez n’existe pas.'
   }
 };
