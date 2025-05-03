@@ -215,7 +215,9 @@ export default function RidesPageClient() {
       <SectionContainer className="flex flex-col gap-5 my-10">
         <RidesFilters onFiltersChange={onFiltersChange} />
         <div className="flex flex-col gap-5">
-          <Typography variant="h3">Résultat(s) de la recherche</Typography>
+          <Typography variant="h3" tag="h2">
+            Résultat(s) de la recherche
+          </Typography>
           {renderRides}
         </div>
       </SectionContainer>

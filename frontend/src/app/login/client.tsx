@@ -36,7 +36,7 @@ export default function LoginPageClient() {
 
   return (
     <div className="mt-10 w-80">
-      <LogOrRegister onLogin={onLogin} onRegister={onRegister} />
+      <LogOrRegister onLogin={onLogin} onRegister={onRegister} titleTag="h1" />
     </div>
   );
 }

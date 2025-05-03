@@ -4,7 +4,7 @@ import Link from 'next/link';
 export const Footer = () => {
   return (
     <div className="w-full flex flex-col bg-primary-700 items-center bottom-0">
-      <img src={'/assets/logo-white.png'} alt={''} className="h-20 w-20 object-cover p-4" />
+      <img src={'/assets/logo-white.png'} alt={'Logo Ecoride'} className="h-20 w-20 object-cover p-4" />
       <Typography variant="small" weight="bold" color="white">
         Copyright © 2025 EcoRide
       </Typography>

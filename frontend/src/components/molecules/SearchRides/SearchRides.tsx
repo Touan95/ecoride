@@ -37,7 +37,7 @@ export const SearchRides = ({
   };
   return (
     <div className="w-full h-[400px] relative">
-      <img src={'/assets/itinerary.webp'} alt={''} className="h-full w-full object-cover" />
+      <img src={'/assets/itinerary.webp'} alt={''} className="h-full w-full object-cover" role="presentation" />
       <div className="absolute w-full h-full flex flex-col items-center bottom-0 justify-center bg-black/40">
         <div className="flex flex-col gap-10 max-w-5xl">
           <Typography variant="h1" align="center" color="white">

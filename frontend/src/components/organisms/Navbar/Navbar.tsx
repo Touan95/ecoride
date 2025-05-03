@@ -14,7 +14,7 @@ export const Navbar = () => {
       <div className="flex relative justify-between">
         <div className="flex items-center h-full w-full gap-10">
           <Link href="/">
-            <img src={'/assets/ecoride-white.png'} alt={'ecoride logo'} className="h-18 p-2 object-cover" />
+            <img src={'/assets/ecoride-white.png'} alt={'Logo Ecoride'} className="h-18 p-2 object-cover" />
           </Link>
           <NavbarLink href="/" label="Accueil" />
           <NavbarLink href="/rides" label="Les trajets" />

@@ -27,7 +27,7 @@ export const Itinerary = ({ departureDate, arrivalDate, departureLocation, arriv
   return (
     <div className={clsxm(['w-full rounded-xl flex p-5 shadow bg-primary-50 justify-evenly items-center'])}>
       <div>
-        <Typography align="center" variant="cardTitle" color="primary" customClassName="mb-2">
+        <Typography align="center" variant="cardTitle" color="primary" customClassName="mb-2" tag="h2">
           {departureLocation}
         </Typography>
         <Typography align="center" variant="cardTitleSm" color="primary">
@@ -45,7 +45,7 @@ export const Itinerary = ({ departureDate, arrivalDate, departureLocation, arriv
         </div>
       </div>
       <div>
-        <Typography align="center" variant="cardTitle" color="primary" customClassName="mb-2">
+        <Typography align="center" variant="cardTitle" color="primary" customClassName="mb-2" tag="h2">
           {arrivalLocation}
         </Typography>
         <Typography align="center" variant="cardTitleSm" color="primary">

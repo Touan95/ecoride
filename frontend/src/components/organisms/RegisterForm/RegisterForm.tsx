@@ -9,15 +9,23 @@ import { Button } from '@/components/molecules/Button';
 import { Typography } from '@/components/atoms/Typography';
 import { registerFormSchema, RegisterSchemaType } from '@/schemas/auth';
 import { RegisterParams } from '@/api/lib/auth';
+import { HTMLTag } from '@/components/atoms/Typography/interface';
 
 interface RegisterFormProps {
   onRegister: (params: Omit<RegisterParams, 'isStaff'>) => void;
   onLoginClick?: () => void;
   title?: string;
   buttonTitle?: string;
+  titleTag?: HTMLTag;
 }
 
-export const RegisterForm = ({ onRegister, onLoginClick, title = 'Inscrivez-vous', buttonTitle = "S'inscrire" }: RegisterFormProps) => {
+export const RegisterForm = ({
+  onRegister,
+  onLoginClick,
+  title = 'Inscrivez-vous',
+  buttonTitle = "S'inscrire",
+  titleTag = 'p'
+}: RegisterFormProps) => {
   const form = useForm<RegisterSchemaType>({
     resolver: zodResolver(registerFormSchema),
     defaultValues: {
@@ -38,7 +46,7 @@ export const RegisterForm = ({ onRegister, onLoginClick, title = 'Inscrivez-vous
 
   return (
     <Form {...form}>
-      <Typography variant="title" tag="p">
+      <Typography variant="title" tag={titleTag}>
         {title}
       </Typography>
       <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-2">
@@ -100,7 +108,9 @@ export const RegisterForm = ({ onRegister, onLoginClick, title = 'Inscrivez-vous
       </form>
       {onLoginClick && (
         <div className="mt-6">
-          <Typography variant="cardTitleSm">Déjà inscrit ?</Typography>
+          <Typography variant="cardTitleSm" tag="h2">
+            Déjà inscrit ?
+          </Typography>
           <div onClick={onLoginClick} className="cursor-pointer w-fit">
             <Typography variant="paragraph" customClassName="hover:text-secondary-500">
               Connectez-vous
