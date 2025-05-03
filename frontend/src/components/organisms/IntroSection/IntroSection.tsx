@@ -8,8 +8,16 @@ export const IntroSection = () => {
       <div className="flex flex-col gap-10">
         <SectionTitle weight="extrabold">EcoRide</SectionTitle>
         <div className="sm:grid sm:grid-cols-2 gap-10 sm:flex-none flex flex-col">
-          <img src={'/assets/driver.webp'} alt={''} className="h-full w-full object-cover rounded-xl shadow-2xl" />
-          <img src={'/assets/passenger.webp'} alt={''} className="h-full w-full object-cover rounded-xl shadow-2xl" />
+          <img
+            src={'/assets/driver.webp'}
+            alt={'Conducteur au volant discutant avec une personne par la fenêtre'}
+            className="h-full w-full object-cover rounded-xl shadow-2xl"
+          />
+          <img
+            src={'/assets/passenger.webp'}
+            alt={'Passager regardant le paysage par la fenêtre du véhicule'}
+            className="h-full w-full object-cover rounded-xl shadow-2xl"
+          />
         </div>
         <Paragraph title="Le covoiturage responsable et accessible à tous">
           Chez EcoRide, nous croyons en une mobilité plus intelligente, plus économique et plus respectueuse de l’environnement. Notre
@@ -17,8 +25,16 @@ export const IntroSection = () => {
           limiter l’impact écologique des déplacements quotidiens.
         </Paragraph>
         <div className="sm:grid sm:grid-cols-2 gap-10 sm:flex-none flex flex-col">
-          <img src={'/assets/team.webp'} alt={''} className="h-full w-full object-cover rounded-xl shadow-2xl" />
-          <img src={'/assets/office.webp'} alt={''} className="h-full w-full object-cover rounded-xl shadow-2xl" />
+          <img
+            src={'/assets/team.webp'}
+            alt={'Équipe Ecoride dans leurs locaux'}
+            className="h-full w-full object-cover rounded-xl shadow-2xl"
+          />
+          <img
+            src={'/assets/office.webp'}
+            alt={"Bureau de l'entreprise Ecoride dans une ambiance écologique"}
+            className="h-full w-full object-cover rounded-xl shadow-2xl"
+          />
         </div>
         <Paragraph title="Qui sommes-nous ?">
           EcoRide est né d’un constat : chaque jour, des milliers de voitures circulent avec des sièges vides, tandis que d’autres cherchent

@@ -62,7 +62,7 @@ export const RideCard = ({
   return (
     <div className={clsxm(['w-full rounded-xl flex p-5 shadow', bgColorClassname])}>
       <div className="flex flex-col items-center w-30">
-        <Image src={driverImage} height={50} width={50} className="rounded-full" alt={`${driverName}-avatar-image`} />
+        <Image src={driverImage} height={50} width={50} className="rounded-full" alt={`Avatar du conducteur ${driverName}`} />
         <div className="w-full">
           <Typography align="center" variant="cardTitleSm" color="primary" ellipsis>
             {driverName}

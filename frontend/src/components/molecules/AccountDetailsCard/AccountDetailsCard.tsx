@@ -37,7 +37,9 @@ export const AccountDetailsCard = ({
         {title}
       </Typography>
       <div className={clsxm('flex gap-5 items-center')}>
-        {avatarUrl && <Image src={avatarUrl} height={80} width={80} className="rounded-full w-20" alt={`${username}-avatar-image`} />}
+        {avatarUrl && (
+          <Image src={avatarUrl} height={80} width={80} className="rounded-full w-20" alt={`Avatar de l'utilisateur ${username}`} />
+        )}
         <div className="flex flex-col w-full">
           <AccountCardField labelClassname="w-30" onEdit={onUsernameEdit} label="Pseudonyme">
             {username}

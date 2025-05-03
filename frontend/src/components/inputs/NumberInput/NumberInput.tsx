@@ -54,7 +54,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
 
     useEffect(() => {
       const handleKeyDown = (e: KeyboardEvent) => {
-        if (document.activeElement === (ref as React.RefObject<HTMLInputElement>).current) {
+        if (document.activeElement === (ref as React.RefObject<HTMLInputElement>)?.current) {
           if (e.key === 'ArrowUp') {
             handleIncrement();
           } else if (e.key === 'ArrowDown') {

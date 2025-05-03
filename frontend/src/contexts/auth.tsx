@@ -1,3 +1,5 @@
+'use client';
+
 import dayjs from 'dayjs';
 import { jwtDecode } from 'jwt-decode';
 import React, { createContext, PropsWithChildren, useContext, useRef, useState, useEffect } from 'react';
