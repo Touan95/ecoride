@@ -9,7 +9,7 @@ import { CarDetailsModal } from '@/components/organisms/CarDetailsModal';
 import { useAuthContext } from '@/contexts/auth';
 import { useState } from 'react';
 
-export default function AddRide() {
+export default function AddRidePage() {
   const { user } = useAuthContext();
   const { data: apiUser, refetch: refetchUser } = useGetOneUser(user?.id);
   const cars = apiUser?.cars ?? [];

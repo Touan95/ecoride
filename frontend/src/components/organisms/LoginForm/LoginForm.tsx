@@ -8,15 +8,23 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/molecules/Button';
 import { Typography } from '@/components/atoms/Typography';
 import { loginFormSchema, LoginSchemaType } from '@/schemas/auth';
+import { HTMLTag } from '@/components/atoms/Typography/interface';
 
 interface LoginFormProps {
   onLogin: ({ email, password }: { email: string; password: string }) => void;
   onCreateAccountClick?: () => void;
   title?: string;
   buttonTitle?: string;
+  titleTag?: HTMLTag;
 }
 
-export const LoginForm = ({ onLogin, onCreateAccountClick, title = 'Connectez-vous', buttonTitle = 'Se connecter' }: LoginFormProps) => {
+export const LoginForm = ({
+  onLogin,
+  onCreateAccountClick,
+  title = 'Connectez-vous',
+  buttonTitle = 'Se connecter',
+  titleTag = 'p'
+}: LoginFormProps) => {
   const form = useForm<LoginSchemaType>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
@@ -35,7 +43,7 @@ export const LoginForm = ({ onLogin, onCreateAccountClick, title = 'Connectez-vo
 
   return (
     <Form {...form}>
-      <Typography variant="title" tag="p">
+      <Typography variant="title" tag={titleTag}>
         {title}
       </Typography>
       <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-2">
@@ -71,7 +79,9 @@ export const LoginForm = ({ onLogin, onCreateAccountClick, title = 'Connectez-vo
       </form>
       {onCreateAccountClick && (
         <div className="mt-6">
-          <Typography variant="cardTitleSm">Pas encore inscrit ?</Typography>
+          <Typography variant="cardTitleSm" tag="h2">
+            Pas encore inscrit ?
+          </Typography>
           <div onClick={onCreateAccountClick} className="cursor-pointer w-fit">
             <Typography variant="paragraph" customClassName="hover:text-secondary-500">
               Créez un compte

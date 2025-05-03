@@ -1,15 +1,23 @@
-import { Header } from '@/components/molecules/Header';
-import { FlowSection } from '@/components/organisms/FlowSection/FlowSection';
-import { IntroSection } from '@/components/organisms/IntroSection';
-import { ValuesSection } from '@/components/organisms/ValuesSection';
+import { defaultSeoValues } from '@/configs/siteSettings';
+import { generatePageMetadata } from '@/utils/seo';
+import { seoData, SEO_PAGES } from '@/utils/seoPages';
+import { Metadata, Viewport } from 'next';
+import HomePageClient from './client';
 
-export default function Home() {
-  return (
-    <>
-      <Header />
-      <IntroSection />
-      <ValuesSection />
-      <FlowSection />
-    </>
-  );
+export const metadata: Metadata = await generatePageMetadata({
+  templateTitle: seoData[SEO_PAGES.PUBLIC_HOME_PAGE].title,
+  description: seoData[SEO_PAGES.PUBLIC_HOME_PAGE].description,
+  defaultMeta: defaultSeoValues
+});
+
+export const viewport: Viewport = {
+  minimumScale: 1,
+  initialScale: 1,
+  width: 'device-width',
+  userScalable: false,
+  viewportFit: 'cover'
+};
+
+export default function HomePage() {
+  return <HomePageClient />;
 }
