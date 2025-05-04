@@ -24,7 +24,7 @@ const checkAdminRequirement = (
   if (options?.requiresAdmin && !authObject.isAdmin) {
     throw buildError({
       message: 'Attempt to log as an admin',
-      publicMessage: 'Forbidden',
+      publicMessage: 'Accès refusé',
       code: ErrorCodes.FORBIDDEN_ADMIN_ACCESS,
       statusCode: HttpStatuses.FORBIDDEN,
     });
@@ -38,7 +38,7 @@ const checkStaffRequirement = (
   if (options?.requiresStaff && !authObject.isStaff) {
     throw buildError({
       message: 'Attempt to log as a staff',
-      publicMessage: 'Forbidden',
+      publicMessage: 'Accès refusé',
       code: ErrorCodes.FORBIDDEN_STAFF_ACCESS,
       statusCode: HttpStatuses.FORBIDDEN,
     });

@@ -5,7 +5,7 @@ import { ErrorCodes } from '../enums/errorCodes.enum';
 const invalidJwtTokenFormatError = (): IAppError =>
   buildError({
     message: 'Invalid JWT token format.',
-    publicMessage: 'Invalid JWT token format.',
+    publicMessage: 'Vous avez été déconnecté',
     code: ErrorCodes.INVALID_JWT_FORMAT,
     statusCode: HttpStatuses.UNAUTHORIZED,
   });
