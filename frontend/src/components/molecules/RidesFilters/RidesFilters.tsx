@@ -42,24 +42,30 @@ export const RidesFilters = ({ onFiltersChange }: RidesFiltersProps) => {
   }, [filters]);
 
   return (
-    <div className="flex gap-7 w-full justify-center">
+    <div className="flex md:gap-7 gap-4 w-full justify-center md:flex-row flex-col">
       <div className="flex flex-col gap-2">
         <Typography variant="small" align="center">
           Prix maximum
         </Typography>
-        <Input type="number" min={0} className="py-2 px-4 w-40" onChange={(e) => handleChange('price', e.target.value)} />
+        <Input type="number" min={0} className="py-2 px-4 md:w-40 w-full" onChange={(e) => handleChange('price', e.target.value)} />
       </div>
       <div className="flex flex-col gap-2">
         <Typography variant="small" align="center">
           Durée maximum (heure)
         </Typography>
-        <Input type="number" min={0} className="py-2 px-4 w-40" onChange={(e) => handleChange('duration', e.target.value)} />
+        <Input type="number" min={0} className="py-2 px-4 md:w-40 w-full" onChange={(e) => handleChange('duration', e.target.value)} />
       </div>
       <div className="flex flex-col gap-2">
         <Typography variant="small" align="center">
           Note du conducteur
         </Typography>
-        <Input type="number" min={0} max={5} className="py-2 px-4 w-40 " onChange={(e) => handleChange('driverRating', e.target.value)} />
+        <Input
+          type="number"
+          min={0}
+          max={5}
+          className="py-2 px-4 md:w-40 w-full"
+          onChange={(e) => handleChange('driverRating', e.target.value)}
+        />
       </div>
       <div className="flex flex-col items-center gap-2">
         <Typography variant="small" htmlFor="isGreenFilter" align="center">

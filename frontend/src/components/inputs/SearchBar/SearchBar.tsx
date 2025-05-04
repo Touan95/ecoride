@@ -28,8 +28,8 @@ export const SearchBar = ({ placeholder }: SearchInputProps) => {
   };
   return (
     <div className="flex flex-col gap-5 items-center">
-      <AddressAutocompleteInput big onSelect={onDepartureSelect} className="p-8" placeholder={placeholder} />
-      <Button className="w-fit px-20 py-7" onClick={onSearch}>
+      <AddressAutocompleteInput big onSelect={onDepartureSelect} className="md:p-8 p-6" placeholder={placeholder} />
+      <Button className="w-fit px-20 md:py-7 py-5" onClick={onSearch}>
         Rechercher
       </Button>
     </div>

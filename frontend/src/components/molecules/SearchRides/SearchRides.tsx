@@ -43,17 +43,17 @@ export const SearchRides = ({
           <Typography variant="h1" align="center" color="white">
             Trouvez le covoiturage idéal et voyagez malin en partageant votre trajet !
           </Typography>
-          <div className="grid grid-cols-[2fr_2fr_1fr_0.5fr] gap-4">
+          <div className="md:grid md:grid-cols-[2fr_2fr_1fr_0.5fr] gap-4 px-5 justify-items-center">
             <AddressAutocompleteInput
               onSelect={handleDepartureSelect}
-              className="p-8"
+              className="md:p-8 p-6"
               placeholder="Lieu de départ"
               initialLocation={departure}
               big
             />
             <AddressAutocompleteInput
               onSelect={handleArrivalSelect}
-              className="p-8"
+              className="md:p-8 p-6"
               placeholder="Lieu de destination"
               initialLocation={arrival}
               big
@@ -61,12 +61,12 @@ export const SearchRides = ({
             <DateInput
               onChange={handleDateSelect}
               placeholder="Date de trajet"
-              className="p-8 w-44"
+              className="md:p-8 md:w-44 p-6 w-full"
               fromDate={now}
               initialDate={departureDate}
             />
-            <div className="pb-5">
-              <Button className="w-full h-full" onClick={onSearch}>
+            <div className="md:pb-5 md:pt-0 pt-5">
+              <Button className="md:w-full md:h-full h-12 px-10" onClick={onSearch}>
                 Rechercher
               </Button>
             </div>

@@ -1,4 +1,5 @@
 import { Typography } from '@/components/atoms/Typography';
+import clsxm from '@/utils/clsxm';
 import 'dayjs/locale/fr';
 import { IconType } from 'react-icons';
 import { TbEdit } from 'react-icons/tb';
@@ -16,7 +17,7 @@ export const AccountCardField = ({ icon: Icon, label, children, onEdit, labelCla
   const childrenComponent = (): React.ReactNode => {
     if (typeof children === 'string') {
       return (
-        <Typography variant={'cardTitleSm'} weight={smallValue ? 'light' : undefined} color="primary">
+        <Typography variant="paragraph" weight={smallValue ? 'light' : undefined} color="primary">
           {children}
         </Typography>
       );
@@ -24,17 +25,17 @@ export const AccountCardField = ({ icon: Icon, label, children, onEdit, labelCla
     return children;
   };
   return (
-    <div className="flex h-7 gap-5 items-center content-center justify-between">
-      <div className="flex gap-2 relative">
-        {Icon && <Icon size={30} className="text-primary-900 absolute -left-10" />}
-        <Typography variant="cardTitleSm" color="primary" customClassName={labelClassname} ellipsis>
+    <div className="flex md:h-7 md:gap-5 gap-1 items-center content-center justify-between md:flex-row flex-col">
+      <div className="flex gap-2 relative md:flex-row flex-col items-center">
+        {Icon && <Icon size={30} className="text-primary-900 md:absolute md:-left-10" />}
+        <Typography variant="cardTitleSm" color="primary" customClassName={clsxm(labelClassname, 'md:text-left text-center')} ellipsis>
           {label}
         </Typography>
       </div>
       <div className="flex gap-1.5 items-center">
         {childrenComponent()}
         {onEdit && (
-          <div className="flex justify-center items-center w-5">
+          <div className="flex justify-center items-center w-5 md:w-auto">
             <TbEdit className="text-primary-900 cursor-pointer" size={30} onClick={onEdit} />
           </div>
         )}

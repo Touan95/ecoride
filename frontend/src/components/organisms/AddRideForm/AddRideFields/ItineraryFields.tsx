@@ -141,8 +141,8 @@ export const ItineraryFields = ({ form, departureLocationError, arrivalLocationE
         </Typography>
         <TbMap2 size={50} className="text-primary-900" />
       </div>
-      <div className="grid grid-cols-2 gap-10 ">
-        <div className="flex flex-col gap-4">
+      <div className="grid md:grid-cols-2 grid-rows-1 gap-10 ">
+        <div className="flex flex-col md:gap-4 gap-1">
           <Typography variant="cardTitle" align="center">
             Départ
           </Typography>
@@ -150,7 +150,7 @@ export const ItineraryFields = ({ form, departureLocationError, arrivalLocationE
           <AddressAutocompleteInput onSelect={handleSelectLocation('departureLocation')} error={departureLocationError} />
           {renderDatePicker('departureDate')}
         </div>
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col md:gap-4 gap-1">
           <Typography variant="cardTitle" align="center">
             Arrivée
           </Typography>

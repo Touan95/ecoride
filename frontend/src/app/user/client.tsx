@@ -125,7 +125,7 @@ export default function UserPageClient() {
     <>
       <SectionContainer className="flex flex-col gap-5 my-10">
         <Typography variant="title">Votre compte</Typography>
-        <div className="grid grid-cols-[1fr_150px] gap-4">
+        <div className="md:grid md:grid-cols-[1fr_150px] flex flex-col gap-4">
           <AccountDetailsCard
             username={apiUser.username}
             email={apiUser.email}

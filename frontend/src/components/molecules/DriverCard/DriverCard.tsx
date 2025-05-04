@@ -84,8 +84,8 @@ export const DriverCard = ({ username, avatar, rating, acceptsPets, acceptsSmoki
   }, [reviews]);
 
   return (
-    <div className={clsxm(['w-full rounded-xl flex p-5 shadow gap-5 bg-primary-50'])}>
-      <div className="flex flex-col items-center w-20 h-25">
+    <div className={clsxm(['w-full rounded-xl flex p-5 shadow gap-5 bg-primary-50 md:flex-row flex-col'])}>
+      <div className="flex flex-col items-center w-full md:w-20 h-25">
         <Image src={avatar} height={50} width={50} className="rounded-full" alt={`Avatar du conducteur ${username}`} />
         <div className="w-full">
           <Typography align="center" variant="cardTitleSm" color="primary" ellipsis>
