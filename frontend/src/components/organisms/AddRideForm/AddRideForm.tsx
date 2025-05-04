@@ -127,7 +127,7 @@ export const AddRideForm = ({ onSubmit, initialValues, cars, onAddCar }: AddRide
             departureLocationError={errors.departureLocation?.message}
             arrivalLocationError={errors.arrivalLocation?.message}
           />
-          <div className="grid grid-cols-[2fr_1fr] gap-4">
+          <div className="grid md:grid-cols-[2fr_1fr] grid-rows-2 gap-4">
             <AccountCarsCard
               cars={cars}
               onAddCar={onAddCar}
@@ -135,9 +135,9 @@ export const AddRideForm = ({ onSubmit, initialValues, cars, onAddCar }: AddRide
               selectedCarIds={selectedCarId ? [selectedCarId] : undefined}
               error={errors.carId?.message}
             />
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4 items-center">
               <PriceField onValueChange={onPriceChange} error={errors.price?.message} />
-              <Button className="h-16" color="secondary" onClick={handleSubmit}>
+              <Button className="md:h-16 h-14 w-40 md:w-full" color="secondary" onClick={handleSubmit}>
                 {"C'est parti !"}
               </Button>
             </div>

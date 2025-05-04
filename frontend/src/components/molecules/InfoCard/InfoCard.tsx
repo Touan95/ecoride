@@ -32,7 +32,9 @@ interface InfoCardItemProps {
 const InfoCardItem = ({ label, value, bigValue, valueIcon: Icon, valueIconTooltipText }: InfoCardItemProps) => {
   return (
     <div className="flex flex-col items-center">
-      <Typography variant="cardTitle">{label}</Typography>
+      <Typography variant="cardTitle" align="center">
+        {label}
+      </Typography>
       <div className="flex gap-2 items-center">
         {Icon && (
           <TooltipProvider>

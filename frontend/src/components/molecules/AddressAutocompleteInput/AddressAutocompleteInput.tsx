@@ -165,7 +165,7 @@ const AddressAutocompleteInput = ({
           onChange={onChange}
           onFocus={onFocus}
           onBlur={onBlur}
-          className={className}
+          className={clsxm(className, 'pr-10')}
         />
         <TbX
           onClick={resetValues}
