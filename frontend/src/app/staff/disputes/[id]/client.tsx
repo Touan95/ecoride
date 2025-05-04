@@ -97,7 +97,7 @@ export default function DisputeDetailPageClient() {
         <div className="flex flex-col gap-4">
           <Typography variant="cardTitle">{`Détail du trajet (${ride.id})`}</Typography>
           <div className="flex flex-col gap-4">
-            <div className="grid gap-4 md:grid-cols-[3fr_1fr] grid-cols-1">
+            <div className="grid gap-4 grid-cols-[3fr_1fr]">
               <div className="flex flex-col gap-4">
                 {isGreen && <GreenCard />}
                 {itineraryData && <Itinerary {...itineraryData} />}

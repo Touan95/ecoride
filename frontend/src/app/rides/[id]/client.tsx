@@ -204,7 +204,7 @@ export default function RideDetailsPageClient() {
       <SectionContainer className="flex flex-col gap-5 my-10">
         <Typography variant="title">Votre itinéraire</Typography>
         <div className="flex flex-col gap-4">
-          <div className="grid gap-4 md:grid-cols-[3fr_1fr] grid-cols-1">
+          <div className="grid gap-4 grid-cols-[3fr_1fr]">
             <div className="flex flex-col gap-4">
               {isGreen && <GreenCard />}
               {itineraryData && <Itinerary {...itineraryData} />}
