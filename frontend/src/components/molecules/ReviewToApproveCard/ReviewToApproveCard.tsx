@@ -24,8 +24,8 @@ export const ReviewToApproveCard = ({ date, username, comment, rate, onDetailCli
   const formattedReviewDate = reviewDate.format('DD MMMM YYYY');
 
   return (
-    <div className="w-full rounded-xl flex p-5 shadow bg-primary-50 gap-4">
-      <div className="flex flex-col justify-between items-center w-26">
+    <div className="w-full rounded-xl flex p-5 shadow bg-primary-50 gap-4 md:flex-row flex-col">
+      <div className="flex flex-col justify-between items-center md:w-26 w-full">
         <Typography align="center" variant="cardTitleSm" color="primary">
           {username}
         </Typography>
@@ -40,7 +40,7 @@ export const ReviewToApproveCard = ({ date, username, comment, rate, onDetailCli
         </Typography>
       </div>
       <div className="flex flex-1">{comment}</div>
-      <div className="flex gap-4">
+      <div className="flex gap-4 justify-center items-center">
         <div>
           <Button className="mt-3 w-26" onClick={onDetailClick} variant="outlined">
             Voir détails

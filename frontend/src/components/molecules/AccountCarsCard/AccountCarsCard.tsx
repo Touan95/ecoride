@@ -58,15 +58,15 @@ export const AccountCarsCard = ({ cars, onAddCar, onEditCar, onRemoveCar, onSele
 
   return (
     <div className={clsxm(['w-full rounded-xl flex flex-col p-5 shadow bg-primary-50 gap-5 items-center'])}>
-      <div className="flex relative justify-center w-full">
+      <div className="flex relative justify-center items-center w-full md:flex-row flex-col">
         <Typography align="center" variant="cardTitle" color="primary">
           Vos véhicules
         </Typography>
-        <Button className="absolute right-0" onClick={onAddCar}>
+        <Button className="md:absolute md:right-0 w-40 md:w-auto md:mt-0 mt-4" onClick={onAddCar}>
           Ajouter
         </Button>
       </div>
-      <TbCar size={50} className="text-primary-900" />
+      <TbCar size={50} className="text-primary-900 md:flex hidden" />
       <div className="w-full flex flex-col gap-4">
         <>
           <div className="h-4">

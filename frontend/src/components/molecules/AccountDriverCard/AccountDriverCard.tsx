@@ -49,9 +49,9 @@ export const AccountDriverCard = ({ values, onEditClick }: AccountDriverCardProp
       <Typography align="center" variant="cardTitle" color="primary">
         Vos préférences conducteur
       </Typography>
-      <TbSteeringWheel size={50} className="text-primary-900" />
+      <TbSteeringWheel size={50} className="text-primary-900 md:flex hidden" />
       <div className="flex items-center">
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col md:gap-3 gap-10">
           <AccountCardField labelClassname="w-54" label="Vous acceptez les fumeurs ?" icon={TbSmoking}>
             {booleanToYesNo(values.acceptsSmoking)}
           </AccountCardField>

@@ -49,8 +49,8 @@ export const CarCard = ({
     <div
       className={clsxm(['w-full rounded-xl flex flex-col p-5 shadow gap-3', bgColorClassname, isSelected && 'ring-4 ring-secondary-600'])}
     >
-      <div className="flex gap-10">
-        <div className="w-full">
+      <div className="flex gap-10 md:flex-row flex-col">
+        <div className="w-full flex flex-col md:gap-2 gap-4">
           <AccountCardField labelClassname="w-50" smallValue label="Marque">
             {brand}
           </AccountCardField>

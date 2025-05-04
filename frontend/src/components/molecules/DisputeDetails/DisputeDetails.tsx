@@ -26,6 +26,7 @@ export const DisputeDetails = ({ driver, passenger, review }: DisputeDetailsProp
           type={driver.type}
           title="Le conducteur"
           notCentered
+          noPassword
         />
       </div>
       <div className="flex flex-col gap-4">
@@ -36,6 +37,7 @@ export const DisputeDetails = ({ driver, passenger, review }: DisputeDetailsProp
           type={passenger.type}
           title="Le passager"
           notCentered
+          noPassword
         />
       </div>
       <div className="w-full rounded-xl flex flex-col p-5 shadow bg-primary-50 gap-4">
