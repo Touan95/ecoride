@@ -8,7 +8,8 @@ export async function generateMetadata(): Promise<Metadata> {
   const metadata = await generatePageMetadata({
     templateTitle: seoData[SEO_PAGES.PUBLIC_CONTACT].title,
     description: seoData[SEO_PAGES.PUBLIC_CONTACT].description,
-    defaultMeta: defaultSeoValues
+    defaultMeta: defaultSeoValues,
+    canonicalPath: 'contact'
   });
 
   return metadata;

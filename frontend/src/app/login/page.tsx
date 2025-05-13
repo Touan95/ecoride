@@ -7,7 +7,8 @@ import LoginPageClient from './client';
 export const metadata: Metadata = await generatePageMetadata({
   templateTitle: seoData[SEO_PAGES.PUBLIC_AUTH].title,
   description: seoData[SEO_PAGES.PUBLIC_AUTH].description,
-  defaultMeta: defaultSeoValues
+  defaultMeta: defaultSeoValues,
+  canonicalPath: 'login'
 });
 
 export default function LoginPage() {

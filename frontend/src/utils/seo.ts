@@ -20,6 +20,7 @@ type PageSeoProps = {
   defaultMeta: DefaultSeoProps;
   noIndex?: boolean;
   noFollow?: boolean;
+  canonicalPath?: string;
 };
 
 const getRobotsContent = (noIndex: boolean, noFollow: boolean) => {
@@ -35,7 +36,8 @@ export const generatePageMetadata = async ({
   description,
   noIndex,
   noFollow,
-  defaultMeta
+  defaultMeta,
+  canonicalPath
 }: PageSeoProps): Promise<Metadata> => {
   const metaTitle = templateTitle ? `${templateTitle} - ${defaultMeta.siteName}` : (title ?? defaultMeta.title);
 
@@ -48,7 +50,7 @@ export const generatePageMetadata = async ({
     robots: metaRobots,
     description: metaDescription,
     alternates: {
-      canonical: defaultMeta.websiteUrl,
+      canonical: canonicalPath ? `${defaultMeta.websiteUrl}/${canonicalPath}` : defaultMeta.websiteUrl,
       types: {
         'application/rss+xml': defaultMeta.rssUrl ?? null
       }
