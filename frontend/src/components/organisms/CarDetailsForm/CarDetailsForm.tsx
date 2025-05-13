@@ -118,7 +118,7 @@ export const CarDetailsForm = ({ onSubmit, initialValues, editMode = false }: Ca
                       defaultValue={field.value}
                       className="flex flex-col space-y-1 text-primary-900"
                     >
-                      <FormItem className="flex items-center space-x-3 space-y-0">
+                      <FormItem className="flex items-center space-x-3 space-y-0 rounded-md focus-within:outline-2 focus-within:outline-blue-600">
                         <FormControl>
                           <RadioGroupItem value={Energy.DIESEL} />
                         </FormControl>
@@ -126,7 +126,7 @@ export const CarDetailsForm = ({ onSubmit, initialValues, editMode = false }: Ca
                           {getEnergyLabel(Energy.DIESEL)}
                         </Typography>
                       </FormItem>
-                      <FormItem className="flex items-center space-x-3 space-y-0">
+                      <FormItem className="flex items-center space-x-3 space-y-0 rounded-md focus-within:outline-2 focus-within:outline-blue-600">
                         <FormControl>
                           <RadioGroupItem value={Energy.GASOLINE} />
                         </FormControl>
@@ -134,7 +134,7 @@ export const CarDetailsForm = ({ onSubmit, initialValues, editMode = false }: Ca
                           {getEnergyLabel(Energy.GASOLINE)}
                         </Typography>
                       </FormItem>
-                      <FormItem className="flex items-center space-x-3 space-y-0">
+                      <FormItem className="flex items-center space-x-3 space-y-0 rounded-md focus-within:outline-2 focus-within:outline-blue-600">
                         <FormControl>
                           <RadioGroupItem value={Energy.HYBRID} />
                         </FormControl>
@@ -142,7 +142,7 @@ export const CarDetailsForm = ({ onSubmit, initialValues, editMode = false }: Ca
                           {getEnergyLabel(Energy.HYBRID)}
                         </Typography>
                       </FormItem>
-                      <FormItem className="flex items-center space-x-3 space-y-0">
+                      <FormItem className="flex items-center space-x-3 space-y-0 rounded-md focus-within:outline-2 focus-within:outline-blue-600">
                         <FormControl>
                           <RadioGroupItem value={Energy.ELECTRIC} />
                         </FormControl>

@@ -99,7 +99,7 @@ export const RideCard = ({
           <div className={clsxm(['flex justify-center', isGreen ? 'text-primary-900' : 'text-primary-300'])}>
             <TooltipProvider>
               <Tooltip>
-                <TooltipTrigger>
+                <TooltipTrigger aria-label={greenTooltipText}>
                   <GreenIcon />
                 </TooltipTrigger>
                 <TooltipContent className={clsxm(['shadow', bgColorClassname])}>{greenTooltipText}</TooltipContent>

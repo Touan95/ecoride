@@ -54,7 +54,7 @@ export const UserTypeForm = ({ initialValue, userId, onValidate }: UserTypeFormP
               <Typography variant="cardTitleSm">Veuillez choisir le profil qui vous correspond</Typography>
               <FormControl>
                 <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex flex-col space-y-1 text-primary-900">
-                  <FormItem className="flex items-center space-x-3 space-y-0">
+                  <FormItem className="flex items-center space-x-3 space-y-0 rounded-md focus-within:outline-2 focus-within:outline-blue-600">
                     <FormControl>
                       <RadioGroupItem value={UserType.PASSENGER} />
                     </FormControl>
@@ -62,7 +62,7 @@ export const UserTypeForm = ({ initialValue, userId, onValidate }: UserTypeFormP
                       {getUserTypeLabel(UserType.PASSENGER)}
                     </Typography>
                   </FormItem>
-                  <FormItem className="flex items-center space-x-3 space-y-0">
+                  <FormItem className="flex items-center space-x-3 space-y-0 rounded-md focus-within:outline-2 focus-within:outline-blue-600">
                     <FormControl>
                       <RadioGroupItem value={UserType.DRIVER} />
                     </FormControl>
@@ -70,7 +70,7 @@ export const UserTypeForm = ({ initialValue, userId, onValidate }: UserTypeFormP
                       {getUserTypeLabel(UserType.DRIVER)}
                     </Typography>
                   </FormItem>
-                  <FormItem className="flex items-center space-x-3 space-y-0">
+                  <FormItem className="flex items-center space-x-3 space-y-0 rounded-md focus-within:outline-2 focus-within:outline-blue-600">
                     <FormControl>
                       <RadioGroupItem value={UserType.BOTH} />
                     </FormControl>

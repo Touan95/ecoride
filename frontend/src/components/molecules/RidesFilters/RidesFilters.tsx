@@ -47,13 +47,25 @@ export const RidesFilters = ({ onFiltersChange }: RidesFiltersProps) => {
         <Typography variant="small" align="center">
           Prix maximum
         </Typography>
-        <Input type="number" min={0} className="py-2 px-4 md:w-40 w-full" onChange={(e) => handleChange('price', e.target.value)} />
+        <Input
+          type="number"
+          min={0}
+          className="py-2 px-4 md:w-40 w-full"
+          onChange={(e) => handleChange('price', e.target.value)}
+          aria-label="Prix maximum"
+        />
       </div>
       <div className="flex flex-col gap-2">
         <Typography variant="small" align="center">
           Durée maximum (heure)
         </Typography>
-        <Input type="number" min={0} className="py-2 px-4 md:w-40 w-full" onChange={(e) => handleChange('duration', e.target.value)} />
+        <Input
+          type="number"
+          min={0}
+          className="py-2 px-4 md:w-40 w-full"
+          onChange={(e) => handleChange('duration', e.target.value)}
+          aria-label="Durée maximum"
+        />
       </div>
       <div className="flex flex-col gap-2">
         <Typography variant="small" align="center">
@@ -65,6 +77,7 @@ export const RidesFilters = ({ onFiltersChange }: RidesFiltersProps) => {
           max={5}
           className="py-2 px-4 md:w-40 w-full"
           onChange={(e) => handleChange('driverRating', e.target.value)}
+          aria-label="Note du conducteur"
         />
       </div>
       <div className="flex flex-col items-center gap-2">
@@ -76,6 +89,7 @@ export const RidesFilters = ({ onFiltersChange }: RidesFiltersProps) => {
             className="text-primary-700 h-5 w-5"
             id="isGreenFilter"
             onCheckedChange={(checked: boolean) => handleChange('isGreen', checked)}
+            aria-label="Trajet éco-responsable"
           />
         </div>
       </div>

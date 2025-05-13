@@ -33,6 +33,26 @@ export const BaseModal = ({
     };
   }, [isOpen]);
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isOpen && onCloseClick) {
+        onCloseClick();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = '';
+    };
+  }, [isOpen, onCloseClick]);
+
   const handleCloseClick = () => {
     if (closeOnOutsideClick && onCloseClick) {
       onCloseClick();
@@ -65,12 +85,13 @@ export const BaseModal = ({
         onClick={stopPropagation}
       >
         {onCloseClick && (
-          <span
+          <button
             className="absolute top-4 right-4 flex justify-center items-center w-[32px] h-[32px] cursor-pointer"
             onClick={handleCloseClick}
+            type="button"
           >
             <TbX className="text-primary-900" size={50} />
-          </span>
+          </button>
         )}
 
         <div className="px-10 pt-[50px] pb-[20px] m-auto flex flex-col justify-center">{children}</div>

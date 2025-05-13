@@ -46,7 +46,7 @@ export const DriverPreferencesForm = ({ initialValues, userId, onValidate }: Dri
           control={form.control}
           name="acceptsSmoking"
           render={({ field }) => (
-            <FormItem className="flex items-center space-x-3 space-y-0">
+            <FormItem className="flex items-center space-x-3 space-y-0 rounded-md focus-within:outline-2 focus-within:outline-blue-600">
               <FormControl>
                 <Checkbox checked={field.value} onCheckedChange={field.onChange} />
               </FormControl>
@@ -61,7 +61,7 @@ export const DriverPreferencesForm = ({ initialValues, userId, onValidate }: Dri
           control={form.control}
           name="acceptsPets"
           render={({ field }) => (
-            <FormItem className="flex items-center space-x-3 space-y-0">
+            <FormItem className="flex items-center space-x-3 space-y-0 rounded-md focus-within:outline-2 focus-within:outline-blue-600">
               <FormControl>
                 <Checkbox checked={field.value} onCheckedChange={field.onChange} />
               </FormControl>

@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { Typography } from '@/components/atoms/Typography';
 import { usePathname } from 'next/navigation';
 import clsxm from '@/utils/clsxm';
-import { DropdownMenuItem } from '@radix-ui/react-dropdown-menu';
+import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
 
 interface NavbarLinkProps {
   href: string;

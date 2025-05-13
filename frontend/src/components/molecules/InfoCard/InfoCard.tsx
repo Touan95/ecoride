@@ -39,7 +39,7 @@ const InfoCardItem = ({ label, value, bigValue, valueIcon: Icon, valueIconToolti
         {Icon && (
           <TooltipProvider>
             <Tooltip>
-              <TooltipTrigger>
+              <TooltipTrigger aria-label={valueIconTooltipText}>
                 <Icon />
               </TooltipTrigger>
               {valueIconTooltipText && <TooltipContent className={clsxm(['shadow bg-primary-50'])}>{valueIconTooltipText}</TooltipContent>}

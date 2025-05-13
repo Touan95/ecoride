@@ -50,7 +50,7 @@ export default function ContactPageClient() {
               <FormItem>
                 <Typography variant="cardTitleSm">Nom</Typography>
                 <FormControl>
-                  <Input placeholder="Nom" {...field} />
+                  <Input placeholder="Nom" {...field} aria-label="Nom" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -63,7 +63,7 @@ export default function ContactPageClient() {
               <FormItem>
                 <Typography variant="cardTitleSm">Email</Typography>
                 <FormControl>
-                  <Input placeholder="Email" {...field} />
+                  <Input placeholder="Email" {...field} aria-label="Email" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -79,6 +79,7 @@ export default function ContactPageClient() {
                   <Textarea
                     {...field}
                     className={clsxm(inputClassname, 'rounded-lg focus-visible:ring-[1px] resize-y w-full max-w-[656px] mb-2 border-none')}
+                    placeholder="Votre message"
                   />
                 </FormControl>
                 <FormMessage />

@@ -9,7 +9,6 @@ import { BurgerMenu } from './BurgerMenu';
 
 export const Navbar = () => {
   const { user } = useAuthContext();
-  console.log('🚀 ~ user:', user);
   const connectedNavbar = !!user;
 
   return (

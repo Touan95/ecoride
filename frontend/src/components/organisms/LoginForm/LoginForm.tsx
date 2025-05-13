@@ -82,11 +82,11 @@ export const LoginForm = ({
           <Typography variant="cardTitleSm" tag="h2">
             Pas encore inscrit ?
           </Typography>
-          <div onClick={onCreateAccountClick} className="cursor-pointer w-fit">
+          <button onClick={onCreateAccountClick} className="cursor-pointer w-fit" type="button" aria-label="Créer un compte">
             <Typography variant="paragraph" customClassName="hover:text-secondary-500">
               Créez un compte
             </Typography>
-          </div>
+          </button>
         </div>
       )}
     </Form>

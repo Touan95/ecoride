@@ -35,9 +35,9 @@ export const AccountCardField = ({ icon: Icon, label, children, onEdit, labelCla
       <div className="flex gap-1.5 items-center">
         {childrenComponent()}
         {onEdit && (
-          <div className="flex justify-center items-center w-5 md:w-auto">
-            <TbEdit className="text-primary-900 cursor-pointer" size={30} onClick={onEdit} />
-          </div>
+          <button className="flex justify-center items-center w-5 md:w-auto" onClick={onEdit} type="button" aria-label="Modifier">
+            <TbEdit className="text-primary-900 cursor-pointer" size={30} />
+          </button>
         )}
       </div>
     </div>

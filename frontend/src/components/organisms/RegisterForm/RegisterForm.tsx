@@ -111,11 +111,11 @@ export const RegisterForm = ({
           <Typography variant="cardTitleSm" tag="h2">
             Déjà inscrit ?
           </Typography>
-          <div onClick={onLoginClick} className="cursor-pointer w-fit">
+          <button onClick={onLoginClick} className="cursor-pointer w-fit" type="button" aria-label="Se connecter">
             <Typography variant="paragraph" customClassName="hover:text-secondary-500">
               Connectez-vous
             </Typography>
-          </div>
+          </button>
         </div>
       )}
     </Form>

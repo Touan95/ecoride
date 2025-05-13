@@ -4,7 +4,6 @@ import * as React from 'react';
 
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Typography } from '@/components/atoms/Typography';
-import clsxm from '@/utils/clsxm';
 import { ConnectedLinks } from './ConnectedLinks';
 import { LogoutButton } from './LogoutButton';
 
@@ -17,11 +16,11 @@ interface ConnectedMenuProps {
 
 const AccountButton = () => {
   return (
-    <div className={clsxm('flex w-fit')}>
-      <Typography color="white" variant="h3" customClassName="hover:text-secondary-500 cursor-pointer">
+    <button type="button" className="cursor-pointer w-fit" aria-label="Mon compte">
+      <Typography color="white" variant="h3" customClassName="hover:text-secondary-500">
         Mon compte
       </Typography>
-    </div>
+    </button>
   );
 };
 

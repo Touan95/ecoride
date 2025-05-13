@@ -18,6 +18,7 @@ interface AddressAutocompleteInputProps {
   initialLocation?: AddressItemLight;
   error?: string;
   big?: boolean;
+  ariaLabel?: string;
 }
 
 const AddressAutocompleteInput = ({
@@ -161,6 +162,7 @@ const AddressAutocompleteInput = ({
         <Input
           ref={inputRef}
           placeholder={placeholder}
+          aria-label={placeholder}
           value={query}
           onChange={onChange}
           onFocus={onFocus}
