@@ -7,9 +7,7 @@ import LegalPageClient from './client';
 export const metadata: Metadata = await generatePageMetadata({
   templateTitle: seoData[SEO_PAGES.PUBLIC_LEGAL_MENTIONS].title,
   description: seoData[SEO_PAGES.PUBLIC_LEGAL_MENTIONS].description,
-  defaultMeta: defaultSeoValues,
-  noIndex: true,
-  noFollow: true
+  defaultMeta: defaultSeoValues
 });
 
 export default function LegalPage() {
