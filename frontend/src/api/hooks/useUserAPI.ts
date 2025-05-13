@@ -128,7 +128,7 @@ export const useGetSearchedRides = (params: GetSearchedRidesParams) => {
 };
 
 export const useGetRideDetails = (rideId?: string) => {
-  return useQuery(['ride', rideId], () => getRideDetailsRequest(rideId ?? ''));
+  return useQuery(['ride', rideId], () => getRideDetailsRequest(rideId ?? ''), { enabled: !!rideId });
 };
 
 export const useBookRide = ({ onSuccess, onError }: UseMutationOptions<BaseAPIResponse, ErrorResponse, string>) => {
