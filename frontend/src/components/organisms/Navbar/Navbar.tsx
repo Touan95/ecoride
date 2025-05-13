@@ -6,6 +6,7 @@ import { ConnectedMenu } from './ConnectedMenu';
 import { UserType } from '@/interfaces/user';
 import { NavbarLinks } from './NavbarLinks';
 import { BurgerMenu } from './BurgerMenu';
+import Image from 'next/image';
 
 export const Navbar = () => {
   const { user } = useAuthContext();
@@ -16,7 +17,7 @@ export const Navbar = () => {
       <div className="hidden md:flex relative justify-between">
         <div className="flex items-center h-full w-full gap-10">
           <Link href="/">
-            <img src={'/assets/ecoride-white.png'} alt={'Logo Ecoride'} className="h-18 p-2 object-cover" />
+            <Image src={'/assets/ecoride-white.png'} alt={'Logo Ecoride'} className="h-18 p-2 object-cover" width={95} height={75} />
           </Link>
           {<NavbarLinks />}
           <div className="flex-1" />
@@ -37,7 +38,7 @@ export const Navbar = () => {
           <BurgerMenu user={user ?? undefined} />
         </div>
         <Link href="/">
-          <img src={'/assets/ecoride-white.png'} alt={'Logo Ecoride'} className="h-18 p-2 object-cover" />
+          <Image src={'/assets/ecoride-white.png'} alt={'Logo Ecoride'} className="h-18 p-2 object-cover" width={95} height={75} />
         </Link>
       </div>
     </SectionContainer>

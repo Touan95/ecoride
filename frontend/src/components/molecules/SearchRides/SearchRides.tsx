@@ -5,6 +5,7 @@ import { Button } from '@/components/molecules/Button';
 import AddressAutocompleteInput, { OnSelectAddressProps } from '../AddressAutocompleteInput/AddressAutocompleteInput';
 import { DateInput } from '@/components/inputs/DateInput';
 import { AddressItemLight } from '@/utils/openStreetMap';
+import Image from 'next/image';
 
 interface SearchRidesProps {
   arrival?: AddressItemLight;
@@ -37,7 +38,7 @@ export const SearchRides = ({
   };
   return (
     <div className="w-full h-[400px] relative">
-      <img src={'/assets/itinerary.webp'} alt={''} className="h-full w-full object-cover" role="presentation" />
+      <Image src={'/assets/itinerary.webp'} alt={''} className="h-full w-full object-cover" role="presentation" width={1700} height={400} />
       <div className="absolute w-full h-full flex flex-col items-center bottom-0 justify-center bg-black/30">
         <div className="flex flex-col gap-10 max-w-5xl">
           <Typography variant="h1" align="center" color="white">

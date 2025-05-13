@@ -1,6 +1,7 @@
 import SectionContainer from '@/components/layout/SectionContainer';
 import { Paragraph } from '@/components/molecules/Paragraph';
 import { SectionTitle } from '@/components/molecules/SectionTitle';
+import Image from 'next/image';
 
 export const IntroSection = () => {
   return (
@@ -8,15 +9,19 @@ export const IntroSection = () => {
       <div className="flex flex-col gap-10">
         <SectionTitle weight="extrabold">EcoRide</SectionTitle>
         <div className="sm:grid sm:grid-cols-2 gap-10 sm:flex-none flex flex-col">
-          <img
+          <Image
             src={'/assets/driver.webp'}
             alt={'Conducteur au volant discutant avec une personne par la fenêtre'}
             className="h-full w-full object-cover rounded-xl shadow-2xl"
+            width={450}
+            height={300}
           />
-          <img
+          <Image
             src={'/assets/passenger.webp'}
             alt={'Passager regardant le paysage par la fenêtre du véhicule'}
             className="h-full w-full object-cover rounded-xl shadow-2xl"
+            width={450}
+            height={300}
           />
         </div>
         <Paragraph title="Le covoiturage responsable et accessible à tous">
@@ -25,15 +30,19 @@ export const IntroSection = () => {
           limiter l’impact écologique des déplacements quotidiens.
         </Paragraph>
         <div className="sm:grid sm:grid-cols-2 gap-10 sm:flex-none flex flex-col">
-          <img
+          <Image
             src={'/assets/team.webp'}
             alt={'Équipe Ecoride dans leurs locaux'}
             className="h-full w-full object-cover rounded-xl shadow-2xl"
+            width={450}
+            height={460}
           />
-          <img
+          <Image
             src={'/assets/office.webp'}
             alt={"Bureau de l'entreprise Ecoride dans une ambiance écologique"}
             className="h-full w-full object-cover rounded-xl shadow-2xl"
+            width={450}
+            height={460}
           />
         </div>
         <Paragraph title="Qui sommes-nous ?">
