@@ -68,6 +68,7 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const clearUser = () => {
     removeCookie('accessToken');
     removeCookie('refreshToken');
+    setEnabled(false);
     queryClient.setQueryData('me', null);
 
     expirationDate.current = null;
