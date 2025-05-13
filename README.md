@@ -32,7 +32,8 @@ This project uses [pnpm workspaces](https://pnpm.io/workspaces) for monorepo man
 1. Copy the environment file :
 
 ```bash
-cp .env.example .env.local
+cp .env.example .env.local                      # Root env file
+cd frontend && cp .env.example .env.local       # Frontend env file
 ```
 
 2. Start docker then run :
