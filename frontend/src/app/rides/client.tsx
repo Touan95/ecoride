@@ -38,6 +38,10 @@ const rideApiToRideCard = (apiRide: SearchedRide): RideCardProps => {
 };
 
 const filterRides = (rides: SearchedRide[], filters: RidesFiltersType): SearchedRide[] => {
+  if (!rides) {
+    return [];
+  }
+
   return rides.filter((ride) => {
     const duration = new Date(ride.arrivalDate).getTime() - new Date(ride.departureDate).getTime();
     let isValid = true;
