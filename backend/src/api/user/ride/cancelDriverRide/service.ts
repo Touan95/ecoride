@@ -13,7 +13,8 @@ import 'dayjs/locale/fr';
 dayjs.locale('fr');
 
 const checkBalanceGoodForRefund = (ridePrice: number, balance: number, passengerCount: number) => {
-  return balance / passengerCount === ridePrice;
+  if (passengerCount === 0) return true;
+  return balance === ridePrice * passengerCount;
 };
 
 export interface CancelPassengerRideServiceOptions {
