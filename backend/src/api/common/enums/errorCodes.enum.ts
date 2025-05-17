@@ -11,6 +11,7 @@ export enum ErrorCodes {
   CAR_BLOCKED_BY_RIDE = 'car-blocked-by-ride',
   RIDE_NOT_FOUND = 'ride-not-found',
   RIDE_PASSENGER_NOT_FOUND = 'ride-passenger-not-found',
+  RIDE_PASSENGER_EMAIL_SHARE_NOT_ACCEPTED = 'ride-passenger-email-share-not-accepted',
   USER_ALREADY_PASSENGER = 'user-already-passenger',
   USER_NOT_PASSENGER = 'user-not-passenger',
   USER_NOT_DRIVER = 'user-not-driver',

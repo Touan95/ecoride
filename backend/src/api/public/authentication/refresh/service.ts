@@ -2,9 +2,9 @@ import { generateRefreshToken } from '../../../../core/jwt/generateToken';
 import { UserRepositoryInterface } from '../../../../repositories/user.repository';
 import userNotFoundError from '../../../common/errors/userNotFound.error';
 import { getAccessTokenFromUser } from '../common/services/getAccessTokenFromUser.service';
-import { checkAccessAndRefreshToken } from './services/checkAccessAndRefreshToken .service';
+import { checkAccessAndRefreshToken } from './services/checkAccessAndRefreshToken.service';
 
-interface LoginServiceOptions {
+interface RefreshServiceOptions {
   accessToken: string;
   refreshToken: string;
   userRepository: UserRepositoryInterface;
@@ -19,7 +19,7 @@ export default async ({
   accessToken,
   refreshToken,
   userRepository,
-}: LoginServiceOptions): Promise<RefreshServiceResponse> => {
+}: RefreshServiceOptions): Promise<RefreshServiceResponse> => {
   const { userId } = await checkAccessAndRefreshToken({
     refreshToken,
     accessToken,

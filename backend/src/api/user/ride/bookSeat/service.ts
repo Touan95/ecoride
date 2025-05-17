@@ -10,10 +10,14 @@ import { processTransaction } from '../../../../core/database/processTransaction
 import userInsufficientCreditsError from '../../../common/errors/userInsufficientCredits.error';
 import { RidePassengerRepositoryInterface } from '../../../../repositories/ridePassenger.repository';
 import { RidePassengerEntityInterface } from '../../../../entities/ridePassenger.entity';
+import ridePassengerEmailShareNotAcceptedError from '../../../common/errors/ridePassengerEmailShareNotAccepted.error';
+import { emailSender } from '../../../../services/emailSender';
+import dayjs from 'dayjs';
 
 export interface BookSeatServiceOptions {
   userId: string;
   rideId: string;
+  emailShareAccepted: boolean;
   userRepository: UserRepositoryInterface;
   rideRepository: RideRepositoryInterface;
   ridePassengerRepository: RidePassengerRepositoryInterface;
@@ -22,6 +26,7 @@ export interface BookSeatServiceOptions {
 export const service = async ({
   userId,
   rideId,
+  emailShareAccepted,
   userRepository,
   rideRepository,
   ridePassengerRepository,
@@ -65,6 +70,11 @@ export const service = async ({
     throw userInsufficientCreditsError();
   }
 
+  // Vérifie que l'utilisateur a accepté la partage de son adresse e-mail
+  if (!emailShareAccepted) {
+    throw ridePassengerEmailShareNotAcceptedError();
+  }
+
   // Effectue la transaction
   // L'ensemble des opérations doit aboutir ou toutes les opérations seront annulées
   await processTransaction(async (transactionalEntityManager) => {
@@ -99,6 +109,8 @@ export const service = async ({
       user,
       ride,
       updatedAt: now,
+      emailShareAccepted: true,
+      emailShareAcceptedDate: ridePassenger?.emailShareAcceptedDate ?? now,
     };
 
     // Met à jour le trajet
@@ -109,5 +121,34 @@ export const service = async ({
 
     // Crée le nouveau passager
     await ridePassengerRepository.createOrUpdate(newRidePassenger, transactionalEntityManager);
+
+    // Récupère les informations pour les e-mails
+    const departureDate = dayjs(ride.departureDate).format('dddd D MMMM à HH[h]mm');
+    const departureCity = ride.departureLocation.city ?? '';
+    const arrivalCity = ride.arrivalLocation.city ?? '';
+    const passengerUsername = user.username;
+    const passengerEmail = user.email;
+    const driverUsername = ride.driver.username;
+    const driverEmail = ride.driver.email;
+
+    // Envoie l'e-mail de confirmation au conducteur
+    void emailSender.driverBookingConfirmation({
+      departureCity,
+      arrivalCity,
+      departureDate,
+      username: driverUsername,
+      email: driverEmail,
+      passengerEmail,
+      passengerUsername,
+    });
+
+    // Envoie l'e-mail de confirmation au passager
+    void emailSender.passengerBookingConfirmation({
+      departureCity,
+      arrivalCity,
+      departureDate,
+      username: passengerUsername,
+      email: passengerEmail,
+    });
   });
 };

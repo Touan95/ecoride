@@ -144,8 +144,8 @@ export default function RideDetailsPageClient() {
     }
   };
 
-  const onConfirmBooking = () => {
-    bookRide.mutate(rideId);
+  const onConfirmBooking = (emailShareAccepted: boolean) => {
+    bookRide.mutate({ rideId, emailShareAccepted });
   };
 
   const loginMutation = useLoginMutation({

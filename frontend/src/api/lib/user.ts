@@ -137,6 +137,11 @@ export interface GetBlockedUsersResponse {
   blockedUsers: User[];
 }
 
+export interface BookRideParams {
+  rideId: string;
+  emailShareAccepted: boolean;
+}
+
 export const changeUserTypeRequest = async (params: ChangeUserTypeParams): Promise<BaseAPIResponse> => {
   const { userId, ...bodyParams } = params;
   const { data } = await axios.patch(`/user/${userId}/type`, bodyParams);
@@ -188,8 +193,9 @@ export const getRideDetailsRequest = async (rideId: string): Promise<PublicRideD
   return data;
 };
 
-export const bookRideRequest = async (rideId: string): Promise<BaseAPIResponse> => {
-  const { data } = await axios.put(`/user/ride/${rideId}/book`);
+export const bookRideRequest = async (params: BookRideParams): Promise<BaseAPIResponse> => {
+  const { rideId, ...bodyParams } = params;
+  const { data } = await axios.put(`/user/ride/${rideId}/book`, bodyParams);
   return data;
 };
 

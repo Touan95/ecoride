@@ -40,7 +40,8 @@ import {
   resolveDisputeRequest,
   startRideRequest,
   unblockUserRequest,
-  getBlockedUsersRequest
+  getBlockedUsersRequest,
+  BookRideParams
 } from '../lib/user';
 import { BaseAPIResponse, ErrorResponse } from '../lib/types';
 
@@ -131,14 +132,14 @@ export const useGetRideDetails = (rideId?: string) => {
   return useQuery(['ride', rideId], () => getRideDetailsRequest(rideId ?? ''), { enabled: !!rideId });
 };
 
-export const useBookRide = ({ onSuccess, onError }: UseMutationOptions<BaseAPIResponse, ErrorResponse, string>) => {
+export const useBookRide = ({ onSuccess, onError }: UseMutationOptions<BaseAPIResponse, ErrorResponse, BookRideParams>) => {
   const queryClient = useQueryClient();
-  return useMutation((rideId) => bookRideRequest(rideId), {
-    onSuccess: (data, rideId, context) => {
+  return useMutation((params) => bookRideRequest(params), {
+    onSuccess: (data, params, context) => {
       if (onSuccess) {
-        onSuccess(data, rideId, context);
+        onSuccess(data, params, context);
       }
-      queryClient.invalidateQueries({ queryKey: ['ride', rideId] });
+      queryClient.invalidateQueries({ queryKey: ['ride', params.rideId] });
       queryClient.invalidateQueries({ queryKey: ['passenger_rides'] });
       queryClient.invalidateQueries({ queryKey: ['driver_rides'] });
       queryClient.invalidateQueries({ queryKey: ['user'] });

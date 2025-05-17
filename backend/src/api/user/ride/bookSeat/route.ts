@@ -19,10 +19,12 @@ export default async (
   try {
     const { rideId } = req.params;
     const { userId } = req.jwt;
+    const { emailShareAccepted } = req.body;
 
     await service({
       userId,
       rideId,
+      emailShareAccepted,
       userRepository: AppDataSource.manager.withRepository(UserRepository),
       rideRepository: AppDataSource.manager.withRepository(RideRepository),
       ridePassengerRepository: AppDataSource.manager.withRepository(RidePassengerRepository),

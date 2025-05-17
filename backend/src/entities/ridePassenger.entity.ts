@@ -15,6 +15,8 @@ export interface RidePassenger {
   createdAt: Date;
   updatedAt: Date;
   canceled: boolean;
+  emailShareAccepted: boolean | null;
+  emailShareAcceptedDate: Date | null;
 }
 export interface RidePassengerEntityInterface extends RidePassenger {
   user: UserEntityInterface;
@@ -35,6 +37,12 @@ export class RidePassengerEntity {
 
   @Column({ type: 'boolean', default: false })
   canceled: boolean;
+
+  @Column({ type: 'boolean', nullable: true })
+  emailShareAccepted: boolean | null;
+
+  @Column({ type: 'timestamp', nullable: true })
+  emailShareAcceptedDate: Date | null;
 
   @CreateDateColumn()
   createdAt: Date;

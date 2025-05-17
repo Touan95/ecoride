@@ -29,7 +29,7 @@ const getPayloadAccessAndRefreshToken = async (
       payloadAccessToken,
       payloadRefreshToken,
     };
-  } catch (error) {
+  } catch {
     throw invalidTokenError();
   }
 };
