@@ -159,6 +159,7 @@ export const ItineraryFields = ({ form, departureLocationError, arrivalLocationE
           {renderDatePicker('arrivalDate')}
         </div>
       </div>
+      <Typography variant="extraSmall">Vos trajets sont visibles publiquement, mais sans affichage d&apos;adresse exacte.</Typography>
     </div>
   );
 };

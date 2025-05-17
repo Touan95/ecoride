@@ -79,6 +79,10 @@ export const AccountCarsCard = ({ cars, onAddCar, onEditCar, onRemoveCar, onSele
           {List()}
         </>
       </div>
+      <Typography variant="extraSmall" customClassName="w-full">
+        Ces informations sont utilisées pour proposer des trajets aux autres utilisateurs. Elles ne seront jamais partagées en dehors de la
+        plateforme.
+      </Typography>
     </div>
   );
 };

@@ -245,6 +245,10 @@ export const CarDetailsForm = ({ onSubmit, initialValues, editMode = false }: Ca
           {editMode ? 'Modifier' : 'Ajouter'}
         </Button>
       </form>
+      <Typography variant="extraSmall">
+        Ces informations sont utilisées pour proposer des trajets aux autres utilisateurs. Elles ne seront jamais partagées en dehors de la
+        plateforme.
+      </Typography>
     </Form>
   );
 };

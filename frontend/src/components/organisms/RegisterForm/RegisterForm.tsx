@@ -10,6 +10,10 @@ import { Typography } from '@/components/atoms/Typography';
 import { registerFormSchema, RegisterSchemaType } from '@/schemas/auth';
 import { RegisterParams } from '@/api/lib/auth';
 import { HTMLTag } from '@/components/atoms/Typography/interface';
+import { Checkbox } from '@/components/ui/checkbox';
+import Link from 'next/link';
+import { ROUTES } from '@/configs/routes';
+import { useState } from 'react';
 
 interface RegisterFormProps {
   onRegister: (params: Omit<RegisterParams, 'isStaff'>) => void;
@@ -26,6 +30,7 @@ export const RegisterForm = ({
   buttonTitle = "S'inscrire",
   titleTag = 'p'
 }: RegisterFormProps) => {
+  const [privacyChecked, setPrivacyChecked] = useState(false);
   const form = useForm<RegisterSchemaType>({
     resolver: zodResolver(registerFormSchema),
     defaultValues: {
@@ -40,6 +45,10 @@ export const RegisterForm = ({
 
   const onSubmit = (values: RegisterSchemaType) => {
     onRegister({ ...values });
+  };
+
+  const handleCheckboxChange = (checked: boolean) => {
+    setPrivacyChecked(checked);
   };
 
   const buttonDisabled = form.formState.isSubmitting || Object.keys(errors).length > 0;
@@ -102,7 +111,21 @@ export const RegisterForm = ({
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={buttonDisabled} className="mt-4">
+        <div className="h-10 items-center flex gap-4">
+          <Checkbox
+            id="privacy-checkbox"
+            aria-label="Accepter la politique de confidentialité"
+            onCheckedChange={handleCheckboxChange}
+            checked={privacyChecked}
+          />
+          <Typography variant="small" htmlFor="privacy-checkbox">
+            J&apos;ai lu et j&apos;accepte la{' '}
+            <Link href={ROUTES.PRIVACY_POLICY} className="underline">
+              politique de confidentialité
+            </Link>
+          </Typography>
+        </div>
+        <Button type="submit" disabled={buttonDisabled || !privacyChecked} className="mt-4">
           {buttonTitle}
         </Button>
       </form>
