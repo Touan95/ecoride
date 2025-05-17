@@ -6,6 +6,7 @@ import SectionContainer from '@/components/layout/SectionContainer';
 import { DriverRideList } from '@/components/organisms/DriverRideList';
 import { PassengerRideList } from '@/components/organisms/PassengerRideList';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { ROUTES } from '@/configs/routes';
 import { useRouter } from 'next/navigation';
 
 export default function UserRidesPageClient() {
@@ -16,7 +17,7 @@ export default function UserRidesPageClient() {
   const cancelDriverRide = useCancelDriverRide({});
 
   const onDetailClick = (id: string) => () => {
-    router.push(`/rides/${id}`);
+    router.push(`${ROUTES.RIDES}/${id}`);
   };
 
   const onPassengerCancelClick = (id: string) => () => {

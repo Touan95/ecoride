@@ -10,6 +10,7 @@ import { LoggedUser } from '@/interfaces/user';
 import { useGetMe } from '@/api/hooks/useAuthAPI';
 import { useRouter } from 'next/navigation';
 import { configureAxios } from '@/configs/axios';
+import { ROUTES } from '@/configs/routes';
 
 const REFETCH_INTERVAL = 15 * 60 * 1000; // 15 minutes
 
@@ -75,7 +76,7 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
     expirationDate.current = null;
 
     queryClient.removeQueries();
-    replace('/login');
+    replace(ROUTES.AUTHENTICATION);
   };
 
   const { data: user, refetch: refreshUser } = useGetMe({

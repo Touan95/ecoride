@@ -11,6 +11,7 @@ import { LoggedUser, UserType } from '@/interfaces/user';
 import { NavbarLinks } from '../NavbarLinks';
 import { TbMenu2, TbX } from 'react-icons/tb';
 import { LogoutButton } from '../ConnectedMenu/LogoutButton';
+import { ROUTES } from '@/configs/routes';
 
 interface BurgerMenuProps {
   user?: LoggedUser;
@@ -49,7 +50,7 @@ export const BurgerMenu = ({ user }: BurgerMenuProps) => {
                 <LogoutButton burger={true} />
               </>
             ) : (
-              <NavbarLink href="/login" label="Se connecter" />
+              <NavbarLink href={ROUTES.AUTHENTICATION} label="Se connecter" />
             )}
           </div>
         </div>

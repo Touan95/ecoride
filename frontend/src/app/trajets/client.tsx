@@ -15,6 +15,7 @@ import { AddressItemLight } from '@/utils/openStreetMap';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 import dayjs from 'dayjs';
+import { ROUTES } from '@/configs/routes';
 
 const rideApiToRideCard = (apiRide: SearchedRide): RideCardProps => {
   const isGreen = isCarGreen(apiRide.car);
@@ -147,7 +148,7 @@ export default function RidesPageClient() {
 
     newSearchParams.delete('initialArrival');
 
-    router.push(`/rides?${newSearchParams.toString()}`);
+    router.push(`${ROUTES.RIDES}?${newSearchParams.toString()}`);
   };
 
   const onFiltersChange = (filters: RidesFiltersType) => {
@@ -155,7 +156,7 @@ export default function RidesPageClient() {
   };
 
   const onDetailClick = (id: string) => () => {
-    router.push(`/rides/${id}`);
+    router.push(`${ROUTES.RIDES}/${id}`);
   };
 
   const onDepartureSelect = ({ rawAddress }: OnSelectAddressProps) => {

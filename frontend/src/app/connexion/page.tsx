@@ -8,7 +8,7 @@ export const metadata: Metadata = await generatePageMetadata({
   templateTitle: seoData[SEO_PAGES.PUBLIC_AUTH].title,
   description: seoData[SEO_PAGES.PUBLIC_AUTH].description,
   defaultMeta: defaultSeoValues,
-  canonicalPath: 'login'
+  canonicalPath: 'connexion'
 });
 
 export default function LoginPage() {

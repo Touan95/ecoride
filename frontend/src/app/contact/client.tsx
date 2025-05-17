@@ -11,8 +11,14 @@ import { contactFormSchema, ContactFormSchemaType } from '@/schemas/contact';
 import { zodResolver } from '@hookform/resolvers/zod';
 import clsxm from '@/utils/clsxm';
 import { useContactMutation } from '@/api/hooks/useContactAPI';
+import { Checkbox } from '@/components/ui/checkbox';
+import Link from 'next/link';
+import { ROUTES } from '@/configs/routes';
+import { useState } from 'react';
 
 export default function ContactPageClient() {
+  const [privacyChecked, setPrivacyChecked] = useState(false);
+  console.log('🚀 ~ checked:', privacyChecked);
   const contact = useContactMutation({});
   const form = useForm<ContactFormSchemaType>({
     resolver: zodResolver(contactFormSchema),
@@ -26,6 +32,9 @@ export default function ContactPageClient() {
       email: values.email,
       message: values.message
     });
+  };
+  const handleCheckboxChange = (checked: boolean) => {
+    setPrivacyChecked(checked);
   };
   return (
     <SectionContainer className="flex flex-col gap-5 my-10">
@@ -86,7 +95,21 @@ export default function ContactPageClient() {
               </FormItem>
             )}
           />
-          <Button type="submit" className="w-full" disabled={buttonDisabled}>
+          <div className="h-10 items-center flex gap-4">
+            <Checkbox
+              id="privacy-checkbox"
+              aria-label="Accepter la politique de confidentialité"
+              onCheckedChange={handleCheckboxChange}
+              checked={privacyChecked}
+            />
+            <Typography variant="small" htmlFor="privacy-checkbox">
+              Je consens à ce que les informations saisies soient utilisées uniquement pour me recontacter, conformément à la{' '}
+              <Link href={ROUTES.PRIVACY_POLICY} className="underline">
+                politique de confidentialité
+              </Link>
+            </Typography>
+          </div>
+          <Button type="submit" className="w-full" disabled={buttonDisabled || !privacyChecked}>
             Envoyer
           </Button>
         </form>

@@ -8,7 +8,7 @@ export const metadata: Metadata = await generatePageMetadata({
   templateTitle: seoData[SEO_PAGES.PUBLIC_RIDE_LIST].title,
   description: seoData[SEO_PAGES.PUBLIC_RIDE_LIST].description,
   defaultMeta: defaultSeoValues,
-  canonicalPath: 'rides'
+  canonicalPath: 'trajets'
 });
 
 export default function RidesPage() {

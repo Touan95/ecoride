@@ -24,7 +24,7 @@ import {
   rideApiToDriverCard,
   rideApiToInfoCard,
   rideApiToItinerary
-} from '@/app/rides/[id]/utils';
+} from '@/app/trajets/[id]/utils';
 import { AddReviewCard } from '@/components/organisms/AddReviewCard';
 import { LoginParams, RegisterParams } from '@/api/lib/auth';
 

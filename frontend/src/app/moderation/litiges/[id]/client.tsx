@@ -10,7 +10,7 @@ import { GreenCard } from '@/components/molecules/GreenCard';
 import { isCarGreen } from '@/utils/car';
 import { useParams } from 'next/navigation';
 import { useGetOneReview, useGetOneUser, useGetRideDetails, useResolveDispute } from '@/api/hooks/useUserAPI';
-import { rideApiToInfoCard, rideApiToItinerary } from '@/app/rides/[id]/utils';
+import { rideApiToInfoCard, rideApiToItinerary } from '@/app/trajets/[id]/utils';
 import { DisputeDetails } from '@/components/molecules/DisputeDetails';
 import { DisputeResolutionModal } from '@/components/organisms/DisputeResolutionModal';
 import { Button } from '@/components/molecules/Button';

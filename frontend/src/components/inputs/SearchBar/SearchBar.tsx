@@ -2,6 +2,7 @@
 
 import AddressAutocompleteInput, { OnSelectAddressProps } from '@/components/molecules/AddressAutocompleteInput/AddressAutocompleteInput';
 import { Button } from '@/components/molecules/Button';
+import { ROUTES } from '@/configs/routes';
 import { AddressItemLight } from '@/utils/openStreetMap';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -21,9 +22,9 @@ export const SearchBar = ({ placeholder }: SearchInputProps) => {
   const onSearch = () => {
     if (selectedAddress) {
       const query = encodeURIComponent(JSON.stringify(selectedAddress));
-      router.push(`/rides?initialArrival=${query}`);
+      router.push(`${ROUTES.RIDES}?initialArrival=${query}`);
     } else {
-      router.push(`/rides`);
+      router.push(ROUTES.RIDES);
     }
   };
   return (

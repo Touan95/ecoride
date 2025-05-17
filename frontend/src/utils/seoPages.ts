@@ -4,6 +4,7 @@ export enum SEO_PAGES {
   PUBLIC_RIDE_DETAIL = 'public-ride-detail',
   PUBLIC_CONTACT = 'public-contact',
   PUBLIC_LEGAL_MENTIONS = 'public-legal-mentions',
+  PUBLIC_PRIVACY_POLICY = 'public-privacy-policy',
   PUBLIC_AUTH = 'public-auth',
   PUBLIC_NOT_FOUND = 'public-not-found',
   USER_ACCOUNT = 'user-account',
@@ -71,5 +72,9 @@ export const seoData: Record<SEO_PAGES, { title: string; description: string }> 
   [SEO_PAGES.PUBLIC_NOT_FOUND]: {
     title: 'Page non trouvée',
     description: 'La page que vous cherchez n’existe pas.'
+  },
+  [SEO_PAGES.PUBLIC_PRIVACY_POLICY]: {
+    title: 'Politique de confidentialité',
+    description: 'Découvrez comment EcoRide protège vos données personnelles et respecte votre vie privée.'
   }
 };

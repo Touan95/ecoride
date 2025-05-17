@@ -1,4 +1,5 @@
 import { Typography } from '@/components/atoms/Typography';
+import { ROUTES } from '@/configs/routes';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -15,7 +16,7 @@ export const Footer = () => {
         </Typography>
       </a>
       <div className="flex gap-2 my-2">
-        <Link href={'/mentions-legales'}>
+        <Link href={ROUTES.LEGAL_NOTICE}>
           <Typography variant="small" color="white">
             Mentions légales
           </Typography>
@@ -23,7 +24,15 @@ export const Footer = () => {
         <Typography variant="small" color="white">
           |
         </Typography>
-        <Link href={'/contact'}>
+        <Link href={ROUTES.PRIVACY_POLICY}>
+          <Typography variant="small" color="white">
+            Politique de confidentialité
+          </Typography>
+        </Link>
+        <Typography variant="small" color="white">
+          |
+        </Typography>
+        <Link href={ROUTES.CONTACT}>
           <Typography variant="small" color="white">
             Nous contacter
           </Typography>

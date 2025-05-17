@@ -8,6 +8,7 @@ import { useApproveReview, useGetReviewsToApprove } from '@/api/hooks/useUserAPI
 import { StaffReviewList } from '@/components/organisms/StaffReviewList';
 import { useRouter } from 'next/navigation';
 import clsxm from '@/utils/clsxm';
+import { ROUTES } from '@/configs/routes';
 
 export default function StaffPageClient() {
   const router = useRouter();
@@ -20,11 +21,11 @@ export default function StaffPageClient() {
   const isStaff = !!user?.isStaff;
 
   const onRideDetailClick = (rideId: string) => () => {
-    router.push(`/rides/${rideId}`);
+    router.push(`${ROUTES.RIDES}/${rideId}`);
   };
 
   const onDisputeDetailClick = (reviewId: string) => () => {
-    router.push(`/staff/disputes/${reviewId}`);
+    router.push(`${ROUTES.STAFF_DISPUTE_DETAIL}/${reviewId}`);
   };
 
   const onApproveReview = (id: string) => () => {

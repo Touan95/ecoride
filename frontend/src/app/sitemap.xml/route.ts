@@ -1,12 +1,14 @@
+import { ROUTES } from '@/configs/routes';
 import { NextResponse } from 'next/server';
 import { SitemapStream, EnumChangefreq } from 'sitemap';
 
 const STATIC_PAGE_LIST = [
-  { url: '/', priority: 1, changefreq: EnumChangefreq.MONTHLY },
-  { url: '/rides/', priority: 1, changefreq: EnumChangefreq.MONTHLY },
-  { url: '/login/', priority: 1, changefreq: EnumChangefreq.MONTHLY },
-  { url: '/contact/', priority: 1, changefreq: EnumChangefreq.MONTHLY },
-  { url: '/mentions-legales/', priority: 0.3, changefreq: EnumChangefreq.YEARLY }
+  { url: ROUTES.HOME, priority: 1, changefreq: EnumChangefreq.MONTHLY },
+  { url: ROUTES.RIDES, priority: 1, changefreq: EnumChangefreq.MONTHLY },
+  { url: ROUTES.AUTHENTICATION, priority: 1, changefreq: EnumChangefreq.MONTHLY },
+  { url: ROUTES.CONTACT, priority: 1, changefreq: EnumChangefreq.MONTHLY },
+  { url: ROUTES.LEGAL_NOTICE, priority: 0.3, changefreq: EnumChangefreq.YEARLY },
+  { url: ROUTES.PRIVACY_POLICY, priority: 0.3, changefreq: EnumChangefreq.YEARLY }
 ];
 
 // Helper to convert a stream to a string
