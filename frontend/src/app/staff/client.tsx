@@ -12,7 +12,7 @@ import clsxm from '@/utils/clsxm';
 export default function StaffPageClient() {
   const router = useRouter();
   const { user } = useAuthContext();
-  const { data: reviewsData } = useGetReviewsToApprove();
+  const { data: reviewsData } = useGetReviewsToApprove({ disabled: !user?.isStaff });
   const approveReview = useApproveReview({});
   const allReviews = reviewsData ? reviewsData.reviews : [];
   const reviewsToApprove = allReviews.filter((review) => !review.dispute);

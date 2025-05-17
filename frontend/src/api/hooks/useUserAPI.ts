@@ -234,8 +234,8 @@ export const useGetRideReviews = (params: GetReviewParams) => {
   return useQuery(['reviews', params.rideId], () => getRideReviewsRequest(params));
 };
 
-export const useGetReviewsToApprove = () => {
-  return useQuery(['reviews_to_approve'], () => getReviewsToApproveRequest());
+export const useGetReviewsToApprove = ({ disabled }: { disabled?: boolean }) => {
+  return useQuery(['reviews_to_approve'], () => getReviewsToApproveRequest(), { enabled: !disabled });
 };
 
 export const useApproveReview = ({ onSuccess, onError }: UseMutationOptions<BaseAPIResponse, ErrorResponse, string>) => {
@@ -277,12 +277,12 @@ export const useGiveStaffAccess = ({ onSuccess, onError }: UseMutationOptions<Ba
   });
 };
 
-export const useGetStatistics = (enabled: boolean = false) => {
-  return useQuery(['statistics'], () => getStatisticsRequest(), { enabled });
+export const useGetStatistics = ({ disabled }: { disabled?: boolean }) => {
+  return useQuery(['statistics'], () => getStatisticsRequest(), { enabled: !disabled });
 };
 
-export const useGetAllStaff = () => {
-  return useQuery(['all_staff'], () => getAllStaffRequest());
+export const useGetAllStaff = ({ disabled }: { disabled?: boolean }) => {
+  return useQuery(['all_staff'], () => getAllStaffRequest(), { enabled: !disabled });
 };
 
 export const useBlockUser = ({ onSuccess, onError }: UseMutationOptions<BaseAPIResponse, ErrorResponse, string>) => {
@@ -313,8 +313,10 @@ export const useUnblockUser = ({ onSuccess, onError }: UseMutationOptions<BaseAP
   });
 };
 
-export const useGetBlockedUsers = () => {
-  return useQuery(['blocked_users'], () => getBlockedUsersRequest());
+export const useGetBlockedUsers = ({ disabled }: { disabled?: boolean }) => {
+  return useQuery(['blocked_users'], () => getBlockedUsersRequest(), {
+    enabled: !disabled
+  });
 };
 
 export const useGetUserForAdmin = (

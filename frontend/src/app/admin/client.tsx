@@ -25,9 +25,9 @@ import { RegisterParams } from '@/api/lib/auth';
 
 export default function AdminPageClient() {
   const { user } = useAuthContext();
-  const { data: statistics } = useGetStatistics(user?.isAdmin);
-  const { data: staffData } = useGetAllStaff();
-  const { data: blockedUsersData } = useGetBlockedUsers();
+  const { data: statistics } = useGetStatistics({ disabled: !user?.isAdmin });
+  const { data: staffData } = useGetAllStaff({ disabled: !user?.isAdmin });
+  const { data: blockedUsersData } = useGetBlockedUsers({ disabled: !user?.isAdmin });
   const blockUser = useBlockUser({});
   const unblockUser = useUnblockUser({});
   const allStaff = staffData ? staffData.allStaff : [];
