@@ -55,7 +55,7 @@ export const UserRepository: UserRepositoryInterface = AppDataSource.getReposito
   },
   getOneForAccount(id: string, withPassword?: boolean): Promise<UserEntityInterface | null> {
     const query = this.createQueryBuilder('user')
-      .leftJoinAndSelect('user.cars', 'cars')
+      .leftJoinAndSelect('user.cars', 'cars', 'cars.isDeleted = false')
       .where('user.id = :id', { id });
 
     if (withPassword) {

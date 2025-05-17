@@ -7,6 +7,7 @@ import { service } from './service';
 import serializer from './serializer';
 import { CarRepository } from '../../../../repositories/car.repository';
 import { UserRepository } from '../../../../repositories/user.repository';
+import { RideRepository } from '../../../../repositories/ride.repository';
 
 type DeleteCarRequestType = ValidatedRequest<DeleteCarRequest>;
 
@@ -23,6 +24,7 @@ export default async (
       userId,
       carRepository: AppDataSource.manager.withRepository(CarRepository),
       userRepository: AppDataSource.manager.withRepository(UserRepository),
+      rideRepository: AppDataSource.manager.withRepository(RideRepository),
     });
 
     const response = serializer();

@@ -7,8 +7,8 @@ import { validatedExpressRequest } from '../../../../core/utils/validatedExpress
 import route from './route';
 import validationMiddleware from './validator';
 
-export const deleteCar = Router().delete(
-  '/:userId/car/:carId',
+export const deleteCar = Router().put(
+  '/:userId/car/:carId/delete',
   customCacheMiddleware({ cacheDuration: CacheDuration.ZERO }),
   validationMiddleware,
   validatedExpressRequest(route),

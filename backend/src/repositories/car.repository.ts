@@ -21,7 +21,9 @@ export const CarRepository: CarRepositoryInterface = AppDataSource.getRepository
     return newCar;
   },
   getOneById(id: string): Promise<Car | null> {
-    const query = this.createQueryBuilder('car').where('car.id = :id', { id });
+    const query = this.createQueryBuilder('car')
+      .where('car.id = :id', { id })
+      .andWhere('car.isDeleted = false');
 
     const car = query.getOne();
 
@@ -29,6 +31,6 @@ export const CarRepository: CarRepositoryInterface = AppDataSource.getRepository
   },
 
   async deleteOne(id: string): Promise<void> {
-    await this.createQueryBuilder().delete().from(CarEntity).where('id = :id', { id }).execute();
+    await this.createQueryBuilder().update().set({ isDeleted: true }).where({ id }).execute();
   },
 });

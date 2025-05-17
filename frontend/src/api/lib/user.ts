@@ -168,7 +168,7 @@ export const putCarRequest = async (params: PutCarParams): Promise<BaseAPIRespon
 
 export const deleteCarRequest = async (params: DeleteCarParams): Promise<BaseAPIResponse> => {
   const { userId, carId } = params;
-  const { data } = await axios.delete(`/user/${userId}/car/${carId}`);
+  const { data } = await axios.put(`/user/${userId}/car/${carId}/delete`);
   return data;
 };
 

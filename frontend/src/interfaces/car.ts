@@ -15,6 +15,7 @@ export interface Car {
   model: string;
   seats: number;
   energy: Energy;
+  isDeleted: boolean;
 }
 
 export type CarLight = Pick<Car, 'id' | 'energy' | 'seats'>;

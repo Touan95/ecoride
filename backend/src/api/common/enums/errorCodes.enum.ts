@@ -7,6 +7,8 @@ export enum ErrorCodes {
   FORBIDDEN_ADMIN_ACCESS = 'forbidden-admin-access',
   FORBIDDEN_STAFF_ACCESS = 'forbidden-staff-access',
   CAR_NOT_FOUND = 'car-not-found',
+  CAR_ALREADY_DELETED = 'car-already-deleted',
+  CAR_BLOCKED_BY_RIDE = 'car-blocked-by-ride',
   RIDE_NOT_FOUND = 'ride-not-found',
   RIDE_PASSENGER_NOT_FOUND = 'ride-passenger-not-found',
   USER_ALREADY_PASSENGER = 'user-already-passenger',

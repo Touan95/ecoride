@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class Init1745360892480 implements MigrationInterface {
-  name = 'Init1745360892480';
+export class Init1747492754857 implements MigrationInterface {
+  name = 'Init1747492754857';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
@@ -20,8 +20,9 @@ export class Init1745360892480 implements MigrationInterface {
       `CREATE TYPE "public"."car_energy_enum" AS ENUM('gasoline', 'diesel', 'hybrid', 'electric', 'unknown')`,
     );
     await queryRunner.query(
-      `CREATE TABLE "car" ("id" uuid NOT NULL, "plate_number" character varying NOT NULL, "registration_date" date NOT NULL, "color" character varying NOT NULL, "brand" character varying NOT NULL, "model" character varying NOT NULL, "seats" integer NOT NULL, "energy" "public"."car_energy_enum" NOT NULL DEFAULT 'unknown', "owner_id" uuid, CONSTRAINT "PK_55bbdeb14e0b1d7ab417d11ee6d" PRIMARY KEY ("id"))`,
+      `CREATE TABLE "car" ("id" uuid NOT NULL, "plate_number" character varying NOT NULL, "registration_date" date NOT NULL, "color" character varying NOT NULL, "brand" character varying NOT NULL, "model" character varying NOT NULL, "seats" integer NOT NULL, "energy" "public"."car_energy_enum" NOT NULL DEFAULT 'unknown', "is_deleted" boolean NOT NULL DEFAULT false, "owner_id" uuid, CONSTRAINT "PK_55bbdeb14e0b1d7ab417d11ee6d" PRIMARY KEY ("id"))`,
     );
+    await queryRunner.query(`CREATE INDEX "is_deleted_index" ON "car" ("is_deleted") `);
     await queryRunner.query(
       `CREATE TYPE "public"."ride_status_enum" AS ENUM('upcoming', 'ongoing', 'completed', 'cancelled')`,
     );
@@ -131,6 +132,7 @@ export class Init1745360892480 implements MigrationInterface {
     await queryRunner.query(`DROP INDEX "public"."ride_departure_date_index"`);
     await queryRunner.query(`DROP TABLE "ride"`);
     await queryRunner.query(`DROP TYPE "public"."ride_status_enum"`);
+    await queryRunner.query(`DROP INDEX "public"."is_deleted_index"`);
     await queryRunner.query(`DROP TABLE "car"`);
     await queryRunner.query(`DROP TYPE "public"."car_energy_enum"`);
     await queryRunner.query(`DROP INDEX "public"."IDX_e12875dfb3b1d92d7d7c5377e2"`);

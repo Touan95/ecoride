@@ -44,6 +44,7 @@ export type RideRepositoryInterface = Repository<RideEntity> & {
   }: GetAllRidesOptions): Promise<SearchedRide[]>;
   updateRide(ride: SavedRide, entityManager?: EntityManager): Promise<void>;
   getAllByDriverId(driverId: string): Promise<RideEntityInterface[]>;
+  getAllByCarId(carId: string): Promise<RideEntityInterface[]>;
   getDailyStatistics(): Promise<DailyStatistics[]>;
 };
 
@@ -170,6 +171,15 @@ export const RideRepository: RideRepositoryInterface = AppDataSource.getReposito
       .leftJoin('ride.car', 'car')
       .addSelect(['car.seats'])
       .where('driver.id = :driverId', { driverId })
+      .orderBy('ride.departure_date', 'DESC');
+
+    return query.getMany();
+  },
+  async getAllByCarId(carId: string): Promise<RideEntityInterface[]> {
+    const query = this.createQueryBuilder('ride')
+      .leftJoin('ride.car', 'car')
+      .where('car.id = :carId', { carId })
+      .andWhere('car.isDeleted = false')
       .orderBy('ride.departure_date', 'DESC');
 
     return query.getMany();

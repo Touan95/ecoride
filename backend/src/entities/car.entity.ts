@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { UserEntity, UserEntityInterface } from './user.entity';
 
 export enum Energy {
@@ -18,6 +18,7 @@ export interface Car {
   model: string;
   seats: number;
   energy: Energy;
+  isDeleted: boolean;
 }
 
 export type CarLight = Pick<Car, 'id' | 'energy' | 'seats'>;
@@ -51,6 +52,10 @@ export class CarEntity implements CarEntityInterface {
 
   @Column({ type: 'enum', enum: Energy, default: Energy.UNKNOWN })
   energy: Energy;
+
+  @Column({ default: false })
+  @Index('is_deleted_index', ['isDeleted'])
+  isDeleted: boolean;
 
   @ManyToOne(() => UserEntity, (user) => user.cars, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'ownerId' })
