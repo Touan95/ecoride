@@ -45,6 +45,7 @@ const decodeExpirationDate = (refreshToken: string | null) => {
     const decodedToken = jwtDecode(refreshToken) as DecodedRefreshToken;
     return dayjs.unix(decodedToken.exp ?? 0).toDate();
   } catch (error) {
+    console.error(error);
     return null;
   }
 };

@@ -43,6 +43,7 @@ export const service = async ({
     model,
     seats,
     energy,
+    isDeleted: false,
     owner: user,
   });
 

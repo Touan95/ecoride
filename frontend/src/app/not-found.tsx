@@ -24,7 +24,7 @@ export default function NotFound() {
         </Typography>
         <Link href="/" className="hover:underline underline-offset-4 decoration-primary-900">
           <Typography variant="cardTitleSm" tag="h2">
-            Retour à l'accueil
+            Retour à l&apos;accueil
           </Typography>
         </Link>
       </div>

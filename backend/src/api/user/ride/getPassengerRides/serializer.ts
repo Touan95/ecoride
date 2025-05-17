@@ -14,6 +14,7 @@ export interface SerializedGetPassengerRides {
 export const serializeGetPassengerRide = (
   ridePassenger: RidePassengerEntityInterface,
 ): SerializedGetPassengerRide => {
+  // eslint-disable-next-line unused-imports/no-unused-vars
   const { ride, user, id, ...passengerData } = ridePassenger;
   return {
     ...ride,
