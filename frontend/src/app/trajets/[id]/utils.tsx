@@ -8,6 +8,7 @@ import { isCarGreen } from '@/utils/car';
 import { DEFAULT_AVATAR_URL } from '@/interfaces/user';
 import { RideStatus } from '@/api/lib/user';
 import { Review } from '@/interfaces/review';
+import { getEnergyLabel } from '@/utils/values';
 
 export const rideApiToItinerary = (apiRide: PublicRideDetails): ItineraryProps => {
   return {
@@ -23,7 +24,7 @@ export const rideApiToInfoCard = (apiRide: PublicRideDetails): InfoCardProps => 
   const duration = new Date(apiRide.arrivalDate).getTime() - new Date(apiRide.departureDate).getTime();
   return {
     carBrand: apiRide.car.brand,
-    carEnergy: apiRide.car.energy,
+    carEnergy: getEnergyLabel(apiRide.car.energy) ?? apiRide.car.energy,
     carModel: apiRide.car.model,
     seats: apiRide.car.seats,
     reservedSeats: apiRide.reservedSeats ?? 0,
