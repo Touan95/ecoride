@@ -18,7 +18,6 @@ import { useState } from 'react';
 
 export default function ContactPageClient() {
   const [privacyChecked, setPrivacyChecked] = useState(false);
-  console.log('🚀 ~ checked:', privacyChecked);
   const contact = useContactMutation({});
   const form = useForm<ContactFormSchemaType>({
     resolver: zodResolver(contactFormSchema),

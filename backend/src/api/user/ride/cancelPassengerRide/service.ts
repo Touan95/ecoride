@@ -6,6 +6,8 @@ import { processTransaction } from '../../../../core/database/processTransaction
 import { RidePassengerRepositoryInterface } from '../../../../repositories/ridePassenger.repository';
 import userNotPassengerError from '../../../common/errors/userNotPassenger.error';
 import ridePassengerNotFoundError from '../../../common/errors/ridePassengerNotFound.error';
+import { emailSender } from '../../../../services/emailSender';
+import dayjs from 'dayjs';
 
 export interface CancelPassengerRideServiceOptions {
   userId: string;
@@ -73,5 +75,35 @@ export const service = async ({
     await rideRepository.updateRide(updateRide, transactionalEntityManager);
     await userRepository.updateUser(userId, updateUser, transactionalEntityManager);
     await ridePassengerRepository.createOrUpdate(updateRidePassenger, transactionalEntityManager);
+  });
+
+  // Envoi des e-mails si la transaction a abouti
+  // Récupère les informations pour les e-mails
+  const departureDate = dayjs(ride.departureDate).format('dddd D MMMM à HH[h]mm');
+  const departureCity = ride.departureLocation.city ?? '';
+  const arrivalCity = ride.arrivalLocation.city ?? '';
+  const passengerUsername = user.username;
+  const passengerEmail = user.email;
+  const driverUsername = ride.driver.username;
+  const driverEmail = ride.driver.email;
+
+  // Envoie l'e-mail de confirmation au conducteur
+  void emailSender.driverBookingCancelled({
+    departureCity,
+    arrivalCity,
+    departureDate,
+    username: driverUsername,
+    email: driverEmail,
+    passengerEmail,
+    passengerUsername,
+  });
+
+  // Envoie l'e-mail de confirmation au passager
+  void emailSender.passengerBookingCancelled({
+    departureCity,
+    arrivalCity,
+    departureDate,
+    username: passengerUsername,
+    email: passengerEmail,
   });
 };

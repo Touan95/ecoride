@@ -121,34 +121,35 @@ export const service = async ({
 
     // Crée le nouveau passager
     await ridePassengerRepository.createOrUpdate(newRidePassenger, transactionalEntityManager);
+  });
 
-    // Récupère les informations pour les e-mails
-    const departureDate = dayjs(ride.departureDate).format('dddd D MMMM à HH[h]mm');
-    const departureCity = ride.departureLocation.city ?? '';
-    const arrivalCity = ride.arrivalLocation.city ?? '';
-    const passengerUsername = user.username;
-    const passengerEmail = user.email;
-    const driverUsername = ride.driver.username;
-    const driverEmail = ride.driver.email;
+  // Envoi des e-mails si la transaction a abouti
+  // Récupère les informations pour les e-mails
+  const departureDate = dayjs(ride.departureDate).format('dddd D MMMM à HH[h]mm');
+  const departureCity = ride.departureLocation.city ?? '';
+  const arrivalCity = ride.arrivalLocation.city ?? '';
+  const passengerUsername = user.username;
+  const passengerEmail = user.email;
+  const driverUsername = ride.driver.username;
+  const driverEmail = ride.driver.email;
 
-    // Envoie l'e-mail de confirmation au conducteur
-    void emailSender.driverBookingConfirmation({
-      departureCity,
-      arrivalCity,
-      departureDate,
-      username: driverUsername,
-      email: driverEmail,
-      passengerEmail,
-      passengerUsername,
-    });
+  // Envoie l'e-mail de confirmation au conducteur
+  void emailSender.driverBookingConfirmation({
+    departureCity,
+    arrivalCity,
+    departureDate,
+    username: driverUsername,
+    email: driverEmail,
+    passengerEmail,
+    passengerUsername,
+  });
 
-    // Envoie l'e-mail de confirmation au passager
-    void emailSender.passengerBookingConfirmation({
-      departureCity,
-      arrivalCity,
-      departureDate,
-      username: passengerUsername,
-      email: passengerEmail,
-    });
+  // Envoie l'e-mail de confirmation au passager
+  void emailSender.passengerBookingConfirmation({
+    departureCity,
+    arrivalCity,
+    departureDate,
+    username: passengerUsername,
+    email: passengerEmail,
   });
 };

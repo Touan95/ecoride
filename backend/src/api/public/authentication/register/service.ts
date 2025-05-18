@@ -4,6 +4,7 @@ import userEmailAlreadyExistsError from '../../../common/errors/userEmailAlready
 import { processTransaction } from '../../../../core/database';
 import { hashPassword } from '../common/services/password.service';
 import { UserEntityInterface, UserType } from '../../../../entities/user.entity';
+import { emailSender } from '../../../../services/emailSender';
 
 export interface RegisterServiceOptions {
   email: string;
@@ -54,6 +55,11 @@ export default async ({
       },
       transactionalEntityManager,
     );
+  });
+
+  void emailSender.userRegistrationConfirmation({
+    email,
+    username,
   });
 
   return newUser;

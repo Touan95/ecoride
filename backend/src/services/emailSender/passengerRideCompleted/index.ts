@@ -11,10 +11,10 @@ interface EmailParams {
   rideId: string;
 }
 
-export const sendPassengersRideCompleted = async (params: EmailParams): Promise<void> => {
-  const rideUrl = `https://ecoride-sooty.vercel.app/rides/${params.rideId}?review=true`;
-  const rideCompletedHtml = await emailRenderer({
-    subTemplatePath: resolve(__dirname, './templates/rideCompleted.template.hbs'),
+export const sendPassengerRideCompleted = async (params: EmailParams): Promise<void> => {
+  const rideUrl = `https://ecoride-sooty.vercel.app/trajets/${params.rideId}?review=true`;
+  const passengerRideCompletedHtml = await emailRenderer({
+    subTemplatePath: resolve(__dirname, './templates/passengerRideCompleted.template.hbs'),
     params: {
       departureCity: params.departureCity,
       arrivalCity: params.arrivalCity,
@@ -27,7 +27,7 @@ export const sendPassengersRideCompleted = async (params: EmailParams): Promise<
 
   await sendEmail({
     to: params.email,
-    html: rideCompletedHtml,
+    html: passengerRideCompletedHtml,
     subject: `[EcoRide] ${params.departureCity} -> ${params.arrivalCity} : Trajet terminé`,
   });
 };

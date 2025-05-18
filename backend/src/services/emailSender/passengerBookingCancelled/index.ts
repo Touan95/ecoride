@@ -10,9 +10,9 @@ interface EmailParams {
   email: string;
 }
 
-export const sendPassengersRideCancelledByDriver = async (params: EmailParams): Promise<void> => {
-  const rideCancelledHtml = await emailRenderer({
-    subTemplatePath: resolve(__dirname, './templates/rideCancelledByDriver.template.hbs'),
+export const sendPassengerBookingCancelled = async (params: EmailParams): Promise<void> => {
+  const passengerBookingCancelledHtml = await emailRenderer({
+    subTemplatePath: resolve(__dirname, './templates/passengerBookingCancelled.template.hbs'),
     params: {
       departureCity: params.departureCity,
       arrivalCity: params.arrivalCity,
@@ -24,7 +24,7 @@ export const sendPassengersRideCancelledByDriver = async (params: EmailParams): 
 
   await sendEmail({
     to: params.email,
-    html: rideCancelledHtml,
-    subject: `[EcoRide] ${params.departureCity} -> ${params.arrivalCity} : Trajet annulé`,
+    html: passengerBookingCancelledHtml,
+    subject: `[EcoRide] ${params.departureCity} -> ${params.arrivalCity} : Réservation annulée`,
   });
 };
