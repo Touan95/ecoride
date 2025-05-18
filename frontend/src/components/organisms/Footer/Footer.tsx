@@ -15,25 +15,33 @@ export const Footer = () => {
           Snowpact
         </Typography>
       </a>
-      <div className="flex gap-2 my-2">
+      <div className="flex gap-2 my-2 md:flex-row flex-col">
         <Link href={ROUTES.LEGAL_NOTICE}>
-          <Typography variant="small" color="white">
+          <Typography align="center" variant="small" color="white">
             Mentions légales
           </Typography>
         </Link>
-        <Typography variant="small" color="white">
+        <Typography variant="small" color="white" customClassName="md:block hidden">
           |
         </Typography>
         <Link href={ROUTES.PRIVACY_POLICY}>
-          <Typography variant="small" color="white">
+          <Typography align="center" variant="small" color="white">
             Politique de confidentialité
           </Typography>
         </Link>
-        <Typography variant="small" color="white">
+        <Typography variant="small" color="white" customClassName="md:block hidden">
+          |
+        </Typography>
+        <Link href={ROUTES.TERMS_OF_USE}>
+          <Typography align="center" variant="small" color="white">
+            Conditions générales d&apos;utilisation
+          </Typography>
+        </Link>
+        <Typography variant="small" color="white" customClassName="md:block hidden">
           |
         </Typography>
         <Link href={ROUTES.CONTACT}>
-          <Typography variant="small" color="white">
+          <Typography align="center" variant="small" color="white">
             Nous contacter
           </Typography>
         </Link>

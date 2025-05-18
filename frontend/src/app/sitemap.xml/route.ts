@@ -8,7 +8,8 @@ const STATIC_PAGE_LIST = [
   { url: ROUTES.AUTHENTICATION, priority: 1, changefreq: EnumChangefreq.MONTHLY },
   { url: ROUTES.CONTACT, priority: 1, changefreq: EnumChangefreq.MONTHLY },
   { url: ROUTES.LEGAL_NOTICE, priority: 0.3, changefreq: EnumChangefreq.YEARLY },
-  { url: ROUTES.PRIVACY_POLICY, priority: 0.3, changefreq: EnumChangefreq.YEARLY }
+  { url: ROUTES.PRIVACY_POLICY, priority: 0.3, changefreq: EnumChangefreq.YEARLY },
+  { url: ROUTES.TERMS_OF_USE, priority: 0.3, changefreq: EnumChangefreq.YEARLY }
 ];
 
 // Helper to convert a stream to a string

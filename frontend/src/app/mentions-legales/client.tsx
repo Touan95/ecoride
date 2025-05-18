@@ -64,6 +64,10 @@ export default function LegalPageClient() {
           </Typography>
         </li>
       </ul>
+      <Typography>
+        Les données collectées restent strictement limitées au cadre de l’application et ne sont accessibles qu’aux utilisateurs concernés,
+        dans le respect des règles de sécurité et de confidentialité mises en place.
+      </Typography>
 
       <Typography variant="h2" tag="h2">
         Développement
@@ -85,20 +89,18 @@ export default function LegalPageClient() {
         Conditions d’utilisation
       </Typography>
       <Typography>
-        L’utilisation du site est libre et gratuite dans un cadre non commercial. Aucune transaction réelle n’est effectuée. Les services
-        présentés sont fictifs et ne donnent lieu à aucun engagement contractuel.
+        L’utilisation de ce site implique l’acceptation des Conditions Générales d’Utilisation (CGU) et de la Politique de confidentialité.
+        Le site est accessible gratuitement, sans finalité commerciale, et les services proposés sont fictifs.
       </Typography>
 
       <Typography variant="h2" tag="h2">
         Données personnelles
       </Typography>
       <Typography>
-        Des données peuvent être collectées à des fins de test uniquement.
-        <br />
-        Conformément au <strong>RGPD</strong>, vous pouvez demander la suppression de toute donnée vous concernant via l’adresse :
-        anthony.hoang@snowpact.com.
-        <br />
-        Aucune donnée n’est cédée à des tiers.
+        Des données personnelles peuvent être collectées dans le cadre du fonctionnement de la plateforme (inscription, réservation, ajout
+        de véhicule ou de trajet, dépôt d’avis…). Ces données sont utilisées uniquement à des fins pédagogiques ou de démonstration.
+        Conformément au RGPD, vous pouvez demander la suppression ou la rectification de vos données en écrivant à :
+        anthony.hoang@snowpact.com. Aucun transfert de données à des tiers n’est réalisé.
       </Typography>
 
       <Typography variant="h2" tag="h2">

@@ -1,6 +1,6 @@
 import { Typography } from '@/components/atoms/Typography';
 
-export default function LegalPageClient() {
+export default function PrivacyPolicyPageClient() {
   return (
     <div className="prose max-w-3xl mx-auto px-4 py-10 text-foreground gap-5 flex flex-col">
       <Typography variant="h1" tag="h1">
@@ -49,14 +49,37 @@ export default function LegalPageClient() {
           <Typography>Contenu du message</Typography>
         </li>
       </ul>
+      <Typography>
+        En dehors du formulaire de contact, d&apos;autres données peuvent être collectées lors de l&apos;utilisation de la plateforme :
+      </Typography>
+      <ul>
+        <li>
+          <Typography>Adresse e-mail (inscription, réservation, création de compte staff)</Typography>
+        </li>
+        <li>
+          <Typography>Plaque d&apos;immatriculation (ajout de véhicule, création de trajet)</Typography>
+        </li>
+        <li>
+          <Typography>Adresse de départ et d&apos;arrivée d&apos;un trajet (seule la ville est visible publiquement)</Typography>
+        </li>
+        <li>
+          <Typography>Consentement explicite (via cases à cocher) à la politique de confidentialité et aux CGU</Typography>
+        </li>
+        <li>
+          <Typography>Consentement explicite à la transmission de l’e-mail du passager au conducteur (réservation)</Typography>
+        </li>
+      </ul>
       <Typography>Aucune autre donnée n’est collectée, stockée ou analysée à des fins statistiques, commerciales ou marketing.</Typography>
 
       <Typography variant="h2" tag="h2">
         3. Finalité du traitement
       </Typography>
       <Typography>
-        Les données que vous fournissez sont utilisées uniquement pour répondre à votre message. Elles ne sont ni transmises à des tiers, ni
-        utilisées à d&apos;autres fins.
+        Les données que vous fournissez sont utilisées uniquement pour répondre à votre message. Certaines données (comme la plaque
+        d’immatriculation ou l’adresse e-mail) sont nécessaires au bon fonctionnement des services proposés (ex. : organisation d’un trajet,
+        création d’un véhicule). D’autres, comme le consentement à la transmission d’un e-mail entre utilisateurs, visent à garantir une
+        communication logistique dans un cadre sécurisé et transparent. Elles ne sont ni transmises à des tiers, ni utilisées à
+        d&apos;autres fins.
       </Typography>
 
       <Typography variant="h2" tag="h2">
@@ -65,6 +88,9 @@ export default function LegalPageClient() {
       <Typography>
         Les messages reçus via le formulaire de contact sont conservés pendant une durée maximale de <strong>3 mois</strong>, uniquement
         dans le cadre du suivi du projet. Ils sont ensuite supprimés.
+        <br />
+        Les consentements (acceptation des CGU, autorisation de partager l’e-mail passager) sont horodatés et conservés à des fins de
+        traçabilité pendant toute la durée d’existence du compte utilisateur.
       </Typography>
 
       <Typography variant="h2" tag="h2">
@@ -73,6 +99,10 @@ export default function LegalPageClient() {
       <Typography>
         Les données transmises sont envoyées de manière sécurisée via HTTPS. Elles ne sont pas stockées dans une base de données, mais
         transmises par e-mail au responsable du projet, via un service SMTP configuré sur le backend.
+        <br />
+        Les informations sensibles, comme les mots de passe ou les e-mails transmis entre utilisateurs, sont traitées de manière sécurisée.
+        Aucune adresse e-mail n’est rendue publique ; elles ne sont partagées qu’après consentement explicite et uniquement entre
+        utilisateurs concernés.
       </Typography>
 
       <Typography variant="h2" tag="h2">

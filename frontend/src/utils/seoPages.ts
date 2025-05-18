@@ -5,6 +5,7 @@ export enum SEO_PAGES {
   PUBLIC_CONTACT = 'public-contact',
   PUBLIC_LEGAL_MENTIONS = 'public-legal-mentions',
   PUBLIC_PRIVACY_POLICY = 'public-privacy-policy',
+  PUBLIC_TERMS_OF_USE = 'public-terms-of-use',
   PUBLIC_AUTH = 'public-auth',
   PUBLIC_NOT_FOUND = 'public-not-found',
   USER_ACCOUNT = 'user-account',
@@ -76,5 +77,9 @@ export const seoData: Record<SEO_PAGES, { title: string; description: string }> 
   [SEO_PAGES.PUBLIC_PRIVACY_POLICY]: {
     title: 'Politique de confidentialité',
     description: 'Découvrez comment EcoRide protège vos données personnelles et respecte votre vie privée.'
+  },
+  [SEO_PAGES.PUBLIC_TERMS_OF_USE]: {
+    title: 'Conditions générales d’utilisation',
+    description: 'Découvrez les conditions d’utilisation de la plateforme EcoRide et les règles de participation.'
   }
 };
