@@ -55,17 +55,28 @@ export const AuthContext = createContext<AuthContextType>(initialContext);
 
 export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [isReady, setIsReady] = useState(getCookie('accessToken') === null);
+  const [enabled, setEnabled] = useState(false);
+
   const isAxiosConfigured = useRef(false);
   const expirationDate = useRef<Date | null>(decodeExpirationDate(getCookie('refreshToken') ?? null));
-
   const { replace } = useRouter();
   const queryClient = useQueryClient();
 
-  const [enabled, setEnabled] = useState(false);
+  const { data: user, refetch: refreshUser } = useGetMe({
+    disabled: !enabled,
+    refetchInterval: enabled ? REFETCH_INTERVAL : undefined,
+    onSettled: () => setIsReady(true)
+  });
 
   useEffect(() => {
     setEnabled(getCookie('accessToken') != null);
   }, [getCookie('accessToken')]);
+
+  useEffect(() => {
+    if (user?.isBlocked) {
+      clearUser();
+    }
+  }, [user]);
 
   const clearUser = () => {
     removeCookie('accessToken');
@@ -78,12 +89,6 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
     queryClient.removeQueries();
     replace(ROUTES.AUTHENTICATION);
   };
-
-  const { data: user, refetch: refreshUser } = useGetMe({
-    disabled: !enabled,
-    refetchInterval: enabled ? REFETCH_INTERVAL : undefined,
-    onSettled: () => setIsReady(true)
-  });
 
   const saveToken = (accessToken: string, refreshToken: string) => {
     expirationDate.current = decodeExpirationDate(refreshToken);
