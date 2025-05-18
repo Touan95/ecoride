@@ -77,7 +77,7 @@ export default function RideDetailsPageClient() {
     const departureTime = new Date(ride.departureDate).getTime();
     const now = Date.now();
 
-    return now >= departureTime - 60 * 60 * 1000 && now < departureTime;
+    return now >= departureTime - 60 * 60 * 1000;
   }, [ride?.departureDate, ride?.status]);
 
   const canEndRide = useMemo(() => {
