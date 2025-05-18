@@ -25,7 +25,7 @@ CREATE TYPE public.user_type_enum AS ENUM (
 );
 
 -- Table principale des utilisateurs.
--- Contient les informations d'identification, de profil, de rôle, de préférences et de crédit.
+-- Contient les informations d'identification, de profil, de rôle, de préférences, de statut d'invitation, de CGU et de crédit.
 CREATE TABLE public."user" (
     id uuid NOT NULL,
     username character varying NOT NULL,
@@ -40,6 +40,9 @@ CREATE TABLE public."user" (
     is_blocked boolean DEFAULT false NOT NULL,
     custom_rules jsonb DEFAULT '[]'::jsonb NOT NULL,
     credits integer NOT NULL,
+    is_invitation_pending boolean DEFAULT false NOT NULL,
+    terms_accepted_at timestamp without time zone,
+    terms_accepted boolean DEFAULT false NOT NULL,
     rate numeric(10,2)
 );
 
@@ -80,10 +83,12 @@ CREATE TABLE public.ride (
 );
 
 -- Table des réservations de passagers.
--- Lie un utilisateur à un trajet avec possibilité d’annulation et suivi des dates.
+-- Lie un utilisateur à un trajet avec possibilité d’annulation, suivi des dates et consentement au partage d’email.
 CREATE TABLE public.ride_passenger (
     id uuid DEFAULT extensions.uuid_generate_v4() NOT NULL,
     canceled boolean DEFAULT false NOT NULL,
+    email_share_accepted boolean,
+    email_share_accepted_at timestamp without time zone,
     created_at timestamp without time zone DEFAULT now() NOT NULL,
     updated_at timestamp without time zone DEFAULT now() NOT NULL,
     user_id uuid,
@@ -181,31 +186,17 @@ ALTER TABLE ONLY public.ride_passenger
 -- Index pour améliorer les performances des requêtes.
 -- Inclut des index géospatiaux (GIST), des index uniques, et des index sur les colonnes fréquemment filtrées.
 CREATE UNIQUE INDEX "IDX_78a916df40e02a9deb1c4b75ed" ON public."user" USING btree (username);
-
 CREATE UNIQUE INDEX "IDX_e12875dfb3b1d92d7d7c5377e2" ON public."user" USING btree (email);
-
 CREATE INDEX "IDX_a9e2b048ebf6301a13ae76727d" ON public.ride USING gist (arrival_point);
-
 CREATE INDEX "IDX_ca9e5465f78af8c51f2da45fa8" ON public.ride USING gist (departure_point);
-
 CREATE UNIQUE INDEX "IDX_ca9de458bf77c2fa71cddf9418" ON public.platform_credit USING btree (ride_id);
-
 CREATE INDEX is_deleted_index ON public.car (is_deleted);
-
 CREATE INDEX "IDX_4396093bcd7db1665d778f1657" ON public.ride_user_passenger USING btree (ride_id);
-
 CREATE INDEX "IDX_6413e40b2f3434304c034ca77b3" ON public.ride_user_passenger USING btree (user_id);
-
 CREATE INDEX "IDX_e7d5ca3e30159832fc5ef8f386" ON public.platform_credit USING btree (created_at);
-
 CREATE INDEX ride_arrival_location_index ON public.ride USING btree (arrival_location);
-
 CREATE INDEX ride_departure_date_index ON public.ride USING btree (departure_date);
-
 CREATE INDEX ride_departure_location_index ON public.ride USING btree (departure_location);
-
 CREATE INDEX ride_driver_index ON public.ride USING btree (driver_id);
-
 CREATE UNIQUE INDEX ride_passenger_user_ride_index ON public.ride_passenger USING btree (user_id, ride_id);
-
 CREATE INDEX ride_status_index ON public.ride USING btree (status);

@@ -36,7 +36,7 @@ export const AcceptTermsModal = ({ isOpen, onCancel, onValidate, isInvitationPen
             onCheckedChange={handleCheckboxChange}
             checked={privacyChecked}
           />
-          <Typography variant="small" htmlFor="terms-checkbox">
+          <Typography htmlFor="terms-checkbox">
             J&apos;ai lu et j&apos;accepte les{' '}
             <Link href={ROUTES.TERMS_OF_USE} className="underline" target="_blank">
               Conditions Générales d&apos;Utilisation
@@ -48,6 +48,12 @@ export const AcceptTermsModal = ({ isOpen, onCancel, onValidate, isInvitationPen
             .
           </Typography>
         </div>
+        {isInvitationPending && (
+          <Typography variant="small">
+            🔐 Conseil : Une fois les conditions acceptées, pensez à changer votre mot de passe temporaire depuis vos paramètres afin de
+            renforcer la sécurité de votre compte.
+          </Typography>
+        )}
         <Button onClick={onValidate} color="primary" disabled={!privacyChecked}>
           Valider
         </Button>

@@ -1,14 +1,14 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class Init1747492754857 implements MigrationInterface {
-  name = 'Init1747492754857';
+export class Init1747595413380 implements MigrationInterface {
+  name = 'Init1747595413380';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
       `CREATE TYPE "public"."user_type_enum" AS ENUM('driver', 'passenger', 'both', 'app')`,
     );
     await queryRunner.query(
-      `CREATE TABLE "user" ("id" uuid NOT NULL, "username" character varying NOT NULL, "email" character varying NOT NULL, "password" character varying NOT NULL, "avatar_url" text, "type" "public"."user_type_enum" NOT NULL DEFAULT 'passenger', "accepts_smoking" boolean NOT NULL DEFAULT false, "accepts_pets" boolean NOT NULL DEFAULT false, "is_admin" boolean NOT NULL DEFAULT false, "is_staff" boolean NOT NULL DEFAULT false, "is_blocked" boolean NOT NULL DEFAULT false, "custom_rules" jsonb NOT NULL DEFAULT '[]', "credits" integer NOT NULL, "rate" numeric(10,2), CONSTRAINT "PK_cace4a159ff9f2512dd42373760" PRIMARY KEY ("id"))`,
+      `CREATE TABLE "user" ("id" uuid NOT NULL, "username" character varying NOT NULL, "email" character varying NOT NULL, "password" character varying NOT NULL, "avatar_url" text, "type" "public"."user_type_enum" NOT NULL DEFAULT 'passenger', "accepts_smoking" boolean NOT NULL DEFAULT false, "accepts_pets" boolean NOT NULL DEFAULT false, "is_admin" boolean NOT NULL DEFAULT false, "is_staff" boolean NOT NULL DEFAULT false, "is_blocked" boolean NOT NULL DEFAULT false, "custom_rules" jsonb NOT NULL DEFAULT '[]', "credits" integer NOT NULL, "is_invitation_pending" boolean NOT NULL DEFAULT false, "terms_accepted_at" TIMESTAMP, "terms_accepted" boolean NOT NULL DEFAULT false, "rate" numeric(10,2), CONSTRAINT "PK_cace4a159ff9f2512dd42373760" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
       `CREATE UNIQUE INDEX "IDX_78a916df40e02a9deb1c4b75ed" ON "user" ("username") `,
@@ -56,7 +56,7 @@ export class Init1747492754857 implements MigrationInterface {
       `CREATE UNIQUE INDEX "IDX_ca9de458bf77c2fa71cddf9418" ON "platform_credit" ("ride_id") `,
     );
     await queryRunner.query(
-      `CREATE TABLE "ride_passenger" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "canceled" boolean NOT NULL DEFAULT false, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), "user_id" uuid, "ride_id" uuid, CONSTRAINT "PK_24be7bdcedfd682e9aa053329a2" PRIMARY KEY ("id"))`,
+      `CREATE TABLE "ride_passenger" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "canceled" boolean NOT NULL DEFAULT false, "email_share_accepted" boolean, "email_share_accepted_at" TIMESTAMP, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), "user_id" uuid, "ride_id" uuid, CONSTRAINT "PK_24be7bdcedfd682e9aa053329a2" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
       `CREATE UNIQUE INDEX "ride_passenger_user_ride_index" ON "ride_passenger" ("user_id", "ride_id") `,

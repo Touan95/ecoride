@@ -1,5 +1,6 @@
 `Router` → Routeur principal `/`
 ├─ `publicRouter = Router()` → Pas protection via jwtMiddleware
+| ├─ **POST** `/contact` - _Envoi d'un formulaire de contact_
 │ ├─ `authenticationRouter` (Routes d’authentification)
 │ │ ├─ **POST** `/register` - _Inscription d’un nouvel utilisateur_
 │ │ ├─ **POST** `/login` - _Connexion (génération de JWT)_
@@ -12,6 +13,7 @@
 │
 ├─ `userRouter = Router().use(jwtMiddleware({}))` → Protection via jwtMiddleware (utilisateur authentifié)
 │ ├─ **GET** `/user/me` - _Récupère les infos du profil connecté_
+│ ├─ **PATCH** `/user/accept-terms` - _Accepte les CGU et politique de confidentialité_
 │ ├─ **PATCH** `/user/:userId/type` - _Change le type d’utilisateur_
 │ ├─ **PATCH** `/user/password` - _Modifie le mot de passe_
 │ ├─ **PATCH** `/user/:userId/driver` - _Met à jour les préférences de conducteur_

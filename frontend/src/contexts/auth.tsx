@@ -142,7 +142,12 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <AuthContext.Provider value={contextValue}>
       {children}
-      <AcceptTermsModal isOpen={showTermsModal && !isTermsRoute} onCancel={clearUser} onValidate={onTermsAccepted} />
+      <AcceptTermsModal
+        isOpen={showTermsModal && !isTermsRoute}
+        onCancel={clearUser}
+        onValidate={onTermsAccepted}
+        isInvitationPending={user?.isInvitationPending}
+      />
     </AuthContext.Provider>
   );
 };
