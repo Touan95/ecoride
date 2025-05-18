@@ -8,6 +8,8 @@ export interface RegisterRequest {
     password: string;
     username: string;
     isStaff: boolean;
+    termsAccepted: boolean;
+    isInvitationPending?: boolean;
   };
 }
 
@@ -17,6 +19,8 @@ export const registerValidator = {
     password: validator.string().regex(passwordRegex).required(),
     username: validator.string().required(),
     isStaff: validator.boolean().required(),
+    termsAccepted: validator.boolean().required(),
+    isInvitationPending: validator.boolean().optional(),
   }),
 };
 

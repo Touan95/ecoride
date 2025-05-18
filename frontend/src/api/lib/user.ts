@@ -298,3 +298,8 @@ export const getBlockedUsersRequest = async (): Promise<GetBlockedUsersResponse>
   const { data } = await axios.get(`/admin/users/blocked`);
   return data;
 };
+
+export const acceptTermsRequest = async (termsAccepted: boolean): Promise<BaseAPIResponse> => {
+  const { data } = await axios.patch(`/user/accept-terms`, { termsAccepted });
+  return data;
+};

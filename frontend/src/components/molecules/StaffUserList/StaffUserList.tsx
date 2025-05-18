@@ -37,6 +37,7 @@ export const StaffUserList = ({ allStaff, onBlockUser, onUnblockUser, onAddStaff
                   isBlocked={staff.isBlocked}
                   onBlockUser={onBlockUser(staff.id)}
                   onUnblockUser={onUnblockUser(staff.id)}
+                  isInvitationPending={staff.isInvitationPending}
                 />
               );
             })}
@@ -67,6 +68,7 @@ export const StaffUserList = ({ allStaff, onBlockUser, onUnblockUser, onAddStaff
                   isBlocked={staff.isBlocked}
                   onBlockUser={onBlockUser(staff.id)}
                   onUnblockUser={onUnblockUser(staff.id)}
+                  isInvitationPending={staff.isInvitationPending}
                 />
               );
             })}

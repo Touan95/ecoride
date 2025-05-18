@@ -110,7 +110,7 @@ export const service = async ({
       ride,
       updatedAt: now,
       emailShareAccepted: true,
-      emailShareAcceptedDate: ridePassenger?.emailShareAcceptedDate ?? now,
+      emailShareAcceptedAt: ridePassenger?.emailShareAcceptedAt ?? now,
     };
 
     // Met à jour le trajet

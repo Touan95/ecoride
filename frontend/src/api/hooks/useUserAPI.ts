@@ -41,7 +41,8 @@ import {
   startRideRequest,
   unblockUserRequest,
   getBlockedUsersRequest,
-  BookRideParams
+  BookRideParams,
+  acceptTermsRequest
 } from '../lib/user';
 import { BaseAPIResponse, ErrorResponse } from '../lib/types';
 
@@ -329,6 +330,16 @@ export const useGetUserForAdmin = (
     onSuccess: (data) => {
       if (onSuccess) {
         onSuccess(data);
+      }
+    }
+  });
+};
+
+export const useAcceptTerms = ({ onSuccess }: UseMutationOptions<BaseAPIResponse, ErrorResponse, boolean>) => {
+  return useMutation<BaseAPIResponse, ErrorResponse, boolean>(acceptTermsRequest, {
+    onSuccess: (data, params, context) => {
+      if (onSuccess) {
+        onSuccess(data, params, context);
       }
     }
   });

@@ -7,6 +7,7 @@ import { changeDriverPreferences } from './changeDriverPreferences';
 import { userCarRouter } from './car';
 import { userRideRouter } from './ride';
 import { changePassword } from './changePassword';
+import { acceptTerms } from './acceptTerms';
 
 export const userRouter = Router()
   .use(jwtMiddleware({}))
@@ -16,4 +17,5 @@ export const userRouter = Router()
   .use(changeDriverPreferences)
   .use(getOneUser)
   .use(userCarRouter)
-  .use(userRideRouter);
+  .use(userRideRouter)
+  .use(acceptTerms);

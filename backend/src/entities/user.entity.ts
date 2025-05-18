@@ -22,6 +22,9 @@ export interface User {
   isBlocked: boolean;
   customRules: string[];
   credits: number;
+  isInvitationPending: boolean;
+  termsAcceptedAt: Date | null;
+  termsAccepted: boolean;
   rate: number | null;
 }
 
@@ -73,6 +76,15 @@ export class UserEntity implements UserEntityInterface {
 
   @Column()
   credits: number;
+
+  @Column({ type: 'boolean', default: false })
+  isInvitationPending: boolean;
+
+  @Column({ type: 'timestamp', nullable: true })
+  termsAcceptedAt: Date | null;
+
+  @Column({ type: 'boolean', default: false })
+  termsAccepted: boolean;
 
   @Column({ type: 'decimal', precision: 10, scale: 2, nullable: true })
   rate: number | null;

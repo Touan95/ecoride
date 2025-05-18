@@ -16,7 +16,8 @@ export const registerFormSchema = z
     password: z.string().min(1, { message: SchemaError.REQUIRED }).regex(passwordRegex, {
       message: SchemaError.INVALID_PASSWORD
     }),
-    confirmPassword: z.string().min(1, { message: SchemaError.REQUIRED })
+    confirmPassword: z.string().min(1, { message: SchemaError.REQUIRED }),
+    termsAccepted: z.boolean().refine((data) => data, { message: SchemaError.REQUIRED })
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: SchemaError.PASSWORD_NOT_MATCH,

@@ -21,8 +21,14 @@ export interface User {
   customRules: string[];
   credits: number;
   rate: number | null;
+  isInvitationPending: boolean;
+  termsAcceptedAt: Date | null;
+  termsAccepted: boolean;
 }
 
 export type UserLight = Pick<User, 'id' | 'avatarUrl' | 'username' | 'rate'>;
 
-export type LoggedUser = Pick<User, 'id' | 'type' | 'username' | 'email' | 'isAdmin' | 'isStaff' | 'isBlocked'>;
+export type LoggedUser = Pick<
+  User,
+  'id' | 'type' | 'username' | 'email' | 'isAdmin' | 'isStaff' | 'isBlocked' | 'isInvitationPending' | 'termsAccepted'
+>;

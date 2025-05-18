@@ -6,11 +6,12 @@ export interface LogOrRegisterModalProps {
   isOpen: boolean;
   onClose: () => void;
   onLogin?: (params: LoginParams) => void;
-  onRegister?: (params: Omit<RegisterParams, 'isStaff'>) => void;
+  onRegister?: (params: Omit<RegisterParams, 'isStaff' | 'isInvitationPending'>) => void;
   loginTitle?: string;
   loginButtonTitle?: string;
   registerTitle?: string;
   registerButtonTitle?: string;
+  adminInvitation?: boolean;
 }
 
 export const LogOrRegisterModal = ({
@@ -21,7 +22,8 @@ export const LogOrRegisterModal = ({
   loginTitle,
   loginButtonTitle,
   registerTitle,
-  registerButtonTitle
+  registerButtonTitle,
+  adminInvitation = false
 }: LogOrRegisterModalProps) => {
   return (
     <BaseModal isOpen={isOpen} onCloseClick={onClose}>
@@ -33,6 +35,7 @@ export const LogOrRegisterModal = ({
           loginButtonTitle={loginButtonTitle}
           registerTitle={registerTitle}
           registerButtonTitle={registerButtonTitle}
+          adminInvitation={adminInvitation}
         />
       </ContentContainer>
     </BaseModal>

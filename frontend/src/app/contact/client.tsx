@@ -103,7 +103,7 @@ export default function ContactPageClient() {
             />
             <Typography variant="small" htmlFor="privacy-checkbox">
               Je consens à ce que les informations saisies soient utilisées uniquement pour me recontacter, conformément à la{' '}
-              <Link href={ROUTES.PRIVACY_POLICY} className="underline">
+              <Link href={ROUTES.PRIVACY_POLICY} className="underline" target="_blank">
                 politique de confidentialité
               </Link>
             </Typography>

@@ -56,8 +56,8 @@ export default function AdminPageClient() {
     }
   });
 
-  const onRegister = (data: Omit<RegisterParams, 'isStaff'>) => {
-    registerMutation.mutate({ ...data, isStaff: true });
+  const onRegister = (data: Omit<RegisterParams, 'isStaff' | 'isInvitationPending'>) => {
+    registerMutation.mutate({ ...data, isStaff: true, isInvitationPending: true, termsAccepted: false });
   };
 
   const onGiveStaffAccess = () => {
@@ -147,6 +147,7 @@ export default function AdminPageClient() {
         onRegister={onRegister}
         registerTitle="Ajouter un membre à l'équipe"
         registerButtonTitle="Ajouter"
+        adminInvitation
       />
       <SearchUserModal
         isOpen={searchUserModalOpen}

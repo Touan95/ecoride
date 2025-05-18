@@ -34,20 +34,20 @@ export const ConfirmBookingModal = ({ isOpen, onClose, price, onValidate }: Conf
           </Typography>
           <Typography variant="cardTitleSm">Souhaitez-vous confirmer votre réservation?</Typography>
           <Typography variant="small">{`Après confirmation, vous serez débité de ${price} crédits`}</Typography>
-        </div>
-        <div className="h-10 items-center flex gap-4 mt-20">
-          <Checkbox
-            id="privacy-checkbox"
-            aria-label="Accepter la politique de confidentialité"
-            onCheckedChange={handleCheckboxChange}
-            checked={emailShareAccepted}
-          />
-          <Typography variant="small" htmlFor="privacy-checkbox">
-            J&apos;accepte que mon adresse e-mail soit transmise au conducteur pour organiser ce trajet. Voir la{' '}
-            <Link href={ROUTES.PRIVACY_POLICY} className="underline" target="_blank">
-              politique de confidentialité
-            </Link>
-          </Typography>
+          <div className="items-center flex gap-4 mt-10">
+            <Checkbox
+              id="privacy-checkbox"
+              aria-label="Accepter la politique de confidentialité"
+              onCheckedChange={handleCheckboxChange}
+              checked={emailShareAccepted}
+            />
+            <Typography variant="small" htmlFor="privacy-checkbox">
+              J&apos;accepte que mon adresse e-mail soit transmise au conducteur pour organiser ce trajet. Voir la{' '}
+              <Link href={ROUTES.PRIVACY_POLICY} className="underline" target="_blank">
+                politique de confidentialité
+              </Link>
+            </Typography>
+          </div>
         </div>
         <Button onClick={onValidateClick} disabled={!emailShareAccepted}>
           Confirmer

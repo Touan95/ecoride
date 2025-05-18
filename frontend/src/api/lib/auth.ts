@@ -17,6 +17,8 @@ export type RegisterParams = {
   email: string;
   password: string;
   isStaff: boolean;
+  termsAccepted: boolean;
+  isInvitationPending?: boolean;
 };
 
 export type ChangePasswordParams = {
@@ -36,12 +38,21 @@ export const loginRequest = async ({ email, password }: LoginParams): Promise<To
   return data;
 };
 
-export const registerRequest = async ({ email, password, username, isStaff }: RegisterParams): Promise<User> => {
+export const registerRequest = async ({
+  email,
+  password,
+  username,
+  isStaff,
+  termsAccepted,
+  isInvitationPending
+}: RegisterParams): Promise<User> => {
   const { data } = await axios.post('/register', {
     email,
     password,
     username,
-    isStaff
+    isStaff,
+    termsAccepted,
+    isInvitationPending
   });
 
   return data;

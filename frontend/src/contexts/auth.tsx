@@ -8,9 +8,11 @@ import { useQueryClient } from 'react-query';
 import { getCookie, removeCookie, setCookie } from '@/utils/cookie';
 import { LoggedUser } from '@/interfaces/user';
 import { useGetMe } from '@/api/hooks/useAuthAPI';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { configureAxios } from '@/configs/axios';
 import { ROUTES } from '@/configs/routes';
+import { AcceptTermsModal } from '@/components/organisms/AcceptTermsModal';
+import { useAcceptTerms } from '@/api/hooks/useUserAPI';
 
 const REFETCH_INTERVAL = 15 * 60 * 1000; // 15 minutes
 
@@ -56,6 +58,9 @@ export const AuthContext = createContext<AuthContextType>(initialContext);
 export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [isReady, setIsReady] = useState(getCookie('accessToken') === null);
   const [enabled, setEnabled] = useState(false);
+  const [showTermsModal, setShowTermsModal] = useState(false);
+  const currentRoute = usePathname();
+  const isTermsRoute = currentRoute === ROUTES.TERMS_OF_USE || currentRoute === ROUTES.PRIVACY_POLICY;
 
   const isAxiosConfigured = useRef(false);
   const expirationDate = useRef<Date | null>(decodeExpirationDate(getCookie('refreshToken') ?? null));
@@ -68,6 +73,17 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
     onSettled: () => setIsReady(true)
   });
 
+  const acceptTerms = useAcceptTerms({
+    onSuccess: () => {
+      setShowTermsModal(false);
+    }
+  });
+
+  const onTermsAccepted = () => {
+    acceptTerms.mutate(true);
+    refreshUser();
+  };
+
   useEffect(() => {
     setEnabled(getCookie('accessToken') != null);
   }, [getCookie('accessToken')]);
@@ -75,6 +91,12 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
   useEffect(() => {
     if (user?.isBlocked) {
       clearUser();
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (user && !user?.termsAccepted) {
+      setShowTermsModal(true);
     }
   }, [user]);
 
@@ -87,6 +109,7 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
     expirationDate.current = null;
 
     queryClient.removeQueries();
+    setShowTermsModal(false);
     replace(ROUTES.AUTHENTICATION);
   };
 
@@ -116,7 +139,12 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
     isReady
   };
 
-  return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={contextValue}>
+      {children}
+      <AcceptTermsModal isOpen={showTermsModal && !isTermsRoute} onCancel={clearUser} onValidate={onTermsAccepted} />
+    </AuthContext.Provider>
+  );
 };
 
 export const useAuthContext = () => {

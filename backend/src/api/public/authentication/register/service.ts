@@ -5,12 +5,15 @@ import { processTransaction } from '../../../../core/database';
 import { hashPassword } from '../common/services/password.service';
 import { UserEntityInterface, UserType } from '../../../../entities/user.entity';
 import { emailSender } from '../../../../services/emailSender';
+import userDidNotAcceptTermsError from '../../../common/errors/userDidNotAcceptTerms.error';
 
 export interface RegisterServiceOptions {
   email: string;
   password: string;
   username: string;
   isStaff: boolean;
+  termsAccepted: boolean;
+  isInvitationPending?: boolean;
   userRepository: UserRepositoryInterface;
 }
 
@@ -24,6 +27,8 @@ export default async ({
   password,
   username,
   isStaff,
+  termsAccepted,
+  isInvitationPending = false,
   userRepository,
 }: RegisterServiceOptions): Promise<UserEntityInterface | undefined> => {
   const user = await userRepository.getOneByEmail(email);
@@ -31,10 +36,15 @@ export default async ({
     throw userEmailAlreadyExistsError();
   }
 
+  if (!termsAccepted && !isInvitationPending) {
+    throw userDidNotAcceptTermsError();
+  }
+
   let newUser;
 
   await processTransaction(async (transactionalEntityManager) => {
     const hashedPassword = await hashPassword(password);
+    const now = new Date();
 
     newUser = await userRepository.createOne(
       {
@@ -52,6 +62,9 @@ export default async ({
         isAdmin: false,
         isBlocked: false,
         isStaff,
+        isInvitationPending,
+        termsAcceptedAt: now,
+        termsAccepted,
       },
       transactionalEntityManager,
     );

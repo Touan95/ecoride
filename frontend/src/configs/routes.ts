@@ -11,5 +11,6 @@ export enum ROUTES {
   LEGAL_NOTICE = '/mentions-legales',
   CONTACT = '/contact',
   AUTHENTICATION = '/connexion',
-  ADMIN_DASHBOARD = '/admin'
+  ADMIN_DASHBOARD = '/admin',
+  TERMS_OF_USE = '/conditions-generales-d-utilisation'
 }

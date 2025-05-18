@@ -2,6 +2,7 @@ export enum ErrorCodes {
   INVALID_JWT_FORMAT = 'invalid-jwt-format',
   USER_NOT_FOUND = 'user-not-found',
   USER_EMAIL_ALREADY_EXISTS = 'user-email-already-exists',
+  USER_DID_NOT_ACCEPT_TERMS = 'user-did-not-accept-terms',
   BAD_CREDENTIALS = 'bad-credentials',
   INVALID_TOKEN_UNAUTHORIZED = 'invalid-token-unauthorized',
   FORBIDDEN_ADMIN_ACCESS = 'forbidden-admin-access',

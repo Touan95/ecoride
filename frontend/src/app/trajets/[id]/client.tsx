@@ -169,7 +169,7 @@ export default function RideDetailsPageClient() {
     loginMutation.mutate(data);
   };
 
-  const onRegister = (data: Omit<RegisterParams, 'isStaff'>) => {
+  const onRegister = (data: Omit<RegisterParams, 'isStaff' | 'isInvitationPending'>) => {
     registerMutation.mutate({ ...data, isStaff: false });
   };
 

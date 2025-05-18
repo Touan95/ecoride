@@ -13,14 +13,14 @@ import { HTMLTag } from '@/components/atoms/Typography/interface';
 import { Checkbox } from '@/components/ui/checkbox';
 import Link from 'next/link';
 import { ROUTES } from '@/configs/routes';
-import { useState } from 'react';
 
 interface RegisterFormProps {
-  onRegister: (params: Omit<RegisterParams, 'isStaff'>) => void;
+  onRegister: (params: Omit<RegisterParams, 'isStaff' | 'isInvitationPending'>) => void;
   onLoginClick?: () => void;
   title?: string;
   buttonTitle?: string;
   titleTag?: HTMLTag;
+  adminInvitation?: boolean;
 }
 
 export const RegisterForm = ({
@@ -28,16 +28,17 @@ export const RegisterForm = ({
   onLoginClick,
   title = 'Inscrivez-vous',
   buttonTitle = "S'inscrire",
-  titleTag = 'p'
+  titleTag = 'p',
+  adminInvitation = false
 }: RegisterFormProps) => {
-  const [privacyChecked, setPrivacyChecked] = useState(false);
   const form = useForm<RegisterSchemaType>({
     resolver: zodResolver(registerFormSchema),
     defaultValues: {
       username: '',
       email: '',
       password: '',
-      confirmPassword: ''
+      confirmPassword: '',
+      termsAccepted: adminInvitation ? true : false
     }
   });
 
@@ -45,10 +46,6 @@ export const RegisterForm = ({
 
   const onSubmit = (values: RegisterSchemaType) => {
     onRegister({ ...values });
-  };
-
-  const handleCheckboxChange = (checked: boolean) => {
-    setPrivacyChecked(checked);
   };
 
   const buttonDisabled = form.formState.isSubmitting || Object.keys(errors).length > 0;
@@ -111,21 +108,40 @@ export const RegisterForm = ({
             </FormItem>
           )}
         />
-        <div className="h-10 items-center flex gap-4">
-          <Checkbox
-            id="privacy-checkbox"
-            aria-label="Accepter la politique de confidentialité"
-            onCheckedChange={handleCheckboxChange}
-            checked={privacyChecked}
-          />
-          <Typography variant="small" htmlFor="privacy-checkbox">
-            J&apos;ai lu et j&apos;accepte la{' '}
-            <Link href={ROUTES.PRIVACY_POLICY} className="underline">
-              politique de confidentialité
-            </Link>
+        {adminInvitation ? (
+          <Typography>
+            {
+              '⚠️ Le collaborateur ne pourra accéder à la plateforme qu’après avoir accepté les Conditions Générales d’Utilisation et la Politique de confidentialité.'
+            }
           </Typography>
-        </div>
-        <Button type="submit" disabled={buttonDisabled || !privacyChecked} className="mt-4">
+        ) : (
+          <FormField
+            control={form.control}
+            name="termsAccepted"
+            render={({ field }) => (
+              <FormItem>
+                <div className="flex items-center gap-2">
+                  <FormControl>
+                    <Checkbox id="terms-checkbox" checked={field.value} onCheckedChange={field.onChange} />
+                  </FormControl>
+                  <Typography variant="small" htmlFor="terms-checkbox">
+                    J&apos;ai lu et j&apos;accepte les{' '}
+                    <Link href={ROUTES.TERMS_OF_USE} className="underline" target="_blank">
+                      Conditions Générales d&apos;Utilisation
+                    </Link>{' '}
+                    et la{' '}
+                    <Link href={ROUTES.PRIVACY_POLICY} className="underline" target="_blank">
+                      politique de confidentialité
+                    </Link>
+                    .
+                  </Typography>
+                </div>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
+        <Button type="submit" disabled={buttonDisabled} className="mt-4">
           {buttonTitle}
         </Button>
       </form>

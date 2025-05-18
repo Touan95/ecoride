@@ -6,12 +6,13 @@ import { HTMLTag } from '@/components/atoms/Typography/interface';
 
 export interface LogOrRegisterProps {
   onLogin?: (params: LoginParams) => void;
-  onRegister?: (params: Omit<RegisterParams, 'isStaff'>) => void;
+  onRegister?: (params: Omit<RegisterParams, 'isStaff' | 'isInvitationPending'>) => void;
   registerTitle?: string;
   registerButtonTitle?: string;
   loginTitle?: string;
   loginButtonTitle?: string;
   titleTag?: HTMLTag;
+  adminInvitation?: boolean;
 }
 
 export const LogOrRegister = ({
@@ -21,7 +22,8 @@ export const LogOrRegister = ({
   registerButtonTitle,
   loginTitle,
   loginButtonTitle,
-  titleTag
+  titleTag,
+  adminInvitation = false
 }: LogOrRegisterProps) => {
   const loginAvailable = !!onLogin;
   const registerAvailable = !!onRegister;
@@ -44,6 +46,7 @@ export const LogOrRegister = ({
               title={registerTitle}
               buttonTitle={registerButtonTitle}
               titleTag={titleTag}
+              adminInvitation={adminInvitation}
             />
           )
         : onLogin && (
