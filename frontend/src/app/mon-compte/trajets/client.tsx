@@ -7,7 +7,11 @@ import { DriverRideList } from '@/components/organisms/DriverRideList';
 import { PassengerRideList } from '@/components/organisms/PassengerRideList';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ROUTES } from '@/configs/routes';
+import { DriverRide } from '@/interfaces/ride';
+import { PassengerRide } from '@/interfaces/ridePassenger';
+import { orderRides } from '@/utils/ride';
 import { useRouter } from 'next/navigation';
+import { useMemo } from 'react';
 
 export default function UserRidesPageClient() {
   const router = useRouter();
@@ -15,6 +19,20 @@ export default function UserRidesPageClient() {
   const { data: driverRides, isLoading: isDriverRidesLoading } = useGetDriverRides();
   const cancelPassengerRide = useCancelPassengerRide({});
   const cancelDriverRide = useCancelDriverRide({});
+
+  const orderedDriverRides = useMemo(() => {
+    if (driverRides) {
+      return orderRides(driverRides) as DriverRide[];
+    }
+    return [];
+  }, [driverRides]);
+
+  const orderedPassengerRides = useMemo(() => {
+    if (passengerRides) {
+      return orderRides(passengerRides) as PassengerRide[];
+    }
+    return [];
+  }, [passengerRides]);
 
   const onDetailClick = (id: string) => () => {
     router.push(`${ROUTES.RIDES}/${id}`);
@@ -42,14 +60,14 @@ export default function UserRidesPageClient() {
             </TabsTrigger>
           </TabsList>
 
-          {!isPassengerRidesLoading && passengerRides && (
+          {!isPassengerRidesLoading && orderedPassengerRides && (
             <TabsContent value="passenger">
-              <PassengerRideList onCancelClick={onPassengerCancelClick} onDetailClick={onDetailClick} rides={passengerRides} />
+              <PassengerRideList onCancelClick={onPassengerCancelClick} onDetailClick={onDetailClick} rides={orderedPassengerRides} />
             </TabsContent>
           )}
-          {!isDriverRidesLoading && driverRides && (
+          {!isDriverRidesLoading && orderedDriverRides && (
             <TabsContent value="driver">
-              <DriverRideList onCancelClick={onDriverCancelClick} onDetailClick={onDetailClick} rides={driverRides} />
+              <DriverRideList onCancelClick={onDriverCancelClick} onDetailClick={onDetailClick} rides={orderedDriverRides} />
             </TabsContent>
           )}
         </Tabs>

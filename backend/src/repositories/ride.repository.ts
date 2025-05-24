@@ -171,7 +171,7 @@ export const RideRepository: RideRepositoryInterface = AppDataSource.getReposito
       .leftJoin('ride.car', 'car')
       .addSelect(['car.seats'])
       .where('driver.id = :driverId', { driverId })
-      .orderBy('ride.departure_date', 'DESC');
+      .orderBy('ride.departure_date', 'ASC');
 
     return query.getMany();
   },

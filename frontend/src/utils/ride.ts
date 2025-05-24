@@ -1,4 +1,6 @@
 import { RideStatus } from '@/api/lib/user';
+import { DriverRide } from '@/interfaces/ride';
+import { PassengerRide } from '@/interfaces/ridePassenger';
 
 export const getRideStatusLabel = (status: RideStatus) => {
   switch (status) {
@@ -14,3 +16,10 @@ export const getRideStatusLabel = (status: RideStatus) => {
 };
 
 export const SERVICE_FEE = 2;
+
+export const orderRides = (rides: DriverRide[] | PassengerRide[]) => {
+  const ongoingRides = rides.filter((ride) => ride.status === RideStatus.ONGOING);
+  const upcomingRides = rides.filter((ride) => ride.status === RideStatus.UPCOMING);
+  const pastRides = rides.filter((ride) => ride.status === RideStatus.COMPLETED || ride.status === RideStatus.CANCELLED);
+  return [...ongoingRides, ...upcomingRides, ...pastRides.reverse()];
+};
