@@ -62,46 +62,49 @@ export const AddRideForm = ({ onSubmit, initialValues, cars, onAddCar, isLoading
 
   const formValues = form.getValues();
 
-  const handleSubmit = () => {
-    const formValues = form.getValues();
+  const onValid = (formValues: AddRideFormSchemaType) => {
+    const now = new Date();
+    let hasError = false;
 
-    form.clearErrors();
-
-    if (formValues.carId === undefined) {
+    if (!formValues.carId) {
       form.setError('carId', { type: 'required', message: SchemaError.CAR_REQUIRED });
+      hasError = true;
     }
 
     if (formValues.price < 2) {
       form.setError('price', { type: 'required', message: SchemaError.RIDE_PRICE });
+      hasError = true;
     }
 
-    if (formValues.departureDate === undefined) {
+    if (!formValues.departureDate) {
       form.setError('departureDate', { type: 'required', message: SchemaError.REQUIRED });
-    }
-
-    if (formValues.departureDate < now) {
+      hasError = true;
+    } else if (formValues.departureDate < now) {
       form.setError('departureDate', { type: 'required', message: SchemaError.DEPARTURE_DATE_PAST });
+      hasError = true;
     }
 
-    if (formValues.departureDate > formValues.arrivalDate) {
-      form.setError('arrivalDate', { type: 'required', message: SchemaError.DEPARTURE_DATE_AFTER_ARRIVAL });
-    }
-
-    if (formValues.arrivalDate === undefined) {
+    if (!formValues.arrivalDate) {
       form.setError('arrivalDate', { type: 'required', message: SchemaError.REQUIRED });
+      hasError = true;
+    } else if (formValues.departureDate && formValues.departureDate > formValues.arrivalDate) {
+      form.setError('arrivalDate', { type: 'required', message: SchemaError.DEPARTURE_DATE_AFTER_ARRIVAL });
+      hasError = true;
     }
 
-    if (formValues.departureLocation === undefined) {
+    if (!formValues.departureLocation) {
       form.setError('departureLocation', { type: 'required', message: SchemaError.REQUIRED });
+      hasError = true;
     }
 
-    if (formValues.arrivalLocation === undefined) {
+    if (!formValues.arrivalLocation) {
       form.setError('arrivalLocation', { type: 'required', message: SchemaError.REQUIRED });
+      hasError = true;
     }
 
-    if (Object.keys(form.formState.errors).length === 0) {
-      onSubmit(formValues);
-    }
+    if (hasError) return;
+
+    onSubmit(formValues);
   };
 
   const onSelectCar = (carId: string) => {
@@ -138,7 +141,7 @@ export const AddRideForm = ({ onSubmit, initialValues, cars, onAddCar, isLoading
     <>
       <Form {...form}>
         {Object.keys(form.formState.errors).length === 0 ? 'true' : 'false'}
-        <form onSubmit={form.handleSubmit(handleSubmit)} className="flex flex-col gap-4">
+        <form onSubmit={form.handleSubmit(onValid)} className="flex flex-col gap-4">
           <ItineraryFields
             form={form}
             departureLocationError={errors.departureLocation?.message}
@@ -154,7 +157,7 @@ export const AddRideForm = ({ onSubmit, initialValues, cars, onAddCar, isLoading
             />
             <div className="flex flex-col gap-4 items-center">
               <PriceField onValueChange={onPriceChange} error={errors.price?.message} />
-              <Button className="md:h-16 h-14 w-40 md:w-full" color="secondary" onClick={handleSubmit} disabled={isLoading || isSuccess}>
+              <Button type="submit" className="md:h-16 h-14 w-40 md:w-full" color="secondary" disabled={isLoading || isSuccess}>
                 {"C'est parti !"}
               </Button>
             </div>

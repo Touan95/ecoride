@@ -10,17 +10,20 @@ import { useAuthContext } from '@/contexts/auth';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
+import { useQueryClient } from 'react-query';
 
 export default function AddRidePage() {
   const { user } = useAuthContext();
   const { data: apiUser, refetch: refetchUser } = useGetOneUser(user?.id);
   const cars = apiUser?.cars ?? [];
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const addRide = useAddRide({
     onSuccess: (data) => {
       toast.success(data.message);
       router.push(`/trajets/${data.rideId}`);
+      queryClient.invalidateQueries({ queryKey: ['driver_rides'] });
     }
   });
 
