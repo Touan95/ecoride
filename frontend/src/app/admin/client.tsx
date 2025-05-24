@@ -22,6 +22,8 @@ import { StaffUserList } from '@/components/molecules/StaffUserList';
 import { BlockedUserList } from '@/components/molecules/BlockedUserList';
 import { SearchUserModal } from '@/components/organisms/SearchUserModal';
 import { RegisterParams } from '@/api/lib/auth';
+import toast from 'react-hot-toast';
+import { useQueryClient } from 'react-query';
 
 export default function AdminPageClient() {
   const { user } = useAuthContext();
@@ -33,13 +35,15 @@ export default function AdminPageClient() {
   const allStaff = staffData ? staffData.allStaff : [];
   const blockedUsers = blockedUsersData ? blockedUsersData.blockedUsers : [];
   const isAdmin = !!user?.isAdmin;
+  const queryClient = useQueryClient();
 
   const [createStaffModalOpen, setCreateStaffModalOpen] = useState(false);
   const [searchUserModalOpen, setSearchUserModalOpen] = useState(false);
   const [giveStaffAccessEmail, setGiveStaffAccessEmail] = useState<string | undefined>(undefined);
 
   const giveStaffAccess = useGiveStaffAccess({
-    onSuccess: () => {
+    onSuccess: (data) => {
+      toast.success(data.message);
       setGiveStaffAccessEmail(undefined);
       setCreateStaffModalOpen(false);
     }
@@ -47,7 +51,9 @@ export default function AdminPageClient() {
 
   const registerMutation = useRegisterMutation({
     onSuccess: () => {
+      toast.success('Un nouveau compte avec accès staff a été créé');
       setCreateStaffModalOpen(false);
+      queryClient.invalidateQueries({ queryKey: ['all_staff'] });
     },
     onError: (error, params) => {
       if (error.code === 'user-email-already-exists') {

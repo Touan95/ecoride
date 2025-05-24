@@ -27,6 +27,8 @@ import {
 import { AddReviewCard } from '@/components/organisms/AddReviewCard';
 import { LoginParams, RegisterParams } from '@/api/lib/auth';
 import { ConfirmBookingModal } from '@/components/organisms/ConfirmBookingModal';
+import toast from 'react-hot-toast';
+import { ConfirmationModal } from '@/components/organisms/ConfirmationModal';
 
 export default function RideDetailsPageClient() {
   const { saveToken, user } = useAuthContext();
@@ -36,17 +38,33 @@ export default function RideDetailsPageClient() {
 
   const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
   const [confirmBookingModalOpen, setConfirmBookingModalOpen] = useState<boolean>(false);
+  const [driverConfirmationModalMode, setDriverConfirmationModalMode] = useState<'start' | 'end' | undefined>(undefined);
 
   const { data: ride, refetch: refetchRide } = useGetRideDetails(rideId);
   const { data: reviewsData } = useGetRideReviews({ rideId, approvedOnly: true });
   const approvedReviews = reviewsData ? reviewsData.reviews : [];
   const allReviewerIds = reviewsData ? reviewsData.allReviewerIds : [];
-  const startRide = useStartRide({});
-  const endRide = useEndRide({});
-  const addReview = useAddReview({});
+  const startRide = useStartRide({
+    onSuccess: (data) => {
+      toast.success(data.message);
+      closeDriverConfirmationModal();
+    }
+  });
+  const endRide = useEndRide({
+    onSuccess: (data) => {
+      toast.success(data.message);
+      closeDriverConfirmationModal();
+    }
+  });
+  const addReview = useAddReview({
+    onSuccess: (data) => {
+      toast.success(data.message);
+    }
+  });
 
   const bookRide = useBookRide({
-    onSuccess: () => {
+    onSuccess: (data) => {
+      toast.success(data.message);
       refetchRide();
     }
   });
@@ -132,15 +150,24 @@ export default function RideDetailsPageClient() {
     }
   };
 
-  const onStartRide = () => {
-    if (ride?.id) {
-      startRide.mutate(ride.id);
-    }
+  const openDriverConfirmationModal = (mode: 'start' | 'end') => {
+    setDriverConfirmationModalMode(mode);
   };
 
-  const onEndRide = () => {
-    if (ride?.id) {
-      endRide.mutate(ride.id);
+  const closeDriverConfirmationModal = () => {
+    setDriverConfirmationModalMode(undefined);
+  };
+
+  const onValidateDriverConfirmation = () => {
+    if (driverConfirmationModalMode && ride?.id) {
+      switch (driverConfirmationModalMode) {
+        case 'start':
+          startRide.mutate(ride.id);
+          break;
+        case 'end':
+          endRide.mutate(ride.id);
+          break;
+      }
     }
   };
 
@@ -182,7 +209,13 @@ export default function RideDetailsPageClient() {
       return;
     }
     if (isUserTheDriver) {
-      return getDriverAction({ status: ride.status, canEndRide, canStartRide, onEndRide, onStartRide });
+      return getDriverAction({
+        status: ride.status,
+        canEndRide,
+        canStartRide,
+        onEndRide: () => openDriverConfirmationModal('end'),
+        onStartRide: () => openDriverConfirmationModal('start')
+      });
     } else if (isUserPassenger) {
       return getPassengerAction(ride.status);
     } else {
@@ -193,7 +226,7 @@ export default function RideDetailsPageClient() {
       );
       return getPublicAction({ bookComponent, status: ride.status });
     }
-  }, [isUserTheDriver, canStartRide, canEndRide, ride?.status, isSeatAvailable, onEndRide, onBookClick, onStartRide]);
+  }, [isUserTheDriver, canStartRide, canEndRide, ride?.status, isSeatAvailable, onBookClick]);
 
   if (!ride) {
     return null;
@@ -237,6 +270,18 @@ export default function RideDetailsPageClient() {
         onClose={closeConfirmBookingModal}
         price={ride.price}
         onValidate={onConfirmBooking}
+      />
+      <ConfirmationModal
+        isOpen={!!driverConfirmationModalMode}
+        onClose={closeDriverConfirmationModal}
+        onValidate={onValidateDriverConfirmation}
+        onCancel={closeDriverConfirmationModal}
+        title={driverConfirmationModalMode === 'start' ? 'Démarrage du trajet' : 'Arrivée à destination'}
+        content={
+          driverConfirmationModalMode === 'start'
+            ? 'Voulez-vous vraiment démarrer ce trajet ?'
+            : 'Voulez-vous vraiment marquer ce trajet comme terminé ?'
+        }
       />
     </>
   );

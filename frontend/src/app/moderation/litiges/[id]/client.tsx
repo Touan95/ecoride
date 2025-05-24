@@ -8,7 +8,7 @@ import { Typography } from '@/components/atoms/Typography';
 import { PriceCard } from '@/components/molecules/PriceCard';
 import { GreenCard } from '@/components/molecules/GreenCard';
 import { isCarGreen } from '@/utils/car';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useGetOneReview, useGetOneUser, useGetRideDetails, useResolveDispute } from '@/api/hooks/useUserAPI';
 import { rideApiToInfoCard, rideApiToItinerary } from '@/app/trajets/[id]/utils';
 import { DisputeDetails } from '@/components/molecules/DisputeDetails';
@@ -17,18 +17,23 @@ import { Button } from '@/components/molecules/Button';
 import { DisputeResolutionActionFormSchemaType } from '@/schemas/staff';
 import { DisputeCreditAction, DisputeReviewAction } from '@/interfaces/review';
 import { useQueryClient } from 'react-query';
+import toast from 'react-hot-toast';
+import { ROUTES } from '@/configs/routes';
 
 export default function DisputeDetailPageClient() {
   const queryClient = useQueryClient();
+  const router = useRouter();
   const { id: reviewId } = useParams<{ id: string }>();
 
   const { data: review } = useGetOneReview(reviewId);
   const { data: ride } = useGetRideDetails(review?.rideId);
   const { data: passenger } = useGetOneUser(review?.userId);
   const resolveDispute = useResolveDispute({
-    onSuccess: () => {
+    onSuccess: (data) => {
+      toast.success(data.message);
       queryClient.invalidateQueries({ queryKey: ['ride', ride?.id] });
       queryClient.invalidateQueries({ queryKey: ['user', driver?.id] });
+      router.push(ROUTES.STAFF_DASHBOARD);
     }
   });
 
