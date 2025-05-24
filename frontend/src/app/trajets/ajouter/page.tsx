@@ -6,6 +6,7 @@ import { Typography } from '@/components/atoms/Typography';
 import SectionContainer from '@/components/layout/SectionContainer';
 import { AddRideForm } from '@/components/organisms/AddRideForm';
 import { CarDetailsModal } from '@/components/organisms/CarDetailsModal';
+import { ROUTES } from '@/configs/routes';
 import { useAuthContext } from '@/contexts/auth';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -22,7 +23,7 @@ export default function AddRidePage() {
   const addRide = useAddRide({
     onSuccess: (data) => {
       toast.success(data.message);
-      router.push(`/trajets/${data.rideId}`);
+      router.push(`${ROUTES.RIDES}/${data.rideId}`);
       queryClient.invalidateQueries({ queryKey: ['driver_rides'] });
     }
   });

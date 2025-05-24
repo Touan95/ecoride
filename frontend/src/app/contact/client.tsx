@@ -15,10 +15,16 @@ import { Checkbox } from '@/components/ui/checkbox';
 import Link from 'next/link';
 import { ROUTES } from '@/configs/routes';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 
 export default function ContactPageClient() {
   const [privacyChecked, setPrivacyChecked] = useState(false);
-  const contact = useContactMutation({});
+  const contact = useContactMutation({
+    onSuccess: () => {
+      toast.success('Votre message a été envoyé avec succès');
+      form.reset();
+    }
+  });
   const form = useForm<ContactFormSchemaType>({
     resolver: zodResolver(contactFormSchema),
     defaultValues: { name: '', email: '', message: '' }

@@ -250,6 +250,9 @@ export const useApproveReview = ({ onSuccess, onError }: UseMutationOptions<Base
       }
       queryClient.invalidateQueries({ queryKey: ['reviews'] });
       queryClient.invalidateQueries({ queryKey: ['reviews_to_approve'] });
+      queryClient.invalidateQueries({
+        predicate: (query) => Array.isArray(query.queryKey) && query.queryKey.some((key) => String(key).includes('reviews'))
+      });
     },
     onError
   });
@@ -264,6 +267,9 @@ export const useResolveDispute = ({ onSuccess, onError }: UseMutationOptions<Bas
       }
       queryClient.invalidateQueries({ queryKey: ['reviews'] });
       queryClient.invalidateQueries({ queryKey: ['reviews_to_approve'] });
+      queryClient.invalidateQueries({
+        predicate: (query) => Array.isArray(query.queryKey) && query.queryKey.some((key) => String(key).includes('reviews'))
+      });
     },
     onError
   });
@@ -274,8 +280,14 @@ export const useGetOneReview = (reviewId?: string) => {
 };
 
 export const useGiveStaffAccess = ({ onSuccess, onError }: UseMutationOptions<BaseAPIResponse, ErrorResponse, string>) => {
+  const queryClient = useQueryClient();
   return useMutation((email) => giveStaffAccessRequest(email), {
-    onSuccess,
+    onSuccess: (data, params, context) => {
+      if (onSuccess) {
+        onSuccess(data, params, context);
+      }
+      queryClient.invalidateQueries({ queryKey: ['all_staff'] });
+    },
     onError
   });
 };

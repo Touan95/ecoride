@@ -6,6 +6,6 @@ export interface BookSeatResponse {
 }
 
 export default (): BookSeatResponse => ({
-  message: 'Vous avez réservé un siège pour ce trajet avec succès',
+  message: 'Vous avez réservé une place pour ce trajet avec succès',
   code: ResponseCodes.BOOK_SEAT_SUCCESS,
 });
