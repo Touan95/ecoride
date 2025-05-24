@@ -7,17 +7,26 @@ import SectionContainer from '@/components/layout/SectionContainer';
 import { AddRideForm } from '@/components/organisms/AddRideForm';
 import { CarDetailsModal } from '@/components/organisms/CarDetailsModal';
 import { useAuthContext } from '@/contexts/auth';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 
 export default function AddRidePage() {
   const { user } = useAuthContext();
   const { data: apiUser, refetch: refetchUser } = useGetOneUser(user?.id);
   const cars = apiUser?.cars ?? [];
+  const router = useRouter();
 
-  const addRide = useAddRide({});
+  const addRide = useAddRide({
+    onSuccess: (data) => {
+      toast.success(data.message);
+      router.push(`/trajets/${data.rideId}`);
+    }
+  });
 
   const addCar = useAddCar({
-    onSuccess: () => {
+    onSuccess: (data) => {
+      toast.success(data.message);
       refetchUser();
       closeAddCarModal();
     }
@@ -50,7 +59,13 @@ export default function AddRidePage() {
       <SectionContainer className="flex flex-col gap-5 my-10">
         <Typography variant="title">Proposer un nouveau trajet</Typography>
         <div className="flex flex-col gap-4">
-          <AddRideForm onAddCar={openAddCarModal} cars={cars} onSubmit={onSubmit} />
+          <AddRideForm
+            onAddCar={openAddCarModal}
+            cars={cars}
+            onSubmit={onSubmit}
+            isLoading={addCar.isLoading}
+            isSuccess={addRide.isSuccess}
+          />
         </div>
       </SectionContainer>
       <CarDetailsModal isOpen={isAddCarmodalOpen} onClose={closeAddCarModal} onSubmit={onCarDetailsSubmit} />

@@ -84,8 +84,8 @@ export const DriverCard = ({ username, avatar, rating, acceptsPets, acceptsSmoki
   }, [reviews]);
 
   return (
-    <div className={clsxm(['w-full rounded-xl flex p-5 shadow gap-5 bg-primary-50 md:flex-row flex-col'])}>
-      <div className="flex flex-col items-center w-full md:w-20 h-25">
+    <div className="w-full rounded-xl flex p-5 shadow gap-5 bg-primary-50 md:flex-row flex-col">
+      <div className="flex flex-col items-center w-full md:w-20 h-25 gap-2">
         <Image src={avatar} height={50} width={50} className="rounded-full" alt={`Avatar du conducteur ${username}`} />
         <div className="w-full">
           <Typography align="center" variant="cardTitleSm" color="primary" ellipsis>
@@ -101,11 +101,11 @@ export const DriverCard = ({ username, avatar, rating, acceptsPets, acceptsSmoki
       </div>
       <div className="flex flex-col w-full">
         <div className="flex flex-col justify-evenly h-25 gap-4 w-full">
-          <div className="flex gap-2 items-center">
+          <div className="gap-2 items-center grid grid-cols-[34px_1fr]">
             <PetsIcon size={30} className="text-primary-900" />
             <Typography variant="cardTitleSm">{petsText}</Typography>
           </div>
-          <div className="flex gap-2 items-center">
+          <div className="gap-2 items-center grid grid-cols-[34px_1fr]">
             <SmokersIcon size={30} className="text-primary-900" />
             <Typography variant="cardTitleSm">{smokersText}</Typography>
           </div>
@@ -115,13 +115,13 @@ export const DriverCard = ({ username, avatar, rating, acceptsPets, acceptsSmoki
             <div className="border-t border-dashed border-primary-900 w-full my-4" />
             <div className="flex flex-col gap-4 w-full">
               <ul>
-                <div className="flex gap-2 items-center">
+                <div className="gap-2 items-center grid grid-cols-[34px_1fr]">
                   <TbExclamationCircle size={30} className="text-primary-900" />
                   <Typography variant="cardTitleSm">Les demandes du chauffeur</Typography>
                 </div>
                 {customRules?.map((pref, index) => {
                   return (
-                    <li key={index} className="flex gap-2 items-center">
+                    <li key={index} className="ml-8 flex items-center">
                       <TbCircleDotFilled size={10} className="mx-2 text-primary-900" />
                       <Typography variant="cardTitleSm">{pref}</Typography>
                     </li>
@@ -132,7 +132,7 @@ export const DriverCard = ({ username, avatar, rating, acceptsPets, acceptsSmoki
           </>
         )}
         <div className="border-t border-dashed border-primary-900 w-full my-4" />
-        <div className="flex flex-col gap-8 w-full pr-10">
+        <div className="flex flex-col gap-8 w-full md:pr-10">
           <Typography variant="cardTitleSm">Les avis</Typography>
           {reviewsContent}
         </div>

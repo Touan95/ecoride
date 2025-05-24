@@ -25,9 +25,13 @@ interface ItineraryFieldsProps {
 export const ItineraryFields = ({ form, departureLocationError, arrivalLocationError }: ItineraryFieldsProps) => {
   const now = new Date();
 
-  const handleDateSelect = (dateType: 'arrivalDate' | 'departureDate') => (date: Date | undefined) => {
-    if (date) {
-      form.setValue(dateType, date);
+  const handleDateSelect = (dateType: 'arrivalDate' | 'departureDate') => (selectedDate: Date | undefined) => {
+    if (selectedDate) {
+      const currentDate = form.getValues(dateType) || new Date();
+      const newDate = new Date(selectedDate);
+      newDate.setHours(currentDate.getHours());
+      newDate.setMinutes(currentDate.getMinutes());
+      form.setValue(dateType, newDate);
     }
   };
 
@@ -89,30 +93,34 @@ export const ItineraryFields = ({ form, departureLocationError, arrivalLocationE
                     <div className="flex flex-col sm:flex-row sm:h-[300px] divide-y sm:divide-y-0 sm:divide-x">
                       <ScrollArea className="w-64 sm:w-auto">
                         <div className="flex sm:flex-col p-2">
-                          {Array.from({ length: 24 }, (_, i) => i)
-                            .reverse()
-                            .map((hour) => (
-                              <ShadButton
-                                key={hour}
-                                size="icon"
-                                variant={field.value && field.value.getHours() === hour ? 'default' : 'ghost'}
-                                className="sm:w-full shrink-0 aspect-square"
-                                onClick={() => handleTimeChange('hour', hour.toString(), dateType)}
-                              >
-                                {hour}
-                              </ShadButton>
-                            ))}
+                          {Array.from({ length: 24 }, (_, i) => i).map((hour) => (
+                            <ShadButton
+                              key={hour}
+                              size="icon"
+                              variant="ghost"
+                              className={clsxm(
+                                'sm:w-full shrink-0 aspect-square hover:bg-primary-300 cursor-pointer h-8 w-8',
+                                field.value && field.value.getHours() === hour && 'border-2 border-primary-300'
+                              )}
+                              onClick={() => handleTimeChange('hour', hour.toString(), dateType)}
+                            >
+                              {hour}
+                            </ShadButton>
+                          ))}
                         </div>
                         <ScrollBar orientation="horizontal" className="sm:hidden" />
                       </ScrollArea>
                       <ScrollArea className="w-64 sm:w-auto">
                         <div className="flex sm:flex-col p-2">
-                          {Array.from({ length: 12 }, (_, i) => i * 5).map((minute) => (
+                          {Array.from({ length: 4 }, (_, i) => i * 15).map((minute) => (
                             <ShadButton
                               key={minute}
                               size="icon"
-                              variant={field.value && field.value.getMinutes() === minute ? 'default' : 'ghost'}
-                              className="sm:w-full shrink-0 aspect-square"
+                              variant="ghost"
+                              className={clsxm(
+                                'sm:w-full shrink-0 aspect-square hover:bg-primary-300 cursor-pointer h-8 w-8',
+                                field.value && field.value.getMinutes() === minute && 'border-2 border-primary-300'
+                              )}
                               onClick={() => handleTimeChange('minute', minute.toString(), dateType)}
                             >
                               {minute.toString().padStart(2, '0')}

@@ -48,6 +48,10 @@ export interface AddRideParams {
   departureDate: Date;
 }
 
+export interface AddRideResponse extends BaseAPIResponse {
+  rideId: string;
+}
+
 interface GetOneUserResponse extends User {
   cars: Car[];
 }
@@ -177,7 +181,7 @@ export const deleteCarRequest = async (params: DeleteCarParams): Promise<BaseAPI
   return data;
 };
 
-export const addRideRequest = async (params: AddRideParams): Promise<BaseAPIResponse> => {
+export const addRideRequest = async (params: AddRideParams): Promise<AddRideResponse> => {
   const { userId, ...bodyParams } = params;
   const { data } = await axios.post(`/user/${userId}/ride/add`, bodyParams);
   return data;

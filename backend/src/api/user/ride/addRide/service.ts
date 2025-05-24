@@ -6,6 +6,8 @@ import { RideEntityInterface, RideLocation, RideStatus } from '../../../../entit
 import { RideRepositoryInterface } from '../../../../repositories/ride.repository';
 import userCarNotFoundError from '../../../common/errors/userCarNotFound.error';
 import carNotFoundError from '../../../common/errors/carNotFound.error';
+import rideArrivalBeforeDepartureError from '../../../common/errors/rideArrivalBeforeDeparture.error';
+import rideDeparturePastError from '../../../common/errors/rideDeparturePast.error';
 
 export interface AddRideServiceOptions {
   userId: string;
@@ -46,6 +48,14 @@ export const service = async ({
   const car = await carRepository.getOneById(carId);
   if (!car) {
     throw carNotFoundError();
+  }
+
+  if (departureDate < new Date()) {
+    throw rideDeparturePastError();
+  }
+
+  if (arrivalDate < departureDate) {
+    throw rideArrivalBeforeDepartureError();
   }
 
   const carWithOwner = {

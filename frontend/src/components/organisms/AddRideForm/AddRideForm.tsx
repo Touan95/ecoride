@@ -24,9 +24,11 @@ interface AddRideFormProps {
   initialValues?: AddRideFormSchemaType;
   cars: Car[];
   onAddCar: () => void;
+  isLoading?: boolean;
+  isSuccess?: boolean;
 }
 
-export const AddRideForm = ({ onSubmit, initialValues, cars, onAddCar }: AddRideFormProps) => {
+export const AddRideForm = ({ onSubmit, initialValues, cars, onAddCar, isLoading, isSuccess }: AddRideFormProps) => {
   const [selectedCarId, setSelectedCarId] = useState<string | undefined>(undefined);
 
   const now = new Date();
@@ -61,6 +63,10 @@ export const AddRideForm = ({ onSubmit, initialValues, cars, onAddCar }: AddRide
   const formValues = form.getValues();
 
   const handleSubmit = () => {
+    const formValues = form.getValues();
+
+    form.clearErrors();
+
     if (formValues.carId === undefined) {
       form.setError('carId', { type: 'required', message: SchemaError.CAR_REQUIRED });
     }
@@ -71,6 +77,14 @@ export const AddRideForm = ({ onSubmit, initialValues, cars, onAddCar }: AddRide
 
     if (formValues.departureDate === undefined) {
       form.setError('departureDate', { type: 'required', message: SchemaError.REQUIRED });
+    }
+
+    if (formValues.departureDate < now) {
+      form.setError('departureDate', { type: 'required', message: SchemaError.DEPARTURE_DATE_PAST });
+    }
+
+    if (formValues.departureDate > formValues.arrivalDate) {
+      form.setError('arrivalDate', { type: 'required', message: SchemaError.DEPARTURE_DATE_AFTER_ARRIVAL });
     }
 
     if (formValues.arrivalDate === undefined) {
@@ -85,7 +99,9 @@ export const AddRideForm = ({ onSubmit, initialValues, cars, onAddCar }: AddRide
       form.setError('arrivalLocation', { type: 'required', message: SchemaError.REQUIRED });
     }
 
-    onSubmit(formValues);
+    if (Object.keys(form.formState.errors).length === 0) {
+      onSubmit(formValues);
+    }
   };
 
   const onSelectCar = (carId: string) => {
@@ -121,13 +137,14 @@ export const AddRideForm = ({ onSubmit, initialValues, cars, onAddCar }: AddRide
   return (
     <>
       <Form {...form}>
+        {Object.keys(form.formState.errors).length === 0 ? 'true' : 'false'}
         <form onSubmit={form.handleSubmit(handleSubmit)} className="flex flex-col gap-4">
           <ItineraryFields
             form={form}
             departureLocationError={errors.departureLocation?.message}
             arrivalLocationError={errors.arrivalLocation?.message}
           />
-          <div className="grid md:grid-cols-[2fr_1fr] grid-rows-2 gap-4">
+          <div className="grid md:grid-cols-[2fr_1fr] grid-cols-1 gap-4">
             <AccountCarsCard
               cars={cars}
               onAddCar={onAddCar}
@@ -137,7 +154,7 @@ export const AddRideForm = ({ onSubmit, initialValues, cars, onAddCar }: AddRide
             />
             <div className="flex flex-col gap-4 items-center">
               <PriceField onValueChange={onPriceChange} error={errors.price?.message} />
-              <Button className="md:h-16 h-14 w-40 md:w-full" color="secondary" onClick={handleSubmit}>
+              <Button className="md:h-16 h-14 w-40 md:w-full" color="secondary" onClick={handleSubmit} disabled={isLoading || isSuccess}>
                 {"C'est parti !"}
               </Button>
             </div>

@@ -42,7 +42,8 @@ import {
   unblockUserRequest,
   getBlockedUsersRequest,
   BookRideParams,
-  acceptTermsRequest
+  acceptTermsRequest,
+  AddRideResponse
 } from '../lib/user';
 import { BaseAPIResponse, ErrorResponse } from '../lib/types';
 
@@ -112,7 +113,7 @@ export const useDeleteCarMutation = ({ onSuccess, onError }: UseMutationOptions<
   });
 };
 
-export const useAddRide = ({ onSuccess, onError }: UseMutationOptions<BaseAPIResponse, ErrorResponse, AddRideParams>) => {
+export const useAddRide = ({ onSuccess, onError }: UseMutationOptions<AddRideResponse, ErrorResponse, AddRideParams>) => {
   return useMutation((params) => addRideRequest(params), {
     onSuccess: (data, params, context) => {
       if (onSuccess) {

@@ -21,7 +21,7 @@ export default async (
     const { arrivalLocation, carId, departureLocation, price, arrivalDate, departureDate } =
       req.body;
 
-    await service({
+    const ride = await service({
       userId,
       arrivalLocation,
       departureLocation,
@@ -34,7 +34,7 @@ export default async (
       carRepository: AppDataSource.manager.withRepository(CarRepository),
     });
 
-    const response = serializer();
+    const response = serializer(ride?.id ?? '');
 
     return res.send(response).status(HttpStatuses.OK);
   } catch (error) {
