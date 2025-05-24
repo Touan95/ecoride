@@ -20,6 +20,7 @@ export const SERVICE_FEE = 2;
 export const orderRides = (rides: DriverRide[] | PassengerRide[]) => {
   const ongoingRides = rides.filter((ride) => ride.status === RideStatus.ONGOING);
   const upcomingRides = rides.filter((ride) => ride.status === RideStatus.UPCOMING);
-  const pastRides = rides.filter((ride) => ride.status === RideStatus.COMPLETED || ride.status === RideStatus.CANCELLED);
-  return [...ongoingRides, ...upcomingRides, ...pastRides.reverse()];
+  const completedRides = rides.filter((ride) => ride.status === RideStatus.COMPLETED);
+  const cancelledRides = rides.filter((ride) => ride.status === RideStatus.CANCELLED);
+  return [...ongoingRides, ...upcomingRides, ...completedRides, ...cancelledRides];
 };
