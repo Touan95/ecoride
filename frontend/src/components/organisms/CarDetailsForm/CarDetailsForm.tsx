@@ -78,7 +78,7 @@ export const CarDetailsForm = ({ onSubmit, initialValues, editMode = false }: Ca
         {editMode ? 'Modifiez votre véhicule' : 'Ajoutez un nouveau véhicule'}
       </Typography>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="place-items-center">
-        <div className="grid grid-cols-2 gap-20">
+        <div className="grid md:grid-cols-2 md:gap-20">
           <div>
             <FormField
               control={form.control}

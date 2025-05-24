@@ -88,7 +88,7 @@ export const CarCard = ({
         </div>
       </div>
       {isGreen && (
-        <div className="flex gap-2 items-center">
+        <div className="flex flex-col md:flex-row gap-2 items-center">
           <TbLeaf size={20} className="text-primary-900" />
           <Typography variant="cardTitleSm" weight="light">
             Ce véhicule sera mis en avant comme étant vert car son énergie est électrique
