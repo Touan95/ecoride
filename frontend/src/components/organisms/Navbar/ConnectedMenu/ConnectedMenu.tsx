@@ -33,8 +33,8 @@ export const ConnectedMenu = ({ username, isDriver, isStaff, isAdmin }: Connecte
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="px-5 py-2 w-48 bg-primary-300 border-primary-800">
-        <div className="flex flex-col items-end gap-2">
-          <Typography variant="cardTitle" color="black" align="right">
+        <div className="flex flex-col items-end gap-2 w-40">
+          <Typography variant="cardTitle" color="black" align="right" customClassName="w-full" ellipsis>
             {username}
           </Typography>
           <div className="border-b w-full" />
