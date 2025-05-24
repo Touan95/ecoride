@@ -46,11 +46,11 @@ export const DriverPreferencesForm = ({ initialValues, userId, onValidate }: Dri
           control={form.control}
           name="acceptsSmoking"
           render={({ field }) => (
-            <FormItem className="flex items-center space-x-3 space-y-0 rounded-md focus-within:outline-2 focus-within:outline-blue-600">
+            <FormItem className="flex items-center space-x-3 space-y-0 rounded-md focus-within-visible">
               <FormControl>
-                <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                <Checkbox checked={field.value} onCheckedChange={field.onChange} id="acceptsSmoking" />
               </FormControl>
-              <Typography variant="cardTitleSm" weight="light">
+              <Typography variant="cardTitleSm" weight="light" htmlFor="acceptsSmoking">
                 {"J'accepte les fumeurs"}
               </Typography>
               <FormMessage />
@@ -61,11 +61,11 @@ export const DriverPreferencesForm = ({ initialValues, userId, onValidate }: Dri
           control={form.control}
           name="acceptsPets"
           render={({ field }) => (
-            <FormItem className="flex items-center space-x-3 space-y-0 rounded-md focus-within:outline-2 focus-within:outline-blue-600">
+            <FormItem className="flex items-center space-x-3 space-y-0 rounded-md focus-within-visible">
               <FormControl>
-                <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                <Checkbox checked={field.value} onCheckedChange={field.onChange} id="acceptsPets" />
               </FormControl>
-              <Typography variant="cardTitleSm" weight="light">
+              <Typography variant="cardTitleSm" weight="light" htmlFor="acceptsPets">
                 {"J'accepte les animaux"}
               </Typography>
               <FormMessage />
@@ -80,26 +80,6 @@ export const DriverPreferencesForm = ({ initialValues, userId, onValidate }: Dri
             <Typography variant="extraSmall" weight="light">
               (60 caractères maximum)
             </Typography>
-          </div>
-
-          <div className="flex gap-2 items-center">
-            <Input
-              placeholder="Ajouter une préférence..."
-              value={newPreference}
-              onChange={(e) => setNewPreference(e.target.value)}
-              className="py-1 px-3 text-sm"
-              maxLength={60}
-            />
-            <Button
-              type="button"
-              onClick={() => {
-                setPreferences((prev) => [...prev, newPreference]);
-                setNewPreference('');
-              }}
-              className="w-8 h-8 rounded-full text-xl"
-            >
-              +
-            </Button>
           </div>
 
           <ul className="flex flex-col gap-1">
@@ -122,6 +102,26 @@ export const DriverPreferencesForm = ({ initialValues, userId, onValidate }: Dri
               </li>
             ))}
           </ul>
+
+          <div className="flex gap-2 items-center">
+            <Input
+              placeholder="Ajouter une préférence..."
+              value={newPreference}
+              onChange={(e) => setNewPreference(e.target.value)}
+              className="py-1 px-3 text-sm"
+              maxLength={60}
+            />
+            <Button
+              type="button"
+              onClick={() => {
+                setPreferences((prev) => [...prev, newPreference]);
+                setNewPreference('');
+              }}
+              className="w-8 h-8 rounded-full text-xl"
+            >
+              +
+            </Button>
+          </div>
         </div>
         <Button type="submit" className="w-full">
           Confirmer
