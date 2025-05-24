@@ -15,8 +15,9 @@ import { AccountCarsCard } from '@/components/molecules/AccountCarsCard';
 import { CarDetailsModal } from '@/components/organisms/CarDetailsModal';
 import { Car } from '@/interfaces/car';
 import { AddCarParams } from '@/api/lib/user';
-import { ConfirmCarDeletionModal } from '@/components/organisms/ConfirmCarDeletionModal';
 import { ChangePasswordModal } from '@/components/organisms/ChangePasswordModal';
+import { ConfirmationModal } from '@/components/organisms/ConfirmationModal';
+import toast from 'react-hot-toast';
 
 export default function UserPageClient() {
   const { user } = useAuthContext();
@@ -34,9 +35,10 @@ export default function UserPageClient() {
     }
   });
   const deleteCar = useDeleteCarMutation({
-    onSuccess: () => {
+    onSuccess: (data) => {
       refetchUser();
       closeRemoveCarModal();
+      toast.success(data.message);
     }
   });
   const cars = apiUser?.cars ?? [];
@@ -170,7 +172,14 @@ export default function UserPageClient() {
         onSubmit={onCarDetailsSubmit}
         car={carDetailsModalProp !== 'new' ? carDetailsModalProp : undefined}
       />
-      <ConfirmCarDeletionModal isOpen={!!carToRemoveID} onClose={closeRemoveCarModal} onValidate={onCarDeletion} />
+      <ConfirmationModal
+        isOpen={!!carToRemoveID}
+        onClose={closeRemoveCarModal}
+        onValidate={onCarDeletion}
+        onCancel={closeRemoveCarModal}
+        title={'Suppression de véhicule'}
+        content={'Êtes-vous sur de vouloir supprimer ce véhicule ?'}
+      />
     </>
   );
 }

@@ -10,7 +10,7 @@ import { DriverCard } from '@/components/molecules/DriverCard';
 import { GreenCard } from '@/components/molecules/GreenCard';
 import { Button } from '@/components/molecules/Button';
 import { LogOrRegisterModal } from '@/components/organisms/LoginModal';
-import { ConfirmBookingModal } from '@/components/organisms/ConfirmBookingModal';
+import { ConfirmationModal } from '@/components/organisms/ConfirmBookingModal';
 import { useLoginMutation, useRegisterMutation } from '@/api/hooks/useAuthAPI';
 import { useAuthContext } from '@/contexts/auth';
 import { isCarGreen } from '@/utils/car';
@@ -232,7 +232,7 @@ export default function RideDetailsPageClient() {
         </div>
       </SectionContainer>
       <LogOrRegisterModal isOpen={loginModalOpen} onClose={closeLoginModal} onLogin={onLogin} onRegister={onRegister} />
-      <ConfirmBookingModal
+      <ConfirmationModal
         isOpen={confirmBookingModalOpen}
         onClose={closeConfirmBookingModal}
         price={ride.price}
