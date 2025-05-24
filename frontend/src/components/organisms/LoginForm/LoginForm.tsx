@@ -9,6 +9,7 @@ import { Button } from '@/components/molecules/Button';
 import { Typography } from '@/components/atoms/Typography';
 import { loginFormSchema, LoginSchemaType } from '@/schemas/auth';
 import { HTMLTag } from '@/components/atoms/Typography/interface';
+import { PasswordInput } from '@/components/inputs/PasswordInput';
 
 interface LoginFormProps {
   onLogin: ({ email, password }: { email: string; password: string }) => void;
@@ -67,7 +68,7 @@ export const LoginForm = ({
             <FormItem>
               <Typography variant="cardTitleSm">Mot de passe</Typography>
               <FormControl>
-                <Input type="password" placeholder="Mot de passe" {...field} />
+                <PasswordInput placeholder="Mot de passe" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

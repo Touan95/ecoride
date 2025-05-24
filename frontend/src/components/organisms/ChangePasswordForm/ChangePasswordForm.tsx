@@ -8,7 +8,7 @@ import { Button } from '@/components/molecules/Button';
 import { Typography } from '@/components/atoms/Typography';
 import { useChangePasswordMutation } from '@/api/hooks/useAuthAPI';
 import { changePasswordFormSchema, ChangePasswordFormSchemaType } from '@/schemas/auth';
-import { Input } from '@/components/ui/input';
+import { PasswordInput } from '@/components/inputs/PasswordInput';
 
 interface ChangePasswordFormProps {
   onSuccess?: () => void;
@@ -56,7 +56,7 @@ export const ChangePasswordForm = ({ onSuccess }: ChangePasswordFormProps) => {
             <FormItem>
               <Typography variant="cardTitleSm">Ancien mot de passe</Typography>
               <FormControl>
-                <Input type="password" placeholder="Ancien mot de passe" {...field} />
+                <PasswordInput placeholder="Ancien mot de passe" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -69,7 +69,7 @@ export const ChangePasswordForm = ({ onSuccess }: ChangePasswordFormProps) => {
             <FormItem>
               <Typography variant="cardTitleSm">Nouveau mot de passe</Typography>
               <FormControl>
-                <Input type="password" placeholder="Nouveau mot de passe" {...field} />
+                <PasswordInput placeholder="Nouveau mot de passe" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -82,7 +82,7 @@ export const ChangePasswordForm = ({ onSuccess }: ChangePasswordFormProps) => {
             <FormItem>
               <Typography variant="cardTitleSm">Confirmation du mot de passe</Typography>
               <FormControl>
-                <Input type="password" placeholder="Confirmation du mot de passe" {...field} />
+                <PasswordInput placeholder="Confirmation du mot de passe" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

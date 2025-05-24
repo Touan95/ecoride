@@ -13,6 +13,7 @@ import { HTMLTag } from '@/components/atoms/Typography/interface';
 import { Checkbox } from '@/components/ui/checkbox';
 import Link from 'next/link';
 import { ROUTES } from '@/configs/routes';
+import { PasswordInput } from '@/components/inputs/PasswordInput';
 
 interface RegisterFormProps {
   onRegister: (params: Omit<RegisterParams, 'isStaff' | 'isInvitationPending'>) => void;
@@ -89,7 +90,7 @@ export const RegisterForm = ({
             <FormItem>
               <Typography variant="cardTitleSm">Mot de passe</Typography>
               <FormControl>
-                <Input type="password" placeholder="Mot de passe" {...field} />
+                <PasswordInput placeholder="Mot de passe" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -102,7 +103,7 @@ export const RegisterForm = ({
             <FormItem>
               <Typography variant="cardTitleSm">Vérification du mot de passe</Typography>
               <FormControl>
-                <Input type="password" placeholder="Vérification du mot de passe" {...field} />
+                <PasswordInput placeholder="Vérification du mot de passe" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
