@@ -47,7 +47,7 @@ export const service = async ({
       const updatedReview = await RideReview.findOneAndUpdate(
         { _id: reviewId, approved: null },
         { $set: { approved: true } },
-        { new: true, projection: { driverId: 1, rideId: 1 } },
+        { new: true, projection: { driverId: 1, rideId: 1, userId: 1 } },
       );
 
       // Vérifie si l'avis n'a pas déjà été approuvé
