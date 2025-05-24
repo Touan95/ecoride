@@ -23,9 +23,9 @@ export const AccountDriverCard = ({ values, onEditClick }: AccountDriverCardProp
     }
 
     return (
-      <div>
-        <div className="flex gap-2 relative">
-          <TbExclamationCircle size={30} className="text-primary-900 absolute -left-10" />
+      <div className="flex flex-col gap-2">
+        <div className="flex gap-2 relative md:flex-row flex-col items-center">
+          <TbExclamationCircle size={30} className="text-primary-900 md:absolute md:-left-10" />
           <Typography variant="cardTitleSm" color="primary">
             Vos préférences personnalisées
           </Typography>

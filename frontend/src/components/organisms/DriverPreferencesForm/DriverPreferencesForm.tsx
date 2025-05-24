@@ -118,6 +118,7 @@ export const DriverPreferencesForm = ({ initialValues, userId, onValidate }: Dri
                 setNewPreference('');
               }}
               className="w-8 h-8 rounded-full text-xl"
+              disabled={!newPreference.trim()}
             >
               +
             </Button>
