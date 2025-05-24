@@ -10,7 +10,6 @@ import { DriverCard } from '@/components/molecules/DriverCard';
 import { GreenCard } from '@/components/molecules/GreenCard';
 import { Button } from '@/components/molecules/Button';
 import { LogOrRegisterModal } from '@/components/organisms/LoginModal';
-import { ConfirmationModal } from '@/components/organisms/ConfirmBookingModal';
 import { useLoginMutation, useRegisterMutation } from '@/api/hooks/useAuthAPI';
 import { useAuthContext } from '@/contexts/auth';
 import { isCarGreen } from '@/utils/car';
@@ -27,6 +26,7 @@ import {
 } from '@/app/trajets/[id]/utils';
 import { AddReviewCard } from '@/components/organisms/AddReviewCard';
 import { LoginParams, RegisterParams } from '@/api/lib/auth';
+import { ConfirmBookingModal } from '@/components/organisms/ConfirmBookingModal';
 
 export default function RideDetailsPageClient() {
   const { saveToken, user } = useAuthContext();
@@ -232,7 +232,7 @@ export default function RideDetailsPageClient() {
         </div>
       </SectionContainer>
       <LogOrRegisterModal isOpen={loginModalOpen} onClose={closeLoginModal} onLogin={onLogin} onRegister={onRegister} />
-      <ConfirmationModal
+      <ConfirmBookingModal
         isOpen={confirmBookingModalOpen}
         onClose={closeConfirmBookingModal}
         price={ride.price}
