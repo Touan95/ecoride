@@ -54,24 +54,24 @@ export const UserTypeForm = ({ initialValue, userId, onValidate }: UserTypeFormP
               <Typography variant="cardTitleSm">Veuillez choisir le profil qui vous correspond</Typography>
               <FormControl>
                 <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex flex-col space-y-1 text-primary-900">
-                  <FormItem className="flex items-center space-x-3 space-y-0 rounded-md focus-within:outline-2 focus-within:outline-blue-600">
-                    <FormControl>
+                  <FormItem className="flex items-center space-x-3 space-y-0 rounded-full">
+                    <FormControl className="focus-within:ring-2! focus-within:ring-blue-600 focus-within:ring-offset-1 rounded-full">
                       <RadioGroupItem value={UserType.PASSENGER} />
                     </FormControl>
                     <Typography variant="cardTitleSm" weight="light">
                       {getUserTypeLabel(UserType.PASSENGER)}
                     </Typography>
                   </FormItem>
-                  <FormItem className="flex items-center space-x-3 space-y-0 rounded-md focus-within:outline-2 focus-within:outline-blue-600">
-                    <FormControl>
+                  <FormItem className="flex items-center space-x-3 space-y-0 rounded-full">
+                    <FormControl className="focus-within:ring-2! focus-within:ring-blue-600 focus-within:ring-offset-1 rounded-full">
                       <RadioGroupItem value={UserType.DRIVER} />
                     </FormControl>
                     <Typography variant="cardTitleSm" weight="light">
                       {getUserTypeLabel(UserType.DRIVER)}
                     </Typography>
                   </FormItem>
-                  <FormItem className="flex items-center space-x-3 space-y-0 rounded-md focus-within:outline-2 focus-within:outline-blue-600">
-                    <FormControl>
+                  <FormItem className="flex items-center space-x-3 space-y-0 rounded-full">
+                    <FormControl className="focus-within:ring-2! focus-within:ring-blue-600 focus-within:ring-offset-1 rounded-full">
                       <RadioGroupItem value={UserType.BOTH} />
                     </FormControl>
                     <Typography variant="cardTitleSm" weight="light">

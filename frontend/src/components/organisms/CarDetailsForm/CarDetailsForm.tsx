@@ -118,35 +118,35 @@ export const CarDetailsForm = ({ onSubmit, initialValues, editMode = false }: Ca
                       defaultValue={field.value}
                       className="flex flex-col space-y-1 text-primary-900"
                     >
-                      <FormItem className="flex items-center space-x-3 space-y-0 rounded-md focus-within:outline-2 focus-within:outline-blue-600">
-                        <FormControl>
-                          <RadioGroupItem value={Energy.DIESEL} />
+                      <FormItem className="flex items-center space-x-3 space-y-0 rounded-full">
+                        <FormControl className="focus-within:ring-2! focus-within:ring-blue-600 focus-within:ring-offset-1 rounded-full">
+                          <RadioGroupItem value={Energy.DIESEL} id={Energy.DIESEL} />
                         </FormControl>
-                        <Typography variant="cardTitleSm" weight="light">
+                        <Typography variant="cardTitleSm" weight="light" htmlFor={Energy.DIESEL}>
                           {getEnergyLabel(Energy.DIESEL)}
                         </Typography>
                       </FormItem>
-                      <FormItem className="flex items-center space-x-3 space-y-0 rounded-md focus-within:outline-2 focus-within:outline-blue-600">
-                        <FormControl>
-                          <RadioGroupItem value={Energy.GASOLINE} />
+                      <FormItem className="flex items-center space-x-3 space-y-0 rounded-full">
+                        <FormControl className="focus-within:ring-2! focus-within:ring-blue-600 focus-within:ring-offset-1 rounded-full">
+                          <RadioGroupItem value={Energy.GASOLINE} id={Energy.GASOLINE} />
                         </FormControl>
-                        <Typography variant="cardTitleSm" weight="light">
+                        <Typography variant="cardTitleSm" weight="light" htmlFor={Energy.GASOLINE}>
                           {getEnergyLabel(Energy.GASOLINE)}
                         </Typography>
                       </FormItem>
-                      <FormItem className="flex items-center space-x-3 space-y-0 rounded-md focus-within:outline-2 focus-within:outline-blue-600">
-                        <FormControl>
-                          <RadioGroupItem value={Energy.HYBRID} />
+                      <FormItem className="flex items-center space-x-3 space-y-0 rounded-full">
+                        <FormControl className="focus-within:ring-2! focus-within:ring-blue-600 focus-within:ring-offset-1 rounded-full">
+                          <RadioGroupItem value={Energy.HYBRID} id={Energy.HYBRID} />
                         </FormControl>
-                        <Typography variant="cardTitleSm" weight="light">
+                        <Typography variant="cardTitleSm" weight="light" htmlFor={Energy.HYBRID}>
                           {getEnergyLabel(Energy.HYBRID)}
                         </Typography>
                       </FormItem>
-                      <FormItem className="flex items-center space-x-3 space-y-0 rounded-md focus-within:outline-2 focus-within:outline-blue-600">
-                        <FormControl>
-                          <RadioGroupItem value={Energy.ELECTRIC} />
+                      <FormItem className="flex items-center space-x-3 space-y-0 rounded-full">
+                        <FormControl className="focus-within:ring-2! focus-within:ring-blue-600 focus-within:ring-offset-1 rounded-full">
+                          <RadioGroupItem value={Energy.ELECTRIC} id={Energy.ELECTRIC} />
                         </FormControl>
-                        <Typography variant="cardTitleSm" weight="light">
+                        <Typography variant="cardTitleSm" weight="light" htmlFor={Energy.ELECTRIC}>
                           {getEnergyLabel(Energy.ELECTRIC)}
                         </Typography>
                       </FormItem>
