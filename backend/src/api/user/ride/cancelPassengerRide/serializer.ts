@@ -6,6 +6,6 @@ export interface CancelPassengerRideResponse {
 }
 
 export default (): CancelPassengerRideResponse => ({
-  message: 'You have cancelled your booking for this ride with success',
+  message: 'Vous avez annulé votre réservation pour ce trajet avec succès',
   code: ResponseCodes.CANCEL_BOOKING_SUCCESS,
 });

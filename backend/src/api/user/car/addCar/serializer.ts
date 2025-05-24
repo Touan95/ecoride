@@ -6,6 +6,6 @@ export interface AddCarResponse {
 }
 
 export default (): AddCarResponse => ({
-  message: 'The car has been created',
+  message: 'Le véhicule a été créé avec succès',
   code: ResponseCodes.CREATE_CAR_SUCCESS,
 });

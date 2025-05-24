@@ -6,6 +6,6 @@ export interface BlockUserResponse {
 }
 
 export default (): BlockUserResponse => ({
-  message: 'You have blocked the user with success',
+  message: "L'utilisateur a été bloqué avec succès",
   code: ResponseCodes.BLOCK_USER_SUCCESS,
 });

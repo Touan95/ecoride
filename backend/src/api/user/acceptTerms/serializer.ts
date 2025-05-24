@@ -6,6 +6,6 @@ export interface AcceptTermsResponse {
 }
 
 export default (): AcceptTermsResponse => ({
-  message: 'The terms have been accepted',
+  message: "Les conditions d'utilisation ont été acceptées avec succès",
   code: ResponseCodes.ACCEPT_TERMS_SUCCESS,
 });

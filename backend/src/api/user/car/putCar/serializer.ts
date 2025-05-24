@@ -6,6 +6,6 @@ export interface PutCarResponse {
 }
 
 export default (): PutCarResponse => ({
-  message: 'The car has been updated',
+  message: 'Le véhicule a été mis à jour avec succès',
   code: ResponseCodes.UPDATE_CAR_SUCCESS,
 });

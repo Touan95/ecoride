@@ -11,7 +11,7 @@ import Joi, {
 
 import { HttpStatuses } from '../httpStatuses';
 
-const DEFAULT_ERROR_MESSAGE = 'Bad Request';
+const DEFAULT_ERROR_MESSAGE = 'Requête invalide';
 const DEFAULT_ERROR_CODE = 'bad-request';
 
 const JOI_OPTIONS: ValidationOptions = { abortEarly: false };

@@ -6,6 +6,6 @@ export interface StartRideResponse {
 }
 
 export default (): StartRideResponse => ({
-  message: 'You have started this ride with success',
+  message: 'Vous avez démarré ce trajet avec succès',
   code: ResponseCodes.START_RIDE_SUCCESS,
 });

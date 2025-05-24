@@ -6,6 +6,6 @@ export interface ResolveDisputeResponse {
 }
 
 export default (): ResolveDisputeResponse => ({
-  message: 'The dispute has been resolved',
+  message: 'Le litige a été résolu avec succès',
   code: ResponseCodes.RESOLVE_DISPUTE_SUCCESS,
 });

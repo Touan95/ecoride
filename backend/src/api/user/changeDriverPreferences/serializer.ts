@@ -6,6 +6,6 @@ export interface DriverPreferencesChangedResponse {
 }
 
 export default (): DriverPreferencesChangedResponse => ({
-  message: "The user's driver preferences have been changed",
+  message: 'Les préférences du conducteur ont été modifiées avec succès',
   code: ResponseCodes.DRIVER_PREFERENCES_CHANGE_SUCCESS,
 });

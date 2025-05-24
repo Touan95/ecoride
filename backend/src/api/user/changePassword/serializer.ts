@@ -6,6 +6,6 @@ export interface UserPasswordChangedResponse {
 }
 
 export default (): UserPasswordChangedResponse => ({
-  message: 'The user password has been changed',
+  message: 'Le mot de passe a été modifié avec succès',
   code: ResponseCodes.CHANGE_PASSWORD_SUCCESS,
 });

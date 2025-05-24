@@ -24,6 +24,8 @@ export enum ErrorCodes {
   RIDE_NOT_UPCOMING = 'ride-not-upcoming',
   RIDE_NOT_ONGOING = 'ride-not-ongoing',
   RIDE_ALREADY_REVIEWED = 'ride-already-reviewed',
+  RIDE_DEPARTURE_DATE_PAST = 'ride-departure-date-past',
+  RIDE_ARRIVAL_BEFORE_DEPARTURE = 'ride-arrival-before-departure',
   USER_NOT_STAFF = 'user-not-staff',
   USER_NOT_ADMIN = 'user-not-admin',
   REVIEW_ALREADY_APPROVED = 'review-already-approved',

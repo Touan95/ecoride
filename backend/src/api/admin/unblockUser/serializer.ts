@@ -6,6 +6,6 @@ export interface UnblockUserResponse {
 }
 
 export default (): UnblockUserResponse => ({
-  message: 'You have unblocked the user with success',
+  message: "L'utilisateur a été débloqué avec succès",
   code: ResponseCodes.UNBLOCK_USER_SUCCESS,
 });

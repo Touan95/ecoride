@@ -6,6 +6,6 @@ export interface EndRideResponse {
 }
 
 export default (): EndRideResponse => ({
-  message: 'You have ended this ride with success',
+  message: 'Vous avez finalisé ce trajet avec succès',
   code: ResponseCodes.END_RIDE_SUCCESS,
 });

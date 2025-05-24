@@ -6,6 +6,6 @@ export interface AddReviewResponse {
 }
 
 export default (): AddReviewResponse => ({
-  message: 'The review has been added',
+  message: "L'avis a été ajouté avec succès",
   code: ResponseCodes.ADD_REVIEW_SUCCESS,
 });

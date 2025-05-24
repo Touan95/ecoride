@@ -6,6 +6,6 @@ export interface GiveStaffAccessResponse {
 }
 
 export default (): GiveStaffAccessResponse => ({
-  message: 'The user is now a staff member',
+  message: 'Cet utilisateur est désormais un membre du staff',
   code: ResponseCodes.GIVE_STAFF_ACCESS_SUCCESS,
 });

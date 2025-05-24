@@ -6,6 +6,6 @@ export interface UserTypeChangedResponse {
 }
 
 export default (): UserTypeChangedResponse => ({
-  message: 'The user type has been changed',
+  message: "Le type d'utilisateur a été modifié avec succès",
   code: ResponseCodes.USER_TYPE_CHANGE_SUCCESS,
 });

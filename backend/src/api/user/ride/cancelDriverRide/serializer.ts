@@ -6,6 +6,6 @@ export interface CancelDriverRideResponse {
 }
 
 export default (): CancelDriverRideResponse => ({
-  message: 'You have cancelled your ride with success',
+  message: 'Vous avez annulé votre trajet avec succès',
   code: ResponseCodes.CANCEL_RIDE_SUCCESS,
 });

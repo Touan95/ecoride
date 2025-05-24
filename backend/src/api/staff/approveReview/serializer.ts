@@ -6,6 +6,6 @@ export interface ApproveReviewResponse {
 }
 
 export default (): ApproveReviewResponse => ({
-  message: 'The review has been approved',
+  message: "L'avis a été approuvé avec succès",
   code: ResponseCodes.APPROVE_REVIEW_SUCCESS,
 });
