@@ -1,0 +1,76 @@
+@startuml
+title Authentification & gestion des accès
+
+actor User
+participant Frontend
+participant AuthContext
+participant Backend
+participant Database
+
+== Inscription ==
+
+User -> Frontend : Formulaire d'inscription
+Frontend -> Frontend : Validation (Zod)
+Frontend -> Backend : POST /register
+Backend -> Backend : Validation (Joi)
+Backend -> Backend : Hash password (argon2.hash)
+Backend -> Database : Stock utilisateur
+Database --> Backend : Nouvel utilisateur
+Backend -> Backend : Envoi mail de confirmation
+Backend -> Frontend : Success (code 200)
+
+== Connexion ==
+
+User -> Frontend : Formulaire de connexion
+Frontend -> Frontend : Validation (Zod)
+Frontend -> Backend : POST /login
+Backend -> Backend : Validation (Joi)
+Backend -> Database : Cherche utilisateur
+Database --> Backend : Données utilisateur
+Backend -> Backend : Check credentials (argon2.verify)
+alt Mauvais credentials
+    Backend -> Frontend : Bad credentials (erreur 401)
+    Frontend -> User : Message d'erreur
+else Redirige si non autorisé
+    Backend -> Backend : Génère tokens (access + refresh)
+    Backend --> Frontend : Réponse : JWT tokens
+    Frontend -> AuthContext : saveToken()
+    AuthContext -> Frontend : Stockage cookie HTTP-only
+    AuthContext -> Frontend : Chargement données utilisateur
+    Frontend -> User : Redirection vers accueil
+end alt
+
+
+== Gestion des pages protégées ==
+
+note over AuthContext
+Objet user avec :
+- isLogged
+- isStaff
+- isAdmin
+end note
+
+User -> Frontend : Ouvre URL protégée
+Frontend -> AuthContext : Demande user avec accès
+AuthContext -> Frontend : Retourne user avec accès
+Frontend -> Frontend : Vérifie les accès
+alt Affiche contenu si possède les droits
+    Frontend -> Frontend : Affiche contenu protégé
+else Redirige si non autorisé
+    Frontend -> User : Redirection (erreur 403)
+end alt
+
+== Gestion des tokens ==
+
+note over AuthContext
+Gestion continue :
+- Vérifie l’expiration
+- Refresh automatique
+- Déconnexion si invalide
+end note
+
+AuthContext -> AuthContext : Vérifie expiration
+AuthContext -> AuthContext : Refresh token si besoin
+AuthContext -> Frontend : Déconnexion si token expiré
+
+@enduml

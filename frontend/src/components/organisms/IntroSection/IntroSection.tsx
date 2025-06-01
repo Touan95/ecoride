@@ -8,7 +8,7 @@ export const IntroSection = () => {
     <SectionContainer className="justify-center py-10">
       <div className="flex flex-col gap-10">
         <SectionTitle weight="extrabold">EcoRide</SectionTitle>
-        <div className="sm:grid sm:grid-cols-2 gap-10 sm:flex-none flex flex-col">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
           <Image
             src={'/assets/driver.webp'}
             alt={'Conducteur au volant discutant avec une personne par la fenêtre'}
@@ -29,7 +29,7 @@ export const IntroSection = () => {
           mission est simple : faciliter la mise en relation entre conducteurs et passagers pour optimiser les trajets, réduire les coûts et
           limiter l’impact écologique des déplacements quotidiens.
         </Paragraph>
-        <div className="sm:grid sm:grid-cols-2 gap-10 sm:flex-none flex flex-col">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
           <Image
             src={'/assets/team.webp'}
             alt={'Équipe Ecoride dans leurs locaux'}
