@@ -1,0 +1,52 @@
+@startuml
+title Sécurisation des pages et des routes
+
+actor User
+participant Frontend
+participant AuthContext
+participant Backend
+participant Database
+
+== Gestion des pages protégées ==
+
+note over AuthContext
+Objet user avec :
+- isLogged
+- isStaff
+- isAdmin
+end note
+
+User -> Frontend : Ouvre URL protégée
+Frontend -> AuthContext : Demande user avec accès
+AuthContext -> Frontend : Retourne user avec accès
+Frontend -> Frontend : Vérifie les accès
+alt Affiche contenu si possède les droits
+    Frontend -> Frontend : Affiche contenu protégé
+else Redirige si non autorisé
+    Frontend -> User : Redirection (erreur 403)
+end alt
+
+== Gestion des routes protégées ==
+
+note over AuthContext
+Le front est censé bloquer l'accès aux fonctionnalités protégées
+Le backend dispose néanmoins de sa couche de sécurité
+end note
+
+User -> Frontend : Validation avis (réservé staff)
+Frontend -> Backend : PATCH /staff/review/:id/approve
+Backend -> Backend : Contrôle du jwt passé en header (jwtMiddleware)
+Backend -> Backend : Divers contrôles faits par le service
+alt jwt sans accès staff
+    Backend -> Frontend : Forbidden (erreur 403)
+    Frontend -> User : Message d'erreur
+else jwt avec accès staff
+    Backend -> Backend : Validation (Joi)
+    Backend -> Backend : htmlStrip (sanitize-html)
+    Backend -> Database : Approuve l'avis
+    Backend -> Frontend : Success (code 200)
+    Frontend -> User : Interface mise à jour
+end alt
+
+
+@enduml

@@ -1,0 +1,66 @@
+@startuml
+title Trajet
+
+actor Passenger
+actor Driver
+participant Frontend
+participant Backend
+participant Database
+
+== Création de trajet ==
+
+Driver -> Frontend: Saisie détails trajet
+Frontend -> Backend: POST user/ride
+Backend -> Database: Contrôles divers (voiture, conducteur, ...)
+Backend -> Database: Création trajet
+Database --> Backend: Confirmation création
+Backend --> Frontend: Réponse : rideId
+Frontend -> Frontend: Mise à jour trajet
+Frontend --> Driver: Confirmation création
+
+note over Database
+Flux des crédits :
+passenger.credits = 100
+driver.credits = 100
+ride.balance = 0
+end note
+
+== Réservation de trajet ==
+
+Passenger -> Frontend: Participe au trajet
+Frontend -> Backend: POST user/ride/:id/book
+Backend -> Database: Contrôles divers (places, crédits, ...)
+Backend -> Database: Création réservation (ride_passenger)
+Database --> Backend: Confirmation réservation
+Backend --> Passenger: Envoi mail
+Backend --> Driver: Envoi mail
+Backend --> Frontend: Success (code 200)
+Frontend --> Passenger: Confirmation réservation
+
+note over Database
+Flux des crédits :
+passenger.credits = 95
+driver.credits = 100
+ride.balance = 5
+end note
+
+== Début/Fin de trajet ==
+
+Driver -> Frontend: Début/Fin trajet
+Frontend -> Backend: POST user/ride/:id/start (ou end)
+Backend -> Database: Contrôles divers (conducteur, horaires, ...)
+Backend -> Database: Mise à jour statut
+Database --> Backend: Confirmation
+Backend --> Passenger: Envoi mail avec demande d'avis (si fin de trajet) 
+Backend --> Frontend: Success (code 200)
+Frontend -> Frontend: Mise à jour statut
+Frontend --> Driver: Confirmation statut
+
+note over Database
+Flux des crédits :
+passenger.credits = 95
+driver.credits = 100
+ride.balance = 5
+end note
+
+@enduml
