@@ -140,7 +140,6 @@ export const AddRideForm = ({ onSubmit, initialValues, cars, onAddCar, isLoading
   return (
     <>
       <Form {...form}>
-        {Object.keys(form.formState.errors).length === 0 ? 'true' : 'false'}
         <form onSubmit={form.handleSubmit(onValid)} className="flex flex-col gap-4">
           <ItineraryFields
             form={form}
