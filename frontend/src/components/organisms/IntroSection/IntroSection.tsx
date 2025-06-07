@@ -8,18 +8,18 @@ export const IntroSection = () => {
     <SectionContainer className="justify-center py-10">
       <div className="flex flex-col gap-10">
         <SectionTitle weight="extrabold">EcoRide</SectionTitle>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-10 overflow-hidden">
           <Image
             src={'/assets/driver.webp'}
             alt={'Conducteur au volant discutant avec une personne par la fenêtre'}
-            className="h-full w-full object-cover rounded-xl shadow-2xl"
+            className="w-full object-cover max-h-[80vh] aspect-[3/2] rounded-xl"
             width={450}
             height={300}
           />
           <Image
             src={'/assets/passenger.webp'}
             alt={'Passager regardant le paysage par la fenêtre du véhicule'}
-            className="h-full w-full object-cover rounded-xl shadow-2xl"
+            className="w-full object-cover max-h-[80vh] aspect-[3/2] rounded-xl"
             width={450}
             height={300}
           />
@@ -29,18 +29,18 @@ export const IntroSection = () => {
           mission est simple : faciliter la mise en relation entre conducteurs et passagers pour optimiser les trajets, réduire les coûts et
           limiter l’impact écologique des déplacements quotidiens.
         </Paragraph>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-10 overflow-hidden">
           <Image
             src={'/assets/team.webp'}
             alt={'Équipe Ecoride dans leurs locaux'}
-            className="h-full w-full object-cover rounded-xl shadow-2xl"
+            className="w-full object-cover max-h-[80vh] aspect-[3/2] rounded-xl"
             width={450}
             height={460}
           />
           <Image
             src={'/assets/office.webp'}
             alt={"Bureau de l'entreprise Ecoride dans une ambiance écologique"}
-            className="h-full w-full object-cover rounded-xl shadow-2xl"
+            className="w-full object-cover max-h-[80vh] aspect-[3/2] rounded-xl"
             width={450}
             height={460}
           />
