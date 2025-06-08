@@ -129,12 +129,12 @@ export class RideEntity implements RideEntityInterface {
   @Column({ type: 'boolean', default: false })
   servicePaid: boolean;
 
-  @ManyToOne(() => UserEntity)
+  @ManyToOne(() => UserEntity, { onDelete: 'CASCADE', nullable: false })
   @Index('ride_driver_index', ['driver'])
   @JoinColumn()
   driver: UserEntityInterface;
 
-  @ManyToOne(() => CarEntity)
+  @ManyToOne(() => CarEntity, { onDelete: 'CASCADE', nullable: false })
   @JoinColumn()
   car: CarEntityInterface;
 

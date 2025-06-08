@@ -29,10 +29,10 @@ export class RidePassengerEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(() => UserEntity, { onDelete: 'CASCADE' })
+  @ManyToOne(() => UserEntity, { onDelete: 'CASCADE', nullable: false })
   user: UserEntity;
 
-  @ManyToOne(() => RideEntity, { onDelete: 'CASCADE' })
+  @ManyToOne(() => RideEntity, { onDelete: 'CASCADE', nullable: false })
   ride: RideEntity;
 
   @Column({ type: 'boolean', default: false })
