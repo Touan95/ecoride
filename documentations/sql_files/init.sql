@@ -1,6 +1,3 @@
-
-
-
 CREATE SCHEMA public;
 
 -- Définition des types ENUM utilisés dans la base.
@@ -61,7 +58,7 @@ CREATE TABLE public.car (
     seats integer NOT NULL,
     energy public.car_energy_enum DEFAULT 'unknown'::public.car_energy_enum NOT NULL,
     is_deleted boolean DEFAULT false NOT NULL,
-    owner_id uuid
+    owner_id uuid NOT NULL
 );
 
 -- Table des trajets proposés sur la plateforme.
@@ -81,12 +78,12 @@ CREATE TABLE public.ride (
     departure_location jsonb NOT NULL,
     status public.ride_status_enum DEFAULT 'upcoming'::public.ride_status_enum NOT NULL,
     service_paid boolean DEFAULT false NOT NULL,
-    driver_id uuid,
-    car_id uuid
+    driver_id uuid NOT NULL,
+    car_id uuid NOT NULL
 );
 
 -- Table des réservations de passagers.
--- Lie un utilisateur à un trajet avec possibilité d’annulation, suivi des dates et consentement au partage d’email.
+-- Lie un utilisateur à un trajet avec possibilité d'annulation, suivi des dates et consentement au partage d'email.
 CREATE TABLE public.ride_passenger (
     id uuid DEFAULT extensions.uuid_generate_v4() NOT NULL,
     canceled boolean DEFAULT false NOT NULL,
@@ -94,8 +91,8 @@ CREATE TABLE public.ride_passenger (
     email_share_accepted_at timestamp without time zone,
     created_at timestamp without time zone DEFAULT now() NOT NULL,
     updated_at timestamp without time zone DEFAULT now() NOT NULL,
-    user_id uuid,
-    ride_id uuid
+    user_id uuid NOT NULL,
+    ride_id uuid NOT NULL
 );
 
 -- Table de liaison many-to-many entre utilisateurs et trajets.
@@ -111,7 +108,7 @@ CREATE TABLE public.platform_credit (
     id uuid DEFAULT extensions.uuid_generate_v4() NOT NULL,
     credit integer NOT NULL,
     created_at timestamp without time zone DEFAULT now() NOT NULL,
-    ride_id uuid
+    ride_id uuid NOT NULL
 );
 
 -- Table technique utilisée par TypeORM pour le suivi des migrations de schéma.
@@ -150,7 +147,7 @@ ALTER TABLE ONLY public.platform_credit
 ALTER TABLE ONLY public.migrations
     ADD CONSTRAINT "PK_8c82d7f526340ab734260ea46be" PRIMARY KEY (id);
 
--- Contrainte d’unicité : un trajet ne peut générer qu’une seule ligne dans "platform_credit"
+-- Contrainte d'unicité : un trajet ne peut générer qu'une seule ligne dans "platform_credit"
 ALTER TABLE ONLY public.platform_credit
     ADD CONSTRAINT "REL_ca9de458bf77c2fa71cddf9418" UNIQUE (ride_id);
 
@@ -160,7 +157,7 @@ ALTER TABLE ONLY public.car
 
 -- Lien entre un trajet et le véhicule utilisé
 ALTER TABLE ONLY public.ride
-    ADD CONSTRAINT "FK_114f0ac09128843a3221fda182a" FOREIGN KEY (car_id) REFERENCES public.car(id);
+    ADD CONSTRAINT "FK_114f0ac09128843a3221fda182a" FOREIGN KEY (car_id) REFERENCES public.car(id) ON DELETE CASCADE;
 
 -- Réservation liée à un trajet
 ALTER TABLE ONLY public.ride_passenger
@@ -176,11 +173,11 @@ ALTER TABLE ONLY public.ride_user_passenger
 
 -- Lien entre un trajet et le conducteur
 ALTER TABLE ONLY public.ride
-    ADD CONSTRAINT "FK_90a1ac5467b49859d4ed9637f2e" FOREIGN KEY (driver_id) REFERENCES public."user"(id);
+    ADD CONSTRAINT "FK_90a1ac5467b49859d4ed9637f2e" FOREIGN KEY (driver_id) REFERENCES public."user"(id) ON DELETE CASCADE;
 
 -- Crédit plateforme lié à un trajet spécifique
 ALTER TABLE ONLY public.platform_credit
-    ADD CONSTRAINT "FK_ca9de458bf77c2fa71cddf94182" FOREIGN KEY (ride_id) REFERENCES public.ride(id);
+    ADD CONSTRAINT "FK_ca9de458bf77c2fa71cddf94182" FOREIGN KEY (ride_id) REFERENCES public.ride(id) ON DELETE CASCADE;
 
 -- Réservation liée à un passager
 ALTER TABLE ONLY public.ride_passenger
