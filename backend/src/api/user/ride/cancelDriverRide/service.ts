@@ -80,7 +80,9 @@ export const service = async ({
     });
   });
 
-  const formattedEmailDate = dayjs(ride.departureDate).format('dddd D MMMM à HH[h]mm');
+  const formattedEmailDate = dayjs(ride.departureDate)
+    .tz('Europe/Paris')
+    .format('dddd D MMMM à HH[h]mm');
 
   passengers.map(async (passenger) => {
     void emailSender.rideCancelledByDriver({
