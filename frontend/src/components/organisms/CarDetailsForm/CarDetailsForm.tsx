@@ -58,9 +58,7 @@ export const CarDetailsForm = ({ onSubmit, initialValues, editMode = false }: Ca
 
   const { errors, submitCount } = form.formState;
 
-  const isButtonDisabled = useMemo(() => {
-    return form.formState.isSubmitting || Object.values(errors).some((error) => error !== undefined);
-  }, [errors, form.formState.isSubmitting]);
+  const isButtonDisabled = form.formState.isSubmitting || Object.values(errors).some((error) => error !== undefined);
 
   const handleSubmit = (values: CarDetailsFormSchemaType) => {
     onSubmit({ ...values });
