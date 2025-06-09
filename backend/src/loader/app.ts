@@ -4,6 +4,7 @@ import { appErrorHandlerMiddleware } from '../core/middlewares/appErrorHandler.m
 import { attachLoggerMiddleware } from '../core/middlewares/attachLogger.middleware';
 import { defaultCacheMiddleware } from '../core/middlewares/cacheControl.middleware';
 import mongoose from 'mongoose';
+import { sanitizeMiddleware } from '../core/middlewares/sanitize.middleware';
 
 const MONGO_URI = process.env.MONGO_URI ?? '';
 
@@ -21,6 +22,7 @@ export default ({ prefix, router }: AppOptions): Express =>
   express()
     .use(attachLoggerMiddleware())
     .use(jsonParserMiddleware)
+    .use(sanitizeMiddleware)
     .use(defaultCacheMiddleware)
     .use(corsMiddleware)
     .use(prefix, router)

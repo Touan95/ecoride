@@ -11,9 +11,7 @@ export const Header = () => {
           <Typography variant="h1" align="center" color="white">
             Optez pour le covoiturage : voyagez ensemble, réduisez votre empreinte et partagez un moment agréable.
           </Typography>
-          <div className="px-20">
-            <SearchBar placeholder="Votre destination" />
-          </div>
+          <SearchBar placeholder="Votre destination" />
         </div>
       </div>
     </div>

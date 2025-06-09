@@ -57,7 +57,7 @@ export class CarEntity implements CarEntityInterface {
   @Index('is_deleted_index', ['isDeleted'])
   isDeleted: boolean;
 
-  @ManyToOne(() => UserEntity, (user) => user.cars, { onDelete: 'CASCADE' })
+  @ManyToOne(() => UserEntity, (user) => user.cars, { onDelete: 'CASCADE', nullable: false })
   @JoinColumn({ name: 'ownerId' })
   owner: UserEntity;
 }

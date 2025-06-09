@@ -1,0 +1,107 @@
+👨‍✈️ CHAUFFEUR (ecoride_driver@punkproof.com)
+
+🔐 Déjà connecté
+	- 💳 20 crédits
+	- Déjà Chauffeur avec véhicule → montrer formulaire véhicule
+	- Créer 1 trajet dans l’heure (👀 bouton « Démarrer » visible)
+			⚠️ RGPD : nota géolocalisation + véhicule
+	- Voir détail trajet
+⸻
+
+🧍‍♂️ PASSAGER 1 (jury – ecoride_passenger_1@punkproof.com)
+
+🔐 Déjà connecté
+	- 💳 20 crédits
+	- HomePage Recherche 
+		- ❌ Mauvaise destination → 0 résultats (🧠 explication URL params)
+		- 📅 Mauvaise date → suggestion date la plus proche (URL mise à jour)
+		- ✅ Bonne date → résultats visibles
+	- Voir détail trajet
+	- Réserver
+		⚠️ RGPD : accepte partage d’email
+		📩 Mail confirmation reçu
+		💳 Crédits mis à jour : 15 crédits
+	- Annule trajet
+		📩 Mail d’annulation
+		💳 Crédit remboursé : 20 crédits
+	- Participe à nouveau
+		📩 Mail confirmation
+		💳 15 crédits restants
+
+⸻
+
+🧍 PASSAGER 2 (jury – ecoride_passenger_2@punkproof.com)
+
+🔐 Déjà connecté
+	- 💳 20 crédits
+	- Réserver trajet
+		⚠️ RGPD : accepte partage d’email
+		📩 Mail confirmation
+		💳 15 crédits
+
+⸻
+
+👨‍✈️ CHAUFFEUR
+	📩 Mail confirmation x2
+	- Démarrer le trajet
+
+⸻
+
+🧍‍♂️ / 🧍 PASSAGERS 1 & 2
+	- État “En cours” → “Vous êtes en route”
+
+⸻
+
+👨‍✈️ CHAUFFEUR
+	- Arrivé à destination
+
+⸻
+
+🧍‍♂️ / 🧍 PASSAGERS 1 & 2
+	📩 Mails demande d’avis
+	- PASSAGER 1 → avis positif
+	- PASSAGER 2 → avis avec réclamation
+
+⸻
+
+👨‍💼 ADMIN (ecoride_admin@punkproof.com)
+
+🔐 Déjà connecté
+	- 📊 Espace admin → statistiques
+
+⸻
+
+🧑‍💼 STAFF (ecoride_staff@punkproof.com)
+
+🔐 Déjà connecté
+	- Approuve avis positif
+	- Remboursement litige + publication avis
+
+⸻
+
+👨‍✈️ CHAUFFEUR
+	📩 Mail : avis validé et litige résolu
+	💳 Crédits = 23 (+3 après 2 trajets réalisés)
+	Voir détail trajet : commentaire visible, note mise à jour
+
+⸻
+
+🧍‍♂️ / 🧍 PASSAGERS
+	📩 Mail : avis validé et litige résolu
+	💳 Crédits :
+	PASSAGER 1 = 15 (pas de litige) 
+	PASSAGER 2 = 20 (remboursement litige de 5 crédits)
+
+⸻
+
+👨‍💼 ADMIN
+	📊 Espace admin → statistiques à jour (refresh?)
+	💳 Crédits : + 2
+	Bloque compte chauffeur
+
+⸻
+
+👨‍✈️ CHAUFFEUR
+	- Déconnexion auto (JWT) ou manuelle 
+	- Tentative de reconnexion → accès bloqué
+	- Envoie un message via le formulaire de contact

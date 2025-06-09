@@ -163,7 +163,9 @@ export const service = async ({
 
   // Envoi des e-mails si la transaction a abouti
   // Récupère les informations pour les e-mails
-  const departureDate = dayjs(ride.departureDate).format('dddd D MMMM à HH[h]mm');
+  const departureDate = dayjs(ride.departureDate)
+    .tz('Europe/Paris')
+    .format('dddd D MMMM à HH[h]mm');
   const departureCity = ride.departureLocation.city ?? '';
   const arrivalCity = ride.arrivalLocation.city ?? '';
   const passengerUsername = passenger.username;

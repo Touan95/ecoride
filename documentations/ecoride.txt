@@ -1,0 +1,13 @@
+App prod  : https://ecoride-sooty.vercel.app/
+
+GitHub : https://github.com/Touan95/ecoride
+Figma : https://www.figma.com/design/4bveJ23vnmugT4DALEoj2Z/Maquette?node-id=0-1&t=47sFZZvQFh95SRXD-1
+
+
+Comptes de test:
+
+Conducteur :   ecoride_driver@punkproof.com      | ecoride
+Passager 1 :   ecoride_passenger_1@punkproof.com | ecoride
+Passager 1 :   ecoride_passenger_2@punkproof.com | ecoride
+Staff :        ecoride_staff@punkproof.com       | ecoride
+Admin :        ecoride_admin@punkproof.com       | ecoride

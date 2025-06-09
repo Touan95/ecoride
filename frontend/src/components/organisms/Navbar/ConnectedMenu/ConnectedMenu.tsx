@@ -26,7 +26,7 @@ const AccountButton = () => {
 
 export const ConnectedMenu = ({ username, isDriver, isStaff, isAdmin }: ConnectedMenuProps) => {
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
         <div>
           <AccountButton />

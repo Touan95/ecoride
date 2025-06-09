@@ -18,7 +18,13 @@ export const Navbar = () => {
       <div className="hidden md:flex relative justify-between">
         <div className="flex items-center h-full w-full gap-10">
           <Link href={ROUTES.HOME}>
-            <Image src={'/assets/ecoride-white.png'} alt={'Logo Ecoride'} className="h-18 p-2 object-cover" width={95} height={75} />
+            <Image
+              src={'/assets/ecoride-white.png'}
+              alt={'Logo Ecoride'}
+              className="h-18 p-2 object-cover overflow-visible"
+              width={95}
+              height={75}
+            />
           </Link>
           {<NavbarLinks />}
           <div className="flex-1" />

@@ -23,7 +23,7 @@ export class PlatformCreditEntity implements PlatformCreditEntityInterface {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 
-  @OneToOne(() => RideEntity)
+  @OneToOne(() => RideEntity, { onDelete: 'CASCADE', nullable: false })
   @JoinColumn()
   @Index({ unique: true })
   ride: RideEntity;

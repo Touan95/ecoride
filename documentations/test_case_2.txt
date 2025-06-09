@@ -1,0 +1,80 @@
+👨‍✈️ CHAUFFEUR (ecoride_driver@punkproof.com)
+
+🔐 Déjà connecté
+	- 💳 20 crédits
+	- Déjà Chauffeur avec véhicule → montrer formulaire véhicule
+	- Créer 1 trajet dans l’heure (👀 bouton « Démarrer » visible)
+			⚠️ RGPD : nota géolocalisation + véhicule
+	- Voir détail trajet
+⸻
+
+🧍‍♂️ PASSAGER 1 (jury – ecoride_passenger_1@punkproof.com)
+
+🔐 Déjà connecté
+	- 💳 20 crédits
+	- HomePage Recherche 
+		- ❌ Mauvaise destination → 0 résultats (🧠 explication URL params)
+		- 📅 Mauvaise date → suggestion date la plus proche (URL mise à jour)
+		- ✅ Bonne date → résultats visibles
+	- Voir détail trajet
+	- Réserver
+		⚠️ RGPD : accepte partage d’email
+		📩 Mail confirmation reçu
+		💳 Crédits mis à jour : 15 crédits
+
+⸻
+
+👨‍✈️ CHAUFFEUR
+	📩 Mail confirmation
+	- Démarrer le trajet
+
+⸻
+
+🧍‍♂️ PASSAGER
+	- État “En cours” → “Vous êtes en route”
+
+⸻
+
+👨‍✈️ CHAUFFEUR
+	- Arrivé à destination
+
+⸻
+
+🧍‍♂️ PASSAGER
+	📩 Mail demande d’avis
+	 → avis positif
+
+⸻
+
+👨‍💼 ADMIN (ecoride_admin@punkproof.com)
+
+🔐 Déjà connecté
+	- 📊 Espace admin → statistiques
+
+⸻
+
+🧑‍💼 STAFF (ecoride_staff@punkproof.com)
+
+🔐 Déjà connecté
+	- Approuve avis positif
+
+⸻
+
+👨‍✈️ CHAUFFEUR
+	📩 Mail : avis validé
+	💳 Crédits = 23 (+3)
+	Voir détail trajet : commentaire visible, note mise à jour
+
+⸻
+
+🧍‍♂️ PASSAGER
+	📩 Mail : avis validé
+	💳 Crédits = 15 
+
+⸻
+
+👨‍💼 ADMIN
+	📊 Espace admin → statistiques à jour (refresh?)
+	💳 Crédits : +2
+
+⸻
